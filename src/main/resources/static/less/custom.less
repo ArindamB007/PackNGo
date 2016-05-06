@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Chewy');
+@import "../bower/bower_components/bootstrap/less/bootstrap.less";
+//@import "../material-ui/assets/css/material-kit.css";
+
+//Google font api classes
+.material-icons.orangeC00 { color: #fbcc00; }
+.material-icons.md-18 { font-size: 18px!important; }
+.material-icons.md-24 { font-size: 24px!important; }
+.material-icons.md-36 { font-size: 36px!important; }
+.material-icons.md-48 { font-size: 48px!important; }
+
+
+body{
+  /*font-family: 'Open Sans', sans-serif;
+  font-size: 16px;*/
+}
+
+.fix-to-top {
+  position: fixed !important;
+  margin-top: 0 !important;
+  ;top: 0;
+}
+
+
+/*********************************************************************************/
+/* Menu Customization                                                            */
+/*********************************************************************************/
+@bgDefault      : rgba(77, 0, 62, 0.75);
+@bgHighlight    : rgb(161, 0, 204);
+@colDefault     : #000000;
+@colBanner      : #ecff00;
+@colHighlight   : #fdfdff;
+@streakhighlight: #cbff00;
+@customMenuTheme       : true;
+
+.navbar-unfix-top {
+  .navbar-fixed-top;
+  position: relative;
+}
+
+.ddm() when (@customMenuTheme) {
+  > .dropdown-menu {
+    background-color: @bgDefault;
+    display:block;
+    > li > a {
+      color: @colHighlight;
+      &:hover,  &:focus {
+        color: #fdfdff;;
+        background-color: @bgHighlight; }}
+    .divider {
+      background-color: @bgHighlight;}}}
+
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  margin-top: 1px!important;
+}
+
+.navbar-wrapper {
+  position: relative;
+  z-index: 20;
+  width: 70%;
+  float: right;
+  margin: 30px 15px 25px 0;
+  min-height: 32px;
+  background: transparent;
+}
+.navbar-default,.navbar-inverse{
+  background-color: @bgDefault !important;
+  border: 1px;
+  .navbar-brand {
+    font-family: 'Chewy', serif;
+    font-size: 30px;
+    color: @colBanner !important;
+    &:hover, &:focus {
+      color: @colHighlight; }}
+  .navbar-text {
+    color: @colDefault; }
+  .navbar-nav {
+    > li{
+      border-top: 4px solid @bgDefault;
+      border-color: transparent;
+      > a {
+        //border-top: 3px @streakhighlight;
+        color: @colHighlight;
+        &:focus, &:hover, &.open {
+          color: @colHighlight;
+          background-color: @bgHighlight;
+        }
+      }
+      .ddm
+    }
+   > :hover, .active {
+      border-top: 4px solid @streakhighlight;
+      > a, > a:hover, > a:focus {
+        color: @colHighlight;
+        //background-color: @bgHighlight;
+        background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+  .navbar-toggle {
+    border-color: @bgHighlight;
+    &:hover, &:focus {
+      background-color: @bgHighlight; }
+    .icon-bar {
+      background-color: @colDefault; }}
+  .navbar-collapse,
+  .navbar-form {
+    border-color: @colDefault; }
+  .navbar-link {
+    color: @colDefault;
+    &:hover {
+      color: @colHighlight; }}}
+.container-fluid .navbar-collapse{
+  margin-right: 10px;
+}
+
+@media (max-width: 767px) {
+ /* .navbar-default .navbar-nav .open .dropdown-menu {
+    > li > a {
+      color: @colHighlight;
+      &:hover, &:focus {
+        color: @colHighlight; }}
+    > .active {
+      > a, > a:hover, > a:focus {
+        color: @colHighlight;
+        background-color: @bgHighlight;
+        }}}*/
+
+  .dropdown:hover .dropdown-menu {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .dropdown.open .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    margin-top: 1px!important;
+  }
+}
+
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 768px) {
+  /* Navbar positioning */
+  .navbar-wrapper {
+    margin-top: 20px;
+  }
+  .navbar-wrapper {
+  }
+  .navbar-wrapper .navbar {
+  }
+
+  /* The navbar becomes detached from the top, so we round the corners */
+  .navbar-wrapper .navbar {
+    border-radius: 4px;
+  }
+
+  /* Bump up size of carousel content */
+  .carousel-caption p {
+    margin-bottom: 20px;
+    font-size: 21px;
+    line-height: 1.4;
+  }
+
+  .featurette-heading {
+    font-size: 50px;
+  }
+}
+
+@media (min-width: 992px) {
+  .featurette-heading {
+    margin-top: 120px;
+  }
+}
+
+
+
+
+/*********************************************************************************/
+/* Background                                                                    */
+/*********************************************************************************/
+.background-container
+{
+  background-position: left top;
+  background: url(../img/main_bgnd.JPG) no-repeat bottom center;
+  background-attachment: fixed;
+  background-size: cover;
+  text-align: center;
+  width: 100%;
+  height: 50%;
+  position: fixed;
+  z-index: -1; /* Ensure div tag stays behind content; -999 might work, too. */
+}
+
+/*********************************************************************************/
+/* CUSTOMIZE THE CAROUSEL                                                        */
+/*********************************************************************************/
+@carouselHeight     : 100vh;
+.carousel-container{
+  position:absolute;
+  width: 100%;
+  height: @carouselHeight;
+}
+
+/* Carousel base class */
+.carousel {
+  min-width: 100%;
+  margin-bottom: 60px;
+  height: @carouselHeight;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  background-color: #777;
+  height: @carouselHeight;
+}
+.carousel-inner > .item > img {
+  //position: relative;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: @carouselHeight;
+}
+
+
+/*********************************************************************************/
+/* Header                                                                        */
+/*********************************************************************************/
+
+
+
+
+
+#background-container:before
+{
+  content: '';
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(64,64,64,0.125);
+}
+

@@ -1,0 +1,20 @@
+{
+  "name": "PacknGo",
+  "description": "Web Project for Hotel Booking",
+  "main": "",
+  "moduleType": [],
+  "authors": [
+    "Sujoy",
+    "Arindam"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
