@@ -41,22 +41,22 @@
   </head>
 <!-- NAVBAR
 ================================================== -->
-  <body data-ng-app="PackNGo" data-ng-controller="MainCtrl">
-  <div class="navbar-wrapper">
-    <nav class="navbar navbar-fixed-top navbar-default navbar-unfix-top">
-      <div class="container-fluid">
+  <body data-ng-app="PackNGo" data-ng-controller="MainCtrl" class="index-page-custom">
+
+    <nav class="navbar navbar-fixed-top navbar-color-on-scroll navbar-transparent navbar-default">
+      <div class="container">
         <div class="navbar-header">
           <button ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" type="button"
-                  class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                  class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation-index"
                   aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Chal Pare</a>
+          <a class="navbar-brand" href="#">Maple 'n' Mist</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse" collapse="navCollapsed">
+        <div id="navbar" class="navbar-collapse collapse" collapse="navCollapsed" id="navigation-index">
           <ul class="nav navbar-nav navbar-right" data-ng-controller="MenuCtrl">
             <li data-ng-repeat="menuItem in menuItems"
             data-ng-class="{'uib-dropdown':menuItem.type =='dropDown','active':$first}" uib-dropdown="menuItem.type =='dropDown'">
@@ -76,21 +76,53 @@
         </div>
       </div>
     </nav>
-  </div>
-    <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Carousel Start ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
-  <div class="carousel-container" data-ng-controller="CarouselCtrl" id="home-carousel">
-    <div class="container" style="width:100%">
-      <uib-carousel interval="myInterval" no-pause='true'>
-           <uib-slide ng-repeat="slide in slides" active="slide.active">
-               <img ng-src="{{slide.image}}">
-               <div class="carousel-caption">
-                   <h4>Slide {{$index+1}}</h4>
-               </div>
-           </uib-slide>
-      </uib-carousel>
+
+  <div class="wrapper">
+    <div class="header header-filter" style="background-image: url('../img/main_bgnd.JPG');">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <div class="brand">
+              <h1>Maple 'n' Mist</h1>
+              <h3>A Badass hospitality group, that thinks about how to make you happy, when you really crave for the same. </h3>
+              <h3>If we have a vacancy and you have a vacation, then lets make it count </h3>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
-   </div>
-   <!--^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Carousel End ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
+    <!-- you can use the class main-raised if you want the main area to be as a page with shadows -->
+    <div class="main main-raised">
+      <div class="container">
+        Hello
+        <h1>Material Kit.</h1>
+        <h3>A Badass Bootstrap UI Kit based on Material Design.</h3>
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Carousel Start ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
+  <div class="carousel-container" data-ng-controller="CarouselCtrl" id="home-carousel">
+
+    <uib-carousel interval="myInterval" no-pause='true'>
+      <uib-slide ng-repeat="slide in slides" active="slide.active">
+        <img ng-src="{{slide.image}}">
+        <div class="carousel-caption">
+          <h4>Slide {{$index+1}}</h4>
+        </div>
+      </uib-slide>
+    </uib-carousel>
+
+  </div>
+  <!--^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Carousel End ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
+
+
+
+
   <!-- <div class="main-raised">
 
   </div> -->
@@ -153,8 +185,9 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script>window.jQuery || document.write('<script src="../bower/bower_components/jquery/dist/jquery.min.js">' +
-            '<\/script>')</script>
+    <!--<script>window.jQuery || document.write('<script src="../bower/bower_components/jquery/dist/jquery.min.js">' +
+            '<\/script>')</script> -->
+    <script src="../material-ui/assets/js/jquery.min.js"></script>
     <script src="../bower/bower_components/angular/angular.js" type="text/javascript"></script>
     <script src="../bower/bower_components/angular-route/angular-route.js" type="text/javascript"></script>
     <script src="../bower/bower_components/angular-animate/angular-animate.min.js" type="text/javascript"></script>
@@ -162,8 +195,8 @@
 
     <script src="../bower/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="../bower/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="../../assets/js/vendor/holder.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line!
+    <script src="../../assets/js/vendor/holder.min.js"></script> -->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../js/ie10-viewport-bug-workaround.js"></script>
     <script src="../js/app.js"></script>
@@ -183,7 +216,7 @@
 
       $().ready(function(){
         // the body of this function is in assets/material-kit.js
-        materialKit.initSliders();
+        //materialKit.initSliders();
         $(window).on('scroll', materialKit.checkScrollForTransparentNavbar);
 
         window_width = $(window).width();

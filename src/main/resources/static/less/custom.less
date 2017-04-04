@@ -66,7 +66,7 @@ body{
   background: transparent;
 }
 .navbar-default,.navbar-inverse{
-  background-color: @bgDefault !important;
+  //background-color: @bgDefault !important;
   border: 1px;
   .navbar-brand {
     font-family: 'Chewy', serif;
@@ -116,6 +116,11 @@ body{
   margin-right: 10px;
 }
 
+.navbar-default.navbar-transparent {
+  background-color: transparent;
+  box-shadow: none;
+}
+
 @media (max-width: 767px) {
  /* .navbar-default .navbar-nav .open .dropdown-menu {
     > li > a {
@@ -137,6 +142,34 @@ body{
     visibility: visible;
     margin-top: 1px!important;
   }
+}
+
+.index-page-custom .wrapper > .header {
+  height: 90vh;
+}
+.index-page-custom .brand {
+  margin-top: 30vh;
+  color: #FFFFFF;
+  text-align: center;
+}
+.index-page-custom .brand h1 {
+  font-size: 4.8em;
+  font-weight: 600;
+}
+.index-page-custom .brand h3 {
+  font-size: 1.5em;
+  text-transform: uppercase;
+  max-width: 400px;
+  margin: 10px auto 0;
+}
+.index-page-custom .section-basic {
+  padding-top: 15px;
+}
+.index-page-custom .header-filter:after {
+  background: rgba(53, 161, 5, 0.56);
+  background: linear-gradient(45deg, rgba(2, 84, 22, 0.88) 0%, rgba(40, 150, 15, 0.45) 100%);
+  background: -moz-linear-gradient(135deg, rgba(2, 84, 22, 0.88) 0%, rgba(40, 150, 15, 0.45) 100%);
+  background: -webkit-linear-gradient(135deg, rgba(2, 84, 22, 0.88) 0%, rgba(40, 150, 15, 0.45) 100%);
 }
 
 
@@ -200,7 +233,7 @@ body{
 /*********************************************************************************/
 @carouselHeight     : 100vh;
 .carousel-container{
-  position:absolute;
+  position: relative;
   width: 100%;
   height: @carouselHeight;
 }
