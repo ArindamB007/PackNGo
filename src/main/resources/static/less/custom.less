@@ -23,14 +23,14 @@ body{
 
 
 /*********************************************************************************/
-/* Menu Customization                                                            */
+/* Navigation Customization                                                      */
 /*********************************************************************************/
-@bgDefault      : rgba(77, 0, 62, 0.75);
-@bgHighlight    : rgb(161, 0, 204);
+@bgDefault      : rgba(78, 103, 177, 0.9);
+@bgHighlight    : rgb(173, 177, 213);
 @colDefault     : #000000;
-@colBanner      : #ecff00;
+@colBanner      : #02beff;;
 @colHighlight   : #fdfdff;
-@streakhighlight: #cbff00;
+@streakhighlight: #02beff;
 @customMenuTheme       : true;
 
 .navbar-unfix-top {
@@ -44,6 +44,8 @@ body{
     display:block;
     > li > a {
       color: @colHighlight;
+      padding: 5px 20px;
+      box-shadow: none;
       &:hover,  &:focus {
         color: #fdfdff;;
         background-color: @bgHighlight; }}
@@ -65,13 +67,23 @@ body{
   min-height: 32px;
   background: transparent;
 }
-.navbar-default,.navbar-inverse{
-  //background-color: @bgDefault !important;
+.navbar,.navbar-default,.navbar-inverse{
+  background-color: @bgDefault !important;
   border: 1px;
   .navbar-brand {
+    >a>img{
+      left: -50%;
+      position: relative;
+      top: 46px;
+      height: 115px;
+      -webkit-filter: drop-shadow(2px 1px 3px rgba(118, 135, 255, 0.98));
+      -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=2, OffY=1, Color='#7687FF')";
+       filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=2, OffY=1, Color='#7687FF')";
+    }
     font-family: 'Chewy', serif;
     font-size: 30px;
     color: @colBanner !important;
+    text-shadow: 3px 3px 10px #443333;
     &:hover, &:focus {
       color: @colHighlight; }}
   .navbar-text {
@@ -116,32 +128,125 @@ body{
   margin-right: 10px;
 }
 
-.navbar-default.navbar-transparent {
-  background-color: transparent;
+.navbar-transparent {
+  background-color: transparent !important;
   box-shadow: none;
 }
 
+a.scroll-arrow, div.scroll_arrow_left, div.scroll_arrow_right, a.scroll_arrow_down{
+    font-size: 28px;
+    color: @streakhighlight;
+    width: 42px;
+    line-height: 52px;
+    border-radius: 50%;
+    height: 42px;
+    border: 3px solid @streakhighlight;
+    display: block;
+    margin: 0 auto;
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    z-index: 1029;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+    opacity: .9;
+  }
+div.scroll_arrow_left {
+  left: 5%;
+  top: 45%;
+  cursor: pointer;
+}
+
+div.scroll_arrow_right {
+  top: 45%;
+  left: 95%;
+  cursor: pointer;
+}
+
+div.scroll_arrow_left i {
+  width: 100%;
+  top: 12%;
+  position: relative;
+}
+
+div.scroll_arrow_right i {
+   width: 100%;
+   top: 12%;
+   position: relative;
+ }
+
+a.scroll_arrow_down i {
+  width: 100%;
+  top: 12%;
+  position: relative;
+}
+
+/*********************************************************************************/
+/* Navigation Customization                                                      */
+/*********************************************************************************/
+
 @media (max-width: 767px) {
- /* .navbar-default .navbar-nav .open .dropdown-menu {
-    > li > a {
-      color: @colHighlight;
+  .navbar,.navbar-default,.navbar-inverse{
+    position: relative;
+    background-color: @bgDefault !important;
+    border: 1px;
+    margin: 0px;
+    .navbar-brand {
+      >img{
+        left: -50%;
+        position: relative;
+        top: 0;
+        height: 115px;
+      }
+      font-family: 'Chewy', serif;
+      font-size: 30px;
+      color: @colBanner !important;
+      text-shadow: 3px 3px 10px #443333;
       &:hover, &:focus {
         color: @colHighlight; }}
-    > .active {
-      > a, > a:hover, > a:focus {
-        color: @colHighlight;
-        background-color: @bgHighlight;
-        }}}*/
-
-  .dropdown:hover .dropdown-menu {
-    opacity: 0;
-    visibility: hidden;
-  }
-  .dropdown.open .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    margin-top: 1px!important;
-  }
+    .navbar-text {
+      color: @colDefault; }
+    .navbar-nav {
+      > li{
+        border-top: 4px solid @bgDefault;
+        border-color: transparent;
+        > a {
+          border-top: 0px;
+          color: @colHighlight;
+          &:focus, &:hover, &.open {
+            color: @colHighlight;
+            background-color: @bgHighlight;
+          }
+        }
+        .ddm
+      }
+      > :hover, .active {
+        border-top: none;
+        > a, > a:hover, > a:focus {
+          color: @colHighlight;
+          //background-color: @bgHighlight;
+          background-color: rgba(255, 255, 255, 0.3);
+        }
+      }
+    }
+    .navbar-toggle {
+      border-color: @bgHighlight;
+      &:hover, &:focus {
+        background-color: @bgHighlight; }
+      .icon-bar {
+        background-color: @colDefault; }}
+    .navbar-collapse {
+      overflow-y: visible;
+    }
+    .navbar-form {
+      border-color: @colDefault; }
+    .navbar-link {
+      color: @colDefault;
+      &:hover {
+        color: @colHighlight; }}}
 }
 
 .index-page-custom .wrapper > .header {
@@ -282,3 +387,44 @@ body{
   background: rgba(64,64,64,0.125);
 }
 
+.captionIntro {
+
+  position: absolute;
+  text-align: center;
+  font-size: 24px;
+  line-height: 60px;
+  left: 0;
+  right: 0;
+  top: 38%;
+  color: #fff;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  text-shadow: 3px 3px 10px #443333;
+}
+
+.captionIntro {
+  > h2 {
+      font-size: 35px;
+      line-height: 16px;
+      color: rgb(239, 237, 237);
+      font-weight: 400;
+      margin-bottom: 20px;
+      font-family: "Slim-Joe","Helvetica Neue", "Arial";
+  }
+}
+
+.captionIntro .textIntro1 {
+  display: block;
+  font-size: 24px;
+  line-height: 48px;
+  margin-top: -4px;
+}
+
+.mapleBrand{
+  font-family: 'Chewy', serif;
+  font-size: 30px;
+  color: @colBanner !important;
+  text-shadow: 3px 3px 10px #443333;
+}

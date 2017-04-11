@@ -1825,7 +1825,7 @@ legend {
   color: #ffffff;
 }
 .navbar .dropdown-menu, .navbar.navbar-default .dropdown-menu {
-  border-radius: 3px !important;
+  border-radius: 5px !important;
 }
 .navbar .dropdown-menu li > a:hover, .navbar .dropdown-menu li > a:focus, .navbar.navbar-default .dropdown-menu li > a:hover, .navbar.navbar-default .dropdown-menu li > a:focus {
   color: #FFFFFF;
