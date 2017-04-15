@@ -28,9 +28,9 @@ body{
 @bgDefault      : rgba(78, 103, 177, 0.9);
 @bgHighlight    : rgb(173, 177, 213);
 @colDefault     : #000000;
-@colBanner      : #02beff;;
 @colHighlight   : #fdfdff;
-@streakhighlight: #02beff;
+@colBanner      : @colHighlight;
+@streakhighlight: #f74700;
 @customMenuTheme       : true;
 
 .navbar-unfix-top {
@@ -55,7 +55,7 @@ body{
 .dropdown:hover .dropdown-menu {
   opacity: 1;
   visibility: visible;
-  margin-top: 1px!important;
+  margin-top: 0.5px!important;
 }
 
 .navbar-wrapper {
@@ -71,31 +71,34 @@ body{
   background-color: @bgDefault !important;
   border: 1px;
   .navbar-brand {
-    >a>img{
-      left: -50%;
+    > a {
+      text-decoration: none;
+      left: -42%;
       position: relative;
-      top: 46px;
-      height: 115px;
       -webkit-filter: drop-shadow(2px 1px 3px rgba(118, 135, 255, 0.98));
       -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=2, OffY=1, Color='#7687FF')";
-       filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=2, OffY=1, Color='#7687FF')";
+      filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=2, OffY=1, Color='#7687FF')";
+      font-family: 'Chewy', serif;
+      font-size: 30px;
+      color: @colBanner !important;
+      text-shadow: 5px 3px 5px #171616;;
+
     }
-    font-family: 'Chewy', serif;
-    font-size: 30px;
-    color: @colBanner !important;
-    text-shadow: 3px 3px 10px #443333;
     &:hover, &:focus {
       color: @colHighlight; }}
   .navbar-text {
     color: @colDefault; }
   .navbar-nav {
     > li{
-      border-top: 4px solid @bgDefault;
+      border-top: 2px solid @bgDefault;
       border-color: transparent;
       > a {
         //border-top: 3px @streakhighlight;
         color: @colHighlight;
-        &:focus, &:hover, &.open {
+        &:focus{
+          color: @colHighlight;
+        }
+        &:hover, &.open {
           color: @colHighlight;
           background-color: @bgHighlight;
         }
@@ -103,7 +106,7 @@ body{
       .ddm
     }
    > :hover, .active {
-      border-top: 4px solid @streakhighlight;
+      border-top: 2px solid @streakhighlight;
       > a, > a:hover, > a:focus {
         color: @colHighlight;
         //background-color: @bgHighlight;
@@ -134,13 +137,16 @@ body{
 }
 
 a.scroll-arrow, div.scroll_arrow_left, div.scroll_arrow_right, a.scroll_arrow_down{
+  &:hover{
+    color: @colHighlight;
+    border: 2px solid @colHighlight; }
     font-size: 28px;
     color: @streakhighlight;
     width: 42px;
     line-height: 52px;
     border-radius: 50%;
     height: 42px;
-    border: 3px solid @streakhighlight;
+    border: 2px solid @streakhighlight;
     display: block;
     margin: 0 auto;
     position: absolute;
@@ -153,6 +159,9 @@ a.scroll-arrow, div.scroll_arrow_left, div.scroll_arrow_right, a.scroll_arrow_do
     -o-transform: translateX(-50%);
     transform: translateX(-50%);
     opacity: .9;
+    transition: 0.5s ease;
+    -o-transition: 0.5s ease;
+    -webkit-transition: 0.5s ease;
   }
 div.scroll_arrow_left {
   left: 5%;
@@ -388,30 +397,29 @@ a.scroll_arrow_down i {
 }
 
 .captionIntro {
-
   position: absolute;
   text-align: center;
-  font-size: 24px;
-  line-height: 60px;
   left: 0;
   right: 0;
-  top: 38%;
+  top: 30%;
   color: #fff;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -o-box-sizing: border-box;
   box-sizing: border-box;
   text-shadow: 3px 3px 10px #443333;
+  font-family: "Slim-Joe","Helvetica Neue", "Arial";
 }
 
 .captionIntro {
   > h2 {
-      font-size: 35px;
-      line-height: 16px;
-      color: rgb(239, 237, 237);
-      font-weight: 400;
-      margin-bottom: 20px;
-      font-family: "Slim-Joe","Helvetica Neue", "Arial";
+    font-size: 35px;
+    line-height: 2.0em;
+    margin: 0;
+  }
+  >h3{
+    font-size: 25px;
+    margin:0;
   }
 }
 
@@ -422,9 +430,9 @@ a.scroll_arrow_down i {
   margin-top: -4px;
 }
 
-.mapleBrand{
-  font-family: 'Chewy', serif;
-  font-size: 30px;
-  color: @colBanner !important;
-  text-shadow: 3px 3px 10px #443333;
+.banner-logo {
+    position: absolute;
+    top: 80%;
+    left: 3%;
+    width: 150px;
 }

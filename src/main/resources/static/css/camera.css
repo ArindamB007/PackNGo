@@ -10,6 +10,9 @@
 .slider_wrapper {
 	position: relative;
 	text-align: left;
+	-moz-box-shadow: 0px 8px 12px -5px black;
+	-webkit-box-shadow: 0px 8px 12px -5px black;
+	box-shadow: 0px 8px 12px -5px black;
 }
 
 
@@ -29,7 +32,7 @@
 
 .camera_wrap img {
 	max-width: 10000px;
-	opacity: 0.4;
+	opacity: 0.6;
 }
 
 .camera_fakehover {

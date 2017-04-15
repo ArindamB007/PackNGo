@@ -1810,7 +1810,6 @@ a:hover {
   background: white;
   z-index: 1032;
   opacity: 1;
-  transition: opacity 0.5s cubic-bezier(0.7, 0, 0.3, 1);
 }
 .loading.hide {
   display: none;
@@ -2389,7 +2388,8 @@ a.carousel-control span.fa {
 }
 
 .section-header {
-  padding: 0;
+  padding:0;
+  padding-bottom: 15px;
 }
 .section-header .container {
   z-index: 3;
@@ -2480,6 +2480,7 @@ a.carousel-control span.fa {
 .section-we-are-2 {
   position: relative;
   z-index: 3;
+  padding:0;
 }
 .section-we-are-2 .text-area {
   padding: 4.375em 0 5em;

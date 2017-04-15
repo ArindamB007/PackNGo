@@ -142,7 +142,7 @@ $(window).on('scroll',function(){
                 
 });*/
 
-
+/*Scroll function from inside the camera slider component*/
 $('#camera_wrap').on('click','a[data-scroll="true"]', function(e){
   var scroll_target = $(this).data('id');
   var scroll_trigger = $(this).data('scroll');

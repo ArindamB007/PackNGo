@@ -44,7 +44,8 @@ PackNGo.controller('CarouselCtrl',function($scope){
 
 PackNGo.controller('MenuCtrl', function($scope) {
 	$scope.menuItems = [
-        {menuLabel: "Home", linkURL: "home.html"},
+        {menuLabel: "Home", linkURL: "#"},
+				{menuLabel: "About Us", dataId:"#whoWeAre"},
 				{menuLabel: "Booking", type: "dropDown",
             submenuItems: [{menuLabel: "Sub Option 1",linkURL: "home.html"},
                 {menuLabel: "Sub Option 2",linkURL: "#"}]},
@@ -56,6 +57,28 @@ PackNGo.controller('MenuCtrl', function($scope) {
 			submenuItems: [{menuLabel: "Login",linkURL: "#"},
 				{menuLabel: "Sign-up",linkURL: "#"}]}];
 });
+
+PackNGo.directive('navMenuItemInternalLink', function(){
+	return{
+		restrict: 'A',
+		link: function(scope, element, attrs){
+			element.on('click', function(e){
+				var scroll_target = attrs.id;
+				var scroll_trigger = attrs.scroll;
+				if(scroll_trigger.toString().toLowerCase() == "true" && scroll_target !== undefined){
+					e.preventDefault();
+					$('html, body').animate({
+						scrollTop: $(scroll_target).offset().top - 50
+					}, 1000);
+				}
+				e.stopPropagation();
+				if (attrs.setActiveOnClick) {
+					element.children().toggleClass('active');
+				}
+			})
+		}
+	}
+})
 
 PackNGo.directive('fixOnTopWhenScrolled',['$window',function($window){
     return {
