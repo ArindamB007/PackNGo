@@ -53,7 +53,7 @@
   <link href="../css/carousel.css" rel="stylesheet">
   <link href="../animate/animate.css" rel="stylesheet">
   <link href="../material-ui/assets/css/material-kit.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/material_dashboard.css">
+  <!--<link rel="stylesheet" href="../css/material_dashboard.css">-->
   <link rel="stylesheet" href="../css/camera.css">
   <link rel="shortcut icon" href="../img/favicon.ico" />
   <link rel="stylesheet" href="booking/css/booking.css">
@@ -72,10 +72,22 @@
 <body id="skrollr-body" data-ng-app="PackNGo" data-ng-controller="MainCtrl">
 <div class="loading">
   <p style="padding: 30px">
-    <img class="loader" src="../img/loading.svg"/>
+    <img class="loader" src="../img/loading.svg"
+    style = "margin: 0 auto;
+              width: 100px;
+              position: absolute;
+              left: 0;
+              right: 0;
+              z-index: 1;
+              -webkit-transform: translate3d(0, -50%, 0);
+              -moz-transform: translate3d(0, -50%, 0);
+              -o-transform: translate3d(0, -50%, 0);
+              -ms-transform: translate3d(0, -50%, 0);
+              transform: translate3d(0, -50%, 0);
+              top: 45%;"/>
   </p>
   <div class="loading-container fadeIn">
-    <p>Welcome! We are working for you...</p>
+    <p>Welcome! One moment please ...</p>
   </div>
 </div>
 <!-- if you want to keep the navbar hidden you can add this class to the navbar "navbar-burger"-->

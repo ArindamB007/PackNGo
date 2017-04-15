@@ -17,7 +17,7 @@
 		var containerIDhash = '#' + settings.containerID;
 		var containerHoverIDHash = '#'+settings.containerHoverID;
 			
-		$('body').append('<a href="#" id="'+settings.containerID+'">'+settings.text+'</a>');
+		$('body').append('<div class="scroll_arrow_up hidden-xs hidden-sm" href="#" id="'+settings.containerID+'">'+settings.text+'</div>');
 		
 		var button_width = parseInt($(containerIDhash).css("width"))+90
 		var button_width_1 = parseInt($(containerIDhash).css("width"))+20
@@ -33,12 +33,12 @@
 		top()
 		$(containerIDhash).hide().click(function(){			
 			$('html, body').stop().animate({scrollTop:0}, settings.scrollSpeed, settings.easingType);
-			$('#'+settings.containerHoverID, this).stop().animate({'opacity': 0 }, settings.inDelay, settings.easingType);
+			//$('#'+settings.containerHoverID, this).stop().animate({'opacity': 0 }, settings.inDelay, settings.easingType);
 			return false;
 		})
 		
-		.prepend('<span id="'+settings.containerHoverID+'"></span>')
-		.hover(function() {
+		.prepend('<i class="fa fa-angle-up" id="'+settings.containerHoverID+'"></i>')
+		/*.hover(function() {
 				$(containerHoverIDHash, this).stop().animate({
 					'opacity': 1
 				}, 600, 'linear');
@@ -46,7 +46,7 @@
 				$(containerHoverIDHash, this).stop().animate({
 					'opacity': 0
 				}, 700, 'linear');
-			});
+			});*/
 								
 		$(window).scroll(function() {
 			var sd = $(window).scrollTop();

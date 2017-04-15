@@ -136,10 +136,11 @@ body{
   box-shadow: none;
 }
 
-a.scroll-arrow, div.scroll_arrow_left, div.scroll_arrow_right, a.scroll_arrow_down{
+a.scroll-arrow, div.scroll_arrow_left, div.scroll_arrow_right, div.scroll_arrow_up, a.scroll_arrow_down{
   &:hover{
     color: @colHighlight;
     border: 2px solid @colHighlight; }
+
     font-size: 28px;
     color: @streakhighlight;
     width: 42px;
@@ -175,6 +176,21 @@ div.scroll_arrow_right {
   cursor: pointer;
 }
 
+div.scroll_arrow_up {
+  &:hover{
+    border: 2px solid @streakhighlight;
+    cursor: pointer;
+    background-color: @streakhighlight;
+    opacity: .6;
+  }
+  position:fixed;
+  bottom: 40px;
+  left: 51%;
+  margin-left: 500px;
+  overflow: hidden;
+  z-index: 999;
+}
+
 div.scroll_arrow_left i {
   width: 100%;
   top: 12%;
@@ -186,6 +202,11 @@ div.scroll_arrow_right i {
    top: 12%;
    position: relative;
  }
+div.scroll_arrow_up i {
+  width: 100%;
+  top: 10%;
+  position: relative;
+}
 
 a.scroll_arrow_down i {
   width: 100%;
@@ -258,36 +279,7 @@ a.scroll_arrow_down i {
         color: @colHighlight; }}}
 }
 
-.index-page-custom .wrapper > .header {
-  height: 90vh;
-}
-.index-page-custom .brand {
-  margin-top: 30vh;
-  color: #FFFFFF;
-  text-align: center;
-}
-.index-page-custom .brand h1 {
-  font-size: 4.8em;
-  font-weight: 600;
-}
-.index-page-custom .brand h3 {
-  font-size: 1.5em;
-  text-transform: uppercase;
-  max-width: 400px;
-  margin: 10px auto 0;
-}
-.index-page-custom .section-basic {
-  padding-top: 15px;
-}
-.index-page-custom .header-filter:after {
-  background: rgba(53, 161, 5, 0.56);
-  background: linear-gradient(45deg, rgba(2, 84, 22, 0.88) 0%, rgba(40, 150, 15, 0.45) 100%);
-  background: -moz-linear-gradient(135deg, rgba(2, 84, 22, 0.88) 0%, rgba(40, 150, 15, 0.45) 100%);
-  background: -webkit-linear-gradient(135deg, rgba(2, 84, 22, 0.88) 0%, rgba(40, 150, 15, 0.45) 100%);
-}
-
-
-/* RESPONSIVE CSS
+/* RESPONSIVE Navigation
 -------------------------------------------------- */
 
 @media (min-width: 768px) {
@@ -322,26 +314,6 @@ a.scroll_arrow_down i {
     margin-top: 120px;
   }
 }
-
-
-
-
-/*********************************************************************************/
-/* Background                                                                    */
-/*********************************************************************************/
-.background-container
-{
-  background-position: left top;
-  background: url(../img/main_bgnd.JPG) no-repeat bottom center;
-  background-attachment: fixed;
-  background-size: cover;
-  text-align: center;
-  width: 100%;
-  height: 50%;
-  position: fixed;
-  z-index: -1; /* Ensure div tag stays behind content; -999 might work, too. */
-}
-
 /*********************************************************************************/
 /* CUSTOMIZE THE CAROUSEL                                                        */
 /*********************************************************************************/
@@ -352,49 +324,9 @@ a.scroll_arrow_down i {
   height: @carouselHeight;
 }
 
-/* Carousel base class */
-.carousel {
-  min-width: 100%;
-  margin-bottom: 60px;
-  height: @carouselHeight;
-}
-/* Since positioning the image, we need to help out the caption */
-.carousel-caption {
-  z-index: 10;
-}
-
-/* Declare heights because of positioning of img element */
-.carousel .item {
-  background-color: #777;
-  height: @carouselHeight;
-}
-.carousel-inner > .item > img {
-  //position: relative;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  height: @carouselHeight;
-}
-
-
 /*********************************************************************************/
-/* Header                                                                        */
+/* Image Transition Texts                                                        */
 /*********************************************************************************/
-
-
-
-
-
-#background-container:before
-{
-  content: '';
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(64,64,64,0.125);
-}
 
 .captionIntro {
   position: absolute;
@@ -423,12 +355,9 @@ a.scroll_arrow_down i {
   }
 }
 
-.captionIntro .textIntro1 {
-  display: block;
-  font-size: 24px;
-  line-height: 48px;
-  margin-top: -4px;
-}
+/*********************************************************************************/
+/* Logo Customization                                                            */
+/*********************************************************************************/
 
 .banner-logo {
     position: absolute;
@@ -436,3 +365,5 @@ a.scroll_arrow_down i {
     left: 3%;
     width: 150px;
 }
+
+

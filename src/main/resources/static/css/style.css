@@ -646,7 +646,7 @@ footer {
     text-transform: uppercase;
 }
 
-#toTop {
+/*#toTop {
     display: none;
     text-decoration: none;
     position: fixed;
@@ -667,7 +667,7 @@ footer {
 #toTop:hover {
     outline: none;
     background-position: right 0;
-}
+}*/
 
 /*==================================RESPONSIVE LAYOUTS===============================================*/
 
