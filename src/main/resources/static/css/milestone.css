@@ -1932,7 +1932,8 @@ a,
   .description.add-animation,
   .carousel.add-animation,
   .static-image.add-animation,
-  p.add-animation {
+  p.add-animation
+  {
     transform: translate3D(0px, 150px, 0px);
     -webkit-transform: translate3D(0px, 150px, 0px);
     opacity: 0;

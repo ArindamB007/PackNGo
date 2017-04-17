@@ -36,10 +36,12 @@
   <meta property="og:image" content="http://demos.creative-tim.com/rubik/assets/img/house.jpg" />
   <meta property="og:description" content="Create a beautiful and stylish presentation page for your company, agency, personal portfolio or startup." />
   <meta property="og:site_name" content="Creative Tim" />
-
+  <!-- Font api links-->
   <link href="../bower/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
+  <link href="https://fonts.googleapis.com/css?family=Cabin|Coda|Handlee" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Chewy" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
 
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -188,7 +190,9 @@
         </div>
       </div>
     </nav>
-<!-- --------------- Navigation Menu End Here ----------------------------- -->
+<!-- --------------- Navigation Menu End Here ------------------------------->
+
+<!-- ------------------------ Carousel Starts ------------------------------->
 <div class="wrapper">
   <div class="section section-header">
     <div class="slider_wrapper">
@@ -207,24 +211,24 @@
             </div>
           </div>
         <div data-src="../img/intro/intro2.jpg">
-          <div class = "captionIntro fadeIn">
+          <div class = "captionIntro content-with-opacity fadeIn">
             <h3>Experience Sikkim</h3>
             <h2>While we arrange all your travel and stay</h2>
             <h3>You enjoy the nature as its meant to be</h3>
           </div>
         </div>
         <div data-src="../img/intro/intro3.jpg">
-          <div class="captionIntro fadeIn">
+          <div class="captionIntro content-with-opacity fadeIn">
             <h3>We are a group of passionate Holiday Consultants</h3>
             <h2>If you have a vacation to spend</h2>
             <h3>Lets make it count at Hotel Milestone</h3>
           </div>
         </div>
         <div data-src="../img/image_seq(3).jpg">
-          <div class="captionIntro fadeIn">
+          <div class="captionIntro content-with-opacity fadeIn">
             <h3>We welcome self drive lovers with ample parking spaces</h3>
-            <h3>We are no less caring to your car as we are to you</h3>
             <h2>Drive in HOTEL MILESTONE</h2>
+            <h3>We are no less caring to your car as we are to you</h3>
           </div>
         </div>
       </div>
@@ -235,7 +239,8 @@
       </div>
     </div>
   </div>
-
+  <!-- ------------------------ Carousel Ends ------------------------------->
+  <!-- ------------------------ About Section ------------------------------->
   <div class="section section-we-are-2 radu" id="whoWeAre">
     <div class="text-area">
       <div class="container">
@@ -260,6 +265,17 @@
       </div>
     </div>
   </div>
+  <!---------------------------- About Section Ends -------------------------->
+  <!---------------------------- Property Section ---------------------------->
+  <div class="main main-raised png add-animation animate">
+    <div class="property-title">
+      Hotel Milestone
+    </div>
+  </div>
+
+
+  <!------------------------- Property Section Ends -------------------------->
+  <!---------------------------- Gallery Section ----------------------------->
   <div class="section section-we-made-1 section-with-hover">
     <div class="row">
       <div class="col-lg-4 col-md-6 col-sm-6">
@@ -330,6 +346,9 @@
       </div>
     </div>
   </div>
+  <!-- ------------------------ Gallery Section Ends----------------------------->
+
+
   <div class="section section-we-do-1" id="values">
     <div class="text-area">
       <div class="container">
@@ -1118,7 +1137,7 @@
     jQuery('#camera_wrap').camera({
       loader: false,
       pagination: false ,
-      minHeight: '444',
+      minHeight: '600',
       thumbnails: false,
       height: '40%',
       caption: true,
@@ -1126,7 +1145,9 @@
       fx: 'random',
       autoAdvance: true,
       time: 5000,
-      hover: false
+      hover: false,
+      mobileFx: 'simpleFade',
+      mobileNavHover: true
     });
     /*carousel*/
     var owl=$("#owl");
