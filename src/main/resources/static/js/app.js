@@ -45,6 +45,11 @@ PackNGo.controller('CarouselCtrl',function($scope){
 PackNGo.controller('MenuCtrl', function($scope) {
 	$scope.menuItems = [
         {menuLabel: "Home", linkURL: "#"},
+				{menuLabel: "ABC", linkURL: "#"},
+				{menuLabel: "DEF", linkURL: "#"},
+				{menuLabel: "IJK", linkURL: "#"},
+				{menuLabel: "IJK", linkURL: "#"},
+				{menuLabel: "IJK", linkURL: "#"},
 				{menuLabel: "About Us", dataId:"#whoWeAre"},
 				{menuLabel: "Booking", type: "dropDown",
             submenuItems: [{menuLabel: "Sub Option 1",linkURL: "home.html"},

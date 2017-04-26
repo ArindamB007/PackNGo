@@ -96,7 +96,7 @@ $(document).ready(function(){
 });
 
 
-$(window).load(function(){
+$(window).on('load',function(){
     
     //after the content is loaded we reinitialize all the waypoints for the animations
     rubik.initAnimationsCheck();

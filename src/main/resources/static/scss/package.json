@@ -1,0 +1,25 @@
+{
+  "name": "packngo",
+  "version": "1.0.0",
+  "description": "Hotel Booking Application",
+  "main": "..\\js\\app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-scss": "node-sass --include-path scss ../scss/app.scss   ../css/app.css",
+    "watch-scss": "nodemon -e scss -x \"npm run build-scss\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArindamB007/PackNGo.git"
+  },
+  "author": "Arindam",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/ArindamB007/PackNGo/issues"
+  },
+  "homepage": "https://github.com/ArindamB007/PackNGo#readme",
+  "devDependencies": {
+    "node-sass": "^4.5.2",
+    "nodemon": "^1.11.0"
+  }
+}

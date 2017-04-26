@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PnGController {
 	@RequestMapping("/")
 	public String milestone() {
-		System.out.println("milestone!");
-		return "milestone";
+		System.out.println("index!");
+		return "index";
 	}
-	@RequestMapping("index")
+	/*@RequestMapping("index")
 	public String index() {
 		System.out.println("milestone!");
 		return "index";
@@ -19,6 +19,6 @@ public class PnGController {
 	public String home() {
 		System.out.println("home!");
 		return "home";
-	}
+	}*/
 
 }

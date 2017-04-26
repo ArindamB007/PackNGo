@@ -16,5 +16,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "resolutions": {
+    "angular": "1.4.8",
+    "bootstrap": "v4.0.0-alpha.6"
+  }
 }
