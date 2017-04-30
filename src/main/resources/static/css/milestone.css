@@ -2204,14 +2204,14 @@ a,
   visibility: visible;
 }
 
-.card .icon {
+/*.card .icon {
   font-size: 75px;
   line-height: 75px;
 }
 .card .icon ~ h3 {
   margin-top: 5px;
   margin-bottom: 0px;
-}
+}*/
 
 a.scroll-arrow {
   font-size: 35px;
@@ -2370,9 +2370,9 @@ a.carousel-control span.fa {
   font-size: 70%;
 }
 
-.card img {
+/*.card img {
   max-width: 100%;
-}
+}*/
 
 .section-we-do-1 .text-area, .section-we-do-2 .text-area {
   padding: 4.375em 0 0;
@@ -2400,13 +2400,13 @@ a.carousel-control span.fa {
   margin-bottom: 10px;
 }
 
-.card p {
+/*.card p {
   font-size: 1em;
   min-height: 100px;
 }
 .card h3 {
   text-transform: capitalize;
-}
+}*/
 
 body.noscroll {
   overflow: hidden;

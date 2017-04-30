@@ -6186,12 +6186,13 @@ a.scroll_arrow_down i {
   -o-box-sizing: border-box;
   box-sizing: border-box;
   text-shadow: 3px 3px 10px #443333;
-  font-family: "Slim-Joe", "Helvetica Neue", "Arial";
   font-weight: bolder;
   padding: 15px; }
 
 .captionIntro > h2 {
   font-size: 35px;
+  font-family: "Slim-Joe", "Helvetica Neue", "Arial";
+  font-weight: 500;
   line-height: 2.0em;
   margin: 0;
   padding-top: 35px;
@@ -6199,6 +6200,8 @@ a.scroll_arrow_down i {
 
 .captionIntro > h3 {
   font-size: 25px;
+  font-family: "Slim-Joe", "Helvetica Neue", "Arial";
+  font-weight: 500;
   margin: 0;
   padding: 0; }
 
