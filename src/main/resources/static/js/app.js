@@ -13,6 +13,21 @@ PackNGo.config(['$routeProvider',
 	})
 }]);
 
+// configure the tooltipProvider to disable angular ui tooltip
+PackNGo.config(['$tooltipProvider', function ($tooltipProvider) {
+	//var parser = new UAParser();
+	//var result = parser.getResult();
+	//var touch = result.device && (result.device.type === 'tablet' || result.device.type === 'mobile');
+	if (true) {
+		var options = {
+			trigger: 'dontTrigger' // default dummy trigger event to show tooltips
+		};
+
+		$tooltipProvider.options(options);
+	}
+
+}]);
+
 
 PackNGo.controller('HomeCtrl', function($scope) {
 	$scope.greeting = {id: 'xxx', content: 'Hello World!'}
