@@ -18,7 +18,7 @@ PackNGo.controller('HomeCtrl', function($scope) {
 	$scope.greeting = {id: 'xxx', content: 'Hello World!'}
 });
 PackNGo.controller('MainCtrl', function($scope) {
-    $scope.greeting = {id: 'xxx', content: 'Hello World!'}
+    $scope.companyDetails = {id: '12345', name: 'ABC inc.'};
 });
 
 PackNGo.controller('CarouselCtrl',function($scope){
@@ -45,7 +45,7 @@ PackNGo.controller('CarouselCtrl',function($scope){
 PackNGo.controller('MenuCtrl', function($scope) {
 	$scope.menuItems = [
         {menuLabel: "Home", linkURL: "#"},
-				{menuLabel: "ABC", linkURL: "#"},
+				{menuLabel: "ABC", dataId:"#topOfPage"},
 				{menuLabel: "DEF", linkURL: "#"},
 				{menuLabel: "IJK", linkURL: "#"},
 				{menuLabel: "IJK", linkURL: "#"},

@@ -42,7 +42,7 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
   <link href="https://fonts.googleapis.com/css?family=Cabin|Coda|Handlee" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans|Chewy" rel="stylesheet">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />-->
 
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   <link href="../css/ie10-viewport-bug-workaround.css" rel="stylesheet">
@@ -67,7 +67,6 @@
   <link rel="stylesheet" type="text/css" href="../semantic/dist/semantic.min.css">
 
   <!--     Fonts and icons     -->
-  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700' rel='stylesheet' type='text/css'>
   <link href="../css/pe-icon-7-stroke.css" rel="stylesheet">
   <link href="../css/Milestone-Fonts.css" rel="stylesheet" />
@@ -107,7 +106,7 @@
       </button>
       <div class="navbar-brand">
         <a  href="#">
-        Maples N Mist
+          {{companyDetails.name}}
         </a>
       </div>
     </div>
@@ -140,14 +139,14 @@
 <!-- --------------- Navigation Menu End Here ------------------------------->
 
 <!-- ------------------------ Carousel Starts ------------------------------->
-<div class="wrapper">
+<div class="wrapper" id="topOfPage">
   <div class="section section-header">
     <div class="slider_wrapper">
       <div id="camera_wrap" class="">
           <div data-src="../img/intro/intro1.jpg">
             <div class="container">
               <div class="content content-with-opacity fadeIn">
-                <p><span>by </span>Maples n Mist
+                <p><span>by </span>{{companyDetails.name}}
                 <p>
                 <h1>SAMPLE Apps</h1>
                 <div class="separator-container">
@@ -195,7 +194,7 @@
           <div class="col-md-4 col-sm-4">
             <div class="title add-animation">
               <h5 class="text-gray">Who are we ?</h5>
-              <h2>Maple 'N' Mist</h2>
+              <h2>{{companyDetails.name}}</h2>
               <div class="separator-container">
                 <div class="separator line-separator">∎</div>
               </div>
@@ -214,45 +213,101 @@
   </div>
   <!---------------------------- About Section Ends -------------------------->
   <!---------------------------- Property Section ---------------------------->
-  <div class="main main-raised png add-animation animate">
-    <div class="property-title">
-     OUR SERVICES
+  <div class="row png">
+    <div class="title add-animation">
+      <h2>{{companyDetails.name}} Service Offerings</h2>
+      <div class="separator-container">
+        <div class="separator line-separator">∎</div>
+      </div>
     </div>
-
+  </div>
+  <div class="main png add-animation animate">
     <div class = "container">
       <div class = "ui stackable grid padded">
-        <div class = "centered seven wide column">
-          <div class rows>
-            <div class row></div>
-            <div class row>
-              <div class="ui cards">
-                <div class = "ui link fluid card">
-                  <div class="image">
-                    <img src="../img/prop_img/hotel_cover.jpg">
-                  </div>
-                  <div class="content">
-                    <div class="header">Hotel Milestone</div>
-                    <div class="meta">
-                      <a>Friends</a>
-                    </div>
-                    <div class="description">
-                      Matthew is an interior designer living in New York.
-                    </div>
-                  </div>
-                  <div class="extra content">
-		              <span class="right floated">
-		                Joined in 2013
-		              </span>
-		              <span>
-		                <i class="user icon"></i>
-		                75 Friends
-		              </span>
-                  </div>
+        <div class = "sixteen wide column">
+          <div class="png ui divided items">
+            <div class="item">
+              <div class="image">
+                <img src="../img/prop_img/hotel_cover.jpg">
+              </div>
+              <div class="content">
+                <a class="header">Property ABCD</a>
+                <div class="meta">
+                  <span class="price-per-day">Starting from 2500 per day</span>
                 </div>
-          <!--<img src="../img/prop_img/hotel_cover.jpg" alt="Raised Image" class="img-rounded img-responsive img-raised">-->
+                <div class="description">
+                  <p>This is a sprawling property in the heart of the city. Amazing location of the property
+                    and connections from this city makes this property and excellent option to spend your stay.
+                    </p>
+                </div>
+                <div class="extra">
+                  <div class="ui label">IMAX</div>
+                  <div class="ui label"><i class="globe icon"></i> Additional Languages</div>
+                  <span class="right floated">
+                    <button class="png ui basic blue button"> <i class="icon user"></i> Reserve</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!--Another Item-->
+
+            <div class="item">
+              <div class="image">
+                <img src="../img/prop_img/hotel_cover.jpg">
+              </div>
+              <div class="content">
+                <a class="header">Property ABCD</a>
+                <div class="meta">
+                  <span class="price-per-day">Starting from 2500 per day</span>
+                </div>
+                <div class="description">
+                  <p>This is a sprawling property in the heart of the city. Amazing location of the property
+                    and connections from this city makes this property and excellent option to spend your stay.
+                    This is a sprawling property in the heart of the city. Amazing location of the property
+                    and connections from this city makes this property and excellent option to spend your stay.</p>
+                </div>
+                <div class="extra">
+                  <div class="ui label">IMAX</div>
+                  <div class="ui label"><i class="globe icon"></i> Additional Languages</div>
+                  <span class="right floated">
+                    <button class="png ui basic blue button"> <i class="icon user"></i> Reserve</button>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
+
+          <!--<div class rows>
+            <div class row>
+              <div class="ui cards">
+                <div class = "ui fluid card">
+                  <div class = "image">
+                    <img src="../img/prop_img/hotel_cover.jpg">
+                  </div>
+                  <div class="content">
+                    <div class="header">Property ABCD</div>
+                    <div class="meta">
+                      <a>Starting from 2500 per day</a>
+                    </div>
+                    <div class="description">
+                      This is a sprawling property in the heart of the city. Amazing location and connections from this
+                      city makes this property and excellent option to spend your stay.
+                    </div>
+                  </div>
+                  <div class="extra content png-extra-content">
+                    <span>
+                      <i class="fa fa-map-marker png-map-marker"></i>
+                      Property Location
+                    </span>
+                    <span class="right floated">
+		                  <button class="png ui basic blue button"> <i class="icon user"></i> Reserve</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>-->
           </div>
         </div>
       </div>
@@ -1117,7 +1172,6 @@
 
 </script>
 <script type="text/javascript">
-
   $().ready(function(){
     jQuery('#camera_wrap').camera({
       loader: false,

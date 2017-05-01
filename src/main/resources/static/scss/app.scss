@@ -1,6 +1,7 @@
 @import "../scss/customVariables";
 //@import "../scss/includes";
 @import "../bower/bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "../bower/bower_components/font-awesome/scss/font-awesome";
 //@import "../material-ui/assets/css/material-kit.css";
 
 
@@ -481,12 +482,12 @@ a.scroll_arrow_down i {
 }
 
 /*********************************************************************************/
-/* Property Customization                                                            */
+/* Property Customization                                                        */
 /*********************************************************************************/
 @media (min-width: 992px) {
   .main-raised.png.add-animation {
-    transform: translate3D(0px, 25px, 0px);
-    -webkit-transform: translate3D(0px, 25px, 0px);
+    transform: translate3D(0px, 50px, 0px);
+    -webkit-transform: translate3D(0px, 50px, 0px);
     opacity: 0;
     -webkit-transition: all 0.3s ease-out 0.3s;
     -moz-transition: all 0.3s ease-out 0.3s;
@@ -514,6 +515,38 @@ a.scroll_arrow_down i {
   margin-top: 10px;
 }
 
+@media (min-width: 992px) {
+  .main.png.add-animation {
+    transform: translate3D(0px, 50px, 0px);
+    -webkit-transform: translate3D(0px, 50px, 0px);
+    opacity: 0;
+    -webkit-transition: all 0.3s ease-out 0.3s;
+    -moz-transition: all 0.3s ease-out 0.3s;
+    -o-transition: all 0.3s ease-out 0.3s;
+    -ms-transition: all 0.3s ease-out 0.3s;
+    transition: all 0.3s ease-out 0.3s;
+  }
+}
+
+.main.png.add-animation {
+  -webkit-transition: all 0.3s ease-out 0.3s;
+  -moz-transition: all 0.3s ease-out 0.3s;
+  -o-transition: all 0.3s ease-out 0.3s;
+  -ms-transition: all 0.3s ease-out 0.3s;
+  transition: all 0.3s ease-out 0.3s;
+}
+
+.main.png.add-animation.animate {
+  transform: translate3D(0px, 0px, 0px);
+  -webkit-transform: translate3D(0px, 0px, 0px);
+  opacity: 1;
+}
+
+.main.png{
+  margin-top: 10px;
+}
+
+
 .png >.property-title{
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 300;
@@ -522,3 +555,35 @@ a.scroll_arrow_down i {
   text-align: center;
 }
 
+.png > .title {
+  @extend .title;
+  margin-bottom: 0px;
+}
+/*********************************************************************************/
+/* General Customization                                                         */
+/*********************************************************************************/
+.png-map-marker{
+  @extend .fa-map-marker;
+  vertical-align: baseline;
+}
+.png-extra-content{
+  line-height: 40px;
+  text-align: left;
+}
+.png.ui.basic.blue.button:hover, .png.ui.basic.blue.buttons .button:hover {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.18), 0 4px 10px rgba(0, 0, 0, 0.36), 0 0 0 1px #1678c2 inset !important;
+}
+.png.ui.items>.item>.image:not(.ui){
+  width:24em;
+}
+.png.ui.items>.item>.content>.description{
+  min-height:6.5em;
+  margin-bottom: 0;
+}
+//for smaller devices centre right floated elements
+@media (max-width: 992px) {
+  .png.ui.items > .item .extra > [class*="right floated"] {
+    margin: .25rem .5rem .25rem 0;
+    float: none;
+  }
+}
