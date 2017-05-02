@@ -10,12 +10,12 @@ public class PnGController {
 		System.out.println("index!");
 		return "index";
 	}
-	/*@RequestMapping("index")
+	@RequestMapping("landing")
 	public String index() {
-		System.out.println("milestone!");
-		return "index";
+		System.out.println("landing!");
+		return "landing";
 	}
-	@RequestMapping("home")
+	/*@RequestMapping("home")
 	public String home() {
 		System.out.println("home!");
 		return "home";

@@ -3,9 +3,9 @@ var PackNGo = angular.module('PackNGo', ['ngRoute','ngAnimate','ui.bootstrap']);
 PackNGo.config(['$routeProvider',
     function($routeProvider){
 	$routeProvider.
-	when('/home', {
-		templateUrl : 'home.html',
-		controller : 'HomeCtrl'
+	when('/', {
+		templateUrl : '/landing'
+		//Controller is in the index.html file
 	}).
 	when('/about', {
 		templateUrl : '/about',
@@ -59,12 +59,12 @@ PackNGo.controller('CarouselCtrl',function($scope){
 
 PackNGo.controller('MenuCtrl', function($scope) {
 	$scope.menuItems = [
-        {menuLabel: "Home", linkURL: "#"},
+        {menuLabel: "Home", linkURL: "#/"},
 				{menuLabel: "ABC", dataId:"#topOfPage"},
-				{menuLabel: "DEF", linkURL: "#"},
-				{menuLabel: "IJK", linkURL: "#"},
-				{menuLabel: "IJK", linkURL: "#"},
-				{menuLabel: "IJK", linkURL: "#"},
+				{menuLabel: "DEF", linkURL: "/"},
+				{menuLabel: "IJK", linkURL: "/"},
+				{menuLabel: "IJK", linkURL: "/"},
+				{menuLabel: "IJK", linkURL: "/"},
 				{menuLabel: "About Us", dataId:"#whoWeAre"},
 				{menuLabel: "Booking", type: "dropDown",
             submenuItems: [{menuLabel: "Sub Option 1",linkURL: "home.html"},
