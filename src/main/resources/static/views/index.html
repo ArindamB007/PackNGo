@@ -72,6 +72,8 @@
   <link href="../css/Milestone-Fonts.css" rel="stylesheet" />
 </head>
 <body id="skrollr-body" data-ng-app="PackNGo" data-ng-controller="MainCtrl">
+<!--The Java script element attached itself to -->
+<div id="fb-root"></div>
 <div class="loading" id="loader">
   <p style="padding: 30px">
     <img class="loader" src="../img/loading.svg"
@@ -138,6 +140,13 @@
 </nav>
 <!-- --------------- Navigation Menu End Here ------------------------------->
 <div class="ng-view"></div>
+<div
+    class="fb-like"
+    data-share="true"
+    data-width="450"
+    data-show-faces="true">
+</div>
+<fb:login-button show-faces="true" max-rows="1" size="large"></fb:login-button>
 </body>
 <!--  script for google maps   -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
@@ -156,7 +165,6 @@
   var w = $(window).width();
   var h = $(window).height();
   $('.loading').css('width', w).css('height', h);
-  console.log("Width: " + w);
 </script>
 <script src="../bower/bower_components/angular/angular.js" type="text/javascript"></script>
 <script src="../bower/bower_components/angular-route/angular-route.js" type="text/javascript"></script>

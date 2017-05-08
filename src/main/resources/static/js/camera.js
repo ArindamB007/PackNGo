@@ -179,7 +179,7 @@
 		).append(
 			'<div  class="scroll_arrow_right hidden-xs hidden-sm"> <i class="fa fa-angle-right"></i> </div>'
 		).append(
-			'<a href="" data-scroll="true" data-id="#whoWeAre" class="scroll_arrow_down hidden-xs hidden-sm "> <i class="fa fa-angle-down"></i> </a>'
+			'<a href="" nav-menu-item-internal-link data-scroll="true" data-id="#whoWeAre" class="scroll_arrow_down hidden-xs hidden-sm "> <i class="fa fa-angle-down"></i> </a>'
 		);
 	}
 
