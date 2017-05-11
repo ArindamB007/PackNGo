@@ -167,31 +167,13 @@ PackNGo.config(['$tooltipProvider', function ($tooltipProvider) {
 PackNGo.controller('HomeCtrl', function($scope) {
 	$scope.greeting = {id: 'xxx', content: 'Hello World!'}
 });
+
+//Controller for the main page index.html
 PackNGo.controller('MainCtrl', function($scope) {
-	$scope.companyDetails = {id: '12345', name: 'Maples N Mist'};
+	$scope.companyDetails = {id: '12345', name: 'ABC Inc.'};
 });
 
-PackNGo.controller('CarouselCtrl',function($scope){
-	$scope.myInterval = 3000;
-	$scope.slides = [
-		{
-			image: '../img/image_seq(1).jpg'
-		},
-		{
-			image: '../img/image_seq(2).jpg'
-		},
-		{
-			image: '../img/image_seq(3).jpg'
-		},
-		{
-			image: '../img/image_seq(4).jpg'
-		}
-	];
-});
-
-
-
-
+//controller for the menu index.html
 PackNGo.controller('MenuCtrl', function($scope) {
 	$scope.menuItems = [
 		{menuLabel: "Home", linkURL: "#/"},

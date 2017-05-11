@@ -62,9 +62,9 @@
           </div>
           <div class="col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1">
             <div class="description add-animation animation-1">
-              <p >We are Houses Inc., a group of architects and interior designers based in Chicago and operating for clients worldwide. We’ve been designing stunningly beautiful houses and making clients happy for years.</p>
+              <p >We are Houses Inc., a group of architects and interior designers based in Chicago and operating for clients worldwide. Weâ€™ve been designing stunningly beautiful houses and making clients happy for years.</p>
               <p >Explore a wide variety of styles, personalise your finishes, and let us design the perfect home for you. It's what we do best and you can see proof in the products and reviews below. </p>
-              <p >Feel free to get in touch with us and tell us about your plans. We think you’ll love working with us.</p>
+              <p >Feel free to get in touch with us and tell us about your plans. We think youâ€™ll love working with us.</p>
             </div>
           </div>
         </div>
@@ -81,35 +81,49 @@
       </div>
     </div>
   </div>
-  <div class="main png add-animation animate">
+  <div class="main png add-animation animate" data-ng-controller = "PropertyCtrl">
     <div class = "container">
       <div class = "ui stackable grid padded">
         <div class = "sixteen wide column">
           <div class="png ui divided items">
-            <div class="item">
+            <div class="item" data-ng-repeat="prop in properties">
               <div class="image">
-                <img src="../img/prop_img/hotel_cover.jpg">
+                <img src={{prop.img}}>
               </div>
               <div class="content">
-                <a class="header">Property ABCD</a>
+                <a class="header">{{prop.name}}</a>
                 <div class="meta">
-                  <span class="price-per-day">Starting from 2500 per day</span>
-                  <span class="price-per-day">Starting from 2500 per day</span>
+                  <span class="price-per-day">Starting from {{prop.price_start_pday}} per day</span>
+                  <span class="price-per-day">Some other text</span>
                 </div>
                 <div class="description">
-                  <p>This is a sprawling property in the heart of the city. Amazing location of the property
-                    and connections from this city makes this property and excellent option to spend your stay.
+                  <p>{{prop.desc}}
                   </p>
                 </div>
                 <div class="extra">
-                  <div class="feature-icon" data-tooltip="Free Parking">
-                    <span><i class="car icon green"></i>Parking</span>
+                  <div data-ng-if="prop.facility.parking == 'true'" class="feature-icon" data-tooltip="Free Parking">
+                  	<span><i class="car icon green"></i>Parking</span>
                   </div>
-                  <div class="feature-icon" data-tooltip="Free WIFI">
+                  <div data-ng-if="prop.facility.parking == 'false'" class="feature-icon">
+                  	<span><i class="car icon green" data-ng-class = "{'disabled':prop.facility.parking == 'false'}"></i>Parking</span>
+                  </div>
+                  <div data-ng-if="prop.facility.wifi == 'true'" class="feature-icon" data-tooltip="Free WIFI">
                     <span><i class="wi-fi icon green"></i>Wifi</span>
                   </div>
-                  <div class="feature-icon">
+                  <div data-ng-if="prop.facility.wifi == 'false'" class="feature-icon">
+                    <span><i class="wi-fi icon green" data-ng-class = "{'disabled':prop.facility.wifi == 'false'}"></i>Wifi</span>
+                  </div>
+                  <div data-ng-if="prop.facility.breakfast == 'true'" class="feature-icon" data-tooltip="Free Breakfast">
                     <span><i class="food icon green"></i>Breakfast</span>
+                  </div>
+                  <div data-ng-if="prop.facility.breakfast == 'false'" class="feature-icon">
+                    <span><i class="food icon green" data-ng-class = "{'disabled':prop.facility.breakfast == 'false'}"></i>Breakfast</span>
+                  </div>
+                  <div data-ng-if="prop.facility.restaurant == 'true'" class="feature-icon" data-tooltip="Free Breakfast">
+                    <span><i class="food icon green"></i>Restaurant</span>
+                  </div>
+                  <div data-ng-if="prop.facility.restaurant == 'false'" class="feature-icon">
+                    <span><i class="food icon green" data-ng-class = "{'disabled':prop.facility.restaurant == 'false'}"></i>Restaurant</span>
                   </div>
                   <span class="right floated">
                     <button class="png ui basic blue button"> <i class="icon user"></i> Reserve</button>
@@ -654,7 +668,7 @@
       </div>
       <hr>
       <div class="copyright">
-        © 2015 Creative Tim, made with love
+        Â© 2015 Creative Tim, made with love
       </div>
     </div>
   </footer>
@@ -734,7 +748,7 @@
               <p><span>Size</span>1500sqft</p>
               <br>
               <p>The true protagonist of this project is a collection of antique ceramics from Vietri, entrusted with the role of exalting the particular elements that make the famous Villa in Positano a contemporary architectural masterpiece.</p>
-              <p>The harmonious composition of hand-painted ceramic tiles, the great passion of the villa’s owners, wraps a long ribbon of steel like a decorative skin. The ribbon is used to articulate the double height spaces of a former eighteenth-century monastery, linking the villa’s three levels.</p>
+              <p>The harmonious composition of hand-painted ceramic tiles, the great passion of the villaâ€™s owners, wraps a long ribbon of steel like a decorative skin. The ribbon is used to articulate the double height spaces of a former eighteenth-century monastery, linking the villaâ€™s three levels.</p>
               <p>It begins on the ceiling, dropping down a six-meter high wall to become a shelf in the large living room on the first floor, a platform, intersecting the stairs leading to the kitchen on the ground floor. The ribbon then transforms into the dining room table, finally climbing back up toward the ceiling to house the lighting fixtures. All without any interruption.</p>
             </div>
           </div>
@@ -841,8 +855,8 @@
               <p><span>Year</span>2012</p>
               <p><span>Size</span>3000sqft</p>
               <br>
-              <p>The Elwood House is a new residential dwelling with a separate garage and studio to the rear. The client’s brief was for a modern family home that was interesting and exciting but not to the detriment of the comfort to the occupants and within a sensible budget.</p>
-              <p>“The client wanted a house that was clean, distinctive and enjoyable to use without feeling like they were an object in their own home because it was of a contemporary design” says the architect, Patrick Jost.</p>
+              <p>The Elwood House is a new residential dwelling with a separate garage and studio to the rear. The clientâ€™s brief was for a modern family home that was interesting and exciting but not to the detriment of the comfort to the occupants and within a sensible budget.</p>
+              <p>â€œThe client wanted a house that was clean, distinctive and enjoyable to use without feeling like they were an object in their own home because it was of a contemporary designâ€� says the architect, Patrick Jost.</p>
               <p>Conceptually, the house is separated into two clearly defined elements to the upper and lower levels.</p>
             </div>
           </div>
@@ -897,7 +911,7 @@
               <br>
               <p>Located within close proximity to Rock Creek Park, and with easy access to the shops and restaurants on Connecticut Avenue, this large lot in Northwest Washington, DC presented a desirable opportunity for a young family to build a new house in this sought-after neighborhood.</p>
               <p>Designed to respect both the scale of neighboring houses and the rhythm of the streetscape, the project aligns with adjacent houses while retaining the vast majority of mature trees and green space located between the street and the house. Materials composing the exterior, which include stone, wood and stucco, evoke traditional materials found throughout the neighborhood. The house appears relatively solid when viewed from the street with strategically placed windows insuring privacy to the street-facing spaces.</p>
-              <p>The “L” shaped house is organized around the outdoor living spaces and swimming pool, and is oriented towards the large, south facing rear yard. </p>
+              <p>The â€œLâ€� shaped house is organized around the outdoor living spaces and swimming pool, and is oriented towards the large, south facing rear yard. </p>
             </div>
           </div>
           <div class="col-md-8">
@@ -949,8 +963,8 @@
               <p><span>Year</span>2014</p>
               <p><span>Size</span>8000sqft</p>
               <br>
-              <p>After rapid growth, ICRAVE, a New York-based experiential branding and design firm, made the move to an 8,000-square-foot studio with the intention of really making it their own. The space, designed by the ICRAVE team itself, goes beyond the notion of an open plan office — it is designed specifically to foster ICRAVE’s immersive, collaborative culture. </p>
-              <p>The design process was a collective effort of the entire ICRAVE studio. Dream sessions were held to harvest ideas, where team members examined different areas and said, “Now, what if we could have...,” giving everyone a chance to bring their ideas to the table. Among those options, ICRAVE then crowdsourced the best solution for each micro-environment, and created a one-of-a-kind office. The result is a truly collaborative office space that fosters employees' creativity, interaction, and inspiration. </p>
+              <p>After rapid growth, ICRAVE, a New York-based experiential branding and design firm, made the move to an 8,000-square-foot studio with the intention of really making it their own. The space, designed by the ICRAVE team itself, goes beyond the notion of an open plan office â€” it is designed specifically to foster ICRAVEâ€™s immersive, collaborative culture. </p>
+              <p>The design process was a collective effort of the entire ICRAVE studio. Dream sessions were held to harvest ideas, where team members examined different areas and said, â€œNow, what if we could have...,â€� giving everyone a chance to bring their ideas to the table. Among those options, ICRAVE then crowdsourced the best solution for each micro-environment, and created a one-of-a-kind office. The result is a truly collaborative office space that fosters employees' creativity, interaction, and inspiration. </p>
               <p>The reception desk doubles as a DJ booth, and the entrance plays host to archery matches. The conference room features large monolithic doors that swivel 360 degrees to open and close the space as needed. The kitchen and conference room are separated by a chalkboard that can be raised to create bar seating next to the kitchen or lowered to be used in meetings.</p>
             </div>
           </div>

@@ -16,6 +16,8 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setPrefix("views/");
         resolver.setSuffix(".html");
+        resolver.setViewNames("/static/*");
+        resolver.setOrder(1);
         return resolver;
     }
 	

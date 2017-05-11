@@ -8,12 +8,12 @@ public class PnGController {
 	@RequestMapping("/")
 	public String milestone() {
 		System.out.println("index!");
-		return "index";
+		return "/views/index";
 	}
 	@RequestMapping("landing")
 	public String index() {
 		System.out.println("landing!");
-		return "landing";
+		return "/views/landing";
 	}
 	/*@RequestMapping("home")
 	public String home() {
