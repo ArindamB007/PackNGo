@@ -1,7 +1,10 @@
 //controllers for the carousel landing.html
-PackNGo.controller('PropertyCtrl',function($scope){
-	$scope.properties = [
-		{
+PackNGo.controller('LandingCtrl',function($scope,$location,$timeout){
+	rubik.initAnimationsCheck();
+});
+//controllers for the carousel landing.html
+PackNGo.controller('PropertyCtrl',function($scope,$location){
+	$scope.properties = [{
 			"id" : "1",
 			"name" : "Property XYZ",
 			"price_start_pday" : "1200",
@@ -24,9 +27,11 @@ PackNGo.controller('PropertyCtrl',function($scope){
 				"parking" : "false",
 				"breakfast" : "true",
 				"restaurant" : "true"}
-		}
-		
-	];
+		}];
+	$scope.goBooking = function (prop){
+		console.log("Going for Property: " + prop.name)
+		$location.path('/booking');
+	}
 });
 
 

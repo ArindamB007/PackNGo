@@ -52,7 +52,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-4 col-sm-4">
-            <div class="title add-animation">
+            <div class="title add-animation" way-point>
               <h5 class="text-gray">Who are we ?</h5>
               <h2>{{companyDetails.name}}</h2>
               <div class="separator-container">
@@ -126,7 +126,7 @@
                     <span><i class="food icon green" data-ng-class = "{'disabled':prop.facility.restaurant == 'false'}"></i>Restaurant</span>
                   </div>
                   <span class="right floated">
-                    <button class="png ui basic blue button"> <i class="icon user"></i> Reserve</button>
+                    <button class="png ui basic blue button" ng-click = "goBooking(prop)"> <i class="icon user"></i> Reserve</button>
                   </span>
                 </div>
               </div>
@@ -1025,7 +1025,7 @@
       navigation : true,
       pagination : false
     });
-    $().UItoTop({ easingType: 'easeOutQuart' });
+    //$().UItoTop({ easingType: 'easeOutQuart' });
 
 
   });

@@ -9,8 +9,7 @@ PackNGo.run(['$rootScope', '$window', 'faceBookLoginService',
 			// Executed when the SDK is loaded
 			FB.init({
 				version    : 'v2.9',
-				/*
-				 The app id of the web app;
+				/*				 The app id of the web app;
 				 To register a new app visit Facebook App Dashboard
 				 ( https://developers.facebook.com/apps/ )
 				 */
@@ -133,21 +132,6 @@ PackNGo.factory('faceBookLoginService', ['$rootScope','$q',function($rootScope,$
 	return fbService;
 }]);
 
-
-
-PackNGo.config(['$routeProvider',
-	function($routeProvider){
-		$routeProvider.
-		when('/', {
-			templateUrl : '/landing'
-			//Controller is in the index.html file
-		}).
-		when('/about', {
-			templateUrl : '/about',
-			controller : 'aboutCtrl'
-		})
-	}]);
-
 // configure the tooltipProvider to disable angular ui tooltip
 PackNGo.config(['$tooltipProvider', function ($tooltipProvider) {
 	//var parser = new UAParser();
@@ -169,8 +153,14 @@ PackNGo.controller('HomeCtrl', function($scope) {
 });
 
 //Controller for the main page index.html
-PackNGo.controller('MainCtrl', function($scope) {
+PackNGo.controller('MainCtrl', function($scope,$timeout) {
+	$().UItoTop({ easingType: 'easeOutQuart' }); //uitotopplugin
 	$scope.companyDetails = {id: '12345', name: 'ABC Inc.'};
+	$scope.$on('$viewContentLoaded', function(event){
+        $timeout(function() {
+            Waypoint.refreshAll();
+        },1000);
+    });
 });
 
 //controller for the menu index.html
@@ -215,7 +205,36 @@ PackNGo.directive('navMenuItemInternalLink', function(){
 			})
 		}
 	}
-})
+});
+
+/*PackNGo.directive('wayPoint',function($timeout){
+  return {
+    link: function(scope, elem, attrs) {
+    	$timeout(function ()
+    	{alert("property directive");
+    	offset_diff = 30;
+    	elem.waypoint(function(direction) {
+        	window_height = $(window).height();
+        	//alert("Direction: " + direction + " " + window_height);
+        	console.log("Direction: " + direction + " " + window_height);
+            if($(this.element).hasClass('title')){
+                 offset_diff = 110;
+             }
+            console.log("Element Id: " + $(this.element).id);
+            if(direction == 'down'){
+            	$(this.element).addClass("animate");
+            	//this.element.addClass("animate");  
+            } else {
+            	$(this.element).removeClass("animate");
+            	//this.element.removeClass('animate');
+            }
+            //$this.toggleClass('animate');
+          //scope.$parent.last = scope.post.id;
+          //scope.$parent.$apply();
+        },{offset: window_height - offset_diff})},0);
+    }
+  }
+});*/
 
 PackNGo.directive('fixOnTopWhenScrolled',['$window',function($window){
 	return {

@@ -58,7 +58,7 @@ $(document).ready(function(){
         no_touch_screen = true;
     }
     
-    rubik.initAnimationsCheck();
+    //rubik.initAnimationsCheck();
     
     // Init navigation toggle for small screens   
     if(window_width < 992 || burger_menu){
@@ -99,7 +99,7 @@ $(document).ready(function(){
 $(window).on('load',function(){
     
     //after the content is loaded we reinitialize all the waypoints for the animations
-    rubik.initAnimationsCheck();
+    //rubik.initAnimationsCheck();
     
 });  
 
@@ -120,11 +120,11 @@ $(window).on('scroll',function(){
    rubik.checkScrollForTransparentNavbar();    
    
    if(window_width > 992){
-        rubik.checkScrollForParallax();
+        //rubik.checkScrollForParallax();
    }
    
    if(content_opacity == 1){
-       rubik.checkScrollForContentTransitions();
+       //rubik.checkScrollForContentTransitions();
    }             
 });
 
