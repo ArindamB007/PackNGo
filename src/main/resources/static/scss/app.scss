@@ -39,10 +39,10 @@ $colBanner      : $colHighlight;
 $streakhighlight: rgb(247,71,0);
 $customMenuTheme       : true;
 
-.navbar-unfix-top {
+/*.navbar-unfix-top {
   @extend .navbar-fixed-top;
   position: relative;
-}
+}*/
 
 .ddm {
   @if($customMenuTheme == true) {

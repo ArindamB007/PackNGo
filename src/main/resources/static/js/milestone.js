@@ -118,7 +118,7 @@ $(window).resize(function(){
 });
 
 $(window).on('scroll',function(){
-   rubik.checkScrollForTransparentNavbar();    
+   rubik.checkScrollForTransparentNavbar();
    
    if(window_width > 992){
         //rubik.checkScrollForParallax();

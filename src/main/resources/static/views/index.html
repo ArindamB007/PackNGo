@@ -71,7 +71,7 @@
   <link href="../css/pe-icon-7-stroke.css" rel="stylesheet">
   <link href="../css/Milestone-Fonts.css" rel="stylesheet" />
 </head>
-<body id="skrollr-body" data-ng-app="PackNGo" data-ng-controller="MainCtrl">
+<body id="skrollr-body" data-ng-app="PackNGo" data-ng-controller="MainCtrl" style="overflow-y: scroll">
 <!--The Java script element attached itself to -->
 <div id="fb-root"></div>
 <div class="loading" id="loader">
@@ -95,7 +95,8 @@
   </div>
 </div>
 <!-- if you want to keep the navbar hidden you can add this class to the navbar "navbar-burger"-->
-<nav class="navbar navbar-fixed-top navbar-color-on-scroll navbar-transparent navbar-default" role="navigation">
+<nav class="navbar navbar-color-on-scroll navbar-default navbar-transparent navbar-fixed-top"
+       role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" type="button"
@@ -139,7 +140,7 @@
   </div>
 </nav>
 <!-- --------------- Navigation Menu End Here ------------------------------->
-<div class="ng-view"></div>
+<div class="ng-view" autoscroll></div>
 <div
     class="fb-like"
     data-share="true"
