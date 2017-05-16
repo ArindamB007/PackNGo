@@ -153,11 +153,17 @@ PackNGo.controller('HomeCtrl', function($scope) {
 });
 
 //Controller for the main page index.html
-PackNGo.controller('MainCtrl', function($scope,$timeout) {
+PackNGo.controller('MainCtrl', function($scope,$timeout, $location) {
 	$().UItoTop({ easingType: 'easeOutQuart' }); //uitotopplugin
 	$scope.companyDetails = {id: '12345', name: 'ABC Inc.'};
 	$scope.$on('$viewContentLoaded', function(event){
-        $timeout(function() {
+		// handling menu transparency flag
+		if ($location.path()==="/")
+			$menu_transparency = true;
+		else
+			$menu_transparency = false
+        // refreshing waypoint for animations to sync
+		$timeout(function() {
             Waypoint.refreshAll();
         },1000);
     });

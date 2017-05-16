@@ -39,6 +39,7 @@ var content_transition = 0;
 var no_touch_screen = false;
 
 var burger_menu;
+var $menu_transparency = true; // flag used to handle transparency of menu
 
         
 $(document).ready(function(){
@@ -312,7 +313,7 @@ rubik = {
                     transparent = false;
                     $('nav[role="navigation"]').removeClass('navbar-transparent');
                 }
-            } else {
+            } else if ($menu_transparency) {
                 if( !transparent ) {
                     transparent = true;
                     $('nav[role="navigation"]').addClass('navbar-transparent');
