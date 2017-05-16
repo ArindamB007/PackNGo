@@ -160,9 +160,10 @@ PackNGo.controller('MainCtrl', function($scope,$timeout, $location) {
 		// handling menu transparency flag
 		if ($location.path()==="/") {
 				$('nav[role="navigation"]').addClass('navbar-transparent');
-			$menu_transparency = true;} else {
+			transparent = $menu_transparency = true;
+		} else {
 			$('nav[role="navigation"]').removeClass('navbar-transparent');
-			$menu_transparency = false;
+			transparent = $menu_transparency = false;
 		}
         // refreshing waypoint for animations to sync
 		$timeout(function() {
