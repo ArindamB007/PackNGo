@@ -18,7 +18,7 @@ public class PnGController {
 	@RequestMapping("booking")
 	public String booking() {
 		System.out.println("booking!");
-		return "/views/booking";
+		return "booking";
 	}
 	/*@RequestMapping("home")
 	public String home() {
