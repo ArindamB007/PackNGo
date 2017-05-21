@@ -12,7 +12,11 @@ PackNGo.config(['$routeProvider',
 			templateUrl : '/booking',
 			controller : 'BookingCtrl'
 			//Controller is in the index.html file
-		}).		
+		}).
+		when('/samples', {
+			templateUrl : '/samples',
+			controller : 'SamplesCtrl'
+		}).
 		when('/about', {
 			templateUrl : '/about',
 			controller : 'aboutCtrl'

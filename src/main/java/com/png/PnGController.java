@@ -20,6 +20,11 @@ public class PnGController {
 		System.out.println("booking!");
 		return "booking";
 	}
+	@RequestMapping("samples")
+	public String sample() {
+		System.out.println("samples!");
+		return "samples";
+	}
 	/*@RequestMapping("home")
 	public String home() {
 		System.out.println("home!");
