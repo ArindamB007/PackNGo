@@ -8660,3 +8660,6 @@ a.scroll_arrow_down i {
   border-radius: .28571429rem;
   -webkit-transition: background .1s ease;
   transition: background .1s ease; }
+
+.datepicker-footer {
+  text-align: center; }

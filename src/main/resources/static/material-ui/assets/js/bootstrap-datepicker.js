@@ -111,11 +111,11 @@
 					that.hide();
 				}
 			});
+			this.update(this.date);
 			this.element.trigger({
 				type: 'show',
 				date: this.date
 			});
-			
 			setTimeout(function(){
     			datepicker.addClass('open');
 			}, 170);
@@ -125,9 +125,9 @@
 			var datepicker = this.picker;
 			datepicker.removeClass('open');
 			
-			setTimeout(function(){
+			/*setTimeout(function(){
     			this.picker.hide();
-			}, 500);
+			}, 500);*/
 			
 			$(window).off('resize', this.place);
 			this.viewMode = this.startViewMode;
@@ -271,7 +271,7 @@
 		click: function(e) {
 			e.stopPropagation();
 			e.preventDefault();
-			var target = $(e.target).closest('span, td, th');
+			var target = $(e.target).closest('span, td, th, button');
 			if (target.length === 1) {
 				switch(target[0].nodeName.toLowerCase()) {
 					case 'th':
@@ -330,7 +330,20 @@
 								date: this.date,
 								viewMode: DPGlobal.modes[this.viewMode].clsName
 							});
+							this.hide();
 						}
+						break;
+					case 'button':
+						this.date = new Date();
+						this.viewDate = new Date();
+						this.fill();
+						this.set();
+						this.element.trigger({
+							type: 'changeDate',
+							date: this.date,
+							viewMode: DPGlobal.modes[this.viewMode].clsName
+						});
+						this.hide();
 						break;
 				}
 			}
@@ -389,7 +402,7 @@
 			days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
 			daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
 			daysMin: ["S", "M", "T", "W", "T", "F", "S", "S"],
-			months: ["JAN.", "FEB.", "MAR.", "APR.", "MAY", "JUN.", "JUL.", "AUG.", "SEPT.", "OCT.", "NOV.", "DEC."],
+			months: ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"],
 			monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 		},
 		isLeapYear: function (year) {
@@ -474,18 +487,33 @@
 									DPGlobal.headTemplate+
 									'<tbody></tbody>'+
 								'</table>'+
+								'<div class ="datepicker-footer">'+
+									'<button class="png ui basic blue button mini">'+
+										'Today'+
+									'</button>'+
+								'</div>'+
 							'</div>'+
 							'<div class="datepicker-months">'+
 								'<table class="table-condensed">'+
 									DPGlobal.headTemplate+
 									DPGlobal.contTemplate+
 								'</table>'+
+								'<div class ="datepicker-footer">'+
+									'<button class="png ui basic blue button mini">'+
+											'Today'+
+									'</button>'+
+								'</div>'+
 							'</div>'+
 							'<div class="datepicker-years">'+
 								'<table class="table-condensed">'+
 									DPGlobal.headTemplate+
 									DPGlobal.contTemplate+
 								'</table>'+
+								'<div class ="datepicker-footer">'+
+									'<button class="png ui basic blue button mini">'+
+										'Today'+
+									'</button>'+
+								'</div>'+
 							'</div>'+
 						'</div>';
 

@@ -2946,7 +2946,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   border-radius: 50%;
   height: 29px;
   line-height: 29px;
-  margin: 3px 0 8px;
+  /*margin: 3px 0 8px;*/
   width: 29px;
 }
 .datepicker td :hover {
