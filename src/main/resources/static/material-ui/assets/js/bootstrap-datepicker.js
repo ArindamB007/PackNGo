@@ -460,6 +460,8 @@
 			var val = {
 				d: date.getDate(),
 				m: date.getMonth() + 1,
+				mmm: DPGlobal.dates.monthsShort[date.getMonth()],
+				MMM: DPGlobal.dates.months[date.getMonth()],
 				yy: date.getFullYear().toString().substring(2),
 				yyyy: date.getFullYear()
 			};

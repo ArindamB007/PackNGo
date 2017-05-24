@@ -8,6 +8,7 @@
 		<h1 th:text="'My Template Heading'">My First Heading</h1>
 		<p>Currency Filter <input ng-model="amount" aria-label="amount" format="number" maxlength=9></p>
 		<p> <span id="currency-default">{{amount}}</span><br></p>
+		<button ng-click ="storeAmt(amount)">Store</button>
 		<div>
 		<object data="{{content}}" type="application/pdf"></object>
 		</div>
