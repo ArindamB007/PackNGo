@@ -428,7 +428,8 @@
 			date.setSeconds(0);
 			date.setMilliseconds(0);
 			if (parts.length === format.parts.length) {
-				var year = date.getFullYear(), day = date.getDate(), month = date.getMonth();
+				//var year = date.getFullYear(), day = date.getDate(), month = date.getMonth();
+				var year = parts[2], day = parts[0];
 				for (var i=0, cnt = format.parts.length; i < cnt; i++) {
 					val = parseInt(parts[i], 10)||1;
 					switch(format.parts[i]) {
@@ -441,6 +442,14 @@
 						case 'm':
 							month = val - 1;
 							date.setMonth(val - 1);
+							break;
+						case 'mmm':
+							month = DPGlobal.dates.monthsShort.indexOf(parts[1])
+							date.setMonth(month);
+							break;
+						case 'MMM':
+							month = DPGlobal.dates.months.indexOf(parts[1])
+							date.setMonth(month);
 							break;
 						case 'yy':
 							year = 2000 + val;
