@@ -203,6 +203,8 @@
 		},
 		
 		fill: function() {
+			var tdd = new Date();
+			var today = new Date(tdd.getFullYear(),tdd.getMonth(),tdd.getDate(),0,0,0,0);
 			var d = new Date(this.viewDate),
 				year = d.getFullYear(),
 				month = d.getMonth(),
@@ -236,6 +238,9 @@
 					clsName += ' active ' + this.color;
 				}
 				html.push('<td class="day '+clsName+'"><p>'+prevMonth.getDate() + '</p></td>');
+				if ((prevMonth.valueOf() == today.valueOf()) && clsName.indexOf('disabled') >= 0){
+					this.picker.find('.datepicker-footer button').addClass('disabled');
+				}
 				if (prevMonth.getDay() === this.weekEnd) {
 					html.push('</tr>');
 				}
@@ -249,6 +254,7 @@
 							.text(year)
 							.end()
 						.find('span').removeClass('active');
+			
 			if (currentYear === year) {
 				months.eq(this.date.getMonth()).addClass('active').addClass(this.color);
 			}

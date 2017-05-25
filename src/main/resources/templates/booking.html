@@ -7,19 +7,15 @@
 	<div class="container" style="padding-top:100px;">
 		<div class="ui icon input">
 			<i class="calendar icon"></i> 
-			<input type="text" class="datepicker form-control" readonly placeholder="Checkin Date ...">
+			<input type="text" class="datepicker form-control" id="checkindate"
+			readonly placeholder="Checkin Date ...">
 		</div>
-
-		<div input-append date id="checkInDate">
-			<input class="datepicker form-control" type="text" readonly place-holder=""/>
-			<span class = "add-on">
-				<i class = "fa fa-calendar"></i>
-			</span>
+		<div class="ui icon input">
+			<i class="calendar icon"></i> 
+			<input type="text" class="datepicker form-control" id="checkoutdate"
+			readonly placeholder="Checkout Date ...">
 		</div>
 	</div>
 	
 </body>
-<script>
-	$('.datepicker').datepicker({format: 'dd-MMM-yyyy'});
-</script>
 </html>
