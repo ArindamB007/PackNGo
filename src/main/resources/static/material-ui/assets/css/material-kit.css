@@ -7,15 +7,15 @@ body {
 body.inverse {
   background: #333333;
 }
-body.inverse, body.inverse .form-control {
+body.inverse, body.inverse .mui-form-control {
   color: #ffffff;
 }
 body.inverse .modal,
-body.inverse .modal .form-control,
+body.inverse .modal .mui-form-control,
 body.inverse .panel-default,
-body.inverse .panel-default .form-control,
+body.inverse .panel-default .mui-form-control,
 body.inverse .card,
-body.inverse .card .form-control {
+body.inverse .card .mui-form-control {
   background-color: initial;
   color: initial;
 }
@@ -24,15 +24,22 @@ body.inverse .card .form-control {
   background: #FFFFFF;
 }
 
-body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
+.mui, body, .mui h1, .mui h2, .mui h3, .mui h4, .mui h5, .mui h6, .mui .h1, .mui .h2, .mui .h3, .mui-h4, .mui p,
+.mui .mui-btn{
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 300;
   line-height: 1.5em;
 }
 
 a, a:hover, a:focus {
+   color: #9c27b0;
+ }
+
+a.mui-btn, a:hover.mui-btn, a:focus.mui-btn {
   color: #9c27b0;
+  text-decoration: none;
 }
+
 a .material-icons, a:hover .material-icons, a:focus .material-icons {
   vertical-align: middle;
 }
@@ -78,8 +85,8 @@ a .material-icons, a:hover .material-icons, a:focus .material-icons {
   margin: 0;
 }
 
-.btn,
-.input-group-btn .btn {
+.mui-btn,
+.input-group-btn .mui-btn {
   border: none;
   border-radius: 3px;
   position: relative;
@@ -92,236 +99,237 @@ a .material-icons, a:hover .material-icons, a:focus .material-icons {
   will-change: box-shadow, transform;
   transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   background: transparent;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
-.btn::-moz-focus-inner,
-.input-group-btn .btn::-moz-focus-inner {
+.mui-btn::-moz-focus-inner,
+.input-group-btn .mui-btn::-moz-focus-inner {
   border: 0;
 }
-.btn:not(.btn-raised),
-.input-group-btn .btn:not(.btn-raised) {
+.mui-btn:not(.mui-btn-raised),
+.input-group-btn .mui-btn:not(.mui-btn-raised) {
   box-shadow: none;
 }
-.btn:not(.btn-raised), .btn:not(.btn-raised).btn-default,
-.input-group-btn .btn:not(.btn-raised),
-.input-group-btn .btn:not(.btn-raised).btn-default {
+.mui-btn:not(.mui-btn-raised), .mui-btn:not(.mui-btn-raised).mui-btn-default,
+.input-group-btn .mui-btn:not(.mui-btn-raised),
+.input-group-btn .mui-btn:not(.mui-btn-raised).mui-btn-default {
   color: rgba(0,0,0, 0.87);
 }
-.btn:not(.btn-raised).btn-inverse,
-.input-group-btn .btn:not(.btn-raised).btn-inverse {
+.mui-btn:not(.mui-btn-raised).mui-btn-inverse,
+.input-group-btn .mui-btn:not(.mui-btn-raised).mui-btn-inverse {
   color: #3f51b5;
 }
-.btn:not(.btn-raised).btn-primary,
-.input-group-btn .btn:not(.btn-raised).btn-primary {
+.mui-btn:not(.mui-btn-raised).mui-btn-primary,
+.input-group-btn .mui-btn:not(.mui-btn-raised).mui-btn-primary {
   color: #9c27b0;
 }
-.btn:not(.btn-raised).btn-success,
-.input-group-btn .btn:not(.btn-raised).btn-success {
+.mui-btn:not(.mui-btn-raised).mui-btn-success,
+.input-group-btn .mui-btn:not(.mui-btn-raised).mui-btn-success {
   color: #4caf50;
 }
-.btn:not(.btn-raised).btn-info,
-.input-group-btn .btn:not(.btn-raised).btn-info {
+.mui-btn:not(.mui-btn-raised).mui-btn-info,
+.input-group-btn .mui-btn:not(.mui-btn-raised).mui-btn-info {
   color: #03a9f4;
 }
-.btn:not(.btn-raised).btn-warning,
-.input-group-btn .btn:not(.btn-raised).btn-warning {
+.mui-btn:not(.mui-btn-raised).mui-btn-warning,
+.input-group-btn .mui-btn:not(.mui-btn-raised).mui-btn-warning {
   color: #fbc02d;
 }
-.btn:not(.btn-raised).btn-danger,
-.input-group-btn .btn:not(.btn-raised).btn-danger {
+.mui-btn:not(.mui-btn-raised).mui-btn-danger,
+.input-group-btn .mui-btn:not(.mui-btn-raised).mui-btn-danger {
   color: #f44336;
 }
-.btn:not(.btn-raised):not(.btn-link):hover, .btn:not(.btn-raised):not(.btn-link):focus,
-.input-group-btn .btn:not(.btn-raised):not(.btn-link):hover,
-.input-group-btn .btn:not(.btn-raised):not(.btn-link):focus {
+.mui-btn:not(.mui-btn-raised):not(.mui-btn-link):hover, .mui-btn:not(.mui-btn-raised):not(.mui-btn-link):focus,
+.input-group-btn .mui-btn:not(.mui-btn-raised):not(.mui-btn-link):hover,
+.input-group-btn .mui-btn:not(.mui-btn-raised):not(.mui-btn-link):focus {
   background-color: transparent;
 }
-.btn:focus, .btn:active, .btn:active:focus,
-.input-group-btn .btn:focus,
-.input-group-btn .btn:active,
-.input-group-btn .btn:active:focus {
+.mui-btn:focus, .mui-btn:active, .mui-btn:active:focus,
+.input-group-btn .mui-btn:focus,
+.input-group-btn .mui-btn:active,
+.input-group-btn .mui-btn:active:focus {
   outline: 0;
 }
-.btn.btn-raised, .btn.btn-raised.btn-default, .btn.btn-fab, .btn.btn-fab.btn-default, .btn-group-raised .btn, .btn-group-raised .btn.btn-default,
-.input-group-btn .btn.btn-raised,
-.input-group-btn .btn.btn-raised.btn-default,
-.input-group-btn .btn.btn-fab,
-.input-group-btn .btn.btn-fab.btn-default, .btn-group-raised
-.input-group-btn .btn, .btn-group-raised
-.input-group-btn .btn.btn-default {
+.mui-btn.mui-btn-raised, .mui-btn.mui-btn-raised.mui-btn-default, .mui-btn.mui-btn-fab, .mui-btn.mui-btn-fab.mui-btn-default, .mui-btn-group-raised .mui-btn, .mui-btn-group-raised .mui-btn.mui-btn-default,
+.input-group-btn .mui-btn.mui-btn-raised,
+.input-group-btn .mui-btn.mui-btn-raised.mui-btn-default,
+.input-group-btn .mui-btn.mui-btn-fab,
+.input-group-btn .mui-btn.mui-btn-fab.mui-btn-default, .mui-btn-group-raised
+.input-group-btn .mui-btn, .mui-btn-group-raised
+.input-group-btn .mui-btn.mui-btn-default {
   background-color: #EEEEEE;
   color: rgba(0,0,0, 0.87);
 }
-.btn.btn-raised.btn-inverse, .btn.btn-fab.btn-inverse, .btn-group-raised .btn.btn-inverse,
-.input-group-btn .btn.btn-raised.btn-inverse,
-.input-group-btn .btn.btn-fab.btn-inverse, .btn-group-raised
-.input-group-btn .btn.btn-inverse {
+.mui-btn.mui-btn-raised.mui-btn-inverse, .mui-btn.mui-btn-fab.mui-btn-inverse, .mui-btn-group-raised .mui-btn.mui-btn-inverse,
+.input-group-btn .mui-btn.mui-btn-raised.mui-btn-inverse,
+.input-group-btn .mui-btn.mui-btn-fab.mui-btn-inverse, .mui-btn-group-raised
+.input-group-btn .mui-btn.mui-btn-inverse {
   background-color: #3f51b5;
   color: contrast-color(#3f51b5, #000000, #ffffff);
 }
-.btn.btn-raised.btn-primary, .btn.btn-fab.btn-primary, .btn-group-raised .btn.btn-primary,
-.input-group-btn .btn.btn-raised.btn-primary,
-.input-group-btn .btn.btn-fab.btn-primary, .btn-group-raised
-.input-group-btn .btn.btn-primary {
+.mui-btn.mui-btn-raised.mui-btn-primary, .mui-btn.mui-btn-fab.mui-btn-primary, .mui-btn-group-raised .mui-btn.mui-btn-primary,
+.input-group-btn .mui-btn.mui-btn-raised.mui-btn-primary,
+.input-group-btn .mui-btn.mui-btn-fab.mui-btn-primary, .mui-btn-group-raised
+.input-group-btn .mui-btn.mui-btn-primary {
   background-color: #9c27b0;
   color: #ffffff;
 }
-.btn.btn-raised.btn-success, .btn.btn-fab.btn-success, .btn-group-raised .btn.btn-success,
-.input-group-btn .btn.btn-raised.btn-success,
-.input-group-btn .btn.btn-fab.btn-success, .btn-group-raised
-.input-group-btn .btn.btn-success {
+.mui-btn.mui-btn-raised.mui-btn-success, .mui-btn.mui-btn-fab.mui-btn-success, .mui-btn-group-raised .mui-btn.mui-btn-success,
+.input-group-btn .mui-btn.mui-btn-raised.mui-btn-success,
+.input-group-btn .mui-btn.mui-btn-fab.mui-btn-success, .mui-btn-group-raised
+.input-group-btn .mui-btn.mui-btn-success {
   background-color: #4caf50;
   color: #ffffff;
 }
-.btn.btn-raised.btn-info, .btn.btn-fab.btn-info, .btn-group-raised .btn.btn-info,
-.input-group-btn .btn.btn-raised.btn-info,
-.input-group-btn .btn.btn-fab.btn-info, .btn-group-raised
-.input-group-btn .btn.btn-info {
+.mui-btn.mui-btn-raised.mui-btn-info, .mui-btn.mui-btn-fab.mui-btn-info, .mui-btn-group-raised .mui-btn.mui-btn-info,
+.input-group-btn .mui-btn.mui-btn-raised.mui-btn-info,
+.input-group-btn .mui-btn.mui-btn-fab.mui-btn-info, .mui-btn-group-raised
+.input-group-btn .mui-btn.mui-btn-info {
   background-color: #03a9f4;
   color: #ffffff;
 }
-.btn.btn-raised.btn-warning, .btn.btn-fab.btn-warning, .btn-group-raised .btn.btn-warning,
-.input-group-btn .btn.btn-raised.btn-warning,
-.input-group-btn .btn.btn-fab.btn-warning, .btn-group-raised
-.input-group-btn .btn.btn-warning {
+.mui-btn.mui-btn-raised.mui-btn-warning, .mui-btn.mui-btn-fab.mui-btn-warning, .mui-btn-group-raised .mui-btn.mui-btn-warning,
+.input-group-btn .mui-btn.mui-btn-raised.mui-btn-warning,
+.input-group-btn .mui-btn.mui-btn-fab.mui-btn-warning, .mui-btn-group-raised
+.input-group-btn .mui-btn.mui-btn-warning {
   background-color: #fbc02d;
   color: #ffffff;
 }
-.btn.btn-raised.btn-danger, .btn.btn-fab.btn-danger, .btn-group-raised .btn.btn-danger,
-.input-group-btn .btn.btn-raised.btn-danger,
-.input-group-btn .btn.btn-fab.btn-danger, .btn-group-raised
-.input-group-btn .btn.btn-danger {
+.mui-btn.mui-btn-raised.mui-btn-danger, .mui-btn.mui-btn-fab.mui-btn-danger, .mui-btn-group-raised .mui-btn.mui-btn-danger,
+.input-group-btn .mui-btn.mui-btn-raised.mui-btn-danger,
+.input-group-btn .mui-btn.mui-btn-fab.mui-btn-danger, .mui-btn-group-raised
+.input-group-btn .mui-btn.mui-btn-danger {
   background-color: #f44336;
   color: #ffffff;
 }
-.btn.btn-raised:not(.btn-link), .btn-group-raised .btn:not(.btn-link),
-.input-group-btn .btn.btn-raised:not(.btn-link), .btn-group-raised
-.input-group-btn .btn:not(.btn-link) {
+.mui-btn.mui-btn-raised:not(.mui-btn-link), .mui-btn-group-raised .mui-btn:not(.mui-btn-link),
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link), .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link) {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
-.btn.btn-raised:not(.btn-link):hover, .btn.btn-raised:not(.btn-link):focus, .btn.btn-raised:not(.btn-link).active, .btn.btn-raised:not(.btn-link):active, .btn-group-raised .btn:not(.btn-link):hover, .btn-group-raised .btn:not(.btn-link):focus, .btn-group-raised .btn:not(.btn-link).active, .btn-group-raised .btn:not(.btn-link):active,
-.input-group-btn .btn.btn-raised:not(.btn-link):hover,
-.input-group-btn .btn.btn-raised:not(.btn-link):focus,
-.input-group-btn .btn.btn-raised:not(.btn-link).active,
-.input-group-btn .btn.btn-raised:not(.btn-link):active, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):hover, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):focus, .btn-group-raised
-.input-group-btn .btn:not(.btn-link).active, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):active {
+.mui-btn.mui-btn-raised:not(.mui-btn-link):hover, .mui-btn.mui-btn-raised:not(.mui-btn-link):focus, .mui-btn.mui-btn-raised:not(.mui-btn-link).active, .mui-btn.mui-btn-raised:not(.mui-btn-link):active, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):hover, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):focus, .mui-btn-group-raised .mui-btn:not(.mui-btn-link).active, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):active,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):hover,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):focus,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link).active,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):active, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):hover, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):focus, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link).active, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):active {
   outline: 0;
 }
-.btn.btn-raised:not(.btn-link):hover, .btn.btn-raised:not(.btn-link):hover.btn-default, .btn.btn-raised:not(.btn-link):focus, .btn.btn-raised:not(.btn-link):focus.btn-default, .btn.btn-raised:not(.btn-link).active, .btn.btn-raised:not(.btn-link).active.btn-default, .btn.btn-raised:not(.btn-link):active, .btn.btn-raised:not(.btn-link):active.btn-default, .btn-group-raised .btn:not(.btn-link):hover, .btn-group-raised .btn:not(.btn-link):hover.btn-default, .btn-group-raised .btn:not(.btn-link):focus, .btn-group-raised .btn:not(.btn-link):focus.btn-default, .btn-group-raised .btn:not(.btn-link).active, .btn-group-raised .btn:not(.btn-link).active.btn-default, .btn-group-raised .btn:not(.btn-link):active, .btn-group-raised .btn:not(.btn-link):active.btn-default,
-.input-group-btn .btn.btn-raised:not(.btn-link):hover,
-.input-group-btn .btn.btn-raised:not(.btn-link):hover.btn-default,
-.input-group-btn .btn.btn-raised:not(.btn-link):focus,
-.input-group-btn .btn.btn-raised:not(.btn-link):focus.btn-default,
-.input-group-btn .btn.btn-raised:not(.btn-link).active,
-.input-group-btn .btn.btn-raised:not(.btn-link).active.btn-default,
-.input-group-btn .btn.btn-raised:not(.btn-link):active,
-.input-group-btn .btn.btn-raised:not(.btn-link):active.btn-default, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):hover, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):hover.btn-default, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):focus, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):focus.btn-default, .btn-group-raised
-.input-group-btn .btn:not(.btn-link).active, .btn-group-raised
-.input-group-btn .btn:not(.btn-link).active.btn-default, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):active, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):active.btn-default {
+.mui-btn.mui-btn-raised:not(.mui-btn-link):hover, .mui-btn.mui-btn-raised:not(.mui-btn-link):hover.mui-btn-default, .mui-btn.mui-btn-raised:not(.mui-btn-link):focus, .mui-btn.mui-btn-raised:not(.mui-btn-link):focus.mui-btn-default, .mui-btn.mui-btn-raised:not(.mui-btn-link).active, .mui-btn.mui-btn-raised:not(.mui-btn-link).active.mui-btn-default, .mui-btn.mui-btn-raised:not(.mui-btn-link):active, .mui-btn.mui-btn-raised:not(.mui-btn-link):active.mui-btn-default, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):hover, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):hover.mui-btn-default, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):focus, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):focus.mui-btn-default, .mui-btn-group-raised .mui-btn:not(.mui-btn-link).active, .mui-btn-group-raised .mui-btn:not(.mui-btn-link).active.mui-btn-default, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):active, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):active.mui-btn-default,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):hover,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):hover.mui-btn-default,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):focus,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):focus.mui-btn-default,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link).active,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link).active.mui-btn-default,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):active,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):active.mui-btn-default, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):hover, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):hover.mui-btn-default, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):focus, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):focus.mui-btn-default, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link).active, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link).active.mui-btn-default, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):active, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):active.mui-btn-default {
   background-color: contrast-color(#EEEEEE, #e4e4e4, #f8f8f8);
 }
-.btn.btn-raised:not(.btn-link):hover.btn-inverse, .btn.btn-raised:not(.btn-link):focus.btn-inverse, .btn.btn-raised:not(.btn-link).active.btn-inverse, .btn.btn-raised:not(.btn-link):active.btn-inverse, .btn-group-raised .btn:not(.btn-link):hover.btn-inverse, .btn-group-raised .btn:not(.btn-link):focus.btn-inverse, .btn-group-raised .btn:not(.btn-link).active.btn-inverse, .btn-group-raised .btn:not(.btn-link):active.btn-inverse,
-.input-group-btn .btn.btn-raised:not(.btn-link):hover.btn-inverse,
-.input-group-btn .btn.btn-raised:not(.btn-link):focus.btn-inverse,
-.input-group-btn .btn.btn-raised:not(.btn-link).active.btn-inverse,
-.input-group-btn .btn.btn-raised:not(.btn-link):active.btn-inverse, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):hover.btn-inverse, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):focus.btn-inverse, .btn-group-raised
-.input-group-btn .btn:not(.btn-link).active.btn-inverse, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):active.btn-inverse {
+.mui-btn.mui-btn-raised:not(.mui-btn-link):hover.mui-btn-inverse, .mui-btn.mui-btn-raised:not(.mui-btn-link):focus.mui-btn-inverse, .mui-btn.mui-btn-raised:not(.mui-btn-link).active.mui-btn-inverse, .mui-btn.mui-btn-raised:not(.mui-btn-link):active.mui-btn-inverse, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):hover.mui-btn-inverse, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):focus.mui-btn-inverse, .mui-btn-group-raised .mui-btn:not(.mui-btn-link).active.mui-btn-inverse, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):active.mui-btn-inverse,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):hover.mui-btn-inverse,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):focus.mui-btn-inverse,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link).active.mui-btn-inverse,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):active.mui-btn-inverse, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):hover.mui-btn-inverse, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):focus.mui-btn-inverse, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link).active.mui-btn-inverse, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):active.mui-btn-inverse {
   background-color: contrast-color(#3f51b5, #3a4aa6, #495bc0);
 }
-.btn.btn-raised:not(.btn-link):hover.btn-primary, .btn.btn-raised:not(.btn-link):focus.btn-primary, .btn.btn-raised:not(.btn-link).active.btn-primary, .btn.btn-raised:not(.btn-link):active.btn-primary, .btn-group-raised .btn:not(.btn-link):hover.btn-primary, .btn-group-raised .btn:not(.btn-link):focus.btn-primary, .btn-group-raised .btn:not(.btn-link).active.btn-primary, .btn-group-raised .btn:not(.btn-link):active.btn-primary,
-.input-group-btn .btn.btn-raised:not(.btn-link):hover.btn-primary,
-.input-group-btn .btn.btn-raised:not(.btn-link):focus.btn-primary,
-.input-group-btn .btn.btn-raised:not(.btn-link).active.btn-primary,
-.input-group-btn .btn.btn-raised:not(.btn-link):active.btn-primary, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):hover.btn-primary, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):focus.btn-primary, .btn-group-raised
-.input-group-btn .btn:not(.btn-link).active.btn-primary, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):active.btn-primary {
+.mui-btn.mui-btn-raised:not(.mui-btn-link):hover.mui-btn-primary, .mui-btn.mui-btn-raised:not(.mui-btn-link):focus.mui-btn-primary, .mui-btn.mui-btn-raised:not(.mui-btn-link).active.mui-btn-primary, .mui-btn.mui-btn-raised:not(.mui-btn-link):active.mui-btn-primary, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):hover.mui-btn-primary, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):focus.mui-btn-primary, .mui-btn-group-raised .mui-btn:not(.mui-btn-link).active.mui-btn-primary, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):active.mui-btn-primary,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):hover.mui-btn-primary,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):focus.mui-btn-primary,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link).active.mui-btn-primary,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):active.mui-btn-primary, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):hover.mui-btn-primary, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):focus.mui-btn-primary, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link).active.mui-btn-primary, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):active.mui-btn-primary {
   background-color: contrast-color(#9c27b0, #8d239f, #ab2bc1);
 }
-.btn.btn-raised:not(.btn-link):hover.btn-success, .btn.btn-raised:not(.btn-link):focus.btn-success, .btn.btn-raised:not(.btn-link).active.btn-success, .btn.btn-raised:not(.btn-link):active.btn-success, .btn-group-raised .btn:not(.btn-link):hover.btn-success, .btn-group-raised .btn:not(.btn-link):focus.btn-success, .btn-group-raised .btn:not(.btn-link).active.btn-success, .btn-group-raised .btn:not(.btn-link):active.btn-success,
-.input-group-btn .btn.btn-raised:not(.btn-link):hover.btn-success,
-.input-group-btn .btn.btn-raised:not(.btn-link):focus.btn-success,
-.input-group-btn .btn.btn-raised:not(.btn-link).active.btn-success,
-.input-group-btn .btn.btn-raised:not(.btn-link):active.btn-success, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):hover.btn-success, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):focus.btn-success, .btn-group-raised
-.input-group-btn .btn:not(.btn-link).active.btn-success, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):active.btn-success {
+.mui-btn.mui-btn-raised:not(.mui-btn-link):hover.mui-btn-success, .mui-btn.mui-btn-raised:not(.mui-btn-link):focus.mui-btn-success, .mui-btn.mui-btn-raised:not(.mui-btn-link).active.mui-btn-success, .mui-btn.mui-btn-raised:not(.mui-btn-link):active.mui-btn-success, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):hover.mui-btn-success, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):focus.mui-btn-success, .mui-btn-group-raised .mui-btn:not(.mui-btn-link).active.mui-btn-success, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):active.mui-btn-success,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):hover.mui-btn-success,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):focus.mui-btn-success,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link).active.mui-btn-success,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):active.mui-btn-success, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):hover.mui-btn-success, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):focus.mui-btn-success, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link).active.mui-btn-success, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):active.mui-btn-success {
   background-color: contrast-color(#4caf50, #46a149, #59b75c);
 }
-.btn.btn-raised:not(.btn-link):hover.btn-info, .btn.btn-raised:not(.btn-link):focus.btn-info, .btn.btn-raised:not(.btn-link).active.btn-info, .btn.btn-raised:not(.btn-link):active.btn-info, .btn-group-raised .btn:not(.btn-link):hover.btn-info, .btn-group-raised .btn:not(.btn-link):focus.btn-info, .btn-group-raised .btn:not(.btn-link).active.btn-info, .btn-group-raised .btn:not(.btn-link):active.btn-info,
-.input-group-btn .btn.btn-raised:not(.btn-link):hover.btn-info,
-.input-group-btn .btn.btn-raised:not(.btn-link):focus.btn-info,
-.input-group-btn .btn.btn-raised:not(.btn-link).active.btn-info,
-.input-group-btn .btn.btn-raised:not(.btn-link):active.btn-info, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):hover.btn-info, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):focus.btn-info, .btn-group-raised
-.input-group-btn .btn:not(.btn-link).active.btn-info, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):active.btn-info {
+.mui-btn.mui-btn-raised:not(.mui-btn-link):hover.mui-btn-info, .mui-btn.mui-btn-raised:not(.mui-btn-link):focus.mui-btn-info, .mui-btn.mui-btn-raised:not(.mui-btn-link).active.mui-btn-info, .mui-btn.mui-btn-raised:not(.mui-btn-link):active.mui-btn-info, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):hover.mui-btn-info, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):focus.mui-btn-info, .mui-btn-group-raised .mui-btn:not(.mui-btn-link).active.mui-btn-info, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):active.mui-btn-info,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):hover.mui-btn-info,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):focus.mui-btn-info,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link).active.mui-btn-info,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):active.mui-btn-info, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):hover.mui-btn-info, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):focus.mui-btn-info, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link).active.mui-btn-info, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):active.mui-btn-info {
   background-color: contrast-color(#03a9f4, #039be0, #0fb2fc);
 }
-.btn.btn-raised:not(.btn-link):hover.btn-warning, .btn.btn-raised:not(.btn-link):focus.btn-warning, .btn.btn-raised:not(.btn-link).active.btn-warning, .btn.btn-raised:not(.btn-link):active.btn-warning, .btn-group-raised .btn:not(.btn-link):hover.btn-warning, .btn-group-raised .btn:not(.btn-link):focus.btn-warning, .btn-group-raised .btn:not(.btn-link).active.btn-warning, .btn-group-raised .btn:not(.btn-link):active.btn-warning,
-.input-group-btn .btn.btn-raised:not(.btn-link):hover.btn-warning,
-.input-group-btn .btn.btn-raised:not(.btn-link):focus.btn-warning,
-.input-group-btn .btn.btn-raised:not(.btn-link).active.btn-warning,
-.input-group-btn .btn.btn-raised:not(.btn-link):active.btn-warning, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):hover.btn-warning, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):focus.btn-warning, .btn-group-raised
-.input-group-btn .btn:not(.btn-link).active.btn-warning, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):active.btn-warning {
+.mui-btn.mui-btn-raised:not(.mui-btn-link):hover.mui-btn-warning, .mui-btn.mui-btn-raised:not(.mui-btn-link):focus.mui-btn-warning, .mui-btn.mui-btn-raised:not(.mui-btn-link).active.mui-btn-warning, .mui-btn.mui-btn-raised:not(.mui-btn-link):active.mui-btn-warning, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):hover.mui-btn-warning, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):focus.mui-btn-warning, .mui-btn-group-raised .mui-btn:not(.mui-btn-link).active.mui-btn-warning, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):active.mui-btn-warning,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):hover.mui-btn-warning,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):focus.mui-btn-warning,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link).active.mui-btn-warning,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):active.mui-btn-warning, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):hover.mui-btn-warning, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):focus.mui-btn-warning, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link).active.mui-btn-warning, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):active.mui-btn-warning {
   background-color: contrast-color(#fbc02d, #fbba19, #fbc641);
 }
-.btn.btn-raised:not(.btn-link):hover.btn-danger, .btn.btn-raised:not(.btn-link):focus.btn-danger, .btn.btn-raised:not(.btn-link).active.btn-danger, .btn.btn-raised:not(.btn-link):active.btn-danger, .btn-group-raised .btn:not(.btn-link):hover.btn-danger, .btn-group-raised .btn:not(.btn-link):focus.btn-danger, .btn-group-raised .btn:not(.btn-link).active.btn-danger, .btn-group-raised .btn:not(.btn-link):active.btn-danger,
-.input-group-btn .btn.btn-raised:not(.btn-link):hover.btn-danger,
-.input-group-btn .btn.btn-raised:not(.btn-link):focus.btn-danger,
-.input-group-btn .btn.btn-raised:not(.btn-link).active.btn-danger,
-.input-group-btn .btn.btn-raised:not(.btn-link):active.btn-danger, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):hover.btn-danger, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):focus.btn-danger, .btn-group-raised
-.input-group-btn .btn:not(.btn-link).active.btn-danger, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):active.btn-danger {
+.mui-btn.mui-btn-raised:not(.mui-btn-link):hover.mui-btn-danger, .mui-btn.mui-btn-raised:not(.mui-btn-link):focus.mui-btn-danger, .mui-btn.mui-btn-raised:not(.mui-btn-link).active.mui-btn-danger, .mui-btn.mui-btn-raised:not(.mui-btn-link):active.mui-btn-danger, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):hover.mui-btn-danger, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):focus.mui-btn-danger, .mui-btn-group-raised .mui-btn:not(.mui-btn-link).active.mui-btn-danger, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):active.mui-btn-danger,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):hover.mui-btn-danger,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):focus.mui-btn-danger,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link).active.mui-btn-danger,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):active.mui-btn-danger, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):hover.mui-btn-danger, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):focus.mui-btn-danger, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link).active.mui-btn-danger, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):active.mui-btn-danger {
   background-color: contrast-color(#f44336, #f33123, #f55549);
 }
-.btn.btn-raised:not(.btn-link):hover, .btn.btn-raised:not(.btn-link):hover:focus, .btn.btn-raised:not(.btn-link):hover.active, .btn.btn-raised:not(.btn-link):hover.active:focus, .btn.btn-raised:not(.btn-link):hover:active, .btn.btn-raised:not(.btn-link):hover:active:focus, .btn-group-raised .btn:not(.btn-link):hover, .btn-group-raised .btn:not(.btn-link):hover:focus, .btn-group-raised .btn:not(.btn-link):hover.active, .btn-group-raised .btn:not(.btn-link):hover.active:focus, .btn-group-raised .btn:not(.btn-link):hover:active, .btn-group-raised .btn:not(.btn-link):hover:active:focus,
-.input-group-btn .btn.btn-raised:not(.btn-link):hover,
-.input-group-btn .btn.btn-raised:not(.btn-link):hover:focus,
-.input-group-btn .btn.btn-raised:not(.btn-link):hover.active,
-.input-group-btn .btn.btn-raised:not(.btn-link):hover.active:focus,
-.input-group-btn .btn.btn-raised:not(.btn-link):hover:active,
-.input-group-btn .btn.btn-raised:not(.btn-link):hover:active:focus, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):hover, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):hover:focus, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):hover.active, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):hover.active:focus, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):hover:active, .btn-group-raised
-.input-group-btn .btn:not(.btn-link):hover:active:focus {
+.mui-btn.mui-btn-raised:not(.mui-btn-link):hover, .mui-btn.mui-btn-raised:not(.mui-btn-link):hover:focus, .mui-btn.mui-btn-raised:not(.mui-btn-link):hover.active, .mui-btn.mui-btn-raised:not(.mui-btn-link):hover.active:focus, .mui-btn.mui-btn-raised:not(.mui-btn-link):hover:active, .mui-btn.mui-btn-raised:not(.mui-btn-link):hover:active:focus, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):hover, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):hover:focus, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):hover.active, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):hover.active:focus, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):hover:active, .mui-btn-group-raised .mui-btn:not(.mui-btn-link):hover:active:focus,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):hover,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):hover:focus,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):hover.active,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):hover.active:focus,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):hover:active,
+.input-group-btn .mui-btn.mui-btn-raised:not(.mui-btn-link):hover:active:focus, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):hover, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):hover:focus, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):hover.active, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):hover.active:focus, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):hover:active, .mui-btn-group-raised
+.input-group-btn .mui-btn:not(.mui-btn-link):hover:active:focus {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.18), 0 8px 16px rgba(0, 0, 0, 0.36);
 }
-.btn.btn-round,
-.input-group-btn .btn.btn-round {
+.mui-btn.mui-btn-round,
+.input-group-btn .mui-btn.mui-btn-round {
   border-radius: 30px;
 }
-.btn i.material-icons,
-.input-group-btn .btn i.material-icons {
+.mui-btn i.material-icons,
+.input-group-btn .mui-btn i.material-icons {
   vertical-align: middle;
   font-size: 17px;
   top: -1px;
   position: relative;
 }
-.btn.btn-fab,
-.input-group-btn .btn.btn-fab {
+.mui-btn.mui-btn-fab,
+.input-group-btn .mui-btn.mui-btn-fab {
   border-radius: 50%;
   font-size: 24px;
   height: 56px;
@@ -334,30 +342,30 @@ a .material-icons, a:hover .material-icons, a:focus .material-icons {
   position: relative;
   line-height: normal;
 }
-.btn.btn-fab .ripple-container,
-.input-group-btn .btn.btn-fab .ripple-container {
+.mui-btn.mui-btn-fab .ripple-container,
+.input-group-btn .mui-btn.mui-btn-fab .ripple-container {
   border-radius: 50%;
 }
-.btn.btn-fab.btn-fab-mini, .btn-group-sm .btn.btn-fab,
-.input-group-btn .btn.btn-fab.btn-fab-mini, .btn-group-sm
-.input-group-btn .btn.btn-fab {
+.mui-btn.mui-btn-fab.mui-btn-fab-mini, .mui-btn-group-sm .mui-btn.mui-btn-fab,
+.input-group-btn .mui-btn.mui-btn-fab.mui-btn-fab-mini, .mui-btn-group-sm
+.input-group-btn .mui-btn.mui-btn-fab {
   height: 40px;
   min-width: 40px;
   width: 40px;
 }
-.btn.btn-fab.btn-fab-mini.material-icons, .btn-group-sm .btn.btn-fab.material-icons,
-.input-group-btn .btn.btn-fab.btn-fab-mini.material-icons, .btn-group-sm
-.input-group-btn .btn.btn-fab.material-icons {
+.mui-btn.mui-btn-fab.mui-btn-fab-mini.material-icons, .mui-btn-group-sm .mui-btn.mui-btn-fab.material-icons,
+.input-group-btn .mui-btn.mui-btn-fab.mui-btn-fab-mini.material-icons, .mui-btn-group-sm
+.input-group-btn .mui-btn.mui-btn-fab.material-icons {
   top: -3.5px;
   left: -3.5px;
 }
-.btn.btn-fab.btn-fab-mini .material-icons, .btn-group-sm .btn.btn-fab .material-icons,
-.input-group-btn .btn.btn-fab.btn-fab-mini .material-icons, .btn-group-sm
-.input-group-btn .btn.btn-fab .material-icons {
+.mui-btn.mui-btn-fab.mui-btn-fab-mini .material-icons, .mui-btn-group-sm .mui-btn.mui-btn-fab .material-icons,
+.input-group-btn .mui-btn.mui-btn-fab.mui-btn-fab-mini .material-icons, .mui-btn-group-sm
+.input-group-btn .mui-btn.mui-btn-fab .material-icons {
   font-size: 17px;
 }
-.btn.btn-fab i.material-icons,
-.input-group-btn .btn.btn-fab i.material-icons {
+.mui-btn.mui-btn-fab i.material-icons,
+.input-group-btn .mui-btn.mui-btn-fab i.material-icons {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -366,211 +374,211 @@ a .material-icons, a:hover .material-icons, a:focus .material-icons {
   width: 24px;
   font-size: 24px;
 }
-.btn.btn-lg, .btn-group-lg .btn,
-.input-group-btn .btn.btn-lg, .btn-group-lg
-.input-group-btn .btn {
+.mui-btn.mui-btn-lg, .mui-btn-group-lg .mui-btn,
+.input-group-btn .mui-btn.mui-btn-lg, .mui-btn-group-lg
+.input-group-btn .mui-btn {
   font-size: 14px;
   padding: 18px 36px;
 }
-.btn.btn-sm, .btn-group-sm .btn,
-.input-group-btn .btn.btn-sm, .btn-group-sm
-.input-group-btn .btn {
+.mui-btn.mui-btn-sm, .mui-btn-group-sm .mui-btn,
+.input-group-btn .mui-btn.mui-btn-sm, .mui-btn-group-sm
+.input-group-btn .mui-btn {
   padding: 5px 20px;
   font-size: 11px;
 }
-.btn.btn-xs, .btn-group-xs .btn,
-.input-group-btn .btn.btn-xs, .btn-group-xs
-.input-group-btn .btn {
+.mui-btn.mui-btn-xs, .mui-btn-group-xs .mui-btn,
+.input-group-btn .mui-btn.mui-btn-xs, .mui-btn-group-xs
+.input-group-btn .mui-btn {
   padding: 4px 15px;
   font-size: 10px;
 }
 
-.btn-just-icon {
+.mui-btn-just-icon {
   font-size: 20px;
   padding: 6px 11px;
 }
 
-fieldset[disabled][disabled] .btn, .btn.disabled, .btn:disabled, .btn[disabled][disabled], fieldset[disabled][disabled]
-.input-group-btn .btn,
-.input-group-btn .btn.disabled,
-.input-group-btn .btn:disabled,
-.input-group-btn .btn[disabled][disabled], fieldset[disabled][disabled]
-.btn-group,
-.btn-group.disabled,
-.btn-group:disabled,
-.btn-group[disabled][disabled], fieldset[disabled][disabled]
-.btn-group-vertical,
-.btn-group-vertical.disabled,
-.btn-group-vertical:disabled,
-.btn-group-vertical[disabled][disabled] {
+fieldset[disabled][disabled] .mui-btn, .mui-btn.disabled, .mui-btn:disabled, .mui-btn[disabled][disabled], fieldset[disabled][disabled]
+.input-group-btn .mui-btn,
+.input-group-btn .mui-btn.disabled,
+.input-group-btn .mui-btn:disabled,
+.input-group-btn .mui-btn[disabled][disabled], fieldset[disabled][disabled]
+.mui-btn-group,
+.mui-btn-group.disabled,
+.mui-btn-group:disabled,
+.mui-btn-group[disabled][disabled], fieldset[disabled][disabled]
+.mui-btn-group-vertical,
+.mui-btn-group-vertical.disabled,
+.mui-btn-group-vertical:disabled,
+.mui-btn-group-vertical[disabled][disabled] {
   color: rgba(0, 0, 0, 0.26);
   background: transparent;
 }
-.theme-dark fieldset[disabled][disabled] .btn, .theme-dark .btn.disabled, .theme-dark .btn:disabled, .theme-dark .btn[disabled][disabled], .theme-dark fieldset[disabled][disabled]
-.input-group-btn .btn, .theme-dark
-.input-group-btn .btn.disabled, .theme-dark
-.input-group-btn .btn:disabled, .theme-dark
-.input-group-btn .btn[disabled][disabled], .theme-dark fieldset[disabled][disabled]
-.btn-group, .theme-dark
-.btn-group.disabled, .theme-dark
-.btn-group:disabled, .theme-dark
-.btn-group[disabled][disabled], .theme-dark fieldset[disabled][disabled]
-.btn-group-vertical, .theme-dark
-.btn-group-vertical.disabled, .theme-dark
-.btn-group-vertical:disabled, .theme-dark
-.btn-group-vertical[disabled][disabled] {
+.theme-dark fieldset[disabled][disabled] .mui-btn, .theme-dark .mui-btn.disabled, .theme-dark .mui-btn:disabled, .theme-dark .mui-btn[disabled][disabled], .theme-dark fieldset[disabled][disabled]
+.input-group-btn .mui-btn, .theme-dark
+.input-group-btn .mui-btn.disabled, .theme-dark
+.input-group-btn .mui-btn:disabled, .theme-dark
+.input-group-btn .mui-btn[disabled][disabled], .theme-dark fieldset[disabled][disabled]
+.mui-btn-group, .theme-dark
+.mui-btn-group.disabled, .theme-dark
+.mui-btn-group:disabled, .theme-dark
+.mui-btn-group[disabled][disabled], .theme-dark fieldset[disabled][disabled]
+.mui-btn-group-vertical, .theme-dark
+.mui-btn-group-vertical.disabled, .theme-dark
+.mui-btn-group-vertical:disabled, .theme-dark
+.mui-btn-group-vertical[disabled][disabled] {
   color: rgba(255, 255, 255, 0.3);
 }
-fieldset[disabled][disabled] .btn.btn-raised, fieldset[disabled][disabled] .btn.btn-raised.active, fieldset[disabled][disabled] .btn.btn-raised:active, fieldset[disabled][disabled] .btn.btn-raised:focus:not(:active), fieldset[disabled][disabled] .btn.btn-group-raised, fieldset[disabled][disabled] .btn.btn-group-raised.active, fieldset[disabled][disabled] .btn.btn-group-raised:active, fieldset[disabled][disabled] .btn.btn-group-raised:focus:not(:active), .btn.disabled.btn-raised, .btn.disabled.btn-raised.active, .btn.disabled.btn-raised:active, .btn.disabled.btn-raised:focus:not(:active), .btn.disabled.btn-group-raised, .btn.disabled.btn-group-raised.active, .btn.disabled.btn-group-raised:active, .btn.disabled.btn-group-raised:focus:not(:active), .btn:disabled.btn-raised, .btn:disabled.btn-raised.active, .btn:disabled.btn-raised:active, .btn:disabled.btn-raised:focus:not(:active), .btn:disabled.btn-group-raised, .btn:disabled.btn-group-raised.active, .btn:disabled.btn-group-raised:active, .btn:disabled.btn-group-raised:focus:not(:active), .btn[disabled][disabled].btn-raised, .btn[disabled][disabled].btn-raised.active, .btn[disabled][disabled].btn-raised:active, .btn[disabled][disabled].btn-raised:focus:not(:active), .btn[disabled][disabled].btn-group-raised, .btn[disabled][disabled].btn-group-raised.active, .btn[disabled][disabled].btn-group-raised:active, .btn[disabled][disabled].btn-group-raised:focus:not(:active), fieldset[disabled][disabled]
-.input-group-btn .btn.btn-raised, fieldset[disabled][disabled]
-.input-group-btn .btn.btn-raised.active, fieldset[disabled][disabled]
-.input-group-btn .btn.btn-raised:active, fieldset[disabled][disabled]
-.input-group-btn .btn.btn-raised:focus:not(:active), fieldset[disabled][disabled]
-.input-group-btn .btn.btn-group-raised, fieldset[disabled][disabled]
-.input-group-btn .btn.btn-group-raised.active, fieldset[disabled][disabled]
-.input-group-btn .btn.btn-group-raised:active, fieldset[disabled][disabled]
-.input-group-btn .btn.btn-group-raised:focus:not(:active),
-.input-group-btn .btn.disabled.btn-raised,
-.input-group-btn .btn.disabled.btn-raised.active,
-.input-group-btn .btn.disabled.btn-raised:active,
-.input-group-btn .btn.disabled.btn-raised:focus:not(:active),
-.input-group-btn .btn.disabled.btn-group-raised,
-.input-group-btn .btn.disabled.btn-group-raised.active,
-.input-group-btn .btn.disabled.btn-group-raised:active,
-.input-group-btn .btn.disabled.btn-group-raised:focus:not(:active),
-.input-group-btn .btn:disabled.btn-raised,
-.input-group-btn .btn:disabled.btn-raised.active,
-.input-group-btn .btn:disabled.btn-raised:active,
-.input-group-btn .btn:disabled.btn-raised:focus:not(:active),
-.input-group-btn .btn:disabled.btn-group-raised,
-.input-group-btn .btn:disabled.btn-group-raised.active,
-.input-group-btn .btn:disabled.btn-group-raised:active,
-.input-group-btn .btn:disabled.btn-group-raised:focus:not(:active),
-.input-group-btn .btn[disabled][disabled].btn-raised,
-.input-group-btn .btn[disabled][disabled].btn-raised.active,
-.input-group-btn .btn[disabled][disabled].btn-raised:active,
-.input-group-btn .btn[disabled][disabled].btn-raised:focus:not(:active),
-.input-group-btn .btn[disabled][disabled].btn-group-raised,
-.input-group-btn .btn[disabled][disabled].btn-group-raised.active,
-.input-group-btn .btn[disabled][disabled].btn-group-raised:active,
-.input-group-btn .btn[disabled][disabled].btn-group-raised:focus:not(:active), fieldset[disabled][disabled]
-.btn-group.btn-raised, fieldset[disabled][disabled]
-.btn-group.btn-raised.active, fieldset[disabled][disabled]
-.btn-group.btn-raised:active, fieldset[disabled][disabled]
-.btn-group.btn-raised:focus:not(:active), fieldset[disabled][disabled]
-.btn-group.btn-group-raised, fieldset[disabled][disabled]
-.btn-group.btn-group-raised.active, fieldset[disabled][disabled]
-.btn-group.btn-group-raised:active, fieldset[disabled][disabled]
-.btn-group.btn-group-raised:focus:not(:active),
-.btn-group.disabled.btn-raised,
-.btn-group.disabled.btn-raised.active,
-.btn-group.disabled.btn-raised:active,
-.btn-group.disabled.btn-raised:focus:not(:active),
-.btn-group.disabled.btn-group-raised,
-.btn-group.disabled.btn-group-raised.active,
-.btn-group.disabled.btn-group-raised:active,
-.btn-group.disabled.btn-group-raised:focus:not(:active),
-.btn-group:disabled.btn-raised,
-.btn-group:disabled.btn-raised.active,
-.btn-group:disabled.btn-raised:active,
-.btn-group:disabled.btn-raised:focus:not(:active),
-.btn-group:disabled.btn-group-raised,
-.btn-group:disabled.btn-group-raised.active,
-.btn-group:disabled.btn-group-raised:active,
-.btn-group:disabled.btn-group-raised:focus:not(:active),
-.btn-group[disabled][disabled].btn-raised,
-.btn-group[disabled][disabled].btn-raised.active,
-.btn-group[disabled][disabled].btn-raised:active,
-.btn-group[disabled][disabled].btn-raised:focus:not(:active),
-.btn-group[disabled][disabled].btn-group-raised,
-.btn-group[disabled][disabled].btn-group-raised.active,
-.btn-group[disabled][disabled].btn-group-raised:active,
-.btn-group[disabled][disabled].btn-group-raised:focus:not(:active), fieldset[disabled][disabled]
-.btn-group-vertical.btn-raised, fieldset[disabled][disabled]
-.btn-group-vertical.btn-raised.active, fieldset[disabled][disabled]
-.btn-group-vertical.btn-raised:active, fieldset[disabled][disabled]
-.btn-group-vertical.btn-raised:focus:not(:active), fieldset[disabled][disabled]
-.btn-group-vertical.btn-group-raised, fieldset[disabled][disabled]
-.btn-group-vertical.btn-group-raised.active, fieldset[disabled][disabled]
-.btn-group-vertical.btn-group-raised:active, fieldset[disabled][disabled]
-.btn-group-vertical.btn-group-raised:focus:not(:active),
-.btn-group-vertical.disabled.btn-raised,
-.btn-group-vertical.disabled.btn-raised.active,
-.btn-group-vertical.disabled.btn-raised:active,
-.btn-group-vertical.disabled.btn-raised:focus:not(:active),
-.btn-group-vertical.disabled.btn-group-raised,
-.btn-group-vertical.disabled.btn-group-raised.active,
-.btn-group-vertical.disabled.btn-group-raised:active,
-.btn-group-vertical.disabled.btn-group-raised:focus:not(:active),
-.btn-group-vertical:disabled.btn-raised,
-.btn-group-vertical:disabled.btn-raised.active,
-.btn-group-vertical:disabled.btn-raised:active,
-.btn-group-vertical:disabled.btn-raised:focus:not(:active),
-.btn-group-vertical:disabled.btn-group-raised,
-.btn-group-vertical:disabled.btn-group-raised.active,
-.btn-group-vertical:disabled.btn-group-raised:active,
-.btn-group-vertical:disabled.btn-group-raised:focus:not(:active),
-.btn-group-vertical[disabled][disabled].btn-raised,
-.btn-group-vertical[disabled][disabled].btn-raised.active,
-.btn-group-vertical[disabled][disabled].btn-raised:active,
-.btn-group-vertical[disabled][disabled].btn-raised:focus:not(:active),
-.btn-group-vertical[disabled][disabled].btn-group-raised,
-.btn-group-vertical[disabled][disabled].btn-group-raised.active,
-.btn-group-vertical[disabled][disabled].btn-group-raised:active,
-.btn-group-vertical[disabled][disabled].btn-group-raised:focus:not(:active) {
+fieldset[disabled][disabled] .mui-btn.mui-btn-raised, fieldset[disabled][disabled] .mui-btn.mui-btn-raised.active, fieldset[disabled][disabled] .mui-btn.mui-btn-raised:active, fieldset[disabled][disabled] .mui-btn.mui-btn-raised:focus:not(:active), fieldset[disabled][disabled] .mui-btn.mui-btn-group-raised, fieldset[disabled][disabled] .mui-btn.mui-btn-group-raised.active, fieldset[disabled][disabled] .mui-btn.mui-btn-group-raised:active, fieldset[disabled][disabled] .mui-btn.mui-btn-group-raised:focus:not(:active), .mui-btn.disabled.mui-btn-raised, .mui-btn.disabled.mui-btn-raised.active, .mui-btn.disabled.mui-btn-raised:active, .mui-btn.disabled.mui-btn-raised:focus:not(:active), .mui-btn.disabled.mui-btn-group-raised, .mui-btn.disabled.mui-btn-group-raised.active, .mui-btn.disabled.mui-btn-group-raised:active, .mui-btn.disabled.mui-btn-group-raised:focus:not(:active), .mui-btn:disabled.mui-btn-raised, .mui-btn:disabled.mui-btn-raised.active, .mui-btn:disabled.mui-btn-raised:active, .mui-btn:disabled.mui-btn-raised:focus:not(:active), .mui-btn:disabled.mui-btn-group-raised, .mui-btn:disabled.mui-btn-group-raised.active, .mui-btn:disabled.mui-btn-group-raised:active, .mui-btn:disabled.mui-btn-group-raised:focus:not(:active), .mui-btn[disabled][disabled].mui-btn-raised, .mui-btn[disabled][disabled].mui-btn-raised.active, .mui-btn[disabled][disabled].mui-btn-raised:active, .mui-btn[disabled][disabled].mui-btn-raised:focus:not(:active), .mui-btn[disabled][disabled].mui-btn-group-raised, .mui-btn[disabled][disabled].mui-btn-group-raised.active, .mui-btn[disabled][disabled].mui-btn-group-raised:active, .mui-btn[disabled][disabled].mui-btn-group-raised:focus:not(:active), fieldset[disabled][disabled]
+.input-group-btn .mui-btn.mui-btn-raised, fieldset[disabled][disabled]
+.input-group-btn .mui-btn.mui-btn-raised.active, fieldset[disabled][disabled]
+.input-group-btn .mui-btn.mui-btn-raised:active, fieldset[disabled][disabled]
+.input-group-btn .mui-btn.mui-btn-raised:focus:not(:active), fieldset[disabled][disabled]
+.input-group-btn .mui-btn.mui-btn-group-raised, fieldset[disabled][disabled]
+.input-group-btn .mui-btn.mui-btn-group-raised.active, fieldset[disabled][disabled]
+.input-group-btn .mui-btn.mui-btn-group-raised:active, fieldset[disabled][disabled]
+.input-group-btn .mui-btn.mui-btn-group-raised:focus:not(:active),
+.input-group-btn .mui-btn.disabled.mui-btn-raised,
+.input-group-btn .mui-btn.disabled.mui-btn-raised.active,
+.input-group-btn .mui-btn.disabled.mui-btn-raised:active,
+.input-group-btn .mui-btn.disabled.mui-btn-raised:focus:not(:active),
+.input-group-btn .mui-btn.disabled.mui-btn-group-raised,
+.input-group-btn .mui-btn.disabled.mui-btn-group-raised.active,
+.input-group-btn .mui-btn.disabled.mui-btn-group-raised:active,
+.input-group-btn .mui-btn.disabled.mui-btn-group-raised:focus:not(:active),
+.input-group-btn .mui-btn:disabled.mui-btn-raised,
+.input-group-btn .mui-btn:disabled.mui-btn-raised.active,
+.input-group-btn .mui-btn:disabled.mui-btn-raised:active,
+.input-group-btn .mui-btn:disabled.mui-btn-raised:focus:not(:active),
+.input-group-btn .mui-btn:disabled.mui-btn-group-raised,
+.input-group-btn .mui-btn:disabled.mui-btn-group-raised.active,
+.input-group-btn .mui-btn:disabled.mui-btn-group-raised:active,
+.input-group-btn .mui-btn:disabled.mui-btn-group-raised:focus:not(:active),
+.input-group-btn .mui-btn[disabled][disabled].mui-btn-raised,
+.input-group-btn .mui-btn[disabled][disabled].mui-btn-raised.active,
+.input-group-btn .mui-btn[disabled][disabled].mui-btn-raised:active,
+.input-group-btn .mui-btn[disabled][disabled].mui-btn-raised:focus:not(:active),
+.input-group-btn .mui-btn[disabled][disabled].mui-btn-group-raised,
+.input-group-btn .mui-btn[disabled][disabled].mui-btn-group-raised.active,
+.input-group-btn .mui-btn[disabled][disabled].mui-btn-group-raised:active,
+.input-group-btn .mui-btn[disabled][disabled].mui-btn-group-raised:focus:not(:active), fieldset[disabled][disabled]
+.mui-btn-group.mui-btn-raised, fieldset[disabled][disabled]
+.mui-btn-group.mui-btn-raised.active, fieldset[disabled][disabled]
+.mui-btn-group.mui-btn-raised:active, fieldset[disabled][disabled]
+.mui-btn-group.mui-btn-raised:focus:not(:active), fieldset[disabled][disabled]
+.mui-btn-group.mui-btn-group-raised, fieldset[disabled][disabled]
+.mui-btn-group.mui-btn-group-raised.active, fieldset[disabled][disabled]
+.mui-btn-group.mui-btn-group-raised:active, fieldset[disabled][disabled]
+.mui-btn-group.mui-btn-group-raised:focus:not(:active),
+.mui-btn-group.disabled.mui-btn-raised,
+.mui-btn-group.disabled.mui-btn-raised.active,
+.mui-btn-group.disabled.mui-btn-raised:active,
+.mui-btn-group.disabled.mui-btn-raised:focus:not(:active),
+.mui-btn-group.disabled.mui-btn-group-raised,
+.mui-btn-group.disabled.mui-btn-group-raised.active,
+.mui-btn-group.disabled.mui-btn-group-raised:active,
+.mui-btn-group.disabled.mui-btn-group-raised:focus:not(:active),
+.mui-btn-group:disabled.mui-btn-raised,
+.mui-btn-group:disabled.mui-btn-raised.active,
+.mui-btn-group:disabled.mui-btn-raised:active,
+.mui-btn-group:disabled.mui-btn-raised:focus:not(:active),
+.mui-btn-group:disabled.mui-btn-group-raised,
+.mui-btn-group:disabled.mui-btn-group-raised.active,
+.mui-btn-group:disabled.mui-btn-group-raised:active,
+.mui-btn-group:disabled.mui-btn-group-raised:focus:not(:active),
+.mui-btn-group[disabled][disabled].mui-btn-raised,
+.mui-btn-group[disabled][disabled].mui-btn-raised.active,
+.mui-btn-group[disabled][disabled].mui-btn-raised:active,
+.mui-btn-group[disabled][disabled].mui-btn-raised:focus:not(:active),
+.mui-btn-group[disabled][disabled].mui-btn-group-raised,
+.mui-btn-group[disabled][disabled].mui-btn-group-raised.active,
+.mui-btn-group[disabled][disabled].mui-btn-group-raised:active,
+.mui-btn-group[disabled][disabled].mui-btn-group-raised:focus:not(:active), fieldset[disabled][disabled]
+.mui-btn-group-vertical.mui-btn-raised, fieldset[disabled][disabled]
+.mui-btn-group-vertical.mui-btn-raised.active, fieldset[disabled][disabled]
+.mui-btn-group-vertical.mui-btn-raised:active, fieldset[disabled][disabled]
+.mui-btn-group-vertical.mui-btn-raised:focus:not(:active), fieldset[disabled][disabled]
+.mui-btn-group-vertical.mui-btn-group-raised, fieldset[disabled][disabled]
+.mui-btn-group-vertical.mui-btn-group-raised.active, fieldset[disabled][disabled]
+.mui-btn-group-vertical.mui-btn-group-raised:active, fieldset[disabled][disabled]
+.mui-btn-group-vertical.mui-btn-group-raised:focus:not(:active),
+.mui-btn-group-vertical.disabled.mui-btn-raised,
+.mui-btn-group-vertical.disabled.mui-btn-raised.active,
+.mui-btn-group-vertical.disabled.mui-btn-raised:active,
+.mui-btn-group-vertical.disabled.mui-btn-raised:focus:not(:active),
+.mui-btn-group-vertical.disabled.mui-btn-group-raised,
+.mui-btn-group-vertical.disabled.mui-btn-group-raised.active,
+.mui-btn-group-vertical.disabled.mui-btn-group-raised:active,
+.mui-btn-group-vertical.disabled.mui-btn-group-raised:focus:not(:active),
+.mui-btn-group-vertical:disabled.mui-btn-raised,
+.mui-btn-group-vertical:disabled.mui-btn-raised.active,
+.mui-btn-group-vertical:disabled.mui-btn-raised:active,
+.mui-btn-group-vertical:disabled.mui-btn-raised:focus:not(:active),
+.mui-btn-group-vertical:disabled.mui-btn-group-raised,
+.mui-btn-group-vertical:disabled.mui-btn-group-raised.active,
+.mui-btn-group-vertical:disabled.mui-btn-group-raised:active,
+.mui-btn-group-vertical:disabled.mui-btn-group-raised:focus:not(:active),
+.mui-btn-group-vertical[disabled][disabled].mui-btn-raised,
+.mui-btn-group-vertical[disabled][disabled].mui-btn-raised.active,
+.mui-btn-group-vertical[disabled][disabled].mui-btn-raised:active,
+.mui-btn-group-vertical[disabled][disabled].mui-btn-raised:focus:not(:active),
+.mui-btn-group-vertical[disabled][disabled].mui-btn-group-raised,
+.mui-btn-group-vertical[disabled][disabled].mui-btn-group-raised.active,
+.mui-btn-group-vertical[disabled][disabled].mui-btn-group-raised:active,
+.mui-btn-group-vertical[disabled][disabled].mui-btn-group-raised:focus:not(:active) {
   box-shadow: none;
 }
 
-.btn-group,
-.btn-group-vertical {
+.mui-btn-group,
+.mui-btn-group-vertical {
   position: relative;
   margin: 10px 1px;
 }
-.btn-group.open > .dropdown-toggle.btn, .btn-group.open > .dropdown-toggle.btn.btn-default,
-.btn-group-vertical.open > .dropdown-toggle.btn,
-.btn-group-vertical.open > .dropdown-toggle.btn.btn-default {
+.mui-btn-group.open > .dropdown-toggle.mui-btn, .mui-btn-group.open > .dropdown-toggle.mui-btn.mui-btn-default,
+.mui-btn-group-vertical.open > .dropdown-toggle.mui-btn,
+.mui-btn-group-vertical.open > .dropdown-toggle.mui-btn.mui-btn-default {
   background-color: #EEEEEE;
 }
-.btn-group.open > .dropdown-toggle.btn.btn-inverse,
-.btn-group-vertical.open > .dropdown-toggle.btn.btn-inverse {
+.mui-btn-group.open > .dropdown-toggle.mui-btn.mui-btn-inverse,
+.mui-btn-group-vertical.open > .dropdown-toggle.mui-btn.mui-btn-inverse {
   background-color: #3f51b5;
 }
-.btn-group.open > .dropdown-toggle.btn.btn-primary,
-.btn-group-vertical.open > .dropdown-toggle.btn.btn-primary {
+.mui-btn-group.open > .dropdown-toggle.mui-btn.mui-btn-primary,
+.mui-btn-group-vertical.open > .dropdown-toggle.mui-btn.mui-btn-primary {
   background-color: #9c27b0;
 }
-.btn-group.open > .dropdown-toggle.btn.btn-success,
-.btn-group-vertical.open > .dropdown-toggle.btn.btn-success {
+.mui-btn-group.open > .dropdown-toggle.mui-btn.mui-btn-success,
+.mui-btn-group-vertical.open > .dropdown-toggle.mui-btn.mui-btn-success {
   background-color: #4caf50;
 }
-.btn-group.open > .dropdown-toggle.btn.btn-info,
-.btn-group-vertical.open > .dropdown-toggle.btn.btn-info {
+.mui-btn-group.open > .dropdown-toggle.mui-btn.mui-btn-info,
+.mui-btn-group-vertical.open > .dropdown-toggle.mui-btn.mui-btn-info {
   background-color: #03a9f4;
 }
-.btn-group.open > .dropdown-toggle.btn.btn-warning,
-.btn-group-vertical.open > .dropdown-toggle.btn.btn-warning {
+.mui-btn-group.open > .dropdown-toggle.mui-btn.mui-btn-warning,
+.mui-btn-group-vertical.open > .dropdown-toggle.mui-btn.mui-btn-warning {
   background-color: #fbc02d;
 }
-.btn-group.open > .dropdown-toggle.btn.btn-danger,
-.btn-group-vertical.open > .dropdown-toggle.btn.btn-danger {
+.mui-btn-group.open > .dropdown-toggle.mui-btn.mui-btn-danger,
+.mui-btn-group-vertical.open > .dropdown-toggle.mui-btn.mui-btn-danger {
   background-color: #f44336;
 }
-.btn-group .dropdown-menu,
-.btn-group-vertical .dropdown-menu {
+.mui-btn-group .dropdown-menu,
+.mui-btn-group-vertical .dropdown-menu {
   border-radius: 0 0 3px 3px;
 }
-.btn-group.btn-group-raised,
-.btn-group-vertical.btn-group-raised {
+.mui-btn-group.mui-btn-group-raised,
+.mui-btn-group-vertical.mui-btn-group-raised {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
-.btn-group .btn + .btn,
-.btn-group .btn,
-.btn-group .btn:active,
-.btn-group .btn-group,
-.btn-group-vertical .btn + .btn,
-.btn-group-vertical .btn,
-.btn-group-vertical .btn:active,
-.btn-group-vertical .btn-group {
+.mui-btn-group .mui-btn + .mui-btn,
+.mui-btn-group .mui-btn,
+.mui-btn-group .mui-btn:active,
+.mui-btn-group .mui-btn-group,
+.mui-btn-group-vertical .mui-btn + .mui-btn,
+.mui-btn-group-vertical .mui-btn,
+.mui-btn-group-vertical .mui-btn:active,
+.mui-btn-group-vertical .mui-btn-group {
   margin: 0;
 }
 
@@ -593,13 +601,13 @@ fieldset[disabled][disabled] .btn.btn-raised, fieldset[disabled][disabled] .btn.
   padding-left: 0;
   color: rgba(0,0,0, 0.26);
 }
-.form-group.is-focused .checkbox label {
+.mui-form-group.is-focused .checkbox label {
   color: rgba(0,0,0, 0.26);
 }
-.form-group.is-focused .checkbox label:hover, .form-group.is-focused .checkbox label:focus {
+.mui-form-group.is-focused .checkbox label:hover, .mui-form-group.is-focused .checkbox label:focus {
   color: rgba(0,0,0, .54);
 }
-fieldset[disabled] .form-group.is-focused .checkbox label {
+fieldset[disabled] .mui-form-group.is-focused .checkbox label {
   color: rgba(0,0,0, 0.26);
 }
 .checkbox input[type=checkbox] {
@@ -736,13 +744,13 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
   cursor: pointer;
   color: rgba(0,0,0, 0.26);
 }
-.form-group.is-focused .togglebutton label {
+.mui-form-group.is-focused .togglebutton label {
   color: rgba(0,0,0, 0.26);
 }
-.form-group.is-focused .togglebutton label:hover, .form-group.is-focused .togglebutton label:focus {
+.mui-form-group.is-focused .togglebutton label:hover, .mui-form-group.is-focused .togglebutton label:focus {
   color: rgba(0,0,0, .54);
 }
-fieldset[disabled] .form-group.is-focused .togglebutton label {
+fieldset[disabled] .mui-form-group.is-focused .togglebutton label {
   color: rgba(0,0,0, 0.26);
 }
 .togglebutton label input[type=checkbox] {
@@ -805,13 +813,13 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   position: relative;
   color: rgba(0,0,0, 0.26);
 }
-.form-group.is-focused .radio label {
+.mui-form-group.is-focused .radio label {
   color: rgba(0,0,0, 0.26);
 }
-.form-group.is-focused .radio label:hover, .form-group.is-focused .radio label:focus {
+.mui-form-group.is-focused .radio label:hover, .mui-form-group.is-focused .radio label:focus {
   color: rgba(0,0,0, .54);
 }
-fieldset[disabled] .form-group.is-focused .radio label {
+fieldset[disabled] .mui-form-group.is-focused .radio label {
   color: rgba(0,0,0, 0.26);
 }
 .radio label span {
@@ -916,7 +924,7 @@ output {
   line-height: 1.42857;
 }
 
-.form-control {
+.mui-form-control {
   height: 36px;
   padding: 7px 0;
   font-size: 14px;
@@ -924,10 +932,10 @@ output {
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  input[type="date"].form-control,
-  input[type="time"].form-control,
-  input[type="datetime-local"].form-control,
-  input[type="month"].form-control {
+  input[type="date"].mui-form-control,
+  input[type="time"].mui-form-control,
+  input[type="datetime-local"].mui-form-control,
+  input[type="month"].mui-form-control {
     line-height: 36px;
   }
   input[type="date"].input-sm, .input-group-sm input[type="date"],
@@ -954,7 +962,7 @@ output {
   min-height: 20px;
 }
 
-.form-control-static {
+.mui-form-control-static {
   padding-top: 8px;
   padding-bottom: 8px;
   min-height: 34px;
@@ -976,21 +984,21 @@ output {
   height: auto;
 }
 
-.form-group-sm .form-control {
+.mui-form-group-sm .mui-form-control {
   height: 24px;
   padding: 3px 0;
   font-size: 11px;
   line-height: 1.5;
 }
-.form-group-sm select.form-control {
+.mui-form-group-sm select.mui-form-control {
   height: 24px;
   line-height: 24px;
 }
-.form-group-sm textarea.form-control,
-.form-group-sm select[multiple].form-control {
+.mui-form-group-sm textarea.mui-form-control,
+.mui-form-group-sm select[multiple].mui-form-control {
   height: auto;
 }
-.form-group-sm .form-control-static {
+.mui-form-group-sm .mui-form-control-static {
   height: 24px;
   min-height: 31px;
   padding: 4px 0;
@@ -1014,21 +1022,21 @@ output {
   height: auto;
 }
 
-.form-group-lg .form-control {
+.mui-form-group-lg .mui-form-control {
   height: 44px;
   padding: 9px 0;
   font-size: 18px;
   line-height: 1.33333;
 }
-.form-group-lg select.form-control {
+.mui-form-group-lg select.mui-form-control {
   height: 44px;
   line-height: 44px;
 }
-.form-group-lg textarea.form-control,
-.form-group-lg select[multiple].form-control {
+.mui-form-group-lg textarea.mui-form-control,
+.mui-form-group-lg select[multiple].mui-form-control {
   height: auto;
 }
-.form-group-lg .form-control-static {
+.mui-form-group-lg .mui-form-control-static {
   height: 44px;
   min-height: 38px;
   padding: 10px 0;
@@ -1052,13 +1060,13 @@ output {
   }
 }
 @media (min-width: 768px) {
-  .form-horizontal .form-group-lg .control-label {
+  .form-horizontal .mui-form-group-lg .control-label {
     padding-top: 13.0px;
     font-size: 18px;
   }
 }
 @media (min-width: 768px) {
-  .form-horizontal .form-group-sm .control-label {
+  .form-horizontal .mui-form-group-sm .control-label {
     padding-top: 4px;
     font-size: 11px;
   }
@@ -1089,8 +1097,8 @@ output {
   background-color: #f44336;
 }
 
-.form-control,
-.form-group .form-control {
+.mui-form-control,
+.mui-form-group .mui-form-control {
   border: 0;
   background-image: linear-gradient(#9c27b0, #9c27b0), linear-gradient(#D2D2D2, #D2D2D2);
   background-size: 0 2px, 100% 1px;
@@ -1103,142 +1111,142 @@ output {
   border-radius: 0;
   font-weight: 400;
 }
-.form-control::-moz-placeholder,
-.form-group .form-control::-moz-placeholder {
+.mui-form-control::-moz-placeholder,
+.mui-form-group .mui-form-control::-moz-placeholder {
   color: #AAAAAA;
   font-weight: 400;
 }
-.form-control:-ms-input-placeholder,
-.form-group .form-control:-ms-input-placeholder {
+.mui-form-control:-ms-input-placeholder,
+.mui-form-group .mui-form-control:-ms-input-placeholder {
   color: #AAAAAA;
   font-weight: 400;
 }
-.form-control::-webkit-input-placeholder,
-.form-group .form-control::-webkit-input-placeholder {
+.mui-form-control::-webkit-input-placeholder,
+.mui-form-group .mui-form-control::-webkit-input-placeholder {
   color: #AAAAAA;
   font-weight: 400;
 }
-.form-control[readonly], .form-control[disabled], fieldset[disabled] .form-control,
-.form-group .form-control[readonly],
-.form-group .form-control[disabled], fieldset[disabled]
-.form-group .form-control {
+.mui-form-control[readonly], .mui-form-control[disabled], fieldset[disabled] .mui-form-control,
+.mui-form-group .mui-form-control[readonly],
+.mui-form-group .mui-form-control[disabled], fieldset[disabled]
+.mui-form-group .mui-form-control {
   background-color: transparent;
 }
-.form-control[disabled], fieldset[disabled] .form-control,
-.form-group .form-control[disabled], fieldset[disabled]
-.form-group .form-control {
+.mui-form-control[disabled], fieldset[disabled] .mui-form-control,
+.mui-form-group .mui-form-control[disabled], fieldset[disabled]
+.mui-form-group .mui-form-control {
   background-image: none;
   border-bottom: 1px dotted #D2D2D2;
 }
 
-.form-group {
+.mui-form-group {
   position: relative;
 }
-.form-group.label-static label.control-label, .form-group.label-placeholder label.control-label, .form-group.label-floating label.control-label {
+.mui-form-group.label-static label.control-label, .mui-form-group.label-placeholder label.control-label, .mui-form-group.label-floating label.control-label {
   position: absolute;
   pointer-events: none;
   transition: 0.3s ease all;
 }
-.form-group.label-floating label.control-label {
+.mui-form-group.label-floating label.control-label {
   will-change: left, top, contents;
 }
-.form-group.label-placeholder:not(.is-empty) label.control-label {
+.mui-form-group.label-placeholder:not(.is-empty) label.control-label {
   display: none;
 }
-.form-group .help-block {
+.mui-form-group .help-block {
   position: absolute;
   display: none;
 }
-.form-group.is-focused .form-control {
+.mui-form-group.is-focused .mui-form-control {
   outline: none;
-  background-image: linear-gradient(#9c27b0, #9c27b0), linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: linear-gradient(#5f76b9, #5f76b9), linear-gradient(#D2D2D2, #D2D2D2);
   background-size: 100% 2px, 100% 1px;
   box-shadow: none;
   transition-duration: 0.3s;
 }
-.form-group.is-focused .form-control .material-input:after {
+.mui-form-group.is-focused .mui-form-control .material-input:after {
   background-color: #9c27b0;
 }
-.form-group.is-focused label,
-.form-group.is-focused label.control-label {
+.mui-form-group.is-focused label,
+.mui-form-group.is-focused label.control-label {
   color: #9c27b0;
 }
-.form-group.is-focused.label-placeholder label,
-.form-group.is-focused.label-placeholder label.control-label {
+.mui-form-group.is-focused.label-placeholder label,
+.mui-form-group.is-focused.label-placeholder label.control-label {
   color: #AAAAAA;
 }
-.form-group.is-focused .help-block {
+.mui-form-group.is-focused .help-block {
   display: block;
 }
-.form-group.has-warning .form-control {
+.mui-form-group.has-warning .mui-form-control {
   box-shadow: none;
 }
-.form-group.has-warning.is-focused .form-control {
+.mui-form-group.has-warning.is-focused .mui-form-control {
   background-image: linear-gradient(#fbc02d, #fbc02d), linear-gradient(#D2D2D2, #D2D2D2);
 }
-.form-group.has-warning label.control-label,
-.form-group.has-warning .help-block {
+.mui-form-group.has-warning label.control-label,
+.mui-form-group.has-warning .help-block {
   color: #fbc02d;
 }
-.form-group.has-error .form-control {
+.mui-form-group.has-error .mui-form-control {
   box-shadow: none;
 }
-.form-group.has-error.is-focused .form-control {
+.mui-form-group.has-error.is-focused .mui-form-control {
   background-image: linear-gradient(#f44336, #f44336), linear-gradient(#D2D2D2, #D2D2D2);
 }
-.form-group.has-error label.control-label,
-.form-group.has-error .help-block {
+.mui-form-group.has-error label.control-label,
+.mui-form-group.has-error .help-block {
   color: #f44336;
 }
-.form-group.has-success .form-control {
+.mui-form-group.has-success .mui-form-control {
   box-shadow: none;
 }
-.form-group.has-success.is-focused .form-control {
+.mui-form-group.has-success.is-focused .mui-form-control {
   background-image: linear-gradient(#4caf50, #4caf50), linear-gradient(#D2D2D2, #D2D2D2);
 }
-.form-group.has-success label.control-label,
-.form-group.has-success .help-block {
+.mui-form-group.has-success label.control-label,
+.mui-form-group.has-success .help-block {
   color: #4caf50;
 }
-.form-group.has-info .form-control {
+.mui-form-group.has-info .mui-form-control {
   box-shadow: none;
 }
-.form-group.has-info.is-focused .form-control {
+.mui-form-group.has-info.is-focused .mui-form-control {
   background-image: linear-gradient(#03a9f4, #03a9f4), linear-gradient(#D2D2D2, #D2D2D2);
 }
-.form-group.has-info label.control-label,
-.form-group.has-info .help-block {
+.mui-form-group.has-info label.control-label,
+.mui-form-group.has-info .help-block {
   color: #03a9f4;
 }
-.form-group textarea {
+.mui-form-group textarea {
   resize: none;
 }
-.form-group textarea ~ .form-control-highlight {
+.mui-form-group textarea ~ .mui-form-control-highlight {
   margin-top: -11px;
 }
-.form-group select {
+.mui-form-group select {
   appearance: none;
 }
-.form-group select ~ .material-input:after {
+.mui-form-group select ~ .material-input:after {
   display: none;
 }
 
-.form-control {
+.mui-form-control {
   margin-bottom: 7px;
 }
-.form-control::-moz-placeholder {
+.mui-form-control::-moz-placeholder {
   font-size: 14px;
   line-height: 1.42857;
   color: #AAAAAA;
   font-weight: 400;
 }
-.form-control:-ms-input-placeholder {
+.mui-form-control:-ms-input-placeholder {
   font-size: 14px;
   line-height: 1.42857;
   color: #AAAAAA;
   font-weight: 400;
 }
-.form-control::-webkit-input-placeholder {
+.mui-form-control::-webkit-input-placeholder {
   font-size: 14px;
   line-height: 1.42857;
   color: #AAAAAA;
@@ -1267,213 +1275,213 @@ label.control-label {
   font-size: 11px;
 }
 
-.form-group {
+.mui-form-group {
   padding-bottom: 7px;
-  margin: 27px 0 0 0;
+  margin: 15px 0 0 0;
 }
-.form-group .form-control {
+.mui-form-group .mui-form-control {
   margin-bottom: 7px;
 }
-.form-group .form-control::-moz-placeholder {
+.mui-form-group .mui-form-control::-moz-placeholder {
   font-size: 14px;
   line-height: 1.42857;
   color: #AAAAAA;
   font-weight: 400;
 }
-.form-group .form-control:-ms-input-placeholder {
+.mui-form-group .mui-form-control:-ms-input-placeholder {
   font-size: 14px;
   line-height: 1.42857;
   color: #AAAAAA;
   font-weight: 400;
 }
-.form-group .form-control::-webkit-input-placeholder {
+.mui-form-group .mui-form-control::-webkit-input-placeholder {
   font-size: 14px;
   line-height: 1.42857;
   color: #AAAAAA;
   font-weight: 400;
 }
-.form-group .checkbox label,
-.form-group .radio label,
-.form-group label {
+.mui-form-group .checkbox label,
+.mui-form-group .radio label,
+.mui-form-group label {
   font-size: 14px;
   line-height: 1.42857;
   color: #AAAAAA;
   font-weight: 400;
 }
-.form-group label.control-label {
+.mui-form-group label.control-label {
   font-size: 11px;
   line-height: 1.07143;
   color: #AAAAAA;
   font-weight: 400;
   margin: 16px 0 0 0;
 }
-.form-group .help-block {
+.mui-form-group .help-block {
   margin-top: 0;
   font-size: 11px;
 }
-.form-group.label-floating label.control-label, .form-group.label-placeholder label.control-label {
+.mui-form-group.label-floating label.control-label, .mui-form-group.label-placeholder label.control-label {
   top: -7px;
   font-size: 14px;
   line-height: 1.42857;
 }
-.form-group.label-static label.control-label, .form-group.label-floating.is-focused label.control-label, .form-group.label-floating:not(.is-empty) label.control-label {
+.mui-form-group.label-static label.control-label, .mui-form-group.label-floating.is-focused label.control-label, .mui-form-group.label-floating:not(.is-empty) label.control-label {
   top: -28px;
   left: 0;
   font-size: 11px;
   line-height: 1.07143;
 }
-.form-group.label-floating input.form-control:-webkit-autofill ~ label.control-label label.control-label {
+.mui-form-group.label-floating input.mui-form-control:-webkit-autofill ~ label.control-label label.control-label {
   top: -28px;
   left: 0;
   font-size: 11px;
   line-height: 1.07143;
 }
 
-.form-group.form-group-sm {
+.mui-form-group.mui-form-group-sm {
   padding-bottom: 3px;
   margin: 21px 0 0 0;
 }
-.form-group.form-group-sm .form-control {
+.mui-form-group.mui-form-group-sm .mui-form-control {
   margin-bottom: 3px;
 }
-.form-group.form-group-sm .form-control::-moz-placeholder {
+.mui-form-group.mui-form-group-sm .mui-form-control::-moz-placeholder {
   font-size: 11px;
   line-height: 1.5;
   color: #AAAAAA;
   font-weight: 400;
 }
-.form-group.form-group-sm .form-control:-ms-input-placeholder {
+.mui-form-group.mui-form-group-sm .mui-form-control:-ms-input-placeholder {
   font-size: 11px;
   line-height: 1.5;
   color: #AAAAAA;
   font-weight: 400;
 }
-.form-group.form-group-sm .form-control::-webkit-input-placeholder {
+.mui-form-group.mui-form-group-sm .mui-form-control::-webkit-input-placeholder {
   font-size: 11px;
   line-height: 1.5;
   color: #AAAAAA;
   font-weight: 400;
 }
-.form-group.form-group-sm .checkbox label,
-.form-group.form-group-sm .radio label,
-.form-group.form-group-sm label {
+.mui-form-group.mui-form-group-sm .checkbox label,
+.mui-form-group.mui-form-group-sm .radio label,
+.mui-form-group.mui-form-group-sm label {
   font-size: 11px;
   line-height: 1.5;
   color: #AAAAAA;
   font-weight: 400;
 }
-.form-group.form-group-sm label.control-label {
+.mui-form-group.mui-form-group-sm label.control-label {
   font-size: 9px;
   line-height: 1.125;
   color: #AAAAAA;
   font-weight: 400;
   margin: 16px 0 0 0;
 }
-.form-group.form-group-sm .help-block {
+.mui-form-group.mui-form-group-sm .help-block {
   margin-top: 0;
   font-size: 9px;
 }
-.form-group.form-group-sm.label-floating label.control-label, .form-group.form-group-sm.label-placeholder label.control-label {
+.mui-form-group.mui-form-group-sm.label-floating label.control-label, .mui-form-group.mui-form-group-sm.label-placeholder label.control-label {
   top: -11px;
   font-size: 11px;
   line-height: 1.5;
 }
-.form-group.form-group-sm.label-static label.control-label, .form-group.form-group-sm.label-floating.is-focused label.control-label, .form-group.form-group-sm.label-floating:not(.is-empty) label.control-label {
+.mui-form-group.mui-form-group-sm.label-static label.control-label, .mui-form-group.mui-form-group-sm.label-floating.is-focused label.control-label, .mui-form-group.mui-form-group-sm.label-floating:not(.is-empty) label.control-label {
   top: -25px;
   left: 0;
   font-size: 9px;
   line-height: 1.125;
 }
-.form-group.form-group-sm.label-floating input.form-control:-webkit-autofill ~ label.control-label label.control-label {
+.mui-form-group.mui-form-group-sm.label-floating input.mui-form-control:-webkit-autofill ~ label.control-label label.control-label {
   top: -25px;
   left: 0;
   font-size: 9px;
   line-height: 1.125;
 }
 
-.form-group.form-group-lg {
+.mui-form-group.mui-form-group-lg {
   padding-bottom: 9px;
   margin: 30px 0 0 0;
 }
-.form-group.form-group-lg .form-control {
+.mui-form-group.mui-form-group-lg .mui-form-control {
   margin-bottom: 9px;
 }
-.form-group.form-group-lg .form-control::-moz-placeholder {
+.mui-form-group.mui-form-group-lg .mui-form-control::-moz-placeholder {
   font-size: 18px;
   line-height: 1.33333;
   color: #AAAAAA;
   font-weight: 400;
 }
-.form-group.form-group-lg .form-control:-ms-input-placeholder {
+.mui-form-group.mui-form-group-lg .mui-form-control:-ms-input-placeholder {
   font-size: 18px;
   line-height: 1.33333;
   color: #AAAAAA;
   font-weight: 400;
 }
-.form-group.form-group-lg .form-control::-webkit-input-placeholder {
+.mui-form-group.mui-form-group-lg .mui-form-control::-webkit-input-placeholder {
   font-size: 18px;
   line-height: 1.33333;
   color: #AAAAAA;
   font-weight: 400;
 }
-.form-group.form-group-lg .checkbox label,
-.form-group.form-group-lg .radio label,
-.form-group.form-group-lg label {
+.mui-form-group.mui-form-group-lg .checkbox label,
+.mui-form-group.mui-form-group-lg .radio label,
+.mui-form-group.mui-form-group-lg label {
   font-size: 18px;
   line-height: 1.33333;
   color: #AAAAAA;
   font-weight: 400;
 }
-.form-group.form-group-lg label.control-label {
+.mui-form-group.mui-form-group-lg label.control-label {
   font-size: 14px;
   line-height: 1.0;
   color: #AAAAAA;
   font-weight: 400;
   margin: 16px 0 0 0;
 }
-.form-group.form-group-lg .help-block {
+.mui-form-group.mui-form-group-lg .help-block {
   margin-top: 0;
   font-size: 14px;
 }
-.form-group.form-group-lg.label-floating label.control-label, .form-group.form-group-lg.label-placeholder label.control-label {
+.mui-form-group.mui-form-group-lg.label-floating label.control-label, .mui-form-group.mui-form-group-lg.label-placeholder label.control-label {
   top: -5px;
   font-size: 18px;
   line-height: 1.33333;
 }
-.form-group.form-group-lg.label-static label.control-label, .form-group.form-group-lg.label-floating.is-focused label.control-label, .form-group.form-group-lg.label-floating:not(.is-empty) label.control-label {
+.mui-form-group.mui-form-group-lg.label-static label.control-label, .mui-form-group.mui-form-group-lg.label-floating.is-focused label.control-label, .mui-form-group.mui-form-group-lg.label-floating:not(.is-empty) label.control-label {
   top: -32px;
   left: 0;
   font-size: 14px;
   line-height: 1.0;
 }
-.form-group.form-group-lg.label-floating input.form-control:-webkit-autofill ~ label.control-label label.control-label {
+.mui-form-group.mui-form-group-lg.label-floating input.mui-form-control:-webkit-autofill ~ label.control-label label.control-label {
   top: -32px;
   left: 0;
   font-size: 14px;
   line-height: 1.0;
 }
 
-select.form-control {
+select.mui-form-control {
   border: 0;
   box-shadow: none;
   border-radius: 0;
 }
-.form-group.is-focused select.form-control {
+.mui-form-group.is-focused select.mui-form-control {
   box-shadow: none;
   border-color: #D2D2D2;
 }
-select.form-control[multiple], .form-group.is-focused select.form-control[multiple] {
+select.mui-form-control[multiple], .mui-form-group.is-focused select.mui-form-control[multiple] {
   height: 85px;
 }
 
-.input-group-btn .btn {
+.input-group-btn .mui-btn {
   margin: 0 0 7px 0;
 }
 
-.form-group.form-group-sm .input-group-btn .btn {
+.mui-form-group.mui-form-group-sm .input-group-btn .mui-btn {
   margin: 0 0 3px 0;
 }
-.form-group.form-group-lg .input-group-btn .btn {
+.mui-form-group.mui-form-group-lg .input-group-btn .mui-btn {
   margin: 0 0 9px 0;
 }
 
@@ -1486,7 +1494,7 @@ select.form-control[multiple], .form-group.is-focused select.form-control[multip
   padding: 12px 15px 0px;
 }
 
-.form-group input[type=file] {
+.mui-form-group input[type=file] {
   opacity: 0;
   position: absolute;
   top: 0;
@@ -1498,14 +1506,14 @@ select.form-control[multiple], .form-group.is-focused select.form-control[multip
   z-index: 100;
 }
 
-.form-control-feedback {
+.mui-form-control-feedback {
   opacity: 0;
 }
-.has-success .form-control-feedback {
+.has-success .mui-form-control-feedback {
   color: #4caf50;
   opacity: 1;
 }
-.has-error .form-control-feedback {
+.has-error .mui-form-control-feedback {
   color: #f44336;
   opacity: 1;
 }
@@ -1613,18 +1621,19 @@ select.form-control[multiple], .form-group.is-focused select.form-control[multip
   background-color: #f44336;
 }
 
-footer {
+.mui-footer {
   padding: 15px 0;
+  margin: 0 0 15px 0;
 }
-footer ul {
+.mui-footer ul {
   margin-bottom: 0;
   padding: 0;
   list-style: none;
 }
-footer ul li {
+.mui-footer ul li {
   display: inline-block;
 }
-footer ul li a {
+.mui-footer ul li a {
   color: inherit;
   padding: 15px;
   font-weight: 500;
@@ -1635,13 +1644,13 @@ footer ul li a {
   position: relative;
   display: block;
 }
-footer ul li a:hover {
+.mui-footer ul li a:hover {
   text-decoration: none;
 }
-footer .copyright {
+.mui-footer .copyright {
   padding: 15px 0;
 }
-footer .copyright .material-icons {
+.mui-footer .copyright .material-icons {
   font-size: 18px;
   position: relative;
   top: 3px;
@@ -1772,31 +1781,31 @@ legend {
 .navbar .navbar-link:hover {
   color: inherit;
 }
-.navbar .btn {
+.navbar .mui-btn {
   margin-top: 0;
   margin-bottom: 0;
 }
-.navbar .btn-link {
+.navbar .mui-btn-link {
   color: inherit;
 }
-.navbar .btn-link:hover, .navbar .btn-link:focus {
+.navbar .mui-btn-link:hover, .navbar .mui-btn-link:focus {
   color: inherit;
 }
-.navbar .btn-link[disabled]:hover, .navbar .btn-link[disabled]:focus, fieldset[disabled] .navbar .btn-link:hover, fieldset[disabled] .navbar .btn-link:focus {
+.navbar .mui-btn-link[disabled]:hover, .navbar .mui-btn-link[disabled]:focus, fieldset[disabled] .navbar .mui-btn-link:hover, fieldset[disabled] .navbar .mui-btn-link:focus {
   color: inherit;
 }
 .navbar .navbar-form {
   margin-top: 16px;
 }
-.navbar .navbar-form .form-group {
+.navbar .navbar-form .mui-form-group {
   margin: 0;
   padding: 0;
 }
-.navbar .navbar-form .form-group .material-input:before, .navbar .navbar-form .form-group.is-focused .material-input:after {
+.navbar .navbar-form .mui-form-group .material-input:before, .navbar .navbar-form .mui-form-group.is-focused .material-input:after {
   background-color: inherit;
 }
-.navbar .navbar-form .form-group .form-control,
-.navbar .navbar-form .form-control {
+.navbar .navbar-form .mui-form-group .mui-form-control,
+.navbar .navbar-form .mui-form-control {
   border-color: inherit;
   color: inherit;
   padding: 0;
@@ -1809,19 +1818,19 @@ legend {
   background-color: #9c27b0;
   color: #ffffff;
 }
-.navbar .navbar-form .form-group input.form-control::-moz-placeholder,
-.navbar .navbar-form input.form-control::-moz-placeholder, .navbar.navbar-default .navbar-form .form-group input.form-control::-moz-placeholder,
-.navbar.navbar-default .navbar-form input.form-control::-moz-placeholder {
+.navbar .navbar-form .mui-form-group input.mui-form-control::-moz-placeholder,
+.navbar .navbar-form input.mui-form-control::-moz-placeholder, .navbar.navbar-default .navbar-form .mui-form-group input.mui-form-control::-moz-placeholder,
+.navbar.navbar-default .navbar-form input.mui-form-control::-moz-placeholder {
   color: #ffffff;
 }
-.navbar .navbar-form .form-group input.form-control:-ms-input-placeholder,
-.navbar .navbar-form input.form-control:-ms-input-placeholder, .navbar.navbar-default .navbar-form .form-group input.form-control:-ms-input-placeholder,
-.navbar.navbar-default .navbar-form input.form-control:-ms-input-placeholder {
+.navbar .navbar-form .mui-form-group input.mui-form-control:-ms-input-placeholder,
+.navbar .navbar-form input.mui-form-control:-ms-input-placeholder, .navbar.navbar-default .navbar-form .mui-form-group input.mui-form-control:-ms-input-placeholder,
+.navbar.navbar-default .navbar-form input.mui-form-control:-ms-input-placeholder {
   color: #ffffff;
 }
-.navbar .navbar-form .form-group input.form-control::-webkit-input-placeholder,
-.navbar .navbar-form input.form-control::-webkit-input-placeholder, .navbar.navbar-default .navbar-form .form-group input.form-control::-webkit-input-placeholder,
-.navbar.navbar-default .navbar-form input.form-control::-webkit-input-placeholder {
+.navbar .navbar-form .mui-form-group input.mui-form-control::-webkit-input-placeholder,
+.navbar .navbar-form input.mui-form-control::-webkit-input-placeholder, .navbar.navbar-default .navbar-form .mui-form-group input.mui-form-control::-webkit-input-placeholder,
+.navbar.navbar-default .navbar-form input.mui-form-control::-webkit-input-placeholder {
   color: #ffffff;
 }
 .navbar .dropdown-menu, .navbar.navbar-default .dropdown-menu {
@@ -1842,16 +1851,16 @@ legend {
   background-color: #3f51b5;
   color: contrast-color(#3f51b5, #000000, #ffffff);
 }
-.navbar.navbar-inverse .navbar-form .form-group input.form-control::-moz-placeholder,
-.navbar.navbar-inverse .navbar-form input.form-control::-moz-placeholder {
+.navbar.navbar-inverse .navbar-form .mui-form-group input.mui-form-control::-moz-placeholder,
+.navbar.navbar-inverse .navbar-form input.mui-form-control::-moz-placeholder {
   color: contrast-color(#3f51b5, #000000, #ffffff);
 }
-.navbar.navbar-inverse .navbar-form .form-group input.form-control:-ms-input-placeholder,
-.navbar.navbar-inverse .navbar-form input.form-control:-ms-input-placeholder {
+.navbar.navbar-inverse .navbar-form .mui-form-group input.mui-form-control:-ms-input-placeholder,
+.navbar.navbar-inverse .navbar-form input.mui-form-control:-ms-input-placeholder {
   color: contrast-color(#3f51b5, #000000, #ffffff);
 }
-.navbar.navbar-inverse .navbar-form .form-group input.form-control::-webkit-input-placeholder,
-.navbar.navbar-inverse .navbar-form input.form-control::-webkit-input-placeholder {
+.navbar.navbar-inverse .navbar-form .mui-form-group input.mui-form-control::-webkit-input-placeholder,
+.navbar.navbar-inverse .navbar-form input.mui-form-control::-webkit-input-placeholder {
   color: contrast-color(#3f51b5, #000000, #ffffff);
 }
 .navbar.navbar-inverse .dropdown-menu {
@@ -1872,16 +1881,16 @@ legend {
   background-color: #9c27b0;
   color: #ffffff;
 }
-.navbar.navbar-primary .navbar-form .form-group input.form-control::-moz-placeholder,
-.navbar.navbar-primary .navbar-form input.form-control::-moz-placeholder {
+.navbar.navbar-primary .navbar-form .mui-form-group input.mui-form-control::-moz-placeholder,
+.navbar.navbar-primary .navbar-form input.mui-form-control::-moz-placeholder {
   color: #ffffff;
 }
-.navbar.navbar-primary .navbar-form .form-group input.form-control:-ms-input-placeholder,
-.navbar.navbar-primary .navbar-form input.form-control:-ms-input-placeholder {
+.navbar.navbar-primary .navbar-form .mui-form-group input.mui-form-control:-ms-input-placeholder,
+.navbar.navbar-primary .navbar-form input.mui-form-control:-ms-input-placeholder {
   color: #ffffff;
 }
-.navbar.navbar-primary .navbar-form .form-group input.form-control::-webkit-input-placeholder,
-.navbar.navbar-primary .navbar-form input.form-control::-webkit-input-placeholder {
+.navbar.navbar-primary .navbar-form .mui-form-group input.mui-form-control::-webkit-input-placeholder,
+.navbar.navbar-primary .navbar-form input.mui-form-control::-webkit-input-placeholder {
   color: #ffffff;
 }
 .navbar.navbar-primary .dropdown-menu {
@@ -1902,16 +1911,16 @@ legend {
   background-color: #4caf50;
   color: #ffffff;
 }
-.navbar.navbar-success .navbar-form .form-group input.form-control::-moz-placeholder,
-.navbar.navbar-success .navbar-form input.form-control::-moz-placeholder {
+.navbar.navbar-success .navbar-form .mui-form-group input.mui-form-control::-moz-placeholder,
+.navbar.navbar-success .navbar-form input.mui-form-control::-moz-placeholder {
   color: #ffffff;
 }
-.navbar.navbar-success .navbar-form .form-group input.form-control:-ms-input-placeholder,
-.navbar.navbar-success .navbar-form input.form-control:-ms-input-placeholder {
+.navbar.navbar-success .navbar-form .mui-form-group input.mui-form-control:-ms-input-placeholder,
+.navbar.navbar-success .navbar-form input.mui-form-control:-ms-input-placeholder {
   color: #ffffff;
 }
-.navbar.navbar-success .navbar-form .form-group input.form-control::-webkit-input-placeholder,
-.navbar.navbar-success .navbar-form input.form-control::-webkit-input-placeholder {
+.navbar.navbar-success .navbar-form .mui-form-group input.mui-form-control::-webkit-input-placeholder,
+.navbar.navbar-success .navbar-form input.mui-form-control::-webkit-input-placeholder {
   color: #ffffff;
 }
 .navbar.navbar-success .dropdown-menu {
@@ -1932,16 +1941,16 @@ legend {
   background-color: #03a9f4;
   color: #ffffff;
 }
-.navbar.navbar-info .navbar-form .form-group input.form-control::-moz-placeholder,
-.navbar.navbar-info .navbar-form input.form-control::-moz-placeholder {
+.navbar.navbar-info .navbar-form .mui-form-group input.mui-form-control::-moz-placeholder,
+.navbar.navbar-info .navbar-form input.mui-form-control::-moz-placeholder {
   color: #ffffff;
 }
-.navbar.navbar-info .navbar-form .form-group input.form-control:-ms-input-placeholder,
-.navbar.navbar-info .navbar-form input.form-control:-ms-input-placeholder {
+.navbar.navbar-info .navbar-form .mui-form-group input.mui-form-control:-ms-input-placeholder,
+.navbar.navbar-info .navbar-form input.mui-form-control:-ms-input-placeholder {
   color: #ffffff;
 }
-.navbar.navbar-info .navbar-form .form-group input.form-control::-webkit-input-placeholder,
-.navbar.navbar-info .navbar-form input.form-control::-webkit-input-placeholder {
+.navbar.navbar-info .navbar-form .mui-form-group input.mui-form-control::-webkit-input-placeholder,
+.navbar.navbar-info .navbar-form input.mui-form-control::-webkit-input-placeholder {
   color: #ffffff;
 }
 .navbar.navbar-info .dropdown-menu {
@@ -1962,16 +1971,16 @@ legend {
   background-color: #fbc02d;
   color: #ffffff;
 }
-.navbar.navbar-warning .navbar-form .form-group input.form-control::-moz-placeholder,
-.navbar.navbar-warning .navbar-form input.form-control::-moz-placeholder {
+.navbar.navbar-warning .navbar-form .mui-form-group input.mui-form-control::-moz-placeholder,
+.navbar.navbar-warning .navbar-form input.mui-form-control::-moz-placeholder {
   color: #ffffff;
 }
-.navbar.navbar-warning .navbar-form .form-group input.form-control:-ms-input-placeholder,
-.navbar.navbar-warning .navbar-form input.form-control:-ms-input-placeholder {
+.navbar.navbar-warning .navbar-form .mui-form-group input.mui-form-control:-ms-input-placeholder,
+.navbar.navbar-warning .navbar-form input.mui-form-control:-ms-input-placeholder {
   color: #ffffff;
 }
-.navbar.navbar-warning .navbar-form .form-group input.form-control::-webkit-input-placeholder,
-.navbar.navbar-warning .navbar-form input.form-control::-webkit-input-placeholder {
+.navbar.navbar-warning .navbar-form .mui-form-group input.mui-form-control::-webkit-input-placeholder,
+.navbar.navbar-warning .navbar-form input.mui-form-control::-webkit-input-placeholder {
   color: #ffffff;
 }
 .navbar.navbar-warning .dropdown-menu {
@@ -1992,16 +2001,16 @@ legend {
   background-color: #f44336;
   color: #ffffff;
 }
-.navbar.navbar-danger .navbar-form .form-group input.form-control::-moz-placeholder,
-.navbar.navbar-danger .navbar-form input.form-control::-moz-placeholder {
+.navbar.navbar-danger .navbar-form .mui-form-group input.mui-form-control::-moz-placeholder,
+.navbar.navbar-danger .navbar-form input.mui-form-control::-moz-placeholder {
   color: #ffffff;
 }
-.navbar.navbar-danger .navbar-form .form-group input.form-control:-ms-input-placeholder,
-.navbar.navbar-danger .navbar-form input.form-control:-ms-input-placeholder {
+.navbar.navbar-danger .navbar-form .mui-form-group input.mui-form-control:-ms-input-placeholder,
+.navbar.navbar-danger .navbar-form input.mui-form-control:-ms-input-placeholder {
   color: #ffffff;
 }
-.navbar.navbar-danger .navbar-form .form-group input.form-control::-webkit-input-placeholder,
-.navbar.navbar-danger .navbar-form input.form-control::-webkit-input-placeholder {
+.navbar.navbar-danger .navbar-form .mui-form-group input.mui-form-control::-webkit-input-placeholder,
+.navbar.navbar-danger .navbar-form input.mui-form-control::-webkit-input-placeholder {
   color: #ffffff;
 }
 .navbar.navbar-danger .dropdown-menu {
@@ -2505,6 +2514,10 @@ h6, .h6 {
   margin-top: 30px;
   margin-bottom: 0px;
   text-align: center;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 300;
+  line-height: 1.5em;
+  font-size: 14px;
 }
 .card-signup .content {
   padding: 0px 30px 0px 10px;
@@ -2518,11 +2531,11 @@ h6, .h6 {
 .card-signup .checkbox .checkbox-material {
   padding-right: 12px;
 }
-.card-signup .social-line {
+.card-signup .mui-social-line {
   margin-top: 15px;
   text-align: center;
 }
-.card-signup .social-line .btn {
+.card-signup .mui-social-line .mui-btn {
   color: #FFFFFF;
   margin-left: 5px;
   margin-right: 5px;
@@ -3322,6 +3335,9 @@ h2.title {
   min-height: 100vh;
 }
 .signup-page .wrapper .card-signup {
+  margin: 160px 0 40px;
+}
+.wrapper .card-signup {
   margin: 160px 0 40px;
 }
 .signup-page .footer .copyright,

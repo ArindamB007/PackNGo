@@ -190,8 +190,8 @@ PackNGo.controller('MenuCtrl', function($scope) {
 				{menuLabel: "Hotel 2",linkURL: "#"}]},
 		{menuLabel: "Contact Us",linkURL: "#"},
 		{menuLabel: "Account", showLabel:true, type: "dropDown", icon: "material-icons md-24 orangeC00", iconClass: "account_box",
-			submenuItems: [{menuLabel: "Login",linkURL: "#"},
-				{menuLabel: "Sign-up",linkURL: "#"}]}];
+			submenuItems: [{menuLabel: "Login",linkURL: "#/login"},
+				{menuLabel: "Sign-up",linkURL: "#/signup"}]}];
 });
 
 PackNGo.directive('navMenuItemInternalLink', function(){

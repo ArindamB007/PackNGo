@@ -8,10 +8,17 @@ PackNGo.config(['$routeProvider',
 			controller : 'LandingCtrl'
 			//Controller is in the index.html file
 		}).
+		when('/login', {
+			templateUrl : '/login',
+			controller : 'LoginCtrl'
+		}).
+		when('/signup', {
+			templateUrl : '/signup',
+			controller : 'SignupCtrl'
+		}).
 		when('/booking', {
 			templateUrl : '/booking',
 			controller : 'BookingCtrl'
-			//Controller is in the index.html file
 		}).
 		when('/samples', {
 			templateUrl : '/samples',

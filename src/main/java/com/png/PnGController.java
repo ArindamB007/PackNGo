@@ -15,6 +15,16 @@ public class PnGController {
 		System.out.println("landing!");
 		return "/views/landing";
 	}
+	@RequestMapping("login")
+	public String login() {
+		System.out.println("login!");
+		return "login";
+	}
+	@RequestMapping("signup")
+	public String signup() {
+		System.out.println("signup!");
+		return "signup";
+	}
 	@RequestMapping("booking")
 	public String booking() {
 		System.out.println("booking!");

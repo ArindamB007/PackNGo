@@ -8435,7 +8435,6 @@ a.scroll-arrow, div.scroll_arrow_left, div.scroll_arrow_right, div.scroll_arrow_
   font-size: 28px;
   color: #f74700;
   width: 42px;
-  line-height: 52px;
   border-radius: 50%;
   height: 42px;
   border: 2px solid #f74700;
@@ -8484,11 +8483,13 @@ div.scroll_arrow_up {
 div.scroll_arrow_left i {
   width: 100%;
   top: 12%;
+  left: -6%;
   position: relative; }
 
 div.scroll_arrow_right i {
   width: 100%;
   top: 12%;
+  left: 6%;
   position: relative; }
 
 div.scroll_arrow_up i {
@@ -8498,7 +8499,7 @@ div.scroll_arrow_up i {
 
 a.scroll_arrow_down i {
   width: 100%;
-  top: 12%;
+  top: 15%;
   position: relative; }
 
 /*********************************************************************************/
@@ -8555,6 +8556,9 @@ a.scroll_arrow_down i {
   top: 80%;
   left: 3%;
   width: 150px; }
+
+.banner-logo img {
+  max-width: 100%; }
 
 /*********************************************************************************/
 /* Property Customization                                                        */
