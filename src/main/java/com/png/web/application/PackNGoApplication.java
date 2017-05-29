@@ -1,4 +1,4 @@
-package com.png;
+package com.png.web.application;
 
 import java.util.Arrays;
 
