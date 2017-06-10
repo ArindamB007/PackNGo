@@ -1,0 +1,1034 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- ------------------------ Carousel Starts ------------------------------->
+<div class="wrapper" id="topOfPage">
+  <div class="section section-header">
+    <div class="slider_wrapper">
+      <div id="camera_wrap" class="">
+        <div data-src="../img/intro/intro1.jpg">
+          <div class="container">
+            <div class="content content-with-opacity fadeIn">
+              <p><span>by </span>{{companyDetails.name}}
+              <p>
+              <h1>SAMPLE Apps</h1>
+              <div class="separator-container">
+                <div class="separator line-separator">âˆŽ</div>
+              </div>
+              <h5>Lodging partner for your vacation</h5>
+            </div>
+          </div>
+        </div>
+        <div data-src="../img/intro/intro2.jpg">
+          <div class = "captionIntro content-with-opacity fadeIn">
+            <h3>Experience Sikkim</h3>
+            <h2>While we arrange all your travel and stay</h2>
+            <h3>You enjoy the nature as its meant to be</h3>
+          </div>
+        </div>
+        <div data-src="../img/intro/intro3.jpg">
+          <div class="captionIntro content-with-opacity fadeIn">
+            <h3>We are a group of passionate Holiday Consultants</h3>
+            <h2>If you have a vacation to spend</h2>
+            <h3>Lets make it count at Hotel Milestone</h3>
+          </div>
+        </div>
+        <div data-src="../img/image_seq(3).jpg">
+          <div class="captionIntro content-with-opacity fadeIn">
+            <h3>We welcome self drive lovers with ample parking spaces</h3>
+            <h2>Drive in HOTEL MILESTONE</h2>
+            <h3>We are no less caring to your car as we are to you</h3>
+          </div>
+        </div>
+      </div>
+      <div class = "banner-logo">
+        <a  href="#">
+          <img src="../img/logo/MnM-Logo.png">
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- ------------------------ Carousel Ends ------------------------------->
+  <!-- ------------------------ About Section ------------------------------->
+  <div class="section section-we-are-2 radu" id="whoWeAre">
+    <div class="text-area">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-sm-4">
+            <div class="title add-animation" way-point>
+              <h5 class="text-gray">Who are we ?</h5>
+              <h2>{{companyDetails.name}}</h2>
+              <div class="separator-container">
+                <div class="separator line-separator">âˆŽ</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1">
+            <div class="description add-animation animation-1">
+              <p >We are Houses Inc., a group of architects and interior designers based in Chicago and operating for clients worldwide. WeÃ¢â‚¬â„¢ve been designing stunningly beautiful houses and making clients happy for years.</p>
+              <p >Explore a wide variety of styles, personalise your finishes, and let us design the perfect home for you. It's what we do best and you can see proof in the products and reviews below. </p>
+              <p >Feel free to get in touch with us and tell us about your plans. We think youÃ¢â‚¬â„¢ll love working with us.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!---------------------------- About Section Ends -------------------------->
+  <!---------------------------- Property Section ---------------------------->
+  <div class="row png">
+    <div class="title add-animation">
+      <h2>{{companyDetails.name}} Service Offerings</h2>
+      <div class="separator-container">
+        <div class="separator line-separator">âˆŽ</div>
+      </div>
+    </div>
+  </div>
+  <div class="main png add-animation animate" data-ng-controller = "PropertyCtrl">
+    <div class = "container">
+      <div class = "ui stackable grid padded">
+        <div class = "sixteen wide column">
+          <div class="png ui divided items">
+            <div class="item" data-ng-repeat="prop in properties">
+              <div class="image">
+                <img src={{prop.img}}>
+              </div>
+              <div class="content">
+                <a class="header">{{prop.name}}</a>
+                <div class="meta">
+                  <span class="price-per-day">Starting from {{prop.price_start_pday}} per day</span>
+                  <span class="price-per-day">Some other text</span>
+                </div>
+                <div class="description">
+                  <p>{{prop.desc}}
+                  </p>
+                </div>
+                <div class="extra">
+                  <div data-ng-if="prop.facility.parking == 'true'" class="feature-icon" data-tooltip="Free Parking">
+                  	<span><i class="car icon green"></i>Parking</span>
+                  </div>
+                  <div data-ng-if="prop.facility.parking == 'false'" class="feature-icon">
+                  	<span><i class="car icon green" data-ng-class = "{'disabled':prop.facility.parking == 'false'}"></i>Parking</span>
+                  </div>
+                  <div data-ng-if="prop.facility.wifi == 'true'" class="feature-icon" data-tooltip="Free WIFI">
+                    <span><i class="wi-fi icon green"></i>Wifi</span>
+                  </div>
+                  <div data-ng-if="prop.facility.wifi == 'false'" class="feature-icon">
+                    <span><i class="wi-fi icon green" data-ng-class = "{'disabled':prop.facility.wifi == 'false'}"></i>Wifi</span>
+                  </div>
+                  <div data-ng-if="prop.facility.breakfast == 'true'" class="feature-icon" data-tooltip="Free Breakfast">
+                    <span><i class="food icon green"></i>Breakfast</span>
+                  </div>
+                  <div data-ng-if="prop.facility.breakfast == 'false'" class="feature-icon">
+                    <span><i class="food icon green" data-ng-class = "{'disabled':prop.facility.breakfast == 'false'}"></i>Breakfast</span>
+                  </div>
+                  <div data-ng-if="prop.facility.restaurant == 'true'" class="feature-icon" data-tooltip="Free Breakfast">
+                    <span><i class="food icon green"></i>Restaurant</span>
+                  </div>
+                  <div data-ng-if="prop.facility.restaurant == 'false'" class="feature-icon">
+                    <span><i class="food icon green" data-ng-class = "{'disabled':prop.facility.restaurant == 'false'}"></i>Restaurant</span>
+                  </div>
+                  <span class="right floated">
+                    <button class="png ui basic blue button" ng-click = "goBooking(prop)"> <i class="icon user"></i> Reserve</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!--Another Item-->
+
+            <div class="item">
+              <div class="image">
+                <img src="../img/prop_img/hotel_cover.jpg">
+              </div>
+              <div class="content">
+                <a class="header">Property ABCD</a>
+                <div class="meta">
+                  <span class="price-per-day">Starting from 2500 per day</span>
+                </div>
+                <div class="description">
+                  <p>This is a sprawling property in the heart of the city. Amazing location of the property
+                    and connections from this city makes this property and excellent option to spend your stay.
+                    This is a sprawling property in the heart of the city. Amazing location of the property
+                    and connections from this city makes this property and excellent option to spend your stay.</p>
+                </div>
+                <div class="extra">
+                  <div class="ui label">IMAX</div>
+                  <div class="ui label"><i class="globe icon"></i> Additional Languages</div>
+                  <span class="right floated">
+                    <button class="png ui basic blue button"> <i class="icon user"></i> Reserve</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--<div class rows>
+            <div class row>
+              <div class="ui cards">
+                <div class = "ui fluid card">
+                  <div class = "image">
+                    <img src="../img/prop_img/hotel_cover.jpg">
+                  </div>
+                  <div class="content">
+                    <div class="header">Property ABCD</div>
+                    <div class="meta">
+                      <a>Starting from 2500 per day</a>
+                    </div>
+                    <div class="description">
+                      This is a sprawling property in the heart of the city. Amazing location and connections from this
+                      city makes this property and excellent option to spend your stay.
+                    </div>
+                  </div>
+                  <div class="extra content png-extra-content">
+                    <span>
+                      <i class="fa fa-map-marker png-map-marker"></i>
+                      Property Location
+                    </span>
+                    <span class="right floated">
+		                  <button class="png ui basic blue button"> <i class="icon user"></i> Reserve</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!------------------------- Property Section Ends -------------------------->
+  <!---------------------------- Gallery Section ----------------------------->
+  <div class="section section-we-made-1 section-with-hover">
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="project add-animation animation-1">
+          <img src="../img/houses_1.jpg"/>
+          <a class="over-area color-1" href="javascript:void(0)" onClick="rubik.showModal(this)" data-target="project_1">
+            <div class="content">
+              <h4>Sol 25</h4>
+              <p>Click for more... </p>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="project add-animation animation-2">
+          <img src="../img/houses_2.jpg"/>
+          <a class="over-area color-1" href="javascript:void(0)" onClick="rubik.showModal(this)" data-target="project_2">
+            <div class="content">
+              <h4>Villa Positano</h4>
+              <p>Click for more... </p>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="project add-animation animation-3">
+          <img src="../img/houses_3.jpg"/>
+          <a class="over-area color-1" href="javascript:void(0)" onClick="rubik.showModal(this)" data-target="project_3">
+            <div class="content">
+              <h4>House 2413</h4>
+              <p>Click for more... </p>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="project add-animation animation-1">
+          <img src="../img/houses_4.jpg">
+          <a class="over-area color-1" href="javascript:void(0)" onClick="rubik.showModal(this)" data-target="project_4">
+            <div class="content">
+              <h4>Elwood House</h4>
+              <p>Click for more... </p>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="project add-animation animation-2">
+          <img src="../img/houses_5.jpg">
+          <a class="over-area color-1" href="javascript:void(0)" onClick="rubik.showModal(this)" data-target="project_5">
+            <div class="content">
+              <h4>Brandywine House</h4>
+              <p>Click for more... </p>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="project add-animation animation-3">
+          <img src="../img/houses_6.jpg">
+          <a class="over-area color-1" href="javascript:void(0)" onClick="rubik.showModal(this)" data-target="project_6">
+            <div class="content">
+              <h4>ICRAVE Office</h4>
+              <p>Click for more... </p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ------------------------ Gallery Section Ends----------------------------->
+
+
+  <div class="section section-we-do-1" id="values">
+    <div class="text-area">
+      <div class="container">
+        <div class="row">
+          <div class="title add-animation">
+            <h5 class="text-gray">let us define</h5>
+            <h2>Our Values</h2>
+            <div class="separator-container">
+              <div class="separator line-separator">âˆŽ</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 col-sm-6">
+            <div class="card add-animation animation-1">
+              <h5 class="text-gray">01.</h5>
+              <h3>Quality</h3>
+              <p>We set exacting standards and strive for consistency and precision in everything we do. We are committed to continuously improving our capabilities.</p>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="card add-animation animation-2">
+              <h5 class="text-gray">02.</h5>
+              <h3>Integrity</h3>
+              <p>We take individual and collective responsibility for keeping our promises, acting ethically and demonstrating exemplary business conduct at all times because it is the right thing to do.</p>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="card add-animation animation-3">
+              <h5 class="text-gray">03.</h5>
+              <h3>Attention to details</h3>
+              <p>We are dedicated to making every details look amazing. You can count on the fact that no thing slides and everything will look just right. </p>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="card add-animation animation-4">
+              <h5 class="text-gray">04.</h5>
+              <h3>Safety</h3>
+              <p>We are committed to creating and maintaining a safe surrounding to what will be your home. We take into consideration every need and make sure every person will feel protected.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section section-clients-2" id="friends">
+    <div class="container">
+      <div class="text-area">
+        <div class="title add-animation">
+          <h5 class="text-gray">some of our</h5>
+          <h2>Friends Together</h2>
+          <div class="separator-container">
+            <div class="separator line-separator">âˆŽ</div>
+          </div>
+        </div>
+        <div class="tab-content quotes add-animation animation-2">
+          <div class="tab-pane active" id="canon">
+            <p class="large">
+              These guys create stunning looking houses! We absolutely love their work and would personally contact them to help us create the perfect space for a new office!
+            </p>
+          </div>
+          <div class="tab-pane" id="samsung">
+            <p class="large">These guys put our gadgets into a great looking context. They did an amazing work re-designing our concept stores and implicitly increasing our sales.</p>
+          </div>
+          <div class="tab-pane" id="sony">
+            <p class="large">The 'Houses' team did a great work while we were collaborating. They provided a vision that was in deep connection with our needs and helped us achieve our goals. </p>
+          </div>
+          <div class="tab-pane" id="intel">
+            <p class="large">We couldn't thank the 'Houses' team enough for their excellent service. We had an wonderful time developing the plans for our new office building and we can tell you that our employees felt at home since the first day they moved here.</p>
+          </div>
+        </div>
+        <ul class="nav nav-text list-logos add-animation animation-2" role="tablist">
+          <li class="active">
+            <a href="../#canon" role="tab" data-toggle="tab">
+              <img src="/rubik/assets/img/clients/forbes.svg"/>
+              <img src="/rubik/assets/img/clients/forbes_h.svg"/>
+            </a>
+          </li>
+          <li>
+            <a href="../#samsung" role="tab" data-toggle="tab">
+              <img src="/rubik/assets/img/clients/qube.svg"/>
+              <img src="/rubik/assets/img/clients/qube_h.svg"/>
+            </a>
+          </li>
+          <li>
+            <a href="../#sony" role="tab" data-toggle="tab">
+              <img src="/rubik/assets/img/clients/axa.svg"/>
+              <img src="/rubik/assets/img/clients/axa_h.svg"/>
+            </a>
+          </li>
+          <li>
+            <a href="../#intel" role="tab" data-toggle="tab">
+              <img src="/rubik/assets/img/clients/dezine.svg"/>
+              <img src="/rubik/assets/img/clients/dezine_h.svg"/>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="section section-team-4" id="team">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div  class="title add-animation">
+            <h5 class="text-gray">our</h5>
+            <h2>Masterminds</h2>
+            <div class="separator-container">
+              <div class="separator line-separator">âˆŽ</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-7 col-offset-1">
+          <div class="team">
+            <div class="row">
+              <div class="col-md-4 col-sm-6">
+                <div class="member add-animation animation-1">
+                  <img class="img-circle" src="/rubik/assets/img/faces/face_6.jpg"/>
+                  <div class="description">
+                    <h3 class="big-text">Paul</h3>
+                    <p class="small-text">Architect</p>
+                    <p class="details">
+                      CEO / CO-Founder <br>
+                      RocAFella.com
+                    </p>
+                  </div>
+                  <div class="social-buttons hidden-xs">
+                    <button href="#" class="btn btn-social btn-simple"><i class="fa fa-linkedin"></i></button>
+                    <button href="#" class="btn btn-social btn-simple"><i class="fa fa-google-plus"></i></button>
+                    <button href="#" class="btn btn-social btn-simple"><i class="fa fa-pinterest"></i></button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="member add-animation animation-2">
+                  <img class="img-circle" src="/rubik/assets/img/faces/face_7.jpg"/>
+                  <div class="description">
+                    <h3 class="big-text">Andrew</h3>
+                    <p class="small-text">Interior Designer</p>
+                    <p class="details">
+                      CO-Founder <br>
+                      andrew@houses.com
+                    </p>
+                  </div>
+                  <div class="social-buttons hidden-xs">
+                    <button href="#" class="btn btn-social btn-simple"><i class="fa fa-linkedin"></i></button>
+                    <button href="#" class="btn btn-social btn-simple"><i class="fa fa-google-plus"></i></button>
+                    <button href="#" class="btn btn-social btn-simple"><i class="fa fa-pinterest"></i></button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="member add-animation animation-3">
+                  <img class="img-circle" src="/rubik/assets/img/faces/face_8.jpg"/>
+                  <div class="description">
+                    <h3 class="big-text">Rick</h3>
+                    <p class="small-text">Designer</p>
+                    <p class="details">
+                      CTO <br>
+                      rickman@houses.com
+                    </p>
+                  </div>
+                  <div class="social-buttons hidden-xs">
+                    <button href="#" class="btn btn-social btn-simple"><i class="fa fa-linkedin"></i></button>
+                    <button href="#" class="btn btn-social btn-simple"><i class="fa fa-google-plus"></i></button>
+                    <button href="#" class="btn btn-social btn-simple"><i class="fa fa-pinterest"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section section-numbers-2" id="numbers">
+    <div class="parallax pattern-image">
+      <img src="/rubik/assets/img/house_2.jpg"/>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2 text-center">
+          <div class="description">
+            <div class="title">
+              <h5>it's a fact that</h5>
+              <h2>Numbers don't lie</h2>
+              <div class="separator-container">
+                <div class="separator line-separator">âˆŽ</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="card card-plain">
+            <h3>Customers</h3>
+            <h5>Enterprises and private</h5>
+            <div class="number" id="customersNo">
+              574
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card card-plain">
+            <h3>Projects</h3>
+            <h5>Design, Sketch and Plan</h5>
+            <div class="number" id="projectsNo">
+              1.257
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card card-plain">
+            <h3>Cities</h3>
+            <h5>Where you can find our work</h5>
+            <div class="number" id="citiesNo">
+              52
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section section-contact-2" id="contact">
+    <div class="container">
+      <div class="text-area">
+        <div class="title add-animation">
+          <h5 class="text-gray">here you can</h5>
+          <h2>Contact Us</h2>
+          <div class="separator-container">
+            <div class="separator line-separator">âˆŽ</div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group add-animation animation-1">
+              <label>Your Full Name</label>
+              <input type="text" value="" placeholder="Michael Jordan" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div  class="form-group add-animation animation-2">
+              <label>Your Email</label>
+              <input type="text" value="" placeholder="michael.j@gmail.com" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div  class="form-group add-animation animation-3">
+              <label>Subject</label>
+              <input type="text" value="" placeholder="Say hi to you" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div  class="form-group add-animation animation-3">
+              <textarea class="form-control" placeholder="Here you can write your nice text" rows="8"></textarea>
+            </div>
+            <div>
+              <div class="col-md-2 col-md-offset-5">
+                <button  class="btn btn-lg btn-black btn-contact">
+                  SEND <i class="fa fa-paper-plane"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer footer-big footer-color-gray" id="footerTrigger">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2 col-sm-3">
+          <div class="info add-animation-stopped animation-1">
+            <h5 class="title">Company</h5>
+            <nav>
+              <ul>
+                <li>
+                  <a href="#">
+                    Home
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    Find offers
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    Discover Projects
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    Our Portfolio
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    About Us
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <div class="col-md-3 col-md-offset-1 col-sm-3">
+          <div class="info add-animation-stopped animation-2">
+            <h5 class="title"> Help and Support</h5>
+            <nav>
+              <ul>
+                <li>
+                  <a href="#">
+                    Contact Us
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    How it works
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    Terms &amp; Conditions
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    Company Policy
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    Money Back
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-3">
+          <div class="info add-animation-stopped animation-3">
+            <h5 class="title">Latest News</h5>
+            <nav>
+              <ul>
+                <li>
+                  <a href="#">
+                    <i class="fa fa-twitter"></i> <b>Get Shit Done</b>
+                    The best kit in the market is here, just give it a try and let us...
+                    <hr class="hr-small">
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i class="fa fa-twitter"></i>
+                    We've just been featured on <b> Awwwards Website</b>! Thank you everybody for...
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <div class="col-md-2 col-md-offset-1 col-sm-3">
+          <div class="info add-animation-stopped animation-4">
+            <h5 class="title">Follow us on</h5>
+            <nav>
+              <ul>
+                <li>
+                  <a href="#" class="btn btn-social btn-facebook btn-simple">
+                    <i class="fa fa-facebook-square"></i> Facebook
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="btn btn-social btn-dribbble btn-simple">
+                    <i class="fa fa-dribbble"></i> Dribbble
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="btn btn-social btn-twitter btn-simple">
+                    <i class="fa fa-twitter"></i> Twitter
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="btn btn-social btn-reddit btn-simple">
+                    <i class="fa fa-google-plus-square"></i> Google+
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="copyright">
+        Ã‚Â© 2015 Creative Tim, made with love
+      </div>
+    </div>
+  </footer>
+</div>
+<!-- end wrapper -->
+<div class="project-content" id="project_1">
+  <span class="icon-close"><i class="pe-7s-close-circle"></i></span>
+  <div>
+    <div class="project-details">
+      <div class="container">
+        <div class="project-title">
+          <h5>PUE, Mexico<span>.</span></h5>
+          <h2>Sol 52</h2>
+          <div class="separator-container">
+            <div class="separator line-separator">âˆŽ</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="project-text">
+              <p><span>Type</span>Private house</p>
+              <p><span>Status</span>Built</p>
+              <p><span>Year</span>2013</p>
+              <p><span>Size</span>1000sqft</p>
+              <br>
+              <p>Sol 25 is a house in San Pedro Cholula Puebla, Mexico. Located in a residential subdivision outside of the city, adjacent to Mount Zapoteca, a protected nature reserve. Sol 25 emerges as a home with the premise of creating spaces that are visually integrated with nature in addition to maximizing the size of the house.</p>
+              <p>A distinct architectural layout is generated; located on the ground floor are two bedrooms, a garden, and a lobby. Going up to the first level is the living room and kitchen, all in an open-plan concept into a double-height space where you can enjoy the view to the green areas. Going up a level is a loft with a studio. The roof space was allocated to a roof garden where you can enjoy an outdoor environment that is visually attractive in 360 degrees.</p>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/sol52-3.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/sol52-1.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/sol52-4.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/sol52-2.jpg"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="project-content" id="project_2">
+  <span class="icon-close"><i class="pe-7s-close-circle"></i></span>
+  <div>
+    <div class="project-details">
+      <div class="container">
+        <div class="project-title">
+          <h5>Positano, Italy<span>.</span></h5>
+          <h2>Villa Positano</h2>
+          <div class="separator-container">
+            <div class="separator line-separator">âˆŽ</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="project-text">
+              <p><span>Type</span>Private house</p>
+              <p><span>Status</span>Built</p>
+              <p><span>Year</span>2014</p>
+              <p><span>Size</span>1500sqft</p>
+              <br>
+              <p>The true protagonist of this project is a collection of antique ceramics from Vietri, entrusted with the role of exalting the particular elements that make the famous Villa in Positano a contemporary architectural masterpiece.</p>
+              <p>The harmonious composition of hand-painted ceramic tiles, the great passion of the villaÃ¢â‚¬â„¢s owners, wraps a long ribbon of steel like a decorative skin. The ribbon is used to articulate the double height spaces of a former eighteenth-century monastery, linking the villaÃ¢â‚¬â„¢s three levels.</p>
+              <p>It begins on the ceiling, dropping down a six-meter high wall to become a shelf in the large living room on the first floor, a platform, intersecting the stairs leading to the kitchen on the ground floor. The ribbon then transforms into the dining room table, finally climbing back up toward the ceiling to house the lighting fixtures. All without any interruption.</p>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/positano-2.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/positano-1.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/positano-4.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/positano-3.jpg"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="project-content" id="project_3">
+  <span class="icon-close"><i class="pe-7s-close-circle"></i></span>
+  <div>
+    <div class="project-details">
+      <div class="container">
+        <div class="project-title">
+          <h5>Sahibzada Ajit Singh Nagar, India<span>.</span></h5>
+          <h2>House 2413</h2>
+          <div class="separator-container">
+            <div class="separator line-separator">âˆŽ</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="project-text">
+              <p><span>Type</span>Private house</p>
+              <p><span>Status</span>Built</p>
+              <p><span>Year</span>2014</p>
+              <p><span>Size</span>3000sqft</p>
+              <br>
+              <p>The project is located in Mohali, a satellite town of Chandigarh that is witnessing fast paced growth like most Indian cities.</p>
+              <p>The brief of the client, a builder was to design a house for selling that would be universal in character so that it is acceptable & appreciated by all kinds of end users ranging from a high earning professional to a wealthy farmer.</p>
+              <p>The overall concept was devised as a free plan with overlapping spaces to allow flexibility. However, the movement was choreographed so as to unfold the layers as one moves along the vertical axis of the house.</p>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/2413-2.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/2413-1.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/2413-4.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/2413-3.jpg"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="project-content" id="project_4">
+  <span class="icon-close"><i class="pe-7s-close-circle"></i></span>
+  <div>
+    <div class="project-details">
+      <div class="container">
+        <div class="project-title">
+          <h5>Elwood, Australia<span>.</span></h5>
+          <h2>The Elwood House</h2>
+          <div class="separator-container">
+            <div class="separator line-separator">âˆŽ</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="project-text">
+              <p><span>Type</span>Private house</p>
+              <p><span>Status</span>Built</p>
+              <p><span>Year</span>2012</p>
+              <p><span>Size</span>3000sqft</p>
+              <br>
+              <p>The Elwood House is a new residential dwelling with a separate garage and studio to the rear. The clientÃ¢â‚¬â„¢s brief was for a modern family home that was interesting and exciting but not to the detriment of the comfort to the occupants and within a sensible budget.</p>
+              <p>Ã¢â‚¬Å“The client wanted a house that was clean, distinctive and enjoyable to use without feeling like they were an object in their own home because it was of a contemporary designÃ¢â‚¬ï¿½ says the architect, Patrick Jost.</p>
+              <p>Conceptually, the house is separated into two clearly defined elements to the upper and lower levels.</p>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/elwood-2.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/elwood-1.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/elwood-4.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/elwood-3.jpg"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="project-content" id="project_5">
+  <span class="icon-close"><i class="pe-7s-close-circle"></i></span>
+  <div>
+    <div class="project-details">
+      <div class="container">
+        <div class="project-title">
+          <h5>Washington, DC, United States<span>.</span></h5>
+          <h2>Brandywine House</h2>
+          <div class="separator-container">
+            <div class="separator line-separator">âˆŽ</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="project-text">
+              <p><span>Type</span>Private house</p>
+              <p><span>Status</span>Built</p>
+              <p><span>Year</span>2013</p>
+              <p><span>Size</span>4000sqft</p>
+              <br>
+              <p>Located within close proximity to Rock Creek Park, and with easy access to the shops and restaurants on Connecticut Avenue, this large lot in Northwest Washington, DC presented a desirable opportunity for a young family to build a new house in this sought-after neighborhood.</p>
+              <p>Designed to respect both the scale of neighboring houses and the rhythm of the streetscape, the project aligns with adjacent houses while retaining the vast majority of mature trees and green space located between the street and the house. Materials composing the exterior, which include stone, wood and stucco, evoke traditional materials found throughout the neighborhood. The house appears relatively solid when viewed from the street with strategically placed windows insuring privacy to the street-facing spaces.</p>
+              <p>The Ã¢â‚¬Å“LÃ¢â‚¬ï¿½ shaped house is organized around the outdoor living spaces and swimming pool, and is oriented towards the large, south facing rear yard. </p>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/brandywine-2.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/brandywine-1.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/brandywine-4.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/brandywine-3.jpg"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="project-content" id="project_6">
+  <span class="icon-close"><i class="pe-7s-close-circle"></i></span>
+  <div>
+    <div class="project-details">
+      <div class="container">
+        <div class="project-title">
+          <h5>New York City, NY, United States<span>.</span></h5>
+          <h2>ICRAVE Office</h2>
+          <div class="separator-container">
+            <div class="separator line-separator">âˆŽ</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="project-text">
+              <p><span>Type</span>Office</p>
+              <p><span>Status</span>Built</p>
+              <p><span>Year</span>2014</p>
+              <p><span>Size</span>8000sqft</p>
+              <br>
+              <p>After rapid growth, ICRAVE, a New York-based experiential branding and design firm, made the move to an 8,000-square-foot studio with the intention of really making it their own. The space, designed by the ICRAVE team itself, goes beyond the notion of an open plan office Ã¢â‚¬â€� it is designed specifically to foster ICRAVEÃ¢â‚¬â„¢s immersive, collaborative culture. </p>
+              <p>The design process was a collective effort of the entire ICRAVE studio. Dream sessions were held to harvest ideas, where team members examined different areas and said, Ã¢â‚¬Å“Now, what if we could have...,Ã¢â‚¬ï¿½ giving everyone a chance to bring their ideas to the table. Among those options, ICRAVE then crowdsourced the best solution for each micro-environment, and created a one-of-a-kind office. The result is a truly collaborative office space that fosters employees' creativity, interaction, and inspiration. </p>
+              <p>The reception desk doubles as a DJ booth, and the entrance plays host to archery matches. The conference room features large monolithic doors that swivel 360 degrees to open and close the space as needed. The kitchen and conference room are separated by a chalkboard that can be raised to create bar seating next to the kitchen or lowered to be used in meetings.</p>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/icrave-2.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/icrave-1.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/icrave-4.jpg"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="project-image">
+                  <img src="/rubik/assets/img/project-content/houses/icrave-3.jpg"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $().ready(function(){
+    jQuery('#camera_wrap').camera({
+      loader: false,
+      pagination: false ,
+      minHeight: '600',
+      thumbnails: false,
+      height: '40%',
+      caption: true,
+      navigation: true,
+      fx: 'random',
+      autoAdvance: true,
+      time: 5000,
+      hover: false,
+      mobileFx: 'simpleFade',
+      mobileNavHover: true
+    });
+    /*carousel*/
+    var owl=$("#owl");
+    owl.owlCarousel({
+      items : 2, //10 items above 1000px browser width
+      itemsDesktop : [995,2], //5 items between 1000px and 901px
+      itemsDesktopSmall : [767, 2], // betweem 900px and 601px
+      itemsTablet: [700, 2], //2 items between 600 and 0
+      itemsMobile : [479, 1], // itemsMobile disabled - inherit from itemsTablet option
+      navigation : true,
+      pagination : false
+    });
+    //$().UItoTop({ easingType: 'easeOutQuart' });
+
+
+  });
+</script>
+</html>

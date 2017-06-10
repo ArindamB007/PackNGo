@@ -2,24 +2,27 @@ package com.png.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-@Configuration
+/*@Configuration
 @EnableWebMvc
-public class ApplicationConfig extends WebMvcConfigurerAdapter {
+public class ApplicationConfig_old extends WebMvcConfigurerAdapter {
 	@Bean
-    public ViewResolver internalResourceViewResolver() {
-        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setPrefix("views/");
-        resolver.setSuffix(".html");
-        resolver.setViewNames("/static/*");
-        resolver.setOrder(1);
-        return resolver;
-    }
+	  public ViewResolver internalResourceViewResolver() {
+	      InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+	      //resolver.setPrefix("/views/");
+	      //resolver.setApplicationContext(applicationContext);
+	      //resolver.setViewNames("/views/*");
+	      resolver.setViewNames(new String[] {"views/*"});
+	      resolver.setOrder(Ordered.HIGHEST_PRECEDENCE +2);
+	      resolver.setSuffix(".html");
+	      return resolver;
+	  }
 	
 	@Override
     public void configureDefaultServletHandling(
@@ -27,4 +30,4 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
         configurer.enable();
     }  
 
-}
+}*/

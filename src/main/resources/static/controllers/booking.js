@@ -1,7 +1,8 @@
 PackNGo.controller('BookingCtrl',function($scope,$sce){
+	$scope.$on('$routeChangeStart', function(event){
+		$('.datepicker').remove();
+    });
 	$(function(){
-		//$('#checkindate').datepicker({format: 'dd-mm-yyyy'});
-		//$('#checkoutdate').datepicker({format: 'dd-mm-yyyy'});
 		var nowTemp = new Date();
 		var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 		 
@@ -11,7 +12,7 @@ PackNGo.controller('BookingCtrl',function($scope,$sce){
 		  },
 		  format: 'dd-mmm-yyyy'
 		}).on('changeDate', function(ev) {
-		  if (ev.date.valueOf() > checkout.date.valueOf()) {
+		  if (ev.date.valueOf() >= checkout.date.valueOf()) {
 		    var newDate = new Date(ev.date)
 		    newDate.setDate(newDate.getDate() + 1);
 		    checkout.setValue(newDate);

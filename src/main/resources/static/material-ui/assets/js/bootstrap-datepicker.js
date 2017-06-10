@@ -91,10 +91,14 @@
 	
 	Datepicker.prototype = {
 		constructor: Datepicker,
-		
+		getId: function(){
+			return "ID";
+		},
 		show: function(e) {
 		    var datepicker = this.picker;
-
+		    $(document).find('div.datepicker').each(function(){
+				$(this).hide();
+			});
 			this.picker.show();
 			this.height = this.component ? this.component.outerHeight() : this.element.outerHeight();
 			this.place();
@@ -197,20 +201,21 @@
 			var html = '';
 			var i = 0
 			while (i < 12) {
-				html += '<span class="month">'+DPGlobal.dates.monthsShort[i++]+'</span>';
+				html += '<div class="month">'+DPGlobal.dates.monthsShort[i++]+'</div>';
 			}
 			this.picker.find('.datepicker-months td').append(html);
 		},
 		
 		fill: function() {
-			var tdd = new Date();
-			var today = new Date(tdd.getFullYear(),tdd.getMonth(),tdd.getDate(),0,0,0,0);
+			var today = new Date();
+			today = new Date(today.getFullYear(),today.getMonth(),today.getDate(),0,0,0,0);
 			var d = new Date(this.viewDate),
 				year = d.getFullYear(),
 				month = d.getMonth(),
 				currentDate = this.date.valueOf();
 			this.picker.find('.datepicker-days th:eq(1)')
 						.text(DPGlobal.dates.months[month]+' '+year);
+			this.picker.find('.datepicker-days th:eq(1)').removeClass('disabled');
 			var prevMonth = new Date(year, month-1, 28,0,0,0,0),
 				day = DPGlobal.getDaysInMonth(prevMonth.getFullYear(), prevMonth.getMonth());
 			prevMonth.setDate(day);
@@ -238,6 +243,11 @@
 					clsName += ' active ' + this.color;
 				}
 				html.push('<td class="day '+clsName+'"><p>'+prevMonth.getDate() + '</p></td>');
+				//disabling month mode
+				//if (prevMonth.getDate()==1 && clsName.indexOf('disabled')>=0){
+					this.picker.find('.datepicker-days th:eq(1)').addClass('disabled');
+				//}
+				//disabling today button
 				if ((prevMonth.valueOf() == today.valueOf()) && clsName.indexOf('disabled') >= 0){
 					this.picker.find('.datepicker-footer button').addClass('disabled');
 				}
@@ -284,6 +294,8 @@
 						switch(target[0].className) {
 							case 'switch-datepicker':
 								this.showMode(1);
+								//disabling month view
+								this.picker.find('.datepicker-months').find('.month').addClass('disabled');
 								break;
 							case 'prev':
 							case 'next':
