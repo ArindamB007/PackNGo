@@ -1,10 +1,13 @@
 package com.png.web.controller;
 
+import com.png.data.entity.User;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class PnGController {
@@ -28,10 +31,16 @@ public class PnGController {
 		System.out.println("login!");
 		return "login";
 	}
-	@RequestMapping("/signup")
-	public String signup() {
-		System.out.println("signup!");
+	@RequestMapping(value ="/signup",method = RequestMethod.GET)
+	public String signupview() {
+		System.out.println("signup GET!");
 		return "signup";
+	}
+	@RequestMapping(value ="/signup",method = RequestMethod.POST)
+	@ResponseBody
+	public User signup(@RequestBody User user) {
+		System.out.println(user.getEmail());
+		return user;
 	}
 	@RequestMapping("/booking")
 	public String booking() {

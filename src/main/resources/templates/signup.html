@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <body class = "mui signup-page">
 <div class="wrapper">
@@ -32,7 +32,7 @@
                       <i class="material-icons">face</i>
                   </span>
                   <div class="mui-form-group is-empty">
-                    <input  data-ng-model = "userDetails.name"
+                    <input  data-ng-model = "userDetails.firstName"
                             type="text" class="mui-form-control" placeholder="Name...">
                     <span class="material-input"></span>
                   </div>
@@ -65,7 +65,7 @@
                       <i class="material-icons">lock_outline</i>
                   </span>
                   <div class="mui-form-group is-empty">
-                    <input  data-ng-model = "userDetails.confPassword"
+                    <input  data-ng-model = "userDetails.confirmPassword"
                             type="password" placeholder="Confirm Password..." class="mui-form-control"/>
                     <span class="material-input"></span>
                   </div>
@@ -81,7 +81,7 @@
                 </div> -->
               </div>
               <div class="mui-footer text-center">
-                <button class="png ui basic blue button"> <i class="icon send outline"></i>Get Started</button>
+                <button class="png ui basic blue button" data-ng-click = "doSignUp();"> <i class="icon send outline"></i>Get Started</button>
                 <div class="ripple-container"></div>
                 </a>
               </div>
