@@ -28,41 +28,45 @@
               <div class="content">
 
                 <div class="input-group">
-										<span class="input-group-addon">
-											<i class="material-icons">face</i>
-										</span>
+                  <span class="input-group-addon">
+                      <i class="material-icons">face</i>
+                  </span>
                   <div class="mui-form-group is-empty">
-                    <input type="text" class="mui-form-control" placeholder="First Name...">
+                    <input  data-ng-model = "userDetails.name"
+                            type="text" class="mui-form-control" placeholder="Name...">
                     <span class="material-input"></span>
                   </div>
                 </div>
 
                 <div class="input-group">
-										<span class="input-group-addon">
-											<i class="material-icons">email</i>
-										</span>
+                  <span class="input-group-addon">
+                      <i class="material-icons">email</i>
+                  </span>
                   <div class="mui-form-group is-empty">
-                    <input type="text" class="mui-form-control" placeholder="Email...">
+                    <input  data-ng-model = "userDetails.email"
+                            type="text" class="mui-form-control" placeholder="Email...">
                     <span class="material-input"></span>
                   </div>
                 </div>
 
                 <div class="input-group">
-										<span class="input-group-addon">
-											<i class="material-icons">lock_outline</i>
-										</span>
+                  <span class="input-group-addon">
+                      <i class="material-icons">lock_outline</i>
+                  </span>
                   <div class="mui-form-group is-empty">
-                    <input type="password" placeholder="Password..." class="mui-form-control"/>
+                    <input data-ng-model = "userDetails.password"
+                           type="password" placeholder="Password..." class="mui-form-control"/>
                     <span class="material-input"></span>
                   </div>
                 </div>
 
                 <div class="input-group">
-										<span class="input-group-addon">
-											<i class="material-icons">lock_outline</i>
-										</span>
+                  <span class="input-group-addon">
+                      <i class="material-icons">lock_outline</i>
+                  </span>
                   <div class="mui-form-group is-empty">
-                    <input type="password" placeholder="Confirm Password..." class="mui-form-control"/>
+                    <input  data-ng-model = "userDetails.confPassword"
+                            type="password" placeholder="Confirm Password..." class="mui-form-control"/>
                     <span class="material-input"></span>
                   </div>
                 </div>

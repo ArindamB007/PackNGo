@@ -1,3 +1,3 @@
-PackNGo.controller('SignupCtrl',function($scope,$sce){
-
+PackNGo.controller('SignupCtrl',function($scope,pngServices){
+$scope.userDetails = undefined;
 });
