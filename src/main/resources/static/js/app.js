@@ -1,4 +1,4 @@
-	var PackNGo = angular.module('PackNGo', ['ngRoute','ngAnimate','ui.bootstrap']);
+	var PackNGo = angular.module('PackNGo', ['ngRoute','ngAnimate','ui.bootstrap','ngMessages']);
 
 
 /***************************FB Login initiation*************************************/

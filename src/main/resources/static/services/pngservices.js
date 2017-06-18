@@ -3,14 +3,13 @@ PackNGo.factory('loginService', ['$rootScope','$q','$http','$log',function($root
   return{
       signUp : function(userDetails) {
         var deferred = $q.defer();
-        $http.post("../signup",userDetails)
-          .success(function(data){
-            deferred.resolve(data);
+        $http.post("../services/signup",userDetails)
+          .then(function(response){
+            deferred.resolve(response);
           })
-          .error(function(msg, code){
-            deferred.reject(msg);
-            $log.error(msg,code);
-
+          .catch(function(response){
+            deferred.reject(response);
+            $log.error(response);
           });
         return deferred.promise;
       }

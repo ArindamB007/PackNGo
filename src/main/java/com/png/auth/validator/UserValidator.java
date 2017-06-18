@@ -1,14 +1,22 @@
 package com.png.auth.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.png.auth.service.UserService;
 import com.png.data.entity.User;
+import com.png.properties.ValidationProperties;
 
+@Component
+@ConfigurationProperties("signUp")
 public class UserValidator implements Validator {
+	@Autowired
+	private ValidationProperties vP;
+	
 	@Autowired
 	private UserService userService;
 	
@@ -21,19 +29,23 @@ public class UserValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 		User user = (User) obj;
 		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
-		if (user.getEmail().length() < 7 || user.getEmail().length() > 48){
-			errors.rejectValue("email", "Size.userForm.email");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "required",vP.getSignupRequiredName());
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "required",vP.getSignupRequired());
+		if (user.getEmail()!=null && (user.getEmail().length() < 7 || user.getEmail().length() > 48)){
+			errors.rejectValue("email", "custom",vP.getSignupSizeEmail());
 		}
 		if (userService.findByUsername(user.getEmail()) != null){
-			errors.rejectValue("email", "Duplicate.serForm.username");
+			errors.rejectValue("email", "custom",vP.getSignupDuplicateEmail());
 		}
-		ValidationUtils.rejectIfEmpty(errors, "password", "NotEmpty");
-		if (user.getPassword().length()<8 ||user.getPassword().length()>48){
-			errors.rejectValue("password", "Size.userform.password");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required", vP.getSignupRequired());
+		if (user.getPassword()!=null && (user.getPassword().length()<8 ||user.getPassword().length()>48)){
+			errors.rejectValue("password", "custom", vP.getSignupSizePassword());
 		}
-		if(!user.getConfirmPassword().equals(user.getPassword())){
-			errors.rejectValue("confirmPassword","Diff.userform.confirmPassword");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword", "required", vP.getSignupRequired());
+		if(user.getConfirmPassword()!=null && !user.getConfirmPassword().equals(user.getPassword())){
+			System.out.println("ConfirmPassword: " + user.getConfirmPassword());
+			System.out.println("Password: " + user.getPassword());
+			errors.rejectValue("confirmPassword","custom",vP.getSignupMismatchPassword());
 		}
 		
 	}
