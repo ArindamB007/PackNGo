@@ -8,7 +8,7 @@ $scope.doSignUp = function(){
 	  console.log(response);
 	  })
   .catch(function(response){
-	  alert("Signup failed");
+	  //alert("Signup failed");
 	  //$scope.signup.email.$error.email = true;
 	  angular.forEach(response.data,function(map){
 		  

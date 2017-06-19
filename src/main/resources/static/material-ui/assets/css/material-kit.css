@@ -1232,7 +1232,7 @@ output {
 }
 
 .mui-form-control {
-  margin-bottom: 7px;
+  /*margin-bottom: 7px;*/
 }
 .mui-form-control::-moz-placeholder {
   font-size: 14px;
@@ -1276,11 +1276,11 @@ label.control-label {
 }
 
 .mui-form-group {
-  padding-bottom: 7px;
+  /*padding-bottom: 7px;*/
   margin: 15px 0 0 0;
 }
 .mui-form-group .mui-form-control {
-  margin-bottom: 7px;
+  /*margin-bottom: 7px;*/
 }
 .mui-form-group .mui-form-control::-moz-placeholder {
   font-size: 14px;
