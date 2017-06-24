@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.png.auth.service.UserService;
 import com.png.auth.validator.UserValidator;
 import com.png.data.entity.User;
 import com.png.exception.ValidationException;
@@ -26,6 +27,9 @@ import com.png.exception.ValidationException;
 public class ServicesControllers {
 	@Autowired
 	UserValidator userValidator;
+	
+	@Autowired
+	UserService userService;
 	
 	@RequestMapping(value ="/signup",method = RequestMethod.POST)
 	@ResponseBody
@@ -43,6 +47,7 @@ public class ServicesControllers {
 			}
 			return new ResponseEntity<Object>(errorList,HttpStatus.BAD_REQUEST);
 		}
+		userService.save(user);
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 }

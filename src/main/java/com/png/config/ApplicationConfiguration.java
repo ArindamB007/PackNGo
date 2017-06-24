@@ -1,5 +1,7 @@
 package com.png.config;
 
+import org.h2.server.web.WebServlet;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +20,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 /*@Configuration
-@EnableWebMvc
 public class ApplicationConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
   private ApplicationContext applicationContext;
@@ -26,6 +27,14 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter implements
   public void setApplicationContext(ApplicationContext applicationContext) {
     this.applicationContext = applicationContext;
   }
+  
+  @Bean
+  ServletRegistrationBean h2servletRegistration(){
+      ServletRegistrationBean registrationBean = new ServletRegistrationBean( new WebServlet());
+      registrationBean.addUrlMappings("/h2-console/*");
+      return registrationBean;
+  }
+ 
 
   @Bean
   public ViewResolver internalResourceViewResolver() {
@@ -70,6 +79,5 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter implements
     resolver.setCheckExistence(true);
     resolver.setTemplateMode(TemplateMode.HTML);
     return resolver;
-  }
-}
-*/
+  } 
+}*/

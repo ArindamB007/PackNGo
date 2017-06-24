@@ -34,14 +34,11 @@ public class User {
     @Column (name="email")
     @Email(message = "Please provide a valid email")
     @NotEmpty(message = "Please provide an email")
-
-
     private String email;
 
     @Column (name="password")
     @Length (min = 5,message = "Password must have 5 characters")
     @NotEmpty (message = "Please provide a password")
-    @Transient
     private String password;
 
     @Column(name="name")

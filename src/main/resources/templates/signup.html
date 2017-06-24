@@ -141,7 +141,10 @@
                 </div> -->
               </div>
               <div class="mui-footer text-center">
-                <button class="png ui basic blue button" data-ng-click = "doSignUp();"> <i class="icon send outline"></i>Get Started</button>
+                <button class="png ui basic blue button" 
+                		data-ng-click = "doSignUp();"
+                		ng-disabled = "signup.$invalid"
+                		> <i class="icon send outline"></i>Get Started</button>
                 <div class="ripple-container"></div>
                 </a>
               </div>
