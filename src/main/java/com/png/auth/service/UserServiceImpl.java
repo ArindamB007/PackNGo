@@ -1,5 +1,6 @@
 package com.png.auth.service;
 
+import java.sql.Timestamp;
 import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,9 @@ public class UserServiceImpl implements UserService{
 	public void save(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setRoles(new HashSet<>(roleRepository.findAll()));
+		user.setCreatedTimestamp(new Timestamp(new java.util.Date().getTime()));
+		user.setUpdatedTimestamp(new Timestamp(new java.util.Date().getTime()));
 		userRepository.save(user);
-		
 	}
 	@Override
 	public User findByUsername(String email) {

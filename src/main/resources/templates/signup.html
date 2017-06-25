@@ -37,13 +37,13 @@
                     <input  data-ng-model = "userDetails.name" type="text" class="mui-form-control" 
                     		placeholder="Name..." name = "name" required>
                     <span ng-show = "!signup.name.$error.required && signup.$submitted" class="form-control-feedback">
-			                <i class="material-icons">done</i>
+			                <i class="material-icons">thumb_up</i>
 		                </span>
                     <span ng-show = "signup.name.$error.required && signup.$submitted" class="form-control-feedback">
-			                <i class="material-icons">clear</i>
+			                <i class="material-icons">error_outline</i>
 		                </span>
                   </div>
-                  <div style="display: block;min-height: 20px;">
+                  <div class = "png-input-error">
                     <div ng-show = "signup.$submitted" ng-messages="signup.name.$error" role="alert">
                       <div ng-show=signup.name.$error.required>{{signup.name.errMsg}}</div>
                     </div>
@@ -55,21 +55,21 @@
                       <i class="material-icons">email</i>
                   </span>
                   <div class="mui-form-group is-empty"
-                  ng-class = "{'has-error':(signup.email.$error.required ||signup.email.$error.custom) && signup.$submitted,
+                  ng-class = "{'has-error':(signup.email.$error.required || signup.email.$error.custom) && signup.$submitted,
                   'has-success':!signup.email.$error.required && !signup.email.$error.custom && signup.$submitted}">
                     <input  data-ng-model = "userDetails.email" type="email" class="mui-form-control" 
                     		placeholder="Email..." name = "email" ng-change = "resetErrors('email')"
                     		required>
                     <span ng-show = "!signup.email.$error.required && !signup.email.$error.custom && signup.$submitted"
                           class="form-control-feedback">
-			                <i class="material-icons">done</i>
+			                <i class="material-icons">thumb_up</i>
 		                </span>
                     <span ng-show = "(signup.email.$error.required ||signup.email.$error.custom) && signup.$submitted"
                           class="form-control-feedback">
-			                <i class="material-icons">clear</i>
+			                <i class="material-icons">error_outline</i>
 		                </span>
                   </div>
-                  <div style="display: block;min-height: 20px;">
+                  <div class = "png-input-error">
                     <div ng-show = "signup.$submitted" ng-messages="signup.email.$error" role="alert">
                       <span ng-show=signup.email.$error.required>{{signup.email.errMsg}}</span>
                       <span ng-show=signup.email.$error.custom>{{signup.email.errMsg}}</span>
@@ -89,14 +89,14 @@
                     		ng-change = "resetErrors('password')" required/>
                     <span ng-show = "!signup.password.$error.required && !signup.password.$error.custom && signup.$submitted"
                           class="form-control-feedback">
-			                <i class="material-icons">done</i>
+			                <i class="material-icons">thumb_up</i>
 		                </span>
                     <span ng-show = "(signup.password.$error.required ||signup.password.$error.custom) && signup.$submitted"
                           class="form-control-feedback">
-			                <i class="material-icons">clear</i>
+			                <i class="material-icons">error_outline</i>
 		                </span>
                   </div>
-                  <div style="display: block;min-height: 20px;">
+                  <div class = "png-input-error">
                     <div ng-show = "signup.$submitted" ng-messages="signup.password.$error" role="alert">
                       <div ng-show=signup.password.$error.required>{{signup.password.errMsg}}</div>
                       <div ng-show=signup.password.$error.custom>{{signup.password.errMsg}}</div>
@@ -117,13 +117,13 @@
                     		ng-change = "resetErrors('confirmPassword')" required/>
                       <span ng-show = "!signup.confirmPassword.$error.required && !signup.confirmPassword.$error.custom && signup.$submitted"
                             class="form-control-feedback">
-                        <i class="material-icons">done</i>
+                        <i class="material-icons">thumb_up</i>
                       </span>
                       <span ng-show = "(signup.confirmPassword.$error.required ||signup.confirmPassword.$error.custom) && signup.$submitted" class="form-control-feedback">
-                       <i class="material-icons">clear</i>
+                       <i class="material-icons">error_outline</i>
                       </span>
                   </div>
-                  <div style="display: block;min-height: 20px;">
+                  <div class = "png-input-error">
                     <div ng-show = "signup.$submitted" ng-messages="signup.confirmPassword.$error">
                       <div ng-show=signup.confirmPassword.$error.required>{{signup.confirmPassword.errMsg}}</div>
                       <div ng-show=signup.confirmPassword.$error.custom>{{signup.confirmPassword.errMsg}}</div>

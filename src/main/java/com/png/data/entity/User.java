@@ -1,6 +1,9 @@
 package com.png.data.entity;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Set;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +19,7 @@ import javax.persistence.Transient;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
-
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 /**
@@ -29,20 +32,35 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_user")
-    private Long id_user;
+    private Long idUser;
 
     @Column (name="email")
-    @Email(message = "Please provide a valid email")
-    @NotEmpty(message = "Please provide an email")
+    @Email
+    @NotEmpty
     private String email;
 
+    @Column (name = "email_validated")
+    private Boolean emailValidated = false;
+
     @Column (name="password")
-    @Length (min = 5,message = "Password must have 5 characters")
-    @NotEmpty (message = "Please provide a password")
+    @Length (min = 5)
+    @NotEmpty
     private String password;
 
     @Column(name="name")
     private String name;
+
+	@Column (name= "last_login_timestamp")
+	private Timestamp lastLoginTimestamp;
+
+	@Column(name = "created_timestamp")
+	private Timestamp createdTimestamp;
+
+	@Column(name = "updated_timestamp")
+	private Timestamp updatedTimestamp;
+
+	@Column(name = "deleted_flag")
+    private Boolean deleteFlag =false;
 
     @Transient
     private String confirmPassword;
@@ -52,7 +70,7 @@ public class User {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_role"))
     private Set<Role> roles;
 
-	public String getEmail() {
+    public String getEmail() {
 		return email;
 	}
 
@@ -76,14 +94,6 @@ public class User {
 		this.name = name;
 	}
 
-	public Long getId_user() {
-		return id_user;
-	}
-
-	public void setId_user(Long id_user) {
-		this.id_user = id_user;
-	}
-
 	public Set<Role> getRoles() {
 		return roles;
 	}
@@ -95,4 +105,54 @@ public class User {
 	public String getConfirmPassword() {
 		return confirmPassword;
 	}
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+    public Long getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
+    }
+
+    public Boolean getEmailValidated() {
+        return emailValidated;
+    }
+
+    public void setEmailValidated(Boolean emailValidated) {
+        this.emailValidated = emailValidated;
+    }
+
+    public Boolean getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(Boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
+    }
+
+    public Timestamp getLastLoginTimestamp() {
+        return lastLoginTimestamp;
+    }
+
+    public void setLastLoginTimestamp(Timestamp lastLoginTimestamp) {
+        this.lastLoginTimestamp = lastLoginTimestamp;
+    }
+
+    public Timestamp getCreatedTimestamp() {
+        return createdTimestamp;
+    }
+
+    public void setCreatedTimestamp(Timestamp createdTimestamp) {
+        this.createdTimestamp = createdTimestamp;
+    }
+
+    public Timestamp getUpdatedTimestamp() {
+        return updatedTimestamp;
+    }
+
+    public void setUpdatedTimestamp(Timestamp updatedTimestamp) {
+        this.updatedTimestamp = updatedTimestamp;
+    }
 }

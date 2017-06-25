@@ -8667,3 +8667,9 @@ a.scroll_arrow_down i {
 
 .datepicker-footer {
   text-align: center; }
+
+.png-input-error {
+  display: block;
+  min-height: 20px;
+  font-size: x-small;
+  color: red; }

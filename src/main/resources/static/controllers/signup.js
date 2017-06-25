@@ -4,6 +4,9 @@ $scope.userDetails = {};
 $scope.doSignUp = function(){
   signupResponse = loginService.signUp($scope.userDetails)
   .then(function(response){
+    //reset the user details after successfull submission
+    $scope.signup.$setPristine();
+    $scope.userDetails = {};
 	  alert("Signup successful");
 	  console.log(response);
 	  })
