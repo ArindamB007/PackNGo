@@ -1,14 +1,22 @@
-PackNGo.controller('SignupCtrl',function($scope,loginService){
+PackNGo.controller('SignupCtrl',function($scope,loginService,ModalService,$location,$log){
 $scope.userDetails = {};
-
 $scope.doSignUp = function(){
   signupResponse = loginService.signUp($scope.userDetails)
   .then(function(response){
     //reset the user details after successfull submission
     $scope.signup.$setPristine();
     $scope.userDetails = {};
-	  alert("Signup successful");
+    ModalService.showModal("sm","Signup Success", "We are delighted to have you with us! Please login!",["OK"]);
+		var modalInstance = ModalService.getModalInstance();
+    modalInstance.result.then(function (response) {
+      $log.info('Modal dismissed at: ' + new Date() + 'Response: ' + response);
+      $location.path("\login");
+    }, function (response) {
+      $log.info('Modal dismissed at: ' + new Date() + 'Response: ' + response);
+      $location.path("\login");
+    });
 	  console.log(response);
+
 	  })
   .catch(function(response){
 	  //alert("Signup failed");

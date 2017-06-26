@@ -75,6 +75,8 @@
 <body id="skrollr-body" data-ng-app="PackNGo" data-ng-controller="MainCtrl" style="overflow-y: scroll">
 <!--The Java script element attached itself to -->
 <div id="fb-root"></div>
+
+<!-- The loading div-->
 <div class="loading" id="loader">
   <p style="padding: 30px">
     <img class="loader" src="../img/loading.svg"
@@ -95,6 +97,24 @@
     <p>Welcome! One moment please ...</p>
   </div>
 </div>
+
+<!-- The Modals -->
+
+		<script type="text/ng-template" id="myModalContent.html">
+      <div class="modalheader">
+        <span class="close" data-ng-click="cancel()">&times;</span>
+        <h3 class="modaltitle">{{title}}</h3>
+      </div>
+      <div class="modalbody">
+        {{msg}}
+      </div>
+      <div class="form-btn-components">
+        <span data-ng-repeat="button in buttons">
+          <button class="ui green button" type="button" data-ng-click="buttonClick(button)">{{button}}</button>
+        </span>
+      </div>
+    </script>
+
 <!-- if you want to keep the navbar hidden you can add this class to the navbar "navbar-burger"-->
 <nav class="navbar navbar-color-on-scroll navbar-default navbar-transparent navbar-fixed-top"
        role="navigation">
@@ -216,6 +236,7 @@
 <!--  All application controller goes here   -->
 <script type="text/javascript" src="../js/app.js"></script>
 <script type="text/javascript" src="../js/app-route.js"></script>
+<script type="text/javascript" src="../js/modal-service.js"></script>
 <script type="application/x-javascript" src="../services/pngservices.js" ></script>
 <script type="text/javascript" src="../controllers/login.js" ></script>
 <script type="text/javascript" src="../controllers/signup.js" ></script>

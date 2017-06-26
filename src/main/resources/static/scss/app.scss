@@ -617,3 +617,35 @@ a.scroll_arrow_down i {
   font-size: x-small;
   color: red;
 }
+
+/*Modal window styles*/
+.modal-content .modalheader{
+  height: 10%;
+ /* background-color: #2678a3;
+  color: #fff; */
+  padding: 5px 10px;
+}
+
+.modal-content .modaltitle{
+  margin: 5px;
+}
+
+.modal-content .modalbody{
+  margin: 5px 15px;
+}
+
+.modal-content .form-btn-components{
+  text-align: center;
+  padding: 25px;
+}
+
+.form-btn-components .btnCancel:hover {
+  color: #fff;
+}
+
+.common-modal h4.modal-title {
+  text-transform: capitalize;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
