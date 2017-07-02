@@ -3,12 +3,16 @@ package com.png.web.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.png.auth.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -30,12 +34,14 @@ public class ServicesControllers {
 	
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	SecurityService securityService;
 	
 	@RequestMapping(value ="/signup",method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<?> signup(@RequestBody User user,BindingResult bindingResult) throws ValidationException{
+	public ResponseEntity<Object> signup(@RequestBody User user,BindingResult bindingResult) throws ValidationException{
 		ArrayList <HashMap <String,String>> errorList = new ArrayList<HashMap <String,String>>();
-		
 		userValidator.validate(user, bindingResult);
 		if (bindingResult.hasErrors()){
 			for (FieldError error : bindingResult.getFieldErrors()){
@@ -49,5 +55,25 @@ public class ServicesControllers {
 		}
 		userService.save(user);
 		return new ResponseEntity<Object>(HttpStatus.OK);
+	}
+
+	@RequestMapping(value ="/userlogin",method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Object> userLogin(@RequestBody Map<String,String> payload){
+		ArrayList <HashMap <String,String>> errorList = new ArrayList<HashMap <String,String>>();
+		System.out.println("User Name: " + payload.get("email"));
+		System.out.println("Password: " + payload.get("password"));
+		try {
+			UserDetails userDetails = securityService.userLogin(payload.get("email"), payload.get("password"));
+			return new ResponseEntity<Object>(userDetails, HttpStatus.OK);
+		} catch (Exception e){
+					HashMap<String,String> errors = new HashMap<String,String>();
+					errors.put("type", e.getClass().getSimpleName());
+					errors.put("message", e.getMessage());
+					errorList.add(errors);
+					return new ResponseEntity<Object>(errorList, HttpStatus.NOT_FOUND);
+		}
+
+
 	}
 }

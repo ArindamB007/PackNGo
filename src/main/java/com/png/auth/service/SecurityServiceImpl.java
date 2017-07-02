@@ -41,5 +41,19 @@ public class SecurityServiceImpl implements SecurityService{
 			logger.debug(String.format("User %s auto logged in successfully!", email));
 		}
 	}
+	@Override
+	public UserDetails userLogin(String email, String password){
+		UserDetails userDetails = null;
+		userDetails = userDetailsService.loadUserByUsername(email);
+		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+				new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+		authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+
+		if (usernamePasswordAuthenticationToken.isAuthenticated()) {
+			SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+			System.out.println(String.format("User %s logged in successfully!", email));
+		}
+		return userDetails;
+	}
 	
 }

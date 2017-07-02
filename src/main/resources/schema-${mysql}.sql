@@ -16,4 +16,11 @@ CREATE TABLE role(
   id_role LONG AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(48) NOT NULL,
   description VARCHAR(48)
-)
+);
+
+CREATE TABLE user_roles(
+  id_user LONG,
+  id_role LONG,
+  FOREIGN KEY (id_user) REFERENCES user(id_user),
+  FOREIGN KEY (id_role) REFERENCES role(id_role)
+);

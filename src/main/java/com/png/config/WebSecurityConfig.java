@@ -16,6 +16,9 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	/*@Autowired
 	ApplicationConfiguration applicationConfiguration;*/
+
+	@Autowired
+	ApplicationMsgResourceConfiguration applicationMsgResourceConfiguration;
 	
 	@Autowired
 	private UserDetailsService userDetailsService;

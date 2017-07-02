@@ -1,13 +1,13 @@
-PackNGo.controller('SignupCtrl',function($scope,loginService,ModalService,$location,$log){
+PackNGo.controller('SignupCtrl',function($scope,LoginService,ModalService,$location,$log){
 $scope.userDetails = {};
 $scope.doSignUp = function(){
-  signupResponse = loginService.signUp($scope.userDetails)
+  LoginService.signUp($scope.userDetails)
   .then(function(response){
-    //reset the user details after successfull submission
+    //reset the user details after successful submission
     $scope.signup.$setPristine();
     $scope.userDetails = {};
-    ModalService.showModal("sm","Signup Success", "We are delighted to have you with us! Please login!",["OK"]);
-		var modalInstance = ModalService.getModalInstance();
+    var modalInstance = ModalService.showModal("sm","Signup Success",
+			"We are delighted to have you with us! Please login!",["OK"]);
     modalInstance.result.then(function (response) {
       $log.info('Modal dismissed at: ' + new Date() + 'Response: ' + response);
       $location.path("\login");
@@ -16,13 +16,11 @@ $scope.doSignUp = function(){
       $location.path("\login");
     });
 	  console.log(response);
-
 	  })
   .catch(function(response){
 	  //alert("Signup failed");
 	  //$scope.signup.email.$error.email = true;
 	  angular.forEach(response.data,function(map){
-		  
 		  console.log(map);
 		  console.log(map.fieldName);
 		  $scope.signup[map.fieldName].$error[map.errorType] = true;

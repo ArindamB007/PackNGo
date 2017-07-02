@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="No such Order")
+@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Incorrect or missing Parameters")
 @ResponseBody
 public class ValidationException extends BaseException{
 

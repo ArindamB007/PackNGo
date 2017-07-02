@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
             <div class="card card-signup">
-              <form class="form" method="" action="">
+              <form name = "loginForm" class="form" novalidate>
                 <div class="header header-info text-center">
                   <mui-h4>Login</mui-h4>
                   <div class="mui-social-line">
@@ -32,8 +32,14 @@
 											<i class="material-icons">email</i>
 										</span>
                     <div class="mui-form-group is-empty">
-                      <input type="text" class="mui-form-control" placeholder="Email...">
+                      <input data-ng-model="loginDetails.email" type="email" placeholder="Email..."
+                             class="mui-form-control" name = "email" required>
                       <span class="material-input"></span>
+                    </div>
+                    <div class = "png-input-error">
+                      <div ng-show = "loginForm.$submitted" ng-messages="loginForm.email.$error" role="alert">
+                        <span ng-show=loginForm.email.$error.required>Enter email used to sign up</span>
+                      </div>
                     </div>
                   </div>
 
@@ -42,9 +48,15 @@
 											<i class="material-icons">lock_outline</i>
 										</span>
                     <div class="mui-form-group is-empty">
-                      <input type="password" placeholder="Password..." class="mui-form-control"/>
+                      <input data-ng-model="loginDetails.password" type="password" placeholder="Password..."
+                             class="mui-form-control" name = "password" required/>
                       <span class="material-input"></span>
-                    </div>
+                    </div> <div class = "png-input-error">
+                      <div ng-show = "loginForm.$submitted" ng-messages="loginForm.password.$error" role="alert">
+                        <span ng-show=loginForm.password.$error.required>Enter your password used to sign up</span>
+                      </div>
+                  </div>
+
                   </div>
                   <!-- If you want to add a checkbox to this form, uncomment this code
 
@@ -56,7 +68,9 @@
                   </div> -->
                 </div>
                 <div class="mui-footer text-center">
-                    <button class="png ui basic blue button"> <i class="icon sign in"></i>Get Started</button>
+                    <button class="png ui basic blue button" data-ng-click="doLogin()"
+                            data-ng-disabled="loginForm.$invalid">
+                      <i class="icon sign in"></i>Login</button>
                     <div class="ripple-container"></div>
                   </a>
                 </div>

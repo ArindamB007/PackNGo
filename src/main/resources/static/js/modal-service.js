@@ -2,10 +2,6 @@
 PackNGo.service('ModalService',['$uibModal', function($uibModal){
   var modalInstance;
 
-  this.getModalInstance = function () {
-    return modalInstance;
-  };
-
   this.showModal = function(size,title,msg,buttons){
     modalInstance = $uibModal.open(
       {animation: true,
@@ -25,6 +21,7 @@ PackNGo.service('ModalService',['$uibModal', function($uibModal){
             return buttons;
           }
         }});
+    return modalInstance;
   };
 
   this.hideModal = function(){

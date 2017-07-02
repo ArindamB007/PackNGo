@@ -1,5 +1,6 @@
 package com.png.auth.validator;
 
+import com.png.com.png.messages.CustomMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,9 @@ import com.png.properties.ValidationProperties;
 @Component
 @ConfigurationProperties("signUp")
 public class UserValidator implements Validator {
+	@Autowired
+	private CustomMessages customMessages;
+
 	@Autowired
 	private ValidationProperties vP;
 	
@@ -35,7 +39,7 @@ public class UserValidator implements Validator {
 			errors.rejectValue("email", "custom",vP.getSignupSizeEmail());
 		}
 		if (userService.findByUsername(user.getEmail()) != null){
-			errors.rejectValue("email", "custom",vP.getSignupDuplicateEmail());
+			errors.rejectValue("email", "custom",customMessages.getMessage("signup.duplicate.email"));
 		}
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required", vP.getSignupRequired());
 		if (user.getPassword()!=null && (user.getPassword().length()<8 ||user.getPassword().length()>48)){
