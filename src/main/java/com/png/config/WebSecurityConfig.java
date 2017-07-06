@@ -17,8 +17,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	/*@Autowired
 	ApplicationConfiguration applicationConfiguration;*/
 
-	@Autowired
-	ApplicationMsgResourceConfiguration applicationMsgResourceConfiguration;
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
