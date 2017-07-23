@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.png.auth.service.UserService;
 import com.png.auth.validator.UserValidator;
 import com.png.data.entity.User;
+import com.png.data.entity.UserContext;
 import com.png.exception.ValidationException;
 
 @Controller
@@ -64,8 +65,8 @@ public class ServicesControllers {
 		System.out.println("User Name: " + payload.get("email"));
 		System.out.println("Password: " + payload.get("password"));
 		try {
-			UserDetails userDetails = securityService.userLogin(payload.get("email"), payload.get("password"));
-			return new ResponseEntity<Object>(userDetails, HttpStatus.OK);
+			UserContext userContext = securityService.login(payload.get("email"), payload.get("password"));
+			return new ResponseEntity<Object>(userContext, HttpStatus.OK);
 		} catch (Exception e){
 					HashMap<String,String> errors = new HashMap<String,String>();
 					errors.put("type", e.getClass().getSimpleName());
@@ -73,7 +74,6 @@ public class ServicesControllers {
 					errorList.add(errors);
 					return new ResponseEntity<Object>(errorList, HttpStatus.NOT_FOUND);
 		}
-
 
 	}
 }

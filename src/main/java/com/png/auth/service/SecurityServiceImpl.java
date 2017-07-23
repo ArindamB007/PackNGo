@@ -10,13 +10,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import com.png.data.entity.UserContext;
+
 @Service
 public class SecurityServiceImpl implements SecurityService{
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
 	@Autowired
-	private UserDetailsService userDetailsService;
+	private CustomUserDetailsService userDetailsService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
@@ -54,6 +56,23 @@ public class SecurityServiceImpl implements SecurityService{
 			System.out.println(String.format("User %s logged in successfully!", email));
 		}
 		return userDetails;
+	}
+	
+	@Override
+	public UserContext login(String email, String password){
+		UserDetails userDetails = null;
+		UserContext userContext = null;
+		userDetails = userDetailsService.loadUserByUsername(email);
+		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+				new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+		authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+
+		if (usernamePasswordAuthenticationToken.isAuthenticated()) {
+			userContext = userDetailsService.getUserContext();
+			SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+			System.out.println(String.format("User %s logged in successfully!", email));
+		}
+		return userContext;
 	}
 	
 }
