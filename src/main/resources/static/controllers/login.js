@@ -1,11 +1,12 @@
-PackNGo.controller('LoginCtrl',function($scope,LoginService,ModalService){
+PackNGo.controller('LoginCtrl',function($scope,LoginService,LocalStorageService,ModalService){
   $scope.loginDetails = {};
   $scope.doLogin = function() {
     LoginService.userLogin($scope.loginDetails)
       .then(function(response){
       $scope.loginForm.$setPristine();
       $scope.loginDetails = {};
-      $location.path("\login");
+      LocalStorageService.setLocalStore("Token",response.headers("x-auth-token"));
+      console.log(response.headers("x-auth-token"));
     })
       .catch(function(response){
       $scope.loginDetails = {};
