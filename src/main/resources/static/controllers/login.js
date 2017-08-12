@@ -1,4 +1,4 @@
-PackNGo.controller('LoginCtrl',function($scope,LoginService,LocalStorageService,ModalService,$http){
+PackNGo.controller('LoginCtrl',function($scope,LoginService,LocalStorageService,ModalService){
   $scope.loginDetails = {};
   $scope.doLogin = function() {
     LoginService.userLogin($scope.loginDetails)
