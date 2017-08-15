@@ -23,7 +23,6 @@ public class PackNGoApplication extends SpringBootServletInitializer{
     public static void main(String[] args) throws IOException{
     	ConfigurableApplicationContext ctx = SpringApplication.run(PackNGoApplication.class, args); 
         System.out.println("Let's inspect the beans provided by Spring Boot:");
-        MenuMapper.getMenu();
         String[] beanNames = ctx.getBeanDefinitionNames();
         Arrays.sort(beanNames);
         for (String beanName : beanNames) {

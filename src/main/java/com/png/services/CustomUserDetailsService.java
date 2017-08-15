@@ -1,8 +1,13 @@
 package com.png.services;
 
+import java.io.IOException;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.png.menu.Menu;
+import com.png.menu.MenuList;
+import com.png.menu.MenuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,7 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 	private UserRepository userRepository;
 
 	private UserContext userContext;
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String email) {
@@ -37,6 +42,10 @@ public class CustomUserDetailsService implements UserDetailsService{
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthorities(user));
 	}
 
+	private User getUserByUserContext(UserContext userContext){
+		return userRepository.findByEmail(userContext.getEmail());
+	}
+
 	private Set<GrantedAuthority> getAuthorities (User user){
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		for(Role role:user.getRoles()){
@@ -47,6 +56,10 @@ public class CustomUserDetailsService implements UserDetailsService{
 
 	public UserContext getUserContext() {
 		return userContext;
+	}
+
+	public Collection<Menu> getUserMenu(long id_user) throws IOException{
+		return MenuMapper.getMenu(userRepository.findByIdUser(id_user).getRoles());
 	}
 
 	public void setUserContext(UserContext userContext) {

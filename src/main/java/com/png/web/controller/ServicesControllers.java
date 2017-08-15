@@ -1,12 +1,11 @@
 package com.png.web.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.png.auth.service.SecurityService;
+import com.png.menu.Menu;
+import com.png.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -35,6 +34,9 @@ public class ServicesControllers {
 	
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	private CustomUserDetailsService userDetailsService;
 
 	@Autowired
 	SecurityService securityService;
@@ -78,12 +80,11 @@ public class ServicesControllers {
 	}
 	@RequestMapping(value ="/user_menu",method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Object> userMenu(@RequestBody Map<String,String> payload){
+	public ResponseEntity<Object> userMenu(@RequestBody UserContext userContext){
 		ArrayList <HashMap <String,String>> errorList = new ArrayList<HashMap <String,String>>();
-		System.out.println("User Id: " + payload.get("user_id"));
 		try {
-			UserContext userContext = securityService.login(payload.get("email"), payload.get("password"));
-			return new ResponseEntity<Object>(userContext, HttpStatus.OK);
+			Collection<Menu> menuToShow= userDetailsService.getUserMenu(userContext.getIdUser());
+			return new ResponseEntity<Object>(menuToShow, HttpStatus.OK);
 		} catch (Exception e){
 			HashMap<String,String> errors = new HashMap<String,String>();
 			errors.put("type", e.getClass().getSimpleName());
