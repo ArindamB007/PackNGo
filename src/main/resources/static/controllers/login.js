@@ -1,13 +1,19 @@
-PackNGo.controller('LoginCtrl',function($scope,LoginService,LocalStorageService,ModalService){
-  $scope.loginDetails = {};
+PackNGo.controller('LoginCtrl',function($scope,$http,$location, $rootScope,LoginService,LocalStorageService,ModalService){
+  $rootScope.userDetails = undefined;
   $scope.doLogin = function() {
     LoginService.userLogin($scope.loginDetails)
       .then(function(response){
       $scope.loginForm.$setPristine();
-      $scope.loginDetails = {};
+      $rootScope.userDetails = response.data;
       LocalStorageService.setLocalStore('token',response.headers("x-auth-token"));
       console.log(response.headers('x-auth-token'));
       $http.defaults.headers.common['x-auth-token'] = LocalStorageService.getLocalStore('token');
+      //redirect to home page after login
+      if($rootScope.userDetails !== undefined) {
+        alert ("Login Success!");
+        $location.path('/');
+      }
+
     })
       .catch(function(response){
       $scope.loginDetails = {};

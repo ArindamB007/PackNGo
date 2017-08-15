@@ -76,4 +76,21 @@ public class ServicesControllers {
 		}
 
 	}
+	@RequestMapping(value ="/user_menu",method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Object> userMenu(@RequestBody Map<String,String> payload){
+		ArrayList <HashMap <String,String>> errorList = new ArrayList<HashMap <String,String>>();
+		System.out.println("User Id: " + payload.get("user_id"));
+		try {
+			UserContext userContext = securityService.login(payload.get("email"), payload.get("password"));
+			return new ResponseEntity<Object>(userContext, HttpStatus.OK);
+		} catch (Exception e){
+			HashMap<String,String> errors = new HashMap<String,String>();
+			errors.put("type", e.getClass().getSimpleName());
+			errors.put("message", e.getMessage());
+			errorList.add(errors);
+			return new ResponseEntity<Object>(errorList, HttpStatus.NOT_FOUND);
+		}
+
+	}
 }

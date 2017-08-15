@@ -4,7 +4,6 @@
 /***************************FB Login initiation*************************************/
 PackNGo.run(['$rootScope', '$window', 'faceBookLoginService',
 	function($rootScope, $window, fbService) {
-		$rootScope.user = {};
 		$window.fbAsyncInit = function() {
 			// Executed when the SDK is loaded
 			FB.init({
