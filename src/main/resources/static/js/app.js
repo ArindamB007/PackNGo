@@ -152,9 +152,10 @@ PackNGo.controller('HomeCtrl', function($scope) {
 });
 
 //Controller for the main page index.html
-PackNGo.controller('MainCtrl', function($scope,$timeout, $location) {
+PackNGo.controller('MainCtrl', function($scope,$rootScope,$timeout, $location) {
 	$().UItoTop({ easingType: 'easeOutQuart' }); //uitotopplugin
 	$scope.companyDetails = {id: '12345', name: 'ABC Inc.'};
+	
 	$scope.$on('$viewContentLoaded', function(event){
 		// handling menu transparency flag
 		if ($location.path()==="/") {
@@ -172,8 +173,23 @@ PackNGo.controller('MainCtrl', function($scope,$timeout, $location) {
 });
 
 //controller for the menu index.html
-PackNGo.controller('MenuCtrl', function($scope) {
-	$scope.menuItems = [
+PackNGo.controller('MenuCtrl', function($scope,$rootScope,MenuService,ModalService,CommonService) {
+	//fetch user menu
+	$scope.getUserMenu = function(userContext){
+		MenuService.userMenu(userContext)
+	      .then(function(response){
+	    	  $scope.menuItems = response.data;
+	    	  console.log(response.data);
+	    })
+	      .catch(function(response){
+	      $scope.loginDetails = {};
+	      console.log(response);
+	      CommonService.handleDefaultErrorResponse("lg","Error Fetching Menu", response,["OK"]);
+	    });
+	}
+	$scope.getUserMenu({});
+	
+	/*$scope.menuItems = [
 		{menuLabel: "Home", linkURL: "#/"},
 		{menuLabel: "Top", dataId:"#topOfPage"},
 		{menuLabel: "Samples", linkURL: "#/samples"},
@@ -190,7 +206,7 @@ PackNGo.controller('MenuCtrl', function($scope) {
 		{menuLabel: "Contact Us",linkURL: "#"},
 		{menuLabel: "Account", showLabel:true, type: "dropDown", icon: "material-icons md-24 orangeC00", iconClass: "account_box",
 			submenuItems: [{menuLabel: "Login",linkURL: "#/login"},
-				{menuLabel: "Sign-up",linkURL: "#/signup"}]}];
+				{menuLabel: "Sign-up",linkURL: "#/signup"}]}];*/
 });
 
 PackNGo.directive('navMenuItemInternalLink', function(){

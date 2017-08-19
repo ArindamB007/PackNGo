@@ -41,7 +41,7 @@ public class ServicesControllers {
 	@Autowired
 	SecurityService securityService;
 	
-	@RequestMapping(value ="/signup",method = RequestMethod.POST)
+	@RequestMapping(value ="/sign_up",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> signup(@RequestBody User user,BindingResult bindingResult) throws ValidationException{
 		ArrayList <HashMap <String,String>> errorList = new ArrayList<HashMap <String,String>>();
@@ -60,21 +60,19 @@ public class ServicesControllers {
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 
-	@RequestMapping(value ="/userlogin",method = RequestMethod.POST)
+	@RequestMapping(value ="/user_login",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> userLogin(@RequestBody Map<String,String> payload){
-		ArrayList <HashMap <String,String>> errorList = new ArrayList<HashMap <String,String>>();
 		System.out.println("User Name: " + payload.get("email"));
 		System.out.println("Password: " + payload.get("password"));
 		try {
 			UserContext userContext = securityService.login(payload.get("email"), payload.get("password"));
 			return new ResponseEntity<Object>(userContext, HttpStatus.OK);
 		} catch (Exception e){
-					HashMap<String,String> errors = new HashMap<String,String>();
-					errors.put("type", e.getClass().getSimpleName());
-					errors.put("message", e.getMessage());
-					errorList.add(errors);
-					return new ResponseEntity<Object>(errorList, HttpStatus.NOT_FOUND);
+					HashMap<String,String> errorDetails = new HashMap<String,String>();
+					errorDetails.put("type", e.getClass().getSimpleName());
+					errorDetails.put("message", e.getMessage());
+					return new ResponseEntity<Object>(errorDetails, HttpStatus.NOT_FOUND);
 		}
 
 	}

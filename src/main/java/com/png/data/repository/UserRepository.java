@@ -7,6 +7,6 @@ import com.png.data.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 	User findByEmail (String email);
-	User findByIdUser (long id_user);
+	User findByIdUser (Long id_user);
 
 }

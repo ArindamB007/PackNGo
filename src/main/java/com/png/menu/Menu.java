@@ -14,20 +14,11 @@ import java.util.ArrayList;
 )
 public abstract class Menu {
     private String menuLabel;
-    private ArrayList<String> roles;
     public String getMenuLabel() {
         return menuLabel;
     }
 
     public void setMenuLabel(String menuLabel) {
         this.menuLabel = menuLabel;
-    }
-
-    public ArrayList<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(ArrayList<String> roles) {
-        this.roles = roles;
     }
 }

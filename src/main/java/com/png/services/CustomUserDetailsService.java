@@ -58,7 +58,10 @@ public class CustomUserDetailsService implements UserDetailsService{
 		return userContext;
 	}
 
-	public Collection<Menu> getUserMenu(long id_user) throws IOException{
+	public Collection<Menu> getUserMenu(Long id_user) throws IOException{
+		if (id_user == null)
+			return MenuMapper.getMenu(null);
+		else
 		return MenuMapper.getMenu(userRepository.findByIdUser(id_user).getRoles());
 	}
 

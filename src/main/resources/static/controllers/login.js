@@ -1,5 +1,6 @@
-PackNGo.controller('LoginCtrl',function($scope,$http,$location, $rootScope,LoginService,LocalStorageService,ModalService){
-  $rootScope.userDetails = undefined;
+PackNGo.controller('LoginCtrl',function($scope,$http,$location, $rootScope,LoginService,
+		LocalStorageService,ModalService,MenuService,CommonService){
+  $rootScope.userDetails = {};
   $scope.doLogin = function() {
     LoginService.userLogin($scope.loginDetails)
       .then(function(response){
@@ -18,13 +19,14 @@ PackNGo.controller('LoginCtrl',function($scope,$http,$location, $rootScope,Login
       .catch(function(response){
       $scope.loginDetails = {};
       console.log(response);
-      var modalInstance = ModalService.showModal("sm","Login Failed!",
+      CommonService.handleDefaultErrorResponse("sm","Error Fetching Menu", response,["OK"]);
+      /*var modalInstance = ModalService.showModal("sm","Login Failed!",
         response.data[0].message,["OK"]);
       modalInstance.result.then(function (response) {
         //need to put the focus on the element
       }, function (response) {
         //need to put the focus on the element
-      });
+      });*/
     });
   };
 });

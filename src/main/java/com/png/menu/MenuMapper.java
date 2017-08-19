@@ -18,7 +18,7 @@ public class MenuMapper {
         ObjectMapper mapper = new ObjectMapper();
         MenuList menuList = mapper.readValue(jsonFile,MenuList.class);
         System.out.println(mapper.writeValueAsString(menuList));
-        if (roleSet == null){ //if user is not logged in
+        if (roleSet == null|| roleSet.isEmpty()){ //if user is not logged in
             return menuList.menusDefault;
         }
         for (Role role:roleSet) {
