@@ -14,6 +14,9 @@ import java.util.ArrayList;
 )
 public abstract class Menu {
     private String menuLabel;
+    private String icon;
+    private String iconClass;
+    private Boolean showLabel;
     public String getMenuLabel() {
         return menuLabel;
     }
@@ -21,4 +24,28 @@ public abstract class Menu {
     public void setMenuLabel(String menuLabel) {
         this.menuLabel = menuLabel;
     }
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public String getIconClass() {
+		return iconClass;
+	}
+
+	public void setIconClass(String iconClass) {
+		this.iconClass = iconClass;
+	}
+
+	public Boolean getShowLabel() {
+		return showLabel;
+	}
+
+	public void setShowLabel(Boolean showLabel) {
+		this.showLabel = showLabel;
+	}
 }

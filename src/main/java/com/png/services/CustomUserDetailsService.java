@@ -1,12 +1,13 @@
 package com.png.services;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import com.png.menu.Menu;
-import com.png.menu.MenuList;
 import com.png.menu.MenuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,22 +29,31 @@ public class CustomUserDetailsService implements UserDetailsService{
 	private UserRepository userRepository;
 
 	private UserContext userContext;
+	
+	private User user;
 
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String email) {
-		User user =null;
-		user = userRepository.findByEmail(email);
-		if (user == null)
+		user = null;
+		this.user = userRepository.findByEmail(email);
+		if (this.user == null)
 			throw new UsernameNotFoundException(String.format("Username and or password invalid. Please try again!", email));
 		userContext = new UserContext();
-		userContext.setUserDetails(user);
-		userContext.setGrantedAuthorities(getAuthorities(user));
+		userContext.setUserRoles(getRoles(this.user));
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthorities(user));
 	}
 
 	private User getUserByUserContext(UserContext userContext){
 		return userRepository.findByEmail(userContext.getEmail());
+	}
+	
+	private ArrayList<String> getRoles (User user){
+		ArrayList<String> userRoles = new ArrayList<String>();
+		for(Role role:user.getRoles()){
+			userRoles.add(role.getName());
+		}
+		return userRoles;
 	}
 
 	private Set<GrantedAuthority> getAuthorities (User user){
@@ -55,7 +65,8 @@ public class CustomUserDetailsService implements UserDetailsService{
 	}
 
 	public UserContext getUserContext() {
-		return userContext;
+		userContext.setUserDetails(this.user);
+		return this.userContext;
 	}
 
 	public Collection<Menu> getUserMenu(Long id_user) throws IOException{
@@ -67,5 +78,13 @@ public class CustomUserDetailsService implements UserDetailsService{
 
 	public void setUserContext(UserContext userContext) {
 		this.userContext = userContext;
+	}
+	
+	public void updateLastLoginTimeStamp(Timestamp lastLoginTimestamp){
+		this.user.setLastLoginTimestamp(lastLoginTimestamp);
+	}
+	
+	public void saveUser(){
+		userRepository.save(this.user);
 	}
 }

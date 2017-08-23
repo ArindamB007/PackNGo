@@ -1,4 +1,4 @@
-	var PackNGo = angular.module('PackNGo', ['ngRoute','ngAnimate','ui.bootstrap','ngMessages','ngStorage']);
+var PackNGo = angular.module('PackNGo', ['ngRoute','ngAnimate','ui.bootstrap','ngMessages','ngStorage']);
 
 
 /***************************FB Login initiation*************************************/
@@ -173,7 +173,8 @@ PackNGo.controller('MainCtrl', function($scope,$rootScope,$timeout, $location) {
 });
 
 //controller for the menu index.html
-PackNGo.controller('MenuCtrl', function($scope,$rootScope,MenuService,ModalService,CommonService) {
+PackNGo.controller('MenuCtrl', function($scope,$rootScope,MenuService,ModalService,CommonService,
+		UserContext) {
 	//fetch user menu
 	$scope.getUserMenu = function(userContext){
 		MenuService.userMenu(userContext)
@@ -182,12 +183,16 @@ PackNGo.controller('MenuCtrl', function($scope,$rootScope,MenuService,ModalServi
 	    	  console.log(response.data);
 	    })
 	      .catch(function(response){
-	      $scope.loginDetails = {};
 	      console.log(response);
 	      CommonService.handleDefaultErrorResponse("lg","Error Fetching Menu", response,["OK"]);
 	    });
 	}
-	$scope.getUserMenu({});
+	$scope.getUserMenu(UserContext);
+	
+	$scope.$on("RefreshUserMenu",function(event,data){
+		alert("Refreshing Menu");
+		$scope.getUserMenu(data);
+	});
 	
 	/*$scope.menuItems = [
 		{menuLabel: "Home", linkURL: "#/"},

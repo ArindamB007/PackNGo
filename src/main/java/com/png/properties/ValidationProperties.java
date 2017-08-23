@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties
 public class ValidationProperties {
 	private String signupRequired;
-	private String signupRequiredName;
+	private String signupRequiredFirstName;
+	private String signupRequiredLastName;
 	private String signupInvalidEmail;
 	private String signupDuplicateEmail;
 	private String signupSizeEmail;
@@ -51,11 +52,17 @@ public class ValidationProperties {
 	public void setSignupRequired(String signupRequired) {
 		this.signupRequired = signupRequired;
 	}
-	public String getSignupRequiredName() {
-		return signupRequiredName;
+	public String getSignupRequiredFirstName() {
+		return signupRequiredFirstName;
 	}
-	public void setSignupRequiredName(String signupRequiredName) {
-		this.signupRequiredName = signupRequiredName;
+	public void setSignupRequiredFirstName(String signupRequiredFirstName) {
+		this.signupRequiredFirstName = signupRequiredFirstName;
+	}
+	public String getSignupRequiredLastName() {
+		return signupRequiredLastName;
+	}
+	public void setSignupRequiredLastName(String signupRequiredLastName) {
+		this.signupRequiredLastName = signupRequiredLastName;
 	}
 
 }

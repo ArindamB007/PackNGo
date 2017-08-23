@@ -1,11 +1,7 @@
 package com.png.data.entity;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Set;
-
-import org.springframework.security.core.GrantedAuthority;
+import java.util.ArrayList;
 
 public class UserContext {
     private Long idUser;
@@ -14,17 +10,19 @@ public class UserContext {
 
     private Boolean emailValidated = false;
 
-    private String name;
-
-	private String lastLoginTimestamp;
-
-	private String createdTimestamp;
-
-	private String updatedTimestamp;
+    private String firstName;
+    
+    private String lastName;
+    
+	private Timestamp lastLoginTimestamp;
+	
+	private Timestamp createdTimestamp;
+	
+	private Timestamp updatedTimestamp;
 
     private Boolean deleteFlag =false;
     
-    private Set<GrantedAuthority> grantedAuthorities;
+    private ArrayList<String> userRoles;
 
 	public Long getIdUser() {
 		return idUser;
@@ -50,41 +48,6 @@ public class UserContext {
 		this.emailValidated = emailValidated;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getLastLoginTimestamp() {
-		return lastLoginTimestamp;
-	}
-
-	public void setLastLoginTimestamp(Timestamp lastLoginTimestamp) {
-		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-		this.lastLoginTimestamp = df.format(lastLoginTimestamp);
-	}
-
-	public String getCreatedTimestamp() {
-		return createdTimestamp;
-	}
-
-	public void setCreatedTimestamp(Timestamp createdTimestamp) {
-		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-		this.createdTimestamp = df.format(createdTimestamp);
-	}
-
-	public String getUpdatedTimestamp() {
-		return updatedTimestamp;
-	}
-
-	public void setUpdatedTimestamp(Timestamp updatedTimestamp) {
-		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-		this.updatedTimestamp = df.format(updatedTimestamp);
-	}
-
 	public Boolean getDeleteFlag() {
 		return deleteFlag;
 	}
@@ -97,23 +60,62 @@ public class UserContext {
 		this.idUser = user.getIdUser();
 		this.email = user.getEmail();
 		this.emailValidated = user.getEmailValidated();
-		this.name = user.getName();
-		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-		if (user.getLastLoginTimestamp()!=null)
-			this.lastLoginTimestamp = df.format(user.getLastLoginTimestamp());
-		if (user.getCreatedTimestamp()!=null)
-			this.createdTimestamp = df.format(user.getCreatedTimestamp());
-		if (user.getUpdatedTimestamp()!=null)
-			this.updatedTimestamp = df.format(user.getUpdatedTimestamp());
+		this.firstName = user.getFirstName();
+		this.lastName = user.getLastName();
+		this.lastLoginTimestamp = user.getLastLoginTimestamp();
+		this.createdTimestamp = user.getCreatedTimestamp();
+		this.updatedTimestamp = user.getUpdatedTimestamp();
 		this.deleteFlag =user.getDeleteFlag();
 	}
 
-	public Set<GrantedAuthority> getGrantedAuthorities() {
-		return grantedAuthorities;
+	public Timestamp getLastLoginTimestamp() {
+		return lastLoginTimestamp;
 	}
 
-	public void setGrantedAuthorities(Set<GrantedAuthority> grantedAuthorities) {
-		this.grantedAuthorities = grantedAuthorities;
+	public void setLastLoginTimestamp(Timestamp lastLoginTimestamp) {
+		this.lastLoginTimestamp = lastLoginTimestamp;
 	}
+
+	public Timestamp getCreatedTimestamp() {
+		return createdTimestamp;
+	}
+
+	public void setCreatedTimestamp(Timestamp createdTimestamp) {
+		this.createdTimestamp = createdTimestamp;
+	}
+
+	public Timestamp getUpdatedTimestamp() {
+		return updatedTimestamp;
+	}
+
+	public void setUpdatedTimestamp(Timestamp updatedTimestamp) {
+		this.updatedTimestamp = updatedTimestamp;
+	}
+
+	public ArrayList<String> getUserRoles() {
+		return userRoles;
+	}
+
+	public void setUserRoles(ArrayList<String> userRoles) {
+		this.userRoles = userRoles;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
 
 }

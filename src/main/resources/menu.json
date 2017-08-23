@@ -1,6 +1,6 @@
 {"menusDefault":[
   {"@type": "menuItem","menuLabel": "Home", "linkURL": "#/"},
-  {"@type": "menuItem","menuLabel": "DefaultTop", "dataId":"#topOfPage"},
+  {"@type": "menuItem","menuLabel": "MyTop", "dataId":"#topOfPage"},
   {"@type": "menuItem","menuLabel": "Samples", "linkURL": "#/samples"},
   {"@type": "menuItem","menuLabel": "IJK", "linkURL": "/"},
   {"@type": "menuItem","menuLabel": "IJK", "linkURL": "/"},

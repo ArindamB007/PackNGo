@@ -47,8 +47,11 @@ public class User {
     @NotEmpty
     private String password;
 
-    @Column(name="name")
-    private String name;
+    @Column(name="first_name")
+    private String firstName;
+    
+    @Column(name="last_name")
+    private String lastName;
 
 	@Column (name= "last_login_timestamp")
 	private Timestamp lastLoginTimestamp;
@@ -84,14 +87,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-    public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public Set<Role> getRoles() {
@@ -155,4 +150,26 @@ public class User {
     public void setUpdatedTimestamp(Timestamp updatedTimestamp) {
         this.updatedTimestamp = updatedTimestamp;
     }
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	public void trimUserData(){
+		this.firstName = this.firstName.trim();
+		this.lastName = this.lastName.trim();
+		this.email = this.email.trim();
+	}
 }

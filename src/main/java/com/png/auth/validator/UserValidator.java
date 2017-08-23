@@ -33,7 +33,8 @@ public class UserValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 		User user = (User) obj;
 		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "required",vP.getSignupRequiredName());
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "required",vP.getSignupRequiredFirstName());
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "required",vP.getSignupRequiredLastName());
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "required",vP.getSignupRequired());
 		if (user.getEmail()!=null && (user.getEmail().length() < 7 || user.getEmail().length() > 48)){
 			errors.rejectValue("email", "custom",vP.getSignupSizeEmail());

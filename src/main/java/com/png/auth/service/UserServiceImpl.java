@@ -22,6 +22,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void save(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		user.trimUserData();
 		//Assign only user role to the newly signed up user
 		user.setRoles(new HashSet<>(roleRepository.findByName("ROLE_USER")));
 		user.setCreatedTimestamp(new Timestamp(new java.util.Date().getTime()));

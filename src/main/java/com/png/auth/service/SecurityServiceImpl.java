@@ -1,6 +1,9 @@
 package com.png.auth.service;
 
 import com.png.services.CustomUserDetailsService;
+
+import java.sql.Timestamp;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +46,7 @@ public class SecurityServiceImpl implements SecurityService{
 			logger.debug(String.format("User %s auto logged in successfully!", email));
 		}
 	}
+	
 	@Override
 	public UserDetails userLogin(String email, String password){
 		UserDetails userDetails = null;
@@ -68,6 +72,8 @@ public class SecurityServiceImpl implements SecurityService{
 		authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
 		if (usernamePasswordAuthenticationToken.isAuthenticated()) {
+			userDetailsService.updateLastLoginTimeStamp(new Timestamp(new java.util.Date().getTime()));
+			userDetailsService.saveUser();
 			userContext = userDetailsService.getUserContext();
 			SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 			System.out.println(String.format("User %s logged in successfully!", email));
