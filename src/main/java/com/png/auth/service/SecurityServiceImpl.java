@@ -64,13 +64,11 @@ public class SecurityServiceImpl implements SecurityService{
 	
 	@Override
 	public UserContext login(String email, String password){
-		UserDetails userDetails = null;
 		UserContext userContext = null;
-		userDetails = userDetailsService.loadUserByUsername(email);
+		UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
 				new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 		authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-
 		if (usernamePasswordAuthenticationToken.isAuthenticated()) {
 			userDetailsService.updateLastLoginTimeStamp(new Timestamp(new java.util.Date().getTime()));
 			userDetailsService.saveUser();
@@ -79,6 +77,13 @@ public class SecurityServiceImpl implements SecurityService{
 			System.out.println(String.format("User %s logged in successfully!", email));
 		}
 		return userContext;
+	}
+	@Override
+	public void logoff(String email){
+		UserDetails userDetails = null;
+		userDetails = userDetailsService.loadUserByUsername(email);
+		userDetailsService.updateLastLogOffTimeStamp(new Timestamp(new java.util.Date().getTime()));
+		userDetailsService.saveUser();
 	}
 	
 }

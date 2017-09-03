@@ -190,7 +190,6 @@ PackNGo.controller('MenuCtrl', function($scope,$rootScope,MenuService,ModalServi
 	$scope.getUserMenu(UserContext);
 	
 	$scope.$on("RefreshUserMenu",function(event,data){
-		alert("Refreshing Menu");
 		$scope.getUserMenu(data);
 	});
 	

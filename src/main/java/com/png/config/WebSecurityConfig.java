@@ -30,6 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http
+				.headers().cacheControl().disable()
+				.and()
 				.authorizeRequests()
 					.antMatchers("/animate/**","/bower/**","/controllers/**","/css/**",
 						"/fonts/*","/icon/**","/img/**","/js/**","/material-ui/**",

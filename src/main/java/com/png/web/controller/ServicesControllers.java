@@ -10,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -25,6 +28,9 @@ import com.png.auth.validator.UserValidator;
 import com.png.data.entity.User;
 import com.png.data.entity.UserContext;
 import com.png.exception.ValidationException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/services")
@@ -91,5 +97,14 @@ public class ServicesControllers {
 			return new ResponseEntity<Object>(errorList, HttpStatus.NOT_FOUND);
 		}
 
+	}
+	@RequestMapping(value ="/user_logoff",method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<Object> userLogoff(HttpServletRequest request, HttpServletResponse response){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null){
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
+		return new ResponseEntity<Object>("",HttpStatus.OK);
 	}
 }

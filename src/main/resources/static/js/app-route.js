@@ -9,9 +9,13 @@ PackNGo.config(['$routeProvider',
 			//Controller is in the index.html file
 		}).
 		when('/login', {
-			templateUrl : '/login',
-			controller : 'LoginCtrl'
-		}).
+      templateUrl : '/login',
+      controller : 'LoginCtrl'
+    }).
+    when('/logoff', {
+      templateUrl : '/logoff',
+      controller : 'LogoffCtrl'
+    }).
 		when('/signup', {
 			templateUrl : '/signup',
 			controller : 'SignupCtrl'

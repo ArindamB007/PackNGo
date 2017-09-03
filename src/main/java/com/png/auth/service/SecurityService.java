@@ -9,4 +9,5 @@ public interface SecurityService {
 	 void autologin(String email, String password);
 	 UserDetails userLogin(String email,String password);
 	 UserContext login (String email, String password);
+	 void logoff(String email);
 }

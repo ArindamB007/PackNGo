@@ -34,7 +34,6 @@
     {"@type": "menuItem","menuLabel": "Contact Us","linkURL": "#"},
     {"@type": "subMenuItem","menuLabel": "Account", "showLabel":true, "type": "dropDown",
       "icon": "material-icons md-24 orangeC00", "iconClass": "account_box",
-      "submenuItems": [{"@type": "menuItem","menuLabel": "Login","linkURL": "#/login"},
-        {"@type": "menuItem","menuLabel": "Sign-up","linkURL": "#/signup"}]}]
+      "submenuItems": [{"@type": "menuItem","menuLabel": "Logoff","linkURL": "#/logoff"}]}]
 
 }

@@ -20,13 +20,18 @@ public class PnGController {
 	}
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
-		System.out.println("login!");
+		System.out.println("login get!");
 		return "login";
 	}
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login() {
-		System.out.println("login!");
+		System.out.println("login post!");
 		return "login";
+	}
+	@RequestMapping(value ="/logoff",method = RequestMethod.GET)
+	public String logoff() {
+		System.out.println("logoff GET!");
+		return "logoff";
 	}
 	@RequestMapping(value ="/signup",method = RequestMethod.GET)
 	public String signupview() {

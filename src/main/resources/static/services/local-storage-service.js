@@ -5,6 +5,9 @@ PackNGo.factory('LocalStorageService',function($localStorage) {
     },
     getLocalStore : function(localStore){
       return $localStorage[localStore];
+    },
+    deleteKeyLocalStore : function(localStore){
+      delete $localStorage[localStore];
     }
   };
 });

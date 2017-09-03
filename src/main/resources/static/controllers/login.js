@@ -1,34 +1,36 @@
 PackNGo.controller('LoginCtrl',function($scope,$http,$location, $rootScope,LoginService,
-		LocalStorageService,ModalService,MenuService,CommonService,UserContext){
-  $rootScope.userDetails = {};
+                                        LocalStorageService,ModalService,MenuService,CommonService,UserContext){
   $scope.doLogin = function() {
     LoginService.userLogin($scope.loginDetails)
       .then(function(response){
-      $scope.loginForm.$setPristine();
-      UserContext = response.data;
-      console.log(UserContext);
-      LocalStorageService.setLocalStore('token',response.headers("x-auth-token"));
-      console.log(response.headers('x-auth-token'));
-      $http.defaults.headers.common['x-auth-token'] = LocalStorageService.getLocalStore('token');
-      //redirect to home page after login
-      if(UserContext.idUser) {
-    	$rootScope.$broadcast("RefreshUserMenu",UserContext);
-        alert ("Login Success!");
-        $location.path('/');
-      }
+        var userContext;
+        $scope.loginForm.$setPristine();
+        console.log(UserContext.value);
+        UserContext.value = response.data; // for access across the application
+        userContext = UserContext.value;
+        console.log(userContext);
+        LocalStorageService.setLocalStore('token',response.headers("x-auth-token"));
+        console.log(response.headers('x-auth-token'));
+        $http.defaults.headers.common['x-auth-token'] = LocalStorageService.getLocalStore('token');
+        //redirect to home page after login
+        if(UserContext.value.idUser) {
+          $rootScope.$broadcast("RefreshUserMenu",userContext);
+          alert ("Login Success!");
+          $location.path('/');
+        }
 
-    })
+      })
       .catch(function(response){
-      $scope.loginDetails = {};
-      console.log(response);
-      CommonService.handleDefaultErrorResponse("sm","Error Fetching Menu", response,["OK"]);
-      /*var modalInstance = ModalService.showModal("sm","Login Failed!",
-        response.data[0].message,["OK"]);
-      modalInstance.result.then(function (response) {
-        //need to put the focus on the element
-      }, function (response) {
-        //need to put the focus on the element
-      });*/
-    });
+        $scope.loginDetails = {};
+        console.log(response);
+        CommonService.handleDefaultErrorResponse("sm","Error Fetching Menu", response,["OK"]);
+        /*var modalInstance = ModalService.showModal("sm","Login Failed!",
+          response.data[0].message,["OK"]);
+        modalInstance.result.then(function (response) {
+          //need to put the focus on the element
+        }, function (response) {
+          //need to put the focus on the element
+        });*/
+      });
   };
 });

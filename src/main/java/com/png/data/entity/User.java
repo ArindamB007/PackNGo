@@ -54,7 +54,10 @@ public class User {
     private String lastName;
 
 	@Column (name= "last_login_timestamp")
-	private Timestamp lastLoginTimestamp;
+    private Timestamp lastLoginTimestamp;
+
+    @Column (name= "last_logoff_timestamp")
+    private Timestamp lastLogOffTimestamp;
 
 	@Column(name = "created_timestamp")
 	private Timestamp createdTimestamp;
@@ -149,6 +152,12 @@ public class User {
 
     public void setUpdatedTimestamp(Timestamp updatedTimestamp) {
         this.updatedTimestamp = updatedTimestamp;
+    }
+
+    public Timestamp getLastLogOffTimestamp() { return lastLogOffTimestamp; }
+
+    public void setLastLogOffTimestamp(Timestamp lastLogOffTimestamp) {
+        this.lastLogOffTimestamp = lastLogOffTimestamp;
     }
 
 	public String getFirstName() {

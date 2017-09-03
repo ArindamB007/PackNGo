@@ -16,4 +16,4 @@ PackNGo.factory('CommonService',function(ModalService) {
   };
 });
 
-PackNGo.value('UserContext', {});
+PackNGo.value('UserContext', {value:{}});

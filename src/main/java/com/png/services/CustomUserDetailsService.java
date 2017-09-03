@@ -71,9 +71,11 @@ public class CustomUserDetailsService implements UserDetailsService{
 
 	public Collection<Menu> getUserMenu(Long id_user) throws IOException{
 		if (id_user == null)
-			return MenuMapper.getMenu(null);
-		else
-		return MenuMapper.getMenu(userRepository.findByIdUser(id_user).getRoles());
+			return MenuMapper.getMenu(null, null);
+		else{
+			User anUser = userRepository.findByIdUser(id_user);
+			return MenuMapper.getMenu(anUser.getRoles(),anUser.getFirstName());
+		}
 	}
 
 	public void setUserContext(UserContext userContext) {
@@ -82,6 +84,10 @@ public class CustomUserDetailsService implements UserDetailsService{
 	
 	public void updateLastLoginTimeStamp(Timestamp lastLoginTimestamp){
 		this.user.setLastLoginTimestamp(lastLoginTimestamp);
+	}
+
+	public void updateLastLogOffTimeStamp(Timestamp lastLogOffTimestamp){
+		this.user.setLastLogOffTimestamp(lastLogOffTimestamp);
 	}
 	
 	public void saveUser(){

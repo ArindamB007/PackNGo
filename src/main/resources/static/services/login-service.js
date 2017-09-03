@@ -25,6 +25,18 @@ PackNGo.factory('LoginService',function($rootScope,$q,$http,$log) {
           });
         return deferred.promise;
       },
+      userLogoff : function() {
+        var deferred = $q.defer();
+        $http.get("../services/user_logoff")
+          .then(function(response){
+            deferred.resolve(response);
+          })
+          .catch(function(response){
+            deferred.reject(response);
+            $log.error(response);
+          });
+        return deferred.promise;
+      },
       userMenu : function(userContext) {
           var deferred = $q.defer();
           $http.post("../services/user_menu",userContext)
