@@ -38,7 +38,7 @@ public class MenuMapper {
         		menu.setMenuLabel(firstName);
         	}
         	menuEdited.add(menu);
-        	
+
         }
         return menuEdited;
 
