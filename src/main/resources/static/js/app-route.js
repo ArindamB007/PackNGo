@@ -5,12 +5,14 @@ PackNGo.config(['$routeProvider',
 		$routeProvider.
 		when('/', {
 			templateUrl : '/landing',
-			controller : 'LandingCtrl'
+			controller : 'LandingCtrl',
+			allowAnonymous : true
 			//Controller is in the index.html file
 		}).
 		when('/login', {
       templateUrl : '/login',
-      controller : 'LoginCtrl'
+      controller : 'LoginCtrl',
+      allowAnonymous : true
     }).
     when('/logoff', {
       templateUrl : '/logoff',
@@ -18,7 +20,8 @@ PackNGo.config(['$routeProvider',
     }).
 		when('/signup', {
 			templateUrl : '/signup',
-			controller : 'SignupCtrl'
+			controller : 'SignupCtrl',
+			allowAnonymous : true
 		}).
 		when('/booking', {
 			templateUrl : '/booking',

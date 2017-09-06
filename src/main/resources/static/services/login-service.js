@@ -1,5 +1,5 @@
 
-PackNGo.factory('LoginService',function($rootScope,$q,$http,$log) {
+PackNGo.factory('LoginService',function($rootScope,$q,$http,$log,UserContext) {
   return{
       signUp : function(userDetails) {
         var deferred = $q.defer();
@@ -48,6 +48,9 @@ PackNGo.factory('LoginService',function($rootScope,$q,$http,$log) {
               $log.error(response);
             });
           return deferred.promise;
+        },
+        isLoggedIn : function() {
+        	return !(Object.keys(UserContext.value).length==0)
         }
   };
 });

@@ -2,8 +2,14 @@ var PackNGo = angular.module('PackNGo', ['ngRoute','ngAnimate','ui.bootstrap','n
 
 
 /***************************FB Login initiation*************************************/
-PackNGo.run(['$rootScope', '$window', 'faceBookLoginService',
-	function($rootScope, $window, fbService) {
+PackNGo.run(['$rootScope', '$window', 'faceBookLoginService', 'LoginService','$location',
+	function($rootScope, $window, fbService,LoginService,$location) {
+	$rootScope.$on("$routeChangeStart", function (event, next, current) {
+        if (next.$$route.templateUrl && !next.$$route.allowAnonymous && !LoginService.isLoggedIn()) {
+        	$location.path('/login');
+        }
+
+    });
 		$window.fbAsyncInit = function() {
 			// Executed when the SDK is loaded
 			FB.init({
@@ -143,6 +149,19 @@ PackNGo.config(['$tooltipProvider', function ($tooltipProvider) {
 
 		$tooltipProvider.options(options);
 	}
+	
+	/*$stateProvider.state('login', {
+	    url: '/login',
+	    allowAnonymous: true, //if you move this, don't forget to update
+	                          //variable path in the force-page check.
+	    views: {
+	        root: {
+	            templateUrl: "app/auth/login/login.html",
+	            controller: 'LoginCtrl'
+	        }
+	    }
+	    //Any other config
+	});*/
 
 }]);
 
