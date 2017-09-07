@@ -2,10 +2,11 @@ var PackNGo = angular.module('PackNGo', ['ngRoute','ngAnimate','ui.bootstrap','n
 
 
 /***************************FB Login initiation*************************************/
-PackNGo.run(['$rootScope', '$window', 'faceBookLoginService', 'LoginService','$location',
-	function($rootScope, $window, fbService,LoginService,$location) {
+PackNGo.run(['$rootScope', '$window', 'faceBookLoginService', 'LoginService','$location','LastUrl',
+	function($rootScope, $window, fbService,LoginService,$location,LastUrl) {
 	$rootScope.$on("$routeChangeStart", function (event, next, current) {
         if (next.$$route.templateUrl && !next.$$route.allowAnonymous && !LoginService.isLoggedIn()) {
+          LastUrl.value = next.$$route.templateUrl;
         	$location.path('/login');
         }
 

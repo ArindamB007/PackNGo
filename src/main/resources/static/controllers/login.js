@@ -1,5 +1,6 @@
 PackNGo.controller('LoginCtrl',function($scope,$http,$location, $rootScope,LoginService,
-                                        LocalStorageService,ModalService,MenuService,CommonService,UserContext){
+                                        LocalStorageService,ModalService,MenuService,CommonService,
+                                        UserContext,LastUrl){
   $scope.doLogin = function() {
     LoginService.userLogin($scope.loginDetails)
       .then(function(response){
@@ -16,7 +17,12 @@ PackNGo.controller('LoginCtrl',function($scope,$http,$location, $rootScope,Login
         if(UserContext.value.idUser) {
           $rootScope.$broadcast("RefreshUserMenu",userContext);
           alert ("Login Success!");
-          $location.path('/');
+          if (Object.keys(LastUrl.value).length===0)
+            $location.path('/');
+          else{
+            $location.path(LastUrl.value);
+            LastUrl.value = {};
+          }
         }
 
       })
