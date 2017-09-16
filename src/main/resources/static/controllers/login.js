@@ -29,7 +29,7 @@ PackNGo.controller('LoginCtrl',function($scope,$http,$location, $rootScope,Login
       .catch(function(response){
         $scope.loginDetails = {};
         console.log(response);
-        CommonService.handleDefaultErrorResponse("sm","Error Fetching Menu", response,["OK"]);
+        CommonService.handleDefaultErrorResponse("sm","Login Failed!", response,["OK"]);
         /*var modalInstance = ModalService.showModal("sm","Login Failed!",
           response.data[0].message,["OK"]);
         modalInstance.result.then(function (response) {
