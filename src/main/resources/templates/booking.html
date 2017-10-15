@@ -4,37 +4,113 @@
 <title>Booking Property</title>
 </head>
 <body>
-	<div class="container" style="padding-top: 100px;">
-		<div class="row" style="line-height: 4.2">
-			<div class="col-sm-2 col-md-2 text-center">
-				<label>Check In </label>
-			</div>
-			<div class="col-sm-3 col-md-3 text-center"
-				style="border-right: 1px solid rgba(34, 36, 38, .15);">
-				<div class="ui icon input">
-					<i class="calendar icon"></i> <input type="text"
-						class="datepicker form-control" id="checkindate" readonly
-						placeholder="Checkin Date ...">
-				</div>
-			</div>
-			<div class="col-sm-2 col-md-2 text-center">
-				<label>Check Out </label>
-			</div>
-			<div class="col-sm-3 col-md-3 text-center">
-				<div class="ui icon input">
-					<i class="calendar icon"></i> <input type="text"
-						class="datepicker form-control" id="checkoutdate" readonly
-						placeholder="Checkout Date ...">
-				</div>
-			</div>
-			<div class="col-sm-2 col-md-2 text-center">
-				<button class="png ui basic blue button" ng-click="">
-					<i class="icon search"></i> Search Rooms
-				</button>
+<!--  checkinout form -->
+<div class="container" style="padding-top: 100px;">
+	<div class="row" style="line-height: 4.2">
+		<div class="col-sm-2 col-md-2 text-center">
+			<label>Check In </label>
+		</div>
+		<div class="col-sm-3 col-md-3 text-center"
+				 style="border-right: 1px solid rgba(34, 36, 38, .15);">
+			<div class="ui icon input">
+				<i class="calendar icon"></i> <input type="text"
+																						 class="datepicker form-control" id="checkindate" readonly
+																						 placeholder="Checkin Date ...">
 			</div>
 		</div>
-		<div class="ui divider"></div>
-
+		<div class="col-sm-2 col-md-2 text-center">
+			<label>Check Out </label>
+		</div>
+		<div class="col-sm-3 col-md-3 text-center">
+			<div class="ui icon input">
+				<i class="calendar icon"></i> <input type="text"
+																						 class="datepicker form-control" id="checkoutdate" readonly
+																						 placeholder="Checkout Date ...">
+			</div>
+		</div>
+		<div class="col-sm-2 col-md-2 text-center">
+			<button class="png ui basic blue button" ng-click="">
+				<i class="icon search"></i> Search Rooms
+			</button>
+		</div>
+	</div>
+	<div class="ui divider"></div>
+</div>
+<!--  room selection -->
+<div class="container" style="padding-top: 100px;">
+	<div class="row" style="line-height: 4.2">
+		<div class="col-sm-2 col-md-2 text-center">
+			<label>Check In </label>
+		</div>
+		<div class="col-sm-3 col-md-3 text-center"
+				 style="border-right: 1px solid rgba(34, 36, 38, .15);">
+			<div class="ui icon input">
+				<i class="calendar icon">Selected Checkin date</i>
+			</div>
+		</div>
+		<div class="col-sm-2 col-md-2 text-center">
+			<label>Check Out </label>
+		</div>
+		<div class="col-sm-3 col-md-3 text-center">
+			<div class="ui icon input">
+				<i class="calendar icon">Selected Checkout date</i>
+			</div>
+		</div>
+		<div class="col-sm-2 col-md-2 text-center">
+			<button class="png ui basic blue button" ng-click="">
+				<i class="icon search"></i> Back to Search
+			</button>
+		</div>
+	</div>
+	<div class="ui divider"></div>
+</div>
+<!--   rooms display -->
+	<div class="container">
+		<div class = "ui stackable grid padded">
+			<div class = "sixteen wide column">
+				<div class="png ui divided items">
+					<div class="item" data-ng-repeat="room_type in roomtypes">
+						<div class="png-room ui fluid image crop">
+							<div class="ui blue ribbon label">
+								<i class="hotel icon"></i> {{room_type.type}}
+							</div>
+							<img src={{room_type.img}}>
+						</div>
+						<div class="content">
+							<a class="header">{{room_type.type}}</a>
+							<div class="meta">
+								<span class="price-per-day">Starting from {{room_type.base_price}} per day</span>
+								<span class="price-per-day right floated">Price per night
+									<a class="ui blue tag label">{{room_type.base_price}}</a>
+								</span>
+							</div>
+							<div class="description">
+								<p>{{room_type.description}}
+								</p>
+							</div>
+							<div class="extra">
+								<div data-ng-if="room_type.facility.wifi == 'true'" class="feature-icon" data-tooltip="Free WIFI">
+									<span><i class="wi-fi icon green" data-ng-class = "{'disabled':room_type.facility.wifi == 'false'}"></i>Wifi</span>
+								</div>
+								<div data-ng-if="room_type.facility.breakfast == 'true'" class="feature-icon" data-tooltip="Free Breakfast">
+									<span><i class="food icon green" data-ng-class = "{'disabled':room_type.facility.breakfast == 'false'}"></i>Breakfast</span>
+								</div>
+								<div data-ng-if="room_type.facility.parking == 'true'" class="feature-icon" data-tooltip="Free Parking">
+									<span><i class="car icon green" data-ng-class = "{'disabled':room_type.facility.parking == 'false'}"></i>Parking</span>
+								</div>
+								<div data-ng-if="room_type.facility.restaurant == 'true'" class="feature-icon" data-tooltip="Restaurant">
+									<span><i class="food icon green" data-ng-class = "{'disabled':room_type.facility.restaurant == 'false'}"></i>Restaurant</span>
+								</div>
+							</div>
+							<span>Rooms Available</span><a class="ui blue circular label">{{room_type.count_available}}</a>
+							<span class="right floated">
+									<button class="png ui basic blue button" ng-click = "goBooking()"> <i class="icon user"></i> Reserve</button>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

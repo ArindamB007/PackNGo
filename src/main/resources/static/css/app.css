@@ -8698,3 +8698,8 @@ a.scroll_arrow_down i {
   text-transform: capitalize;
   margin-bottom: 10px;
   text-align: center; }
+
+.png-room.ui.fluid.image {
+  vertical-align: middle;
+  width: 31%;
+  background-color: transparent; }

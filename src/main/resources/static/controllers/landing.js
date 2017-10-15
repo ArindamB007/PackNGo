@@ -9,7 +9,7 @@ PackNGo.controller('PropertyCtrl',function($scope,$location){
 			"name" : "Property XYZ",
 			"price_start_pday" : "1200",
 			"desc" : "This is a sprawling property in the heart of the city. Amazing location of the property and connections from this city makes this property and excellent option to spend your stay.",
-			"img" : "../img/prop_img/prop1_cover.jpg",
+			"img" : "../img/prop1_img/prop1_cover.jpg",
 			"facility" : {
 				"wifi" : "true",
 				"parking" : "true",
@@ -21,7 +21,7 @@ PackNGo.controller('PropertyCtrl',function($scope,$location){
 			"name" : "Property EFGH",
 			"price_start_pday" : "1400",
 			"desc" : "Amazing location of the property and connections from this city makes this property and excellent option to spend your stay. This is a sprawling property in the heart of the city.",
-			"img" : "../img/prop_img/prop2_cover.jpg",
+			"img" : "../img/prop2_img/prop2_cover.jpg",
 			"facility" : {
 				"wifi" : "false",
 				"parking" : "false",
