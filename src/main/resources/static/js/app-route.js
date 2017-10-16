@@ -16,7 +16,8 @@ PackNGo.config(['$routeProvider',
     }).
     when('/logoff', {
       templateUrl : '/logoff',
-      controller : 'LogoffCtrl'
+      controller : 'LogoffCtrl',
+      allowAnonymous : true
     }).
 		when('/signup', {
 			templateUrl : '/signup',
@@ -25,7 +26,8 @@ PackNGo.config(['$routeProvider',
 		}).
 		when('/booking', {
 			templateUrl : '/booking',
-			controller : 'BookingCtrl'
+			controller : 'BookingCtrl',
+      allowAnonymous : true // remove this config
 		}).
 		when('/samples', {
 			templateUrl : '/samples',
