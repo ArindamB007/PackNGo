@@ -1,0 +1,30 @@
+{
+  "availableRoomTypes": [
+    {
+      "idRoomType": "1",
+      "type": "Delux",
+      "basePrice": "1200",
+      "countAvailable": "2",
+      "discount": "10",
+      "description": "This is a sprawling property in the heart of the city. Amazing location of the property and connections from this city makes this property and excellent option to spend your stay.",
+      "img": "../img/prop1_img/rooms/delux_cover.jpg",
+      "wifi": "true",
+      "parking": "true",
+      "breakfast": "false",
+      "restaurant": "false"
+    },
+    {
+      "idRoomType": "3",
+      "type": "Super Delux",
+      "basePrice": "1500",
+      "countAvailable": "5",
+      "discount": "10",
+      "description": "This is a sprawling property in the heart of the city. Amazing location of the property and connections from this city makes this property and excellent option to spend your stay.",
+      "img": "../img/prop1_img/rooms/super_delux_cover.jpg",
+      "wifi": "true",
+      "parking": "true",
+      "breakfast": "true",
+      "restaurant": "false"
+      }
+  ]
+}

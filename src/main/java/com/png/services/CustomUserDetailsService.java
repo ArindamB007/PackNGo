@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.png.data.entity.User;
-import com.png.data.entity.UserContext;
+import com.png.data.domain.UserContext;
 import com.png.data.repository.UserRepository;
 import com.png.data.entity.Role;;;
 

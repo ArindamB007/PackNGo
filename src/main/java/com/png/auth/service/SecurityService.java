@@ -2,7 +2,7 @@ package com.png.auth.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.png.data.entity.UserContext;
+import com.png.data.domain.UserContext;
 
 public interface SecurityService {
 	 String findLoggedInUsername();

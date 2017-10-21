@@ -8642,13 +8642,11 @@ a.scroll_arrow_down i {
   width: 24em; }
 
 .png.ui.items > .item > .content > .description {
-  min-height: 6.5em;
   margin-bottom: 0; }
 
 @media (max-width: 992px) {
   .png.ui.items > .item .extra > [class*="right floated"] {
-    margin: .25rem .5rem .25rem 0;
-    float: none; } }
+    margin: .25rem .5rem .25rem 0; } }
 
 .png.ui.items > .item .extra > .feature-icon {
   display: inline-block;

@@ -1,19 +1,20 @@
 package com.png.web.controller;
 
+import java.io.File;
 import java.util.*;
-import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.png.auth.service.SecurityService;
+import com.png.data.domain.AvailableRoomType;
+import com.png.data.domain.AvailableRoomTypes;
 import com.png.menu.Menu;
+import com.png.menu.MenuList;
 import com.png.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.png.auth.service.UserService;
 import com.png.auth.validator.UserValidator;
 import com.png.data.entity.User;
-import com.png.data.entity.UserContext;
+import com.png.data.domain.UserContext;
 import com.png.exception.ValidationException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -106,5 +107,20 @@ public class ServicesControllers {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
 		return new ResponseEntity<Object>("",HttpStatus.OK);
+	}
+	@RequestMapping(value ="/search_room",method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Object> searchRoom(HttpServletRequest request, HttpServletResponse response){
+		AvailableRoomTypes availableRoomTypes = null;
+		try {
+			File jsonFile = new File("src/main/resources/available-rooms.json");
+			ObjectMapper mapper = new ObjectMapper();
+			availableRoomTypes = mapper.readValue(jsonFile, AvailableRoomTypes.class);
+			System.out.println(mapper.writeValueAsString(availableRoomTypes));
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+
+		return new ResponseEntity<Object>(availableRoomTypes,HttpStatus.OK);
 	}
 }

@@ -1,4 +1,6 @@
-package com.png.data.entity;
+package com.png.data.domain;
+
+import com.png.data.entity.User;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

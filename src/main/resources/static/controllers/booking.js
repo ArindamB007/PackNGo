@@ -1,11 +1,11 @@
-PackNGo.controller('BookingCtrl',function($scope,$sce){
+PackNGo.controller('BookingCtrl',function($scope,BookingService){
 	$scope.$on('$routeChangeStart', function(event){
 		$('.datepicker').remove();
     });
 	$(function(){
 		var nowTemp = new Date();
 		var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-		 
+		console.log(BookingService.searchRoom({"hello": "hello world"}));
 		var checkin = $('#checkindate').datepicker({
 		  onRender: function(date) {
 		    return date.valueOf() < now.valueOf() ? 'disabled' : '';
@@ -30,7 +30,7 @@ PackNGo.controller('BookingCtrl',function($scope,$sce){
 		}).data('datepicker');
 	});
   $scope.roomtypes = [{
-    "id" : "1",
+    "id_room_type" : "1",
     "type" : "Delux",
     "base_price" : "INR 1200",
 		"count_available" : "2",
@@ -44,10 +44,10 @@ PackNGo.controller('BookingCtrl',function($scope,$sce){
       "restaurant" : "false"}
   },
     {
-      "id" : "3",
+      "id_room_type" : "3",
       "type" : "Super Delux",
       "base_price" : "INR 1500",
-      "count_available" : "15",
+      "count_available" : "5",
       "discount" : "10%",
       "description" : "This is a sprawling property in the heart of the city. Amazing location of the property and connections from this city makes this property and excellent option to spend your stay.",
       "img" : "../img/prop1_img/rooms/super_delux_cover.jpg",
