@@ -99,9 +99,10 @@
 		    $(document).find('div.datepicker').each(function(){
 				$(this).hide();
 			});
-			this.picker.show();
+
 			this.height = this.component ? this.component.outerHeight() : this.element.outerHeight();
 			this.place();
+      this.picker.show();
 			$(window).on('resize', $.proxy(this.place, this));
 			if (e ) {
 				e.stopPropagation();

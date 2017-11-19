@@ -5,53 +5,61 @@
 </head>
 <body>
 <!--  checkinout form STEP1-->
-<div class="container" style="padding-top: 100px;">
+<div class="container" style="padding-top: 100px;"
+		 ng-show="bookingStage === BOOKING_NAV_CONSTANTS.SELECT_DATE">
 	<div class="row" style="line-height: 4.2">
-		<div class="col-sm-2 col-md-2 text-center">
-			<label>Check In </label>
-		</div>
-		<div class="col-sm-3 col-md-3 text-center"
-				 style="border-right: 1px solid rgba(34, 36, 38, .15);">
-			<div class="ui icon input">
-				<i class="calendar icon"></i> <input type="text"
-																						 class="datepicker form-control" id="checkindate" readonly
-																						 placeholder="Checkin Date ...">
+		<form name="checkinout" class ="form" novalidate>
+			<div class="col-sm-2 col-md-2 text-center">
+				<label>Check In </label>
 			</div>
-		</div>
-		<div class="col-sm-2 col-md-2 text-center">
-			<label>Check Out </label>
-		</div>
-		<div class="col-sm-3 col-md-3 text-center">
-			<div class="ui icon input">
-				<i class="calendar icon"></i> <input type="text"
-																						 class="datepicker form-control" id="checkoutdate" readonly
-																						 placeholder="Checkout Date ...">
+			<div class="col-sm-3 col-md-3 text-center"
+					 style="border-right: 1px solid rgba(34, 36, 38, .15);">
+				<div class="ui icon input">
+					<i class="calendar icon"></i> <input type="text" name ="checkIn" required
+																							 class="datepicker form-control" id="checkindate" readonly
+																							 data-ng-model="bookingDetails.checkInDate"
+																							 placeholder="Checkin Date ...">
+				</div>
 			</div>
-		</div>
-		<div class="col-sm-2 col-md-2 text-center">
-			<button class="png ui basic blue button" ng-click="">
-				<i class="icon search"></i> Search Rooms
-			</button>
-		</div>
+			<div class="col-sm-2 col-md-2 text-center">
+				<label>Check Out </label>
+			</div>
+			<div class="col-sm-3 col-md-3 text-center">
+				<div class="ui icon input">
+					<i class="calendar icon"></i> <input type="text" name ="checkOut" required
+																							 class="datepicker form-control" id="checkoutdate" readonly
+																							 data-ng-model="bookingDetails.checkOutDate"
+																							 placeholder="Checkout Date ...">
+				</div>
+			</div>
+			<div class="col-sm-2 col-md-2 text-center">
+				<button class="png ui basic blue button" ng-click="searchRoomsByDate()" data-ng-disabled="checkinout.$invalid">
+					<i class="icon search"></i> Search Rooms
+				</button>
+			</div>
+		</form>
 	</div>
 	<div class="ui divider"></div>
 </div>
 <!--  rooms selection STEP2-->
-<div class="container" style="padding-top: 100px;">
+<div class="container" style="padding-top: 100px;"
+		 ng-show="bookingStage === BOOKING_NAV_CONSTANTS.SELECT_ROOM">
 	<div class="row" style="line-height: 4.2">
 		<div class="col-sm-2 col-md-2 text-center" style="border-right: 1px solid rgba(34, 36, 38, .15);">
-			<button class="png ui basic blue button" ng-click="">
-				<i class="left chevron icon"></i> Back
+			<button class="png ui basic blue button" ng-click="movePrev()">
+				<i class="left chevron icon"></i> Change Dates
 			</button>
 		</div>
 		<div class="col-sm-3 col-md-3 text-center">
-			<div class = "ui label blue"><i class = "checked calendar icon"></i> Check In </div>  Selected Checkin date
+			<i class = "checked calendar icon"></i> Check In
+			<div class = "ui label green">{{bookingDetails.checkInDate}}</div>
 		</div>
 		<div class="col-sm-2 col-md-2 text-center">
 			<i class = "moon blue icon"></i>2 Nights
 		</div>
 		<div class="col-sm-3 col-md-3 text-center">
-			<div class = "ui label blue"><i class = "checked calendar icon"></i> Check Out </div>  Selected Checkout date
+			<i class = "checked calendar icon"></i> Check Out
+			<div class = "ui label green">{{bookingDetails.checkOutDate}}</div>
 		</div>
 		<div class="col-sm-2 col-md-2 text-center" style="border-left: 1px solid rgba(34, 36, 38, .15);">
 			<button class="png ui basic blue button" ng-click="">
@@ -62,11 +70,11 @@
 	<div class="ui divider"></div>
 </div>
 <!--   rooms display -->
-	<div class="container">
+	<div class="container" ng-show = "(availableRoomTypes | json)!='{}'">
 		<div class = "ui stackable grid padded">
 			<div class = "sixteen wide column">
 				<div class="png ui divided items">
-					<div class="item" data-ng-repeat="room_type in roomtypes">
+					<div class="item" data-ng-repeat="room_type in availableRoomTypes">
 						<div class="png-room ui fluid image crop">
 							<div class="ui blue ribbon label">
 								<i class="hotel icon"></i> {{room_type.type}}
@@ -76,33 +84,33 @@
 						<div class="content">
 							<a class="header">{{room_type.type}}</a>
 							<div class="meta">
-								<span class="price-per-day">Starting from {{room_type.base_price}} per day</span>
+								<span class="price-per-day">Starting from {{room_type.basePrice}} per day</span>
 							</div>
 							<div class="description">
 								<p>{{room_type.description}}
 								</p>
 							</div>
 							<div class="extra">
-								<div data-ng-if="room_type.facility.wifi == 'true'" class="feature-icon" data-tooltip="Free WIFI">
-									<span><i class="wi-fi icon green" data-ng-class = "{'disabled':room_type.facility.wifi == 'false'}"></i>Wifi</span>
+								<div data-ng-if="room_type.wifi == 'true'" class="feature-icon" data-tooltip="Free WIFI">
+									<span><i class="wi-fi icon green" data-ng-class = "{'disabled':room_type.wifi == 'false'}"></i>Wifi</span>
 								</div>
-								<div data-ng-if="room_type.facility.breakfast == 'true'" class="feature-icon" data-tooltip="Free Breakfast">
-									<span><i class="food icon green" data-ng-class = "{'disabled':room_type.facility.breakfast == 'false'}"></i>Breakfast</span>
+								<div data-ng-if="room_type.breakfast == 'true'" class="feature-icon" data-tooltip="Free Breakfast">
+									<span><i class="food icon green" data-ng-class = "{'disabled':room_type.breakfast == 'false'}"></i>Breakfast</span>
 								</div>
-								<div data-ng-if="room_type.facility.parking == 'true'" class="feature-icon" data-tooltip="Free Parking">
-									<span><i class="car icon green" data-ng-class = "{'disabled':room_type.facility.parking == 'false'}"></i>Parking</span>
+								<div data-ng-if="room_type.parking == 'true'" class="feature-icon" data-tooltip="Free Parking">
+									<span><i class="car icon green" data-ng-class = "{'disabled':room_type.parking == 'false'}"></i>Parking</span>
 								</div>
-								<div data-ng-if="room_type.facility.restaurant == 'true'" class="feature-icon" data-tooltip="Restaurant">
-									<span><i class="food icon green" data-ng-class = "{'disabled':room_type.facility.restaurant == 'false'}"></i>Restaurant</span>
+								<div data-ng-if="room_type.restaurant == 'true'" class="feature-icon" data-tooltip="Restaurant">
+									<span><i class="food icon green" data-ng-class = "{'disabled':room_type.restaurant == 'false'}"></i>Restaurant</span>
 								</div>
 								<span class="price-per-day ui right floated">Price per night
-									<a class="ui blue tag label">{{room_type.base_price}}</a>
+									<a class="ui blue tag label">{{room_type.basePrice}}</a>
 								</span>
 							</div>
 							<div class="extra">
-								<span>Rooms Available</span><a class="ui blue circular label">{{room_type.count_available}}</a>
+								<span>Rooms Available</span><a class="ui blue circular label">{{room_type.countAvailable}}</a>
 								<div class = "ui label"><i class="hotel icon"></i>Room Selected
-									<a class="ui green circular label">{{room_type.count_available}}</a>
+									<a class="ui green circular label">{{room_type.countAvailable}}</a>
 								</div>
 								<div class="ui right floated png basic blue button">
 										<i class="icon user"></i> Reserve

@@ -75,6 +75,14 @@ PackNGo.run(['$rootScope', '$window', 'faceBookLoginService', 'LoginService','$l
 
 	}]);
 
+/*Adding Constants to be used application wide*/
+PackNGo.constant('CONSTANTS',{
+	BOOKING_NAV:{
+		SELECT_DATE:'SELECT_DATE',
+		SELECT_ROOM:'SELECT_ROOM'
+	}
+});
+
 PackNGo.factory('faceBookLoginService', ['$rootScope','$q',function($rootScope,$q) {
 	var fbService= {};
 	fbService.getUserInfo = function() {
