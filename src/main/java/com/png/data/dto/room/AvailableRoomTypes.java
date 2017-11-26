@@ -1,4 +1,4 @@
-package com.png.data.domain;
+package com.png.data.dto.room;
 
 import java.util.Collection;
 

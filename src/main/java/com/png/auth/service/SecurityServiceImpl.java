@@ -13,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.png.data.domain.UserContext;
+import com.png.data.dto.user.UserContext;
 
 @Service
 public class SecurityServiceImpl implements SecurityService{

@@ -1,8 +1,6 @@
-package com.png.data.domain;
+package com.png.data.dto.room;
 
 import com.png.data.entity.RoomType;
-
-import java.util.Collection;
 
 public class AvailableRoomType extends RoomType{
     private Integer countAvailable;

@@ -5,10 +5,8 @@ import java.util.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.png.auth.service.SecurityService;
-import com.png.data.domain.AvailableRoomType;
-import com.png.data.domain.AvailableRoomTypes;
+import com.png.data.dto.room.AvailableRoomTypes;
 import com.png.menu.Menu;
-import com.png.menu.MenuList;
 import com.png.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.png.auth.service.UserService;
 import com.png.auth.validator.UserValidator;
 import com.png.data.entity.User;
-import com.png.data.domain.UserContext;
+import com.png.data.dto.user.UserContext;
 import com.png.exception.ValidationException;
 
 import javax.servlet.http.HttpServletRequest;
