@@ -5,9 +5,12 @@ import java.util.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.png.auth.service.SecurityService;
+import com.png.data.dto.property.PropertyDto;
 import com.png.data.dto.room.AvailableRoomTypes;
+import com.png.data.entity.Property;
 import com.png.menu.Menu;
 import com.png.services.CustomUserDetailsService;
+import com.png.services.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +48,10 @@ public class ServicesControllers {
 
 	@Autowired
 	SecurityService securityService;
-	
+
+	@Autowired
+	private PropertyService propertyService;
+
 	@RequestMapping(value ="/sign_up",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> signup(@RequestBody User user,BindingResult bindingResult) throws ValidationException{
@@ -120,5 +126,22 @@ public class ServicesControllers {
 		}
 
 		return new ResponseEntity<Object>(availableRoomTypes,HttpStatus.OK);
+	}
+
+	@RequestMapping(value ="/getAllEnabledProperties",method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<Object> getAllEnabledProperties(HttpServletResponse response){
+		ArrayList <HashMap <String,String>> errorList = new ArrayList<HashMap <String,String>>();
+		try {
+			ArrayList <PropertyDto> properties = propertyService.getAllProperties();
+			System.out.println(properties);
+			return new ResponseEntity<Object>(properties,HttpStatus.OK);
+		} catch (Exception e){
+			HashMap<String,String> errors = new HashMap<String,String>();
+			errors.put("type", e.getClass().getSimpleName());
+			errors.put("message", e.getMessage());
+			errorList.add(errors);
+			return new ResponseEntity<Object>(errorList, HttpStatus.NOT_FOUND);
+		}
 	}
 }

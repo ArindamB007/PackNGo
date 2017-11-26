@@ -3,8 +3,8 @@ PackNGo.controller('LandingCtrl',function($scope,$location,$timeout){
 	rubik.initAnimationsCheck();
 });
 //controllers for the carousel landing.html
-PackNGo.controller('PropertyCtrl',function($scope,$location){
-	$scope.properties = [{
+PackNGo.controller('PropertyCtrl',function($scope,$location,PropertyService,CommonService){
+	/*$scope.properties = [{
 			"id" : "1",
 			"name" : "Property XYZ",
 			"price_start_pday" : "1200",
@@ -27,11 +27,23 @@ PackNGo.controller('PropertyCtrl',function($scope,$location){
 				"parking" : "false",
 				"breakfast" : "true",
 				"restaurant" : "true"}
-		}];
+		}];*/
+  /*get all property details*/
+  $scope.getAllProperties = function() {
+    PropertyService.getProperties().then(function (response) {
+      $scope.properties = response.data;
+      console.log(response.data[0]);
+      console.log(response.data[1]);
+    }).catch(function (response) {
+      $scope.availableRoomTypes = {};
+      CommonService.handleDefaultErrorResponse("sm", "Get Property Failed!", response, ["OK"]);
+    });
+  }
 	$scope.goBooking = function (prop){
 		console.log("Going for Property: " + prop.name)
 		$location.path('/booking');
 	}
+  $scope.getAllProperties();
 });
 
 

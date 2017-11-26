@@ -89,7 +89,7 @@
           <div class="png ui divided items">
             <div class="item" data-ng-repeat="prop in properties">
               <div class="image">
-                <img src={{prop.img}}>
+                <img src={{prop.imgPath}}>
               </div>
               <div class="content">
                 <a class="header">{{prop.name}}</a>
@@ -98,32 +98,32 @@
                   <span class="price-per-day">Some other text</span>
                 </div>
                 <div class="description">
-                  <p>{{prop.desc}}
+                  <p>{{prop.description}}
                   </p>
                 </div>
                 <div class="extra">
-                  <div data-ng-if="prop.facility.parking == 'true'" class="feature-icon" data-tooltip="Free Parking">
+                  <div data-ng-if="prop.facilities.parking" class="feature-icon" data-tooltip="Free Parking">
                   	<span><i class="car icon green"></i>Parking</span>
                   </div>
-                  <div data-ng-if="prop.facility.parking == 'false'" class="feature-icon">
+                  <div data-ng-if="!prop.facilities.parking" class="feature-icon">
                   	<span><i class="car icon green" data-ng-class = "{'disabled':prop.facility.parking == 'false'}"></i>Parking</span>
                   </div>
-                  <div data-ng-if="prop.facility.wifi == 'true'" class="feature-icon" data-tooltip="Free WIFI">
+                  <div data-ng-if="prop.facilities.wifi" class="feature-icon" data-tooltip="Free WIFI">
                     <span><i class="wi-fi icon green"></i>Wifi</span>
                   </div>
-                  <div data-ng-if="prop.facility.wifi == 'false'" class="feature-icon">
+                  <div data-ng-if="!prop.facilities.wifi" class="feature-icon">
                     <span><i class="wi-fi icon green" data-ng-class = "{'disabled':prop.facility.wifi == 'false'}"></i>Wifi</span>
                   </div>
-                  <div data-ng-if="prop.facility.breakfast == 'true'" class="feature-icon" data-tooltip="Free Breakfast">
+                  <div data-ng-if="prop.facilities.breakfast" class="feature-icon" data-tooltip="Free Breakfast">
                     <span><i class="food icon green"></i>Breakfast</span>
                   </div>
-                  <div data-ng-if="prop.facility.breakfast == 'false'" class="feature-icon">
+                  <div data-ng-if="!prop.facilities.breakfast" class="feature-icon">
                     <span><i class="food icon green" data-ng-class = "{'disabled':prop.facility.breakfast == 'false'}"></i>Breakfast</span>
                   </div>
-                  <div data-ng-if="prop.facility.restaurant == 'true'" class="feature-icon" data-tooltip="Free Breakfast">
+                  <div data-ng-if="prop.facilities.restaurant" class="feature-icon" data-tooltip="Free Breakfast">
                     <span><i class="food icon green"></i>Restaurant</span>
                   </div>
-                  <div data-ng-if="prop.facility.restaurant == 'false'" class="feature-icon">
+                  <div data-ng-if="!prop.facilities.restaurant" class="feature-icon">
                     <span><i class="food icon green" data-ng-class = "{'disabled':prop.facility.restaurant == 'false'}"></i>Restaurant</span>
                   </div>
                   <span class="right floated">
