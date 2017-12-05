@@ -12,6 +12,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.databind.deser.Deserializers;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -21,11 +22,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name="image")
-public class Image {
+public class Image extends BaseEntity{
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_property_image")
-    private Long idPropertyImage;
+    @Column(name = "id_image")
+    private Long idImage;
 	
 	@Column (name="name")
 	@NotEmpty
@@ -33,17 +34,23 @@ public class Image {
 	
 	@Column (name="short_desc")
 	private String shortDesc;
+
+	@Column(name="img_path")
+	private String imgPath;
+
+	@Column(name="id_entity")
+	private Long idEntity;
 	
 	@Lob
 	@Column
 	private byte[] picture;
-	
-	public Long getIdPropertyImage() {
-		return idPropertyImage;
+
+	public Long getIdImage() {
+		return idImage;
 	}
 
-	public void setIdPropertyImage(Long idPropertyImage) {
-		this.idPropertyImage = idPropertyImage;
+	public void setIdImage(Long idImage) {
+		this.idImage = idImage;
 	}
 
 	public String getName() {
@@ -70,4 +77,19 @@ public class Image {
 		this.picture = picture;
 	}
 
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
+
+	public Long getIdEntity() {
+		return idEntity;
+	}
+
+	public void setIdEntity(Long idEntity) {
+		this.idEntity = idEntity;
+	}
 }

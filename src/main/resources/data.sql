@@ -3,19 +3,19 @@ VALUES ('password','arindam.bandyopadhyay@gmail.com', 'Arindam','Bandyopadhyay',
 
 INSERT into role(name,description) VALUES ("ROLE_USER","An applicaiton user");
 
-INSERT into property (name,tagline,short_desc,description,img_path,created_timestamp,
+INSERT into property (name,tagline,short_desc,description,created_timestamp,
                       updated_timestamp,enabled_flag)
 VALUES ('Property XYZ','Heavenly Comfort',
         'Cozy Comfortable Stay',
         'This is a sprawling property in the heart of the city. Amazing location of the property and connections from this city makes this property and excellent option to spend your stay.',
-        '../img/prop1_img/prop1_cover.jpg',now(),now(),1);
+        now(),now(),1);
 
-INSERT into property (name,tagline,short_desc,description,img_path,created_timestamp,
+INSERT into property (name,tagline,short_desc,description,created_timestamp,
                       updated_timestamp,enabled_flag)
 VALUES ('Property EFGH','Earthly Comfort',
         'Warm Enjoyable Stay',
         'Amazing location of the property and connections from this city makes this property and excellent option to spend your stay. This is a sprawling property in the heart of the city.',
-        '../img/prop2_img/prop2_cover.jpg',now(),now(),1);
+        now(),now(),1);
 
 INSERT into facility (name,css_class_name,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ('WIFI','WIFI',now(),now(),1);
@@ -25,6 +25,13 @@ INSERT into facility (name,css_class_name,created_timestamp,updated_timestamp,en
 VALUES ('Breakfast','Breakfast',now(),now(),1);
 INSERT into facility (name,css_class_name,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ('Restaurant','Restaurant',now(),now(),1);
+
+INSERT into image (name,short_desc,img_path,created_timestamp,updated_timestamp,enabled_flag,id_entity)
+VALUES ('COVER','Cover Photo','../img/prop1_img/prop1_cover.jpg',now(),now(),1,
+        (select id_property from property where name='Property XYZ'));
+INSERT into image (name,short_desc,img_path,created_timestamp,updated_timestamp,enabled_flag,id_entity)
+VALUES ('COVER','Cover Photo','../img/prop2_img/prop2_cover.jpg',now(),now(),1,
+        (select id_property from property where name='Property EFGH'));
 
 INSERT into property_facilities (id_property, id_facility)
 VALUES ((select id_property from property where name='Property XYZ'),

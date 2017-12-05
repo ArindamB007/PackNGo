@@ -39,7 +39,6 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS){
 		var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 		var chkInDateCtrl = $('#checkindate');
     var chkOutDateCtrl = $('#checkoutdate');
-		console.log(BookingService.searchRoom({"hello": "hello world"}));
 		var checkin = chkInDateCtrl.datepicker({
 		  onRender: function(date) {
 		    return date.valueOf() < now.valueOf() ? 'disabled' : '';

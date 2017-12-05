@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.png.data.entity.Facility;
+import com.png.data.entity.Image;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -39,7 +40,6 @@ public interface PropertyMapper {
 		propertyDto.setShortDesc( property.getShortDesc() );
 		propertyDto.setIdProperty( property.getIdProperty() );
 		propertyDto.setTagLine( property.getTagLine() );
-		propertyDto.setImgPath( property.getImgPath() );
 		propertyDto.setCreatedTimestamp( property.getCreatedTimestamp() );
 		propertyDto.setUpdatedTimestamp( property.getUpdatedTimestamp() );
 		propertyDto.setDeleteFlag( property.getDeletedFlag() );
@@ -52,6 +52,15 @@ public interface PropertyMapper {
 			}
 		});
 		propertyDto.setFacilities(facilitiesMap);
+
+		HashMap<String,Object> imagesMap = new HashMap<>();
+		property.getPropertyImages().forEach(image-> {
+			if (image.getEnabledFlag()){
+				imagesMap.put(image.getName().toLowerCase(),image);
+			}
+		});
+		propertyDto.setImages(imagesMap);
+
 		return propertyDto;
 	}
 
@@ -63,7 +72,6 @@ public interface PropertyMapper {
 		property.setShortDesc( propertyDto.getShortDesc() );
 		property.setIdProperty( propertyDto.getIdProperty() );
 		property.setTagLine( propertyDto.getTagLine() );
-		property.setImgPath( propertyDto.getImgPath() );
 		property.setCreatedTimestamp( propertyDto.getCreatedTimestamp() );
 		property.setUpdatedTimestamp( propertyDto.getUpdatedTimestamp() );
 		property.setDeletedFlag( propertyDto.getDeleteFlag() );
@@ -74,6 +82,14 @@ public interface PropertyMapper {
 			facility.setName(k);
 			facilitySet.add(facility);
 		});
+		property.setFacilities(facilitySet);
+		Set<Image> imagesSet = new HashSet<Image>();
+		propertyDto.getFacilities().forEach((k,v)->{
+			Image image = new Image();
+			//image.setName set the image
+			imagesSet.add(image);
+		});
+		property.setPropertyImages(imagesSet);
 		return property;
 	}
 }

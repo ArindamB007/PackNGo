@@ -3,13 +3,13 @@ package com.png.data.dto.room;
 import java.util.Collection;
 
 public class AvailableRoomTypes {
-    private Collection<AvailableRoomType> availableRoomTypes;
+    private Collection<AvailableRoomTypeObject> availableRoomTypes;
 
-    public Collection<AvailableRoomType> getAvailableRoomTypes() {
+    public Collection<AvailableRoomTypeObject> getAvailableRoomTypes() {
         return availableRoomTypes;
     }
 
-    public void setAvailableRoomTypes(Collection<AvailableRoomType> availableRoomTypes) {
+    public void setAvailableRoomTypes(Collection<AvailableRoomTypeObject> availableRoomTypes) {
         this.availableRoomTypes = availableRoomTypes;
     }
 

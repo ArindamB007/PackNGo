@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name="room_type")
-public class RoomType {
+public class RoomTypeObject {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_room_type")

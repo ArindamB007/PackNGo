@@ -13,8 +13,6 @@ public class PropertyDto {
     private String shortDesc;
 
     private String description;
-    
-    private String imgPath;
 
 	private Timestamp createdTimestamp;
 
@@ -25,6 +23,8 @@ public class PropertyDto {
     private Boolean enabledFlag =true;
 
     private HashMap<String,Boolean> facilities;
+
+	private HashMap<String,Object> images;
 
 	public Long getIdProperty() {
 		return idProperty;
@@ -66,14 +66,6 @@ public class PropertyDto {
 		this.description = description;
 	}
 
-	public String getImgPath() {
-		return imgPath;
-	}
-
-	public void setImgPath(String imgPath) {
-		this.imgPath = imgPath;
-	}
-
 	public Timestamp getCreatedTimestamp() {
 		return createdTimestamp;
 	}
@@ -112,5 +104,13 @@ public class PropertyDto {
 
 	public void setFacilities(HashMap<String, Boolean> facilities) {
 		this.facilities = facilities;
+	}
+
+	public HashMap<String, Object> getImages() {
+		return images;
+	}
+
+	public void setImages(HashMap<String, Object> images) {
+		this.images = images;
 	}
 }

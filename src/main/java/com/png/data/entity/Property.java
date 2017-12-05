@@ -3,15 +3,7 @@ package com.png.data.entity;
 import java.sql.Timestamp;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -35,17 +27,13 @@ public class Property extends BaseEntity{
 
     @Column(name="description")
     private String description;
-    
-    @Column(name="img_path")
-    private String imgPath;
 
 	@ManyToMany
     @JoinTable(name = "property_facilities", joinColumns = @JoinColumn(name = "id_property"), inverseJoinColumns = @JoinColumn(name = "id_facility"))
     private Set<Facility> facilities;
 	
-	@ManyToMany
-    @JoinTable(name = "property_images", joinColumns = @JoinColumn(name = "id_vendor_property"), inverseJoinColumns = @JoinColumn(name = "id_property_image"))
-    private Set<Image> property_images;
+	@OneToMany (mappedBy = "idEntity")
+    private Set<Image> propertyImages;
 
 	public Long getIdProperty() {
 		return idProperty;
@@ -87,14 +75,6 @@ public class Property extends BaseEntity{
 		this.description = description;
 	}
 
-	public String getImgPath() {
-		return imgPath;
-	}
-
-	public void setImgPath(String imgPath) {
-		this.imgPath = imgPath;
-	}
-
 	public Set<Facility> getFacilities() {
 		return facilities;
 	}
@@ -103,12 +83,11 @@ public class Property extends BaseEntity{
 		this.facilities = facilities;
 	}
 
-	public Set<Image> getProperty_images() {
-		return property_images;
+	public Set<Image> getPropertyImages() {
+		return propertyImages;
 	}
 
-	public void setProperty_images(Set<Image> property_images) {
-		this.property_images = property_images;
+	public void setPropertyImages(Set<Image> propertyImages) {
+		this.propertyImages = propertyImages;
 	}
-
 }

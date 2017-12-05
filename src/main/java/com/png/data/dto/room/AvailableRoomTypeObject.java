@@ -1,8 +1,8 @@
 package com.png.data.dto.room;
 
-import com.png.data.entity.RoomType;
+import com.png.data.entity.RoomTypeObject;
 
-public class AvailableRoomType extends RoomType{
+public class AvailableRoomTypeObject extends RoomTypeObject {
     private Integer countAvailable;
     public Integer getCountAvailable() {
         return countAvailable;
@@ -14,6 +14,6 @@ public class AvailableRoomType extends RoomType{
 }
 
 /*public class AvailableRoomTypes{
-    private Collection<AvailableRoomType> availableRoomTypes;
+    private Collection<AvailableRoomTypeObject> availableRoomTypes;
 
 }*/
