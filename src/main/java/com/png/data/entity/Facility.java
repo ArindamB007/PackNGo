@@ -30,21 +30,6 @@ public class Facility extends BaseEntity{
 	
 	@Column (name="css_class_name")
 	private String cssClassName;
-	
-	@ManyToMany (mappedBy ="facilities")
-    private Set<Property> properties;
-	
-/*	@Column(name = "created_timestamp")
-	private Timestamp createdTimestamp;
-
-	@Column(name = "updated_timestamp")
-	private Timestamp updatedTimestamp;
-
-	@Column(name = "deleted_flag")
-    private Boolean deletedFlag =false;
-	
-	@Column(name = "enabled_flag")
-    private Boolean enabledFlag =true;*/
 
 	public Long getIdFacility() {
 		return idFacility;
@@ -68,14 +53,6 @@ public class Facility extends BaseEntity{
 
 	public void setCssClassName(String cssClassName) {
 		this.cssClassName = cssClassName;
-	}
-
-	public Set<Property> getProperties() {
-		return properties;
-	}
-
-	public void setProperties(Set<Property> properties) {
-		this.properties = properties;
 	}
 
 }

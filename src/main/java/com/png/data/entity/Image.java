@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name="image")
-public class PropertyImage {
+public class Image {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_property_image")
@@ -38,9 +38,6 @@ public class PropertyImage {
 	@Column
 	private byte[] picture;
 	
-	@ManyToMany (mappedBy ="property_images")
-    private Set<Property> properties;
-
 	public Long getIdPropertyImage() {
 		return idPropertyImage;
 	}
@@ -72,14 +69,5 @@ public class PropertyImage {
 	public void setPicture(byte[] picture) {
 		this.picture = picture;
 	}
-
-	public Set<Property> getProperties() {
-		return properties;
-	}
-
-	public void setProperties(Set<Property> properties) {
-		this.properties = properties;
-	}
-
 
 }

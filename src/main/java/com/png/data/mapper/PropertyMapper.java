@@ -42,7 +42,7 @@ public interface PropertyMapper {
 		propertyDto.setImgPath( property.getImgPath() );
 		propertyDto.setCreatedTimestamp( property.getCreatedTimestamp() );
 		propertyDto.setUpdatedTimestamp( property.getUpdatedTimestamp() );
-		propertyDto.setDeleteFlag( property.getDeleteFlag() );
+		propertyDto.setDeleteFlag( property.getDeletedFlag() );
 		propertyDto.setEnabledFlag( property.getEnabledFlag() );
 
 		HashMap<String,Boolean> facilitiesMap = new HashMap<>();
@@ -66,7 +66,7 @@ public interface PropertyMapper {
 		property.setImgPath( propertyDto.getImgPath() );
 		property.setCreatedTimestamp( propertyDto.getCreatedTimestamp() );
 		property.setUpdatedTimestamp( propertyDto.getUpdatedTimestamp() );
-		property.setDeleteFlag( propertyDto.getDeleteFlag() );
+		property.setDeletedFlag( propertyDto.getDeleteFlag() );
 		property.setEnabledFlag( propertyDto.getEnabledFlag() );
 		Set<Facility> facilitySet = new HashSet<Facility>();
 		propertyDto.getFacilities().forEach((k,v)->{
