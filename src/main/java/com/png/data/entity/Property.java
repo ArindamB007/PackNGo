@@ -17,7 +17,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="property")
-public class Property {
+public class Property extends BaseEntity{
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_property")
@@ -39,25 +39,13 @@ public class Property {
     @Column(name="img_path")
     private String imgPath;
 
-	@Column(name = "created_timestamp")
-	private Timestamp createdTimestamp;
-
-	@Column(name = "updated_timestamp")
-	private Timestamp updatedTimestamp;
-
-	@Column(name = "deleted_flag")
-    private Boolean deleteFlag =false;
-	
-	@Column(name = "enabled_flag")
-    private Boolean enabledFlag =true;
-
 	@ManyToMany
     @JoinTable(name = "property_facilities", joinColumns = @JoinColumn(name = "id_property"), inverseJoinColumns = @JoinColumn(name = "id_facility"))
     private Set<Facility> facilities;
 	
 	@ManyToMany
-    @JoinTable(name = "property_propertyimages", joinColumns = @JoinColumn(name = "id_vendor_property"), inverseJoinColumns = @JoinColumn(name = "id_property_image"))
-    private Set<PropertyImage> property_images;
+    @JoinTable(name = "property_images", joinColumns = @JoinColumn(name = "id_vendor_property"), inverseJoinColumns = @JoinColumn(name = "id_property_image"))
+    private Set<Image> property_images;
 
 	public Long getIdProperty() {
 		return idProperty;
@@ -107,38 +95,6 @@ public class Property {
 		this.imgPath = imgPath;
 	}
 
-	public Timestamp getCreatedTimestamp() {
-		return createdTimestamp;
-	}
-
-	public void setCreatedTimestamp(Timestamp createdTimestamp) {
-		this.createdTimestamp = createdTimestamp;
-	}
-
-	public Timestamp getUpdatedTimestamp() {
-		return updatedTimestamp;
-	}
-
-	public void setUpdatedTimestamp(Timestamp updatedTimestamp) {
-		this.updatedTimestamp = updatedTimestamp;
-	}
-
-	public Boolean getDeleteFlag() {
-		return deleteFlag;
-	}
-
-	public void setDeleteFlag(Boolean deleteFlag) {
-		this.deleteFlag = deleteFlag;
-	}
-
-	public Boolean getEnabledFlag() {
-		return enabledFlag;
-	}
-
-	public void setEnabledFlag(Boolean enabledFlag) {
-		this.enabledFlag = enabledFlag;
-	}
-
 	public Set<Facility> getFacilities() {
 		return facilities;
 	}
@@ -147,11 +103,11 @@ public class Property {
 		this.facilities = facilities;
 	}
 
-	public Set<PropertyImage> getProperty_images() {
+	public Set<Image> getProperty_images() {
 		return property_images;
 	}
 
-	public void setProperty_images(Set<PropertyImage> property_images) {
+	public void setProperty_images(Set<Image> property_images) {
 		this.property_images = property_images;
 	}
 
