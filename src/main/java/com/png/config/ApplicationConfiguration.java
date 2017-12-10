@@ -1,7 +1,6 @@
 package com.png.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**

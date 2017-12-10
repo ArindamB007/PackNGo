@@ -1,12 +1,9 @@
 package com.png.services;
 
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
+import com.png.data.dto.user.UserContext;
+import com.png.data.entity.Role;
+import com.png.data.entity.User;
+import com.png.data.repository.UserRepository;
 import com.png.menu.Menu;
 import com.png.menu.MenuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +15,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.png.data.entity.User;
-import com.png.data.dto.user.UserContext;
-import com.png.data.repository.UserRepository;
-import com.png.data.entity.Role;;;
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+;
+;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService{

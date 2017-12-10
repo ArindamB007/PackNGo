@@ -1,9 +1,7 @@
 package com.png.auth.service;
 
+import com.png.data.dto.user.UserContext;
 import com.png.services.CustomUserDetailsService;
-
-import java.sql.Timestamp;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.png.data.dto.user.UserContext;
+import java.sql.Timestamp;
 
 @Service
 public class SecurityServiceImpl implements SecurityService{

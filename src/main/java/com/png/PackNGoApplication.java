@@ -1,15 +1,13 @@
 package com.png;
 
-import java.io.IOException;
-import java.util.Arrays;
-
-import com.png.menu.MenuMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
+
+import java.io.IOException;
+import java.util.Arrays;
 
 
 

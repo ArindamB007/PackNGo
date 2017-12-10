@@ -1,15 +1,14 @@
 package com.png.auth.service;
 
-import java.sql.Timestamp;
-import java.util.HashSet;
-
+import com.png.data.entity.User;
+import com.png.data.repository.RoleRepository;
+import com.png.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.png.data.entity.User;
-import com.png.data.repository.RoleRepository;
-import com.png.data.repository.UserRepository;
+import java.sql.Timestamp;
+import java.util.HashSet;
 
 @Service
 public class UserServiceImpl implements UserService{

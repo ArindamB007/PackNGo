@@ -1,12 +1,10 @@
 package com.png.data.repository;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.png.data.entity.Property;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.png.data.entity.Property;
+import java.util.ArrayList;
 
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Long>{

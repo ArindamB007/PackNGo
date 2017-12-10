@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="room_type")
+@Table(name="room_type_object")
 public class RoomTypeObject {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

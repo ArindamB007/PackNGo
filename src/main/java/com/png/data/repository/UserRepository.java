@@ -1,8 +1,8 @@
 package com.png.data.repository;
 
+import com.png.data.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.png.data.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {

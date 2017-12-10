@@ -1,11 +1,9 @@
 package com.png.data.entity;
 
-import java.sql.Timestamp;
-import java.util.Set;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-
-import org.hibernate.validator.constraints.NotEmpty;
+import java.util.Set;
 
 @Entity
 @Table(name="property")
@@ -29,7 +27,7 @@ public class Property extends BaseEntity{
     private String description;
 
 	@ManyToMany
-    @JoinTable(name = "property_facilities", joinColumns = @JoinColumn(name = "id_property"), inverseJoinColumns = @JoinColumn(name = "id_facility"))
+    @JoinTable(name = "properties_facilities", joinColumns = @JoinColumn(name = "id_property"), inverseJoinColumns = @JoinColumn(name = "id_facility"))
     private Set<Facility> facilities;
 	
 	@OneToMany (mappedBy = "idEntity")

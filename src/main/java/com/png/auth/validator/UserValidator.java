@@ -1,16 +1,15 @@
 package com.png.auth.validator;
 
+import com.png.auth.service.UserService;
 import com.png.com.png.messages.CustomMessages;
+import com.png.data.entity.User;
+import com.png.properties.ValidationProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-
-import com.png.auth.service.UserService;
-import com.png.data.entity.User;
-import com.png.properties.ValidationProperties;
 
 @Component
 @ConfigurationProperties("signUp")

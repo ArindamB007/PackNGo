@@ -1,19 +1,16 @@
 package com.png.data.mapper;
 
+import com.png.data.dto.property.PropertyDto;
+import com.png.data.entity.Facility;
+import com.png.data.entity.Image;
+import com.png.data.entity.Property;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
-
-import com.png.data.entity.Facility;
-import com.png.data.entity.Image;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
-import org.mapstruct.factory.Mappers;
-
-import com.png.data.dto.property.PropertyDto;
-import com.png.data.entity.Property;
 
 @Mapper
 public interface PropertyMapper {

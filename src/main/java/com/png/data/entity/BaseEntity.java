@@ -1,9 +1,8 @@
 package com.png.data.entity;
 
-import java.sql.Timestamp;
-
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import java.sql.Timestamp;
 
 @MappedSuperclass
 public class BaseEntity {
