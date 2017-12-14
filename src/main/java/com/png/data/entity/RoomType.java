@@ -34,6 +34,9 @@ public class RoomType extends BaseEntity {
     @ManyToMany
     @JoinTable(name = "room_types_facilities", joinColumns = @JoinColumn(name = "id_room_type"), inverseJoinColumns = @JoinColumn(name = "id_facility"))
     private Set<Facility> facilities;
+    
+    @OneToMany (mappedBy = "idEntity")
+    private Set<Image> roomTypeImages;
 
     public Integer getIdRoomType() {
         return idRoomType;
@@ -82,4 +85,13 @@ public class RoomType extends BaseEntity {
     public void setFacilities(Set<Facility> facilities) {
         this.facilities = facilities;
     }
+
+	public Set<Image> getRoomTypeImages() {
+		return roomTypeImages;
+	}
+
+	public void setRoomTypeImages(Set<Image> roomTypeImages) {
+		this.roomTypeImages = roomTypeImages;
+	}
+    
 }
