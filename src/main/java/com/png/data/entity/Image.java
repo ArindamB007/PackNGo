@@ -5,14 +5,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 
 
-@Entity
-@Table(name="image")
+@MappedSuperclass
 public class Image extends BaseEntity{
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_image")
-    private Long idImage;
-	
 	@Column (name="name")
 	@NotEmpty
 	private String name;
@@ -22,21 +16,10 @@ public class Image extends BaseEntity{
 
 	@Column(name="img_path")
 	private String imgPath;
-
-	@Column(name="id_entity")
-	private Long idEntity;
 	
 	@Lob
 	@Column
 	private byte[] picture;
-
-	public Long getIdImage() {
-		return idImage;
-	}
-
-	public void setIdImage(Long idImage) {
-		this.idImage = idImage;
-	}
 
 	public String getName() {
 		return name;
@@ -68,13 +51,5 @@ public class Image extends BaseEntity{
 
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
-	}
-
-	public Long getIdEntity() {
-		return idEntity;
-	}
-
-	public void setIdEntity(Long idEntity) {
-		this.idEntity = idEntity;
 	}
 }

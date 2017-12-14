@@ -4,6 +4,7 @@ import com.png.data.dto.property.PropertyDto;
 import com.png.data.entity.Facility;
 import com.png.data.entity.Image;
 import com.png.data.entity.Property;
+import com.png.data.entity.PropertyImage;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -80,9 +81,9 @@ public interface PropertyMapper {
 			facilitySet.add(facility);
 		});
 		property.setFacilities(facilitySet);
-		Set<Image> imagesSet = new HashSet<Image>();
+		Set<PropertyImage> imagesSet = new HashSet<PropertyImage>();
 		propertyDto.getFacilities().forEach((k,v)->{
-			Image image = new Image();
+			PropertyImage image = new PropertyImage();
 			//image.setName set the image
 			imagesSet.add(image);
 		});

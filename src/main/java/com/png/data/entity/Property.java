@@ -30,8 +30,8 @@ public class Property extends BaseEntity{
     @JoinTable(name = "properties_facilities", joinColumns = @JoinColumn(name = "id_property"), inverseJoinColumns = @JoinColumn(name = "id_facility"))
     private Set<Facility> facilities;
 	
-	@OneToMany (mappedBy = "idEntity")
-    private Set<Image> propertyImages;
+	@OneToMany (mappedBy = "propertyId")
+    private Set<PropertyImage> propertyImages;
 
 	public Long getIdProperty() {
 		return idProperty;
@@ -81,11 +81,11 @@ public class Property extends BaseEntity{
 		this.facilities = facilities;
 	}
 
-	public Set<Image> getPropertyImages() {
+	public Set<PropertyImage> getPropertyImages() {
 		return propertyImages;
 	}
 
-	public void setPropertyImages(Set<Image> propertyImages) {
+	public void setPropertyImages(Set<PropertyImage> propertyImages) {
 		this.propertyImages = propertyImages;
 	}
 }

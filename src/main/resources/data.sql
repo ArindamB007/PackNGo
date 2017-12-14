@@ -31,14 +31,14 @@ INSERT INTO facility (name,css_class_name,created_timestamp,updated_timestamp,en
 VALUES ('Restaurant','Restaurant',now(),now(),1);
 
 /*Property Image*/
-INSERT INTO image (name,short_desc,img_path,created_timestamp,updated_timestamp,enabled_flag,id_entity)
+INSERT INTO property_image (name,short_desc,img_path,created_timestamp,updated_timestamp,enabled_flag,property_id)
 VALUES ('COVER','Cover Photo','../img/prop1_img/prop1_cover.jpg',now(),now(),1,
         (select id_property from property where name='Property XYZ'));
 /*--------- Inserting Test Data---------*/
-INSERT INTO image (name,short_desc,img_path,created_timestamp,updated_timestamp,enabled_flag,id_entity)
+INSERT INTO property_image (name,short_desc,img_path,created_timestamp,updated_timestamp,enabled_flag,property_id)
 VALUES ('Test','Test Cover Photo','../img/prop1_img/test.jpg',now(),now(),1,
         (select id_property from property where name='Property XYZ'));
-INSERT INTO image (name,short_desc,img_path,created_timestamp,updated_timestamp,enabled_flag,id_entity)
+INSERT INTO property_image (name,short_desc,img_path,created_timestamp,updated_timestamp,enabled_flag,property_id)
 VALUES ('COVER','Cover Photo','../img/prop2_img/prop2_cover.jpg',now(),now(),1,
         (select id_property from property where name='Property EFGH'));
 
@@ -136,13 +136,13 @@ VALUES (
   (select id_facility from facility where name='Restaurant'));
   
 /*Room Type Image*/
-INSERT INTO image (name,short_desc,img_path,created_timestamp,updated_timestamp,enabled_flag,id_entity)
+INSERT INTO room_type_image (name,short_desc,img_path,created_timestamp,updated_timestamp,enabled_flag,room_type_id)
 VALUES ('COVER','Deluxe Cover','../img/prop1_img/rooms/delux_cover.jpg',now(),now(),1,
         (select id_room_type from room_type where type_name='Deluxe'));
-INSERT INTO image (name,short_desc,img_path,created_timestamp,updated_timestamp,enabled_flag,id_entity)
+INSERT INTO room_type_image (name,short_desc,img_path,created_timestamp,updated_timestamp,enabled_flag,room_type_id)
 VALUES ('COVER','Super Deluxe Cover','../img/prop1_img/rooms/super_delux_cover.jpg',now(),now(),1,
         (select id_room_type from room_type where type_name='Super Deluxe'));
-INSERT INTO image (name,short_desc,img_path,created_timestamp,updated_timestamp,enabled_flag,id_entity)
+INSERT INTO room_type_image (name,short_desc,img_path,created_timestamp,updated_timestamp,enabled_flag,room_type_id)
 VALUES ('COVER','Suite','../img/prop1_img/rooms/suite_cover.jpg',now(),now(),1,
         (select id_room_type from room_type where type_name='Suite'));
 
