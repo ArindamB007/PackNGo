@@ -5,6 +5,7 @@ import com.png.data.entity.AvailableRoomType;
 import com.png.data.entity.Property;
 import com.png.data.mapper.PropertyMapper;
 import com.png.data.repository.PropertyRepository;
+import com.png.data.repository.RoomTypeRepository;
 import com.png.data.repository.RoomTypeRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,10 @@ import java.util.List;
 public class PropertyService {
 	@Autowired
 	private PropertyRepository propertyRepository;
-	private RoomTypeRepositoryImpl roomTypeRepository;
+	@Autowired
+	private RoomTypeRepository roomTypeRepository;
 	
 	public ArrayList<PropertyDto> getAllProperties(){
-		roomTypeRepository = new RoomTypeRepositoryImpl();
 		List<AvailableRoomType> availableRoomTypeList = roomTypeRepository.getAvaiableRoomTypeWithCount();
 		System.out.println(availableRoomTypeList.toString());
 

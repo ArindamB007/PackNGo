@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
     @Override
     @Transactional
     public List<AvailableRoomType> getAvaiableRoomTypeWithCount(){
-        List<Object> results = em.createNativeQuery("SELECT room_type.id_room_type,room_type.type_name,room_type.base_price,count(*) AS count_available,\n" +
+        List<Object[]> results = em.createNativeQuery("SELECT room_type.id_room_type,room_type.type_name,room_type.base_price,count(*) AS count_available,\n" +
                 "    room_type.discount,room_type.description\n" +
                 "    FROM room \n" +
                 "\t\tLEFT JOIN room_type\n" +
@@ -37,7 +38,7 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
             availableRoomType.setIdRoomType((Integer)row[0]);
             availableRoomType.setTypeName((String)row[1]);
             availableRoomType.setBasePrice((BigDecimal) row[2]);
-            availableRoomType.setAvailableCount((Integer) row[3]);
+            availableRoomType.setAvailableCount(((BigInteger) row[3]).intValue());
             availableRoomType.setDiscount((Integer) row[4]);
             availableRoomType.setDescription((String) row[5]);
             availableRoomTypeList.add(availableRoomType);
