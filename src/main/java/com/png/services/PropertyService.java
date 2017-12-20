@@ -23,7 +23,7 @@ public class PropertyService {
 	private RoomTypeRepository roomTypeRepository;
 	
 	public ArrayList<PropertyDto> getAllProperties(){
-		List<AvailableRoomType> availableRoomTypeList = roomTypeRepository.getAvaiableRoomTypeWithCount();
+		List<AvailableRoomType> availableRoomTypeList = roomTypeRepository.getAvailableRoomTypeWithCount();
 		System.out.println(availableRoomTypeList.toString());
 
 		ArrayList<Property> properties = propertyRepository.findAllByEnabledFlagTrue();
