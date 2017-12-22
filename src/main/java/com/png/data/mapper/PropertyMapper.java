@@ -2,7 +2,6 @@ package com.png.data.mapper;
 
 import com.png.data.dto.property.PropertyDto;
 import com.png.data.entity.Facility;
-import com.png.data.entity.Image;
 import com.png.data.entity.Property;
 import com.png.data.entity.PropertyImage;
 import org.mapstruct.Mapper;

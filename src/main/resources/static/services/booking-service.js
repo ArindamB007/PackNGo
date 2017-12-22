@@ -2,7 +2,7 @@ PackNGo.factory('BookingService',function($rootScope,$q,$http,$log,UserContext) 
   return{
     searchRoom : function(checkInOutDetails) {
       var deferred = $q.defer();
-      $http.post("../services/search_room",checkInOutDetails)
+      $http.post("../services/search_room_types",checkInOutDetails)
         .then(function(response){
           deferred.resolve(response);
         })

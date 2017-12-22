@@ -1,17 +1,18 @@
 package com.png.web.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.png.auth.service.SecurityService;
 import com.png.auth.service.UserService;
 import com.png.auth.validator.UserValidator;
+import com.png.data.dto.availableroomtype.AvailableRoomTypeDto;
 import com.png.data.dto.property.PropertyDto;
-import com.png.data.dto.room.AvailableRoomTypes;
 import com.png.data.dto.user.UserContext;
 import com.png.data.entity.User;
 import com.png.exception.ValidationException;
 import com.png.menu.Menu;
 import com.png.services.CustomUserDetailsService;
 import com.png.services.PropertyService;
+import com.png.services.RoomTypeService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -51,6 +53,9 @@ public class ServicesControllers {
 
 	@Autowired
 	private PropertyService propertyService;
+	
+	@Autowired
+	private RoomTypeService roomTypeService;
 
 	@RequestMapping(value ="/sign_up",method = RequestMethod.POST)
 	@ResponseBody
@@ -112,20 +117,30 @@ public class ServicesControllers {
 		}
 		return new ResponseEntity<Object>("",HttpStatus.OK);
 	}
-	@RequestMapping(value ="/search_room",method = RequestMethod.POST)
+	@RequestMapping(value ="/search_room_types",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> searchRoom(HttpServletRequest request, HttpServletResponse response){
-		AvailableRoomTypes availableRoomTypes = null;
-		try {
+		List <HashMap <String,String>> errorList = new ArrayList<HashMap <String,String>>();
+		/*try {
 			File jsonFile = new File("src/main/resources/available-rooms.json");
 			ObjectMapper mapper = new ObjectMapper();
 			availableRoomTypes = mapper.readValue(jsonFile, AvailableRoomTypes.class);
 			System.out.println(mapper.writeValueAsString(availableRoomTypes));
 		} catch (Exception e){
 			e.printStackTrace();
+		}*/
+		try{
+			List <AvailableRoomTypeDto> availableRoomTypeDtos = roomTypeService.getAvailableRoomTypes();
+			System.out.println(availableRoomTypeDtos);
+			return new ResponseEntity<Object>(availableRoomTypeDtos,HttpStatus.OK);
+		} catch (Exception e){
+			HashMap<String,String> errors = new HashMap<String,String>();
+			errors.put("type", e.getClass().getSimpleName());
+			errors.put("message", e.getMessage());
+			errorList.add(errors);
+			return new ResponseEntity<Object>(errorList, HttpStatus.NOT_FOUND);
 		}
-
-		return new ResponseEntity<Object>(availableRoomTypes,HttpStatus.OK);
+		
 	}
 
 	@RequestMapping(value ="/getAllEnabledProperties",method = RequestMethod.GET)
