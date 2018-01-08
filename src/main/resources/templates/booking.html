@@ -16,9 +16,9 @@
 					 style="border-right: 1px solid rgba(34, 36, 38, .15);">
 				<div class="ui icon input">
 					<i class="calendar icon"></i> <input type="text" name ="checkIn" required
-																							 class="datepicker form-control" id="checkindate" readonly
-																							 data-ng-model="bookingDetails.checkInDate"
-																							 placeholder="Checkin Date ...">
+														 class="datepicker form-control" id="checkindate" readonly
+														 data-ng-model="checkInOutDetails.checkInTimestamp"
+														 placeholder="Checkin Date ...">
 				</div>
 			</div>
 			<div class="col-sm-2 col-md-2 text-center">
@@ -27,9 +27,9 @@
 			<div class="col-sm-3 col-md-3 text-center">
 				<div class="ui icon input">
 					<i class="calendar icon"></i> <input type="text" name ="checkOut" required
-																							 class="datepicker form-control" id="checkoutdate" readonly
-																							 data-ng-model="bookingDetails.checkOutDate"
-																							 placeholder="Checkout Date ...">
+														 class="datepicker form-control" id="checkoutdate" readonly
+														 data-ng-model="checkInOutDetails.checkOutTimestamp"
+														 placeholder="Checkout Date ...">
 				</div>
 			</div>
 			<div class="col-sm-2 col-md-2 text-center">
@@ -52,14 +52,14 @@
 		</div>
 		<div class="col-sm-3 col-md-3 text-center">
 			<i class = "checked calendar icon"></i> Check In
-			<div class = "ui label green">{{bookingDetails.checkInDate}}</div>
+			<div class = "ui label green">{{checkInOutDetails.checkInTimestamp}}</div>
 		</div>
 		<div class="col-sm-2 col-md-2 text-center">
 			<i class = "moon blue icon"></i>2 Nights
 		</div>
 		<div class="col-sm-3 col-md-3 text-center">
 			<i class = "checked calendar icon"></i> Check Out
-			<div class = "ui label green">{{bookingDetails.checkOutDate}}</div>
+			<div class = "ui label green">{{checkInOutDetails.checkOutTimestamp}}</div>
 		</div>
 		<div class="col-sm-2 col-md-2 text-center" style="border-left: 1px solid rgba(34, 36, 38, .15);">
 			<button class="png ui basic blue button" ng-click="">
@@ -77,12 +77,12 @@
 					<div class="item" data-ng-repeat="room_type in availableRoomTypes">
 						<div class="png-room ui fluid image crop">
 							<div class="ui blue ribbon label">
-								<i class="hotel icon"></i> {{room_type.type}}
+								<i class="hotel icon"></i> {{room_type.typeName}}
 							</div>
-							<img src={{room_type.img}}>
+							<img src={{room_type.roomTypeImages.COVER.imgPath}}>
 						</div>
 						<div class="content">
-							<a class="header">{{room_type.type}}</a>
+							<a class="header">{{room_type.typeName}}</a>
 							<div class="meta">
 								<span class="price-per-day">Starting from {{room_type.basePrice}} per day</span>
 							</div>
@@ -91,31 +91,34 @@
 								</p>
 							</div>
 							<div class="extra">
-								<div data-ng-if="room_type.wifi == 'true'" class="feature-icon" data-tooltip="Free WIFI">
-									<span><i class="wi-fi icon green" data-ng-class = "{'disabled':room_type.wifi == 'false'}"></i>Wifi</span>
+								<div data-ng-if="room_type.facilities.wifi" class="feature-icon" data-tooltip="Free WIFI">
+									<span><i class="wi-fi icon green" data-ng-class = "{'disabled':!room_type.facilities.wifi}"></i>Wifi</span>
 								</div>
-								<div data-ng-if="room_type.breakfast == 'true'" class="feature-icon" data-tooltip="Free Breakfast">
-									<span><i class="food icon green" data-ng-class = "{'disabled':room_type.breakfast == 'false'}"></i>Breakfast</span>
+								<div data-ng-if="room_type.facilities.breakfast" class="feature-icon" data-tooltip="Free Breakfast">
+									<span><i class="food icon green" data-ng-class = "{'disabled':!room_type.facilities.breakfast}"></i>Breakfast</span>
 								</div>
-								<div data-ng-if="room_type.parking == 'true'" class="feature-icon" data-tooltip="Free Parking">
-									<span><i class="car icon green" data-ng-class = "{'disabled':room_type.parking == 'false'}"></i>Parking</span>
+								<div data-ng-if="room_type.facilities.parking" class="feature-icon" data-tooltip="Free Parking">
+									<span><i class="car icon green" data-ng-class = "{'disabled':!room_type.facilities.parking}"></i>Parking</span>
 								</div>
-								<div data-ng-if="room_type.restaurant == 'true'" class="feature-icon" data-tooltip="Restaurant">
-									<span><i class="food icon green" data-ng-class = "{'disabled':room_type.restaurant == 'false'}"></i>Restaurant</span>
+								<div data-ng-if="room_type.facilities.restaurant" class="feature-icon" data-tooltip="Restaurant">
+									<span><i class="food icon green" data-ng-class = "{'disabled':!room_type.facilities.restaurant}"></i>Restaurant</span>
 								</div>
 								<span class="price-per-day ui right floated">Price per night
 									<a class="ui blue tag label">{{room_type.basePrice}}</a>
 								</span>
 							</div>
-							<div class="extra">
-								<span>Rooms Available</span><a class="ui blue circular label">{{room_type.countAvailable}}</a>
+							<div data-ng-if ="room_type.availableCount>0" class="extra">
+								<span>Rooms Available</span><a class="ui blue circular label">{{room_type.availableCount}}</a>
 								<div class = "ui label"><i class="hotel icon"></i>Room Selected
-									<a class="ui green circular label">{{room_type.countAvailable}}</a>
+									<a class="ui green circular label">{{room_type.availableCount}}</a>
 								</div>
 								<div class="ui right floated png basic blue button">
 										<i class="icon user"></i> Reserve
 								</div>
 							</div>
+                            <div data-ng-if ="room_type.availableCount<1" class="extra">
+                                Sold Out
+                            </div>
 						</div>
 					</div>
 				</div>

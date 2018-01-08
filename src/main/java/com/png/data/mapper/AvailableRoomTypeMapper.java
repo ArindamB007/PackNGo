@@ -1,6 +1,7 @@
 package com.png.data.mapper;
 
 import java.util.List;
+import java.util.Set;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -20,9 +21,11 @@ public interface AvailableRoomTypeMapper {
 		availableRoomTypeDto.setIdRoomType(availableRoomType.getIdRoomType());
 		availableRoomTypeDto.setTypeName(availableRoomType.getTypeName());
 		availableRoomTypeDto.setDiscount(availableRoomType.getDiscount());
+		availableRoomTypeDto.setDescription(availableRoomType.getDescription());
 		availableRoomTypeDto.setAvailableCount(availableRoomType.getAvailableCount());
 		availableRoomTypeDto.setBasePrice(availableRoomType.getBasePrice());
-		availableRoomTypeDto.setRoomTypeImages(availableRoomType.getRoomTypeImages());
+		availableRoomTypeDto.setRoomTypeImages(RoomTypeImageMapper.INSTANCE.RoomTypeImagesToRoomTypeImageDtos(
+				availableRoomType.getRoomTypeImages()));
 		availableRoomTypeDto.setFacilities(
 				FacilitiesMapper.INSTANCE.FacilitiesToFacilitiesDto(
 						availableRoomType.getFacilities()).getFacilitiesMap());

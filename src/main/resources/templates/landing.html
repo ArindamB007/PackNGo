@@ -106,25 +106,25 @@
                   	<span><i class="car icon green"></i>Parking</span>
                   </div>
                   <div data-ng-if="!prop.facilities.parking" class="feature-icon">
-                  	<span><i class="car icon green" data-ng-class = "{'disabled':prop.facility.parking == 'false'}"></i>Parking</span>
+                  	<span><i class="car icon green" data-ng-class = "{'disabled':!prop.facilities.parking}"></i>Parking</span>
                   </div>
                   <div data-ng-if="prop.facilities.wifi" class="feature-icon" data-tooltip="Free WIFI">
                     <span><i class="wi-fi icon green"></i>Wifi</span>
                   </div>
                   <div data-ng-if="!prop.facilities.wifi" class="feature-icon">
-                    <span><i class="wi-fi icon green" data-ng-class = "{'disabled':prop.facility.wifi == 'false'}"></i>Wifi</span>
+                    <span><i class="wi-fi icon green" data-ng-class = "{'disabled':!prop.facilities.wifi}"></i>Wifi</span>
                   </div>
                   <div data-ng-if="prop.facilities.breakfast" class="feature-icon" data-tooltip="Free Breakfast">
                     <span><i class="food icon green"></i>Breakfast</span>
                   </div>
                   <div data-ng-if="!prop.facilities.breakfast" class="feature-icon">
-                    <span><i class="food icon green" data-ng-class = "{'disabled':prop.facility.breakfast == 'false'}"></i>Breakfast</span>
+                    <span><i class="food icon green" data-ng-class = "{'disabled':!prop.facilities.breakfast}"></i>Breakfast</span>
                   </div>
                   <div data-ng-if="prop.facilities.restaurant" class="feature-icon" data-tooltip="Free Breakfast">
                     <span><i class="food icon green"></i>Restaurant</span>
                   </div>
                   <div data-ng-if="!prop.facilities.restaurant" class="feature-icon">
-                    <span><i class="food icon green" data-ng-class = "{'disabled':prop.facility.restaurant == 'false'}"></i>Restaurant</span>
+                    <span><i class="food icon green" data-ng-class = "{'disabled':!prop.facilities.restaurant}"></i>Restaurant</span>
                   </div>
                   <span class="right floated">
                     <button class="png ui basic blue button" ng-click = "goBooking(prop)"> <i class="icon user"></i> Reserve</button>

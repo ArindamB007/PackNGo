@@ -1,7 +1,7 @@
-PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS){
+PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,CommonService){
 	$scope.BOOKING_NAV_CONSTANTS = CONSTANTS.BOOKING_NAV; // booking nav constants in scope variable
   $scope.availableRoomTypes = {}; //available rooms
-  $scope.bookingDetails = {}; // selected rooms for booking
+  $scope.checkInOutDetails = {}; // selected rooms for booking
   /*Booking navigation control logic*/
   $scope.bookingStage = $scope.BOOKING_NAV_CONSTANTS.SELECT_DATE;
   $scope.moveNext = function(){
@@ -17,16 +17,16 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS){
         $scope.availableRoomTypes = {}; // clear search results
     }
   };
-  /*Booking Search Function doing service call*/
-  $scope.searchRoomsByDate = function() {
-    BookingService.searchRoom({"hello": "hello world"}).then(function (response) {
-      $scope.availableRoomTypes = response.data.availableRoomTypes;
-      $scope.moveNext(); //move to next booking stage
-    }).catch(function (response) {
-      $scope.availableRoomTypes = {};
-      CommonService.handleDefaultErrorResponse("sm", "Search Room Failed!", response, ["OK"]);
-    });
-  }
+    /*Booking Search Function doing service call*/
+    $scope.searchRoomsByDate = function() {
+        BookingService.searchRoom($scope.checkInOutDetails).then(function (response) {
+            $scope.availableRoomTypes = response.data;
+            $scope.moveNext(); //move to next booking stage
+        }).catch(function (response) {
+            $scope.availableRoomTypes = {};
+            CommonService.handleDefaultErrorResponse("sm", "Search Room Failed!", response, ["OK"]);
+        });
+    };
 
 
 
@@ -55,8 +55,8 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS){
         chkOutDateCtrl
           .trigger('input')
           .trigger('change');
+              checkin.hide();
 		  }
-		  checkin.hide();
       chkOutDateCtrl[0].focus();
 		}).data('datepicker');
 		var checkout = chkOutDateCtrl.datepicker({

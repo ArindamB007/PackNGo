@@ -4,6 +4,7 @@ import com.png.auth.service.SecurityService;
 import com.png.auth.service.UserService;
 import com.png.auth.validator.UserValidator;
 import com.png.data.dto.availableroomtype.AvailableRoomTypeDto;
+import com.png.data.dto.checkinoutdetails.CheckInOutDetailsDto;
 import com.png.data.dto.property.PropertyDto;
 import com.png.data.dto.user.UserContext;
 import com.png.data.entity.User;
@@ -13,6 +14,7 @@ import com.png.services.CustomUserDetailsService;
 import com.png.services.PropertyService;
 import com.png.services.RoomTypeService;
 
+import com.png.util.DateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/services")
@@ -56,6 +54,9 @@ public class ServicesControllers {
 	
 	@Autowired
 	private RoomTypeService roomTypeService;
+
+	@Autowired
+	private DateFormatter dateFormatter;
 
 	@RequestMapping(value ="/sign_up",method = RequestMethod.POST)
 	@ResponseBody
@@ -119,18 +120,19 @@ public class ServicesControllers {
 	}
 	@RequestMapping(value ="/search_room_types",method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Object> searchRoom(HttpServletRequest request, HttpServletResponse response){
+	public ResponseEntity<Object> searchRoom(@RequestBody CheckInOutDetailsDto checkInOutDetails){
 		List <HashMap <String,String>> errorList = new ArrayList<HashMap <String,String>>();
-		/*try {
-			File jsonFile = new File("src/main/resources/available-rooms.json");
-			ObjectMapper mapper = new ObjectMapper();
-			availableRoomTypes = mapper.readValue(jsonFile, AvailableRoomTypes.class);
-			System.out.println(mapper.writeValueAsString(availableRoomTypes));
-		} catch (Exception e){
-			e.printStackTrace();
-		}*/
 		try{
-			List <AvailableRoomTypeDto> availableRoomTypeDtos = roomTypeService.getAvailableRoomTypes();
+			System.out.println("Checkin Date : " + checkInOutDetails.getCheckInTimestamp());
+			System.out.println("Checkin Date Converted : " +
+					dateFormatter.getTimestampFromString(checkInOutDetails.getCheckInTimestamp()));
+			System.out.println("Checkout Date : " + checkInOutDetails.getCheckOutTimestamp());
+			System.out.println("Checkout Date Converted : " +
+					dateFormatter.getTimestampFromString(checkInOutDetails.getCheckOutTimestamp()));
+			List<AvailableRoomTypeDto> availableRoomTypeDtos =
+					roomTypeService.getAvailableRoomTypes(
+							dateFormatter.getTimestampFromString(checkInOutDetails.getCheckInTimestamp()),
+							dateFormatter.getTimestampFromString(checkInOutDetails.getCheckOutTimestamp()));
 			System.out.println(availableRoomTypeDtos);
 			return new ResponseEntity<Object>(availableRoomTypeDtos,HttpStatus.OK);
 		} catch (Exception e){

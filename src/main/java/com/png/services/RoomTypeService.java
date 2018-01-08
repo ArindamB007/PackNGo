@@ -1,5 +1,6 @@
 package com.png.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,9 @@ import com.png.data.repository.RoomTypeRepository;
 public class RoomTypeService {
 	@Autowired
 	private RoomTypeRepository roomTypeRepository;
-	public List<AvailableRoomTypeDto> getAvailableRoomTypes(){
-		List<AvailableRoomType> availableRoomTypeList = roomTypeRepository.getAvailableRoomTypeWithCount();
+	public List<AvailableRoomTypeDto> getAvailableRoomTypes(Timestamp checkInTimestamp, Timestamp checkOutTimestamp){
+		List<AvailableRoomType> availableRoomTypeList =
+				roomTypeRepository.getAvailableRoomTypeWithCount(checkInTimestamp,checkOutTimestamp);
 		System.out.println(availableRoomTypeList.toString());
 
 		List<AvailableRoomTypeDto> availableRoomTypeDtos =

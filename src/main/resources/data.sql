@@ -77,7 +77,7 @@ INSERT INTO room_type (type_name,base_price, discount, description,created_times
 VALUES ('Super Deluxe',2800,0,'Super Deluxe rooms take the comfort level much higher. It provided an excellent offering of super comfort and luxury at modest and affordable pricing',
         now(),now(),1);
 INSERT INTO room_type (type_name,base_price, discount, description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ('Suite',2800,0,'Our Suite rooms are built to spoil you. A cozy pampered stay for you away from how that is sure to make a long lasting mark whn you look back at this trip',
+VALUES ('Suite',3000,0,'Our Suite rooms are built to spoil you. A cozy pampered stay for you away from home, that is sure to make a long lasting mark when you look back at this trip years later',
         now(),now(),1);
 
 /*Room Type Facility data*/
@@ -170,16 +170,28 @@ VALUES ('10',now(),now(),1, (select id_room_type from room_type where type_name=
 
 /*--------- Inserting Test Data---------*/
 INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
-    VALUES (now(),CURDATE() + INTERVAL 2 DAY,now(),now(),1);
+    VALUES ('2018-01-10 11:00:00.0','2018-01-12 10:00:00.0',now(),now(),1);
 
 INSERT INTO bookings_rooms(id_booking,id_room)
     VALUES (1,10);
     
 INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
-    VALUES (CURDATE() + INTERVAL 3 DAY,CURDATE() + INTERVAL 5 DAY,now(),now(),1);
+    VALUES ('2018-01-10 11:00:00.0','2018-01-12 10:00:00.0',now(),now(),1);
 
 INSERT INTO bookings_rooms(id_booking,id_room)
     VALUES (2,5);
+
+INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
+    VALUES ('2018-01-10 11:00:00.0','2018-01-12 10:00:00.0',now(),now(),1);
+
+INSERT INTO bookings_rooms(id_booking,id_room)
+    VALUES (3,9);
+
+INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
+    VALUES ('2018-01-10 11:00:00.0','2018-01-12 10:00:00.0',now(),now(),1);
+
+INSERT INTO bookings_rooms(id_booking,id_room)
+    VALUES (4,4);
     
 /*
  select room_type.id_room_type,room_type.type_name,room_type.base_price,count(*) as count_available,

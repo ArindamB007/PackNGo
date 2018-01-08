@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Set;
 
+import com.png.data.dto.roomtypeimage.RoomTypeImageDto;
 import com.png.data.entity.RoomTypeImage;
 
 public class AvailableRoomTypeDto {
@@ -21,7 +22,7 @@ public class AvailableRoomTypeDto {
 
 	    private HashMap<String,Boolean> facilities;
 
-	    private Set<RoomTypeImage> roomTypeImages;
+	    private HashMap<String,RoomTypeImageDto> roomTypeImages;
 
 		public Integer getIdRoomType() {
 			return idRoomType;
@@ -71,11 +72,11 @@ public class AvailableRoomTypeDto {
 			this.description = description;
 		}
 
-		public Set<RoomTypeImage> getRoomTypeImages() {
+		public HashMap<String,RoomTypeImageDto> getRoomTypeImages() {
 			return roomTypeImages;
 		}
 
-		public void setRoomTypeImages(Set<RoomTypeImage> roomTypeImages) {
+		public void setRoomTypeImages(HashMap<String,RoomTypeImageDto> roomTypeImages) {
 			this.roomTypeImages = roomTypeImages;
 		}
 

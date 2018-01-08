@@ -23,6 +23,7 @@
     "nodemon": "^1.11.0"
   },
   "dependencies": {
+    "moment": "^2.20.1",
     "semantic-ui": "^2.2.10"
   }
 }
