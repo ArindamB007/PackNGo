@@ -12,7 +12,15 @@ PackNGo.factory('CommonService',function(ModalService) {
     		      }, function (response) {
     		        //need to put the focus on the element
     		      });
-        }
+        },
+    getNightsFromCheckInOut : function(checkOutDateString, checkInDateString) {
+        var checkOutDate = Date.parse(checkOutDateString);
+        var checkInDate = Date.parse(checkInDateString);
+        var checkOutMoment = moment(checkOutDate);
+        var checkInMoment = moment(checkInDate);
+        return checkOutMoment.diff(checkInMoment,'days');
+    }
+
   };
 });
 

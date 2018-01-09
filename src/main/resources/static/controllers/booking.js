@@ -7,7 +7,10 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
   $scope.moveNext = function(){
     switch ($scope.bookingStage){
       case $scope.BOOKING_NAV_CONSTANTS.SELECT_DATE :
-        $scope.bookingStage = $scope.BOOKING_NAV_CONSTANTS.SELECT_ROOM;
+          $scope.checkInOutDetails.nights =
+              CommonService.getNightsFromCheckInOut($scope.checkInOutDetails.checkOutTimestamp,
+                  $scope.checkInOutDetails.checkInTimestamp);
+          $scope.bookingStage = $scope.BOOKING_NAV_CONSTANTS.SELECT_ROOM;
     }
   };
   $scope.movePrev = function(){
