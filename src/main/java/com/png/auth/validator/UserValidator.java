@@ -1,7 +1,7 @@
 package com.png.auth.validator;
 
 import com.png.auth.service.UserService;
-import com.png.com.png.messages.CustomMessages;
+import com.png.messages.CustomMessages;
 import com.png.data.entity.User;
 import com.png.properties.ValidationProperties;
 import org.springframework.beans.factory.annotation.Autowired;

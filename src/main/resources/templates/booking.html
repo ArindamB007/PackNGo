@@ -43,11 +43,40 @@
 </div>
 <!--  rooms selection STEP2-->
 <div class="container" style="padding-top: 100px;"
-		 ng-show="bookingStage === BOOKING_NAV_CONSTANTS.SELECT_ROOM">
+     data-ng-if="bookingStage === BOOKING_NAV_CONSTANTS.SELECT_ROOM">
+    <div class="row" style="line-height: 4.2">
+        <div class="col-sm-2 col-md-2 text-center" style="border-right: 1px solid rgba(34, 36, 38, .15);">
+            <button class="png ui basic blue button" ng-click="movePrev()">
+                <i class="left chevron icon"></i> Change Dates
+            </button>
+        </div>
+        <div class="col-sm-3 col-md-3 text-center">
+            <i class = "checked calendar icon"></i> Check In
+            <div class = "ui label green">{{checkInOutDetails.checkInTimestamp}}</div>
+        </div>
+        <div class="col-sm-2 col-md-2 text-center">
+            <i class = "moon blue icon"></i>{{checkInOutDetails.nights}}
+        </div>
+        <div class="col-sm-3 col-md-3 text-center">
+            <i class = "checked calendar icon"></i> Check Out
+            <div class = "ui label green">{{checkInOutDetails.checkOutTimestamp}}</div>
+        </div>
+        <div class="col-sm-2 col-md-2 text-center" style="border-left: 1px solid rgba(34, 36, 38, .15);">
+            <button data-ng-disabled = "!enableMoveToGuestInfo()"
+                    class="png ui basic blue button" ng-click="showGuestConfirmation()">
+                <i class="right chevron icon"></i> Next
+            </button>
+        </div>
+    </div>
+    <div class="ui divider"></div>
+</div>
+<!--  guest info STEP3-->
+<div class="container" style="padding-top: 100px;"
+		 data-ng-if="bookingStage === BOOKING_NAV_CONSTANTS.SHOW_GUEST_INFO">
 	<div class="row" style="line-height: 4.2">
 		<div class="col-sm-2 col-md-2 text-center" style="border-right: 1px solid rgba(34, 36, 38, .15);">
 			<button class="png ui basic blue button" ng-click="movePrev()">
-				<i class="left chevron icon"></i> Change Dates
+				<i class="left chevron icon"></i> Room Details
 			</button>
 		</div>
 		<div class="col-sm-3 col-md-3 text-center">
@@ -62,15 +91,39 @@
 			<div class = "ui label green">{{checkInOutDetails.checkOutTimestamp}}</div>
 		</div>
 		<div class="col-sm-2 col-md-2 text-center" style="border-left: 1px solid rgba(34, 36, 38, .15);">
-			<button class="png ui basic blue button" ng-click="">
+			<button data-ng-disabled = "!enableMoveToGuestInfo()"
+                    class="png ui basic blue button" ng-click="showGuestConfirmation()">
 				<i class="right chevron icon"></i> Next
 			</button>
 		</div>
 	</div>
+    <div class="row" style="line-height: 4.2">
+        <div class="col-sm-2 col-md-2 text-center" style="border-right: 1px solid rgba(34, 36, 38, .15);">
+            Property Details Selected
+        </div>
+        <div class="col-sm-3 col-md-3 text-center">
+            <i class = "checked calendar icon"></i> Check In
+            <div class = "ui label green">Room Details Selected</div>
+        </div>
+        <div class="col-sm-2 col-md-2 text-center">
+            <i class = "moon blue icon"></i>Some More Details
+        </div>
+        <div class="col-sm-3 col-md-3 text-center">
+            <i class = "checked calendar icon"></i> Check Out
+            <div class = "ui label green">Some Other Details</div>
+        </div>
+        <div class="col-sm-2 col-md-2 text-center" style="border-left: 1px solid rgba(34, 36, 38, .15);">
+            <button data-ng-disabled = "!enableMoveToGuestInfo()"
+                    class="png ui basic blue button" ng-click="showGuestConfirmation()">
+                <i class="right chevron icon"></i> Next
+            </button>
+        </div>
+    </div>
 	<div class="ui divider"></div>
 </div>
 <!--   rooms display -->
-	<div class="container" ng-show = "(availableRoomTypes | json)!='{}'">
+	<div class="container" data-ng-if = "(availableRoomTypes | json)!='{}' &&
+	bookingStage===BOOKING_NAV_CONSTANTS.SELECT_ROOM">
 		<div class = "ui stackable grid padded">
 			<div class = "sixteen wide column">
 				<div class="png ui divided items">
@@ -103,18 +156,32 @@
 								<div data-ng-if="room_type.facilities.restaurant" class="feature-icon" data-tooltip="Restaurant">
 									<span><i class="food icon green" data-ng-class = "{'disabled':!room_type.facilities.restaurant}"></i>Restaurant</span>
 								</div>
-								<span class="price-per-day ui right floated">Price per night
+								<span class="ui right floated">Price per night
 									<a class="ui blue tag label">{{room_type.basePrice}}</a>
 								</span>
 							</div>
 							<div data-ng-if ="room_type.availableCount>0" class="extra">
-								<span>Rooms Available</span><a class="ui blue circular label">{{room_type.availableCount}}</a>
-								<div class = "ui label"><i class="hotel icon"></i>Room Selected
-									<a class="ui green circular label">{{room_type.availableCount}}</a>
+								<div class="ui label">
+                                    Rooms Available
+                                    <div class="detail">{{room_type.availableCount}}</div>
+                                </div>
+								<div data-ng-show = "room_type.selectedCount>0" class = "ui label green">
+                                    <i class="hotel icon"></i>Room Selected
+                                    <div class = "detail">{{room_type.selectedCount}}</div>
 								</div>
-								<div class="ui right floated png basic blue button">
-										<i class="icon user"></i> Reserve
-								</div>
+                                <div class="ui right floated basic blue icon buttons">
+                                    <button ng-class="{disabled:room_type.selectedCount==0||
+                                                        room_type.selectedCount==undefined}"
+                                            class="ui button basic blue" ng-click="removeRoomsByIndex($index)"
+                                            data-tooltip="Remove a room">
+                                        <i class="minus icon"></i>
+                                    </button>
+                                    <button ng-class="{disabled:room_type.selectedCount==room_type.availableCount}"
+                                            class="ui button basic blue" ng-click="addRoomsByIndex($index)"
+                                            data-tooltip="Add a room">
+                                        <i class="add icon"></i>
+                                    </button>
+                                </div>
 							</div>
                             <div data-ng-if ="room_type.availableCount<1" class="extra">
                                 Sold Out
@@ -125,5 +192,9 @@
 			</div>
 		</div>
 	</div>
+    <div class="container"
+         data-ng-if = "bookingStage==BOOKING_NAV_CONSTANTS.SELECT_ROOM">
+
+    </div>
 </body>
 </html>

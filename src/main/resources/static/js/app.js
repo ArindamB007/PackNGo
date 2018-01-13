@@ -79,7 +79,8 @@ PackNGo.run(['$rootScope', '$window', 'faceBookLoginService', 'LoginService','$l
 PackNGo.constant('CONSTANTS',{
 	BOOKING_NAV:{
 		SELECT_DATE:'SELECT_DATE',
-		SELECT_ROOM:'SELECT_ROOM'
+		SELECT_ROOM:'SELECT_ROOM',
+        SHOW_GUEST_INFO:"SHOW_GUEST_INFO"
 	}
 });
 

@@ -1,4 +1,4 @@
-package com.png.com.png.messages;
+package com.png.messages;
 
 
 import org.springframework.context.MessageSource;

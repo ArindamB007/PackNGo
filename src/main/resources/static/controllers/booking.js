@@ -11,13 +11,20 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
               CommonService.getNightsFromCheckInOut($scope.checkInOutDetails.checkOutTimestamp,
                   $scope.checkInOutDetails.checkInTimestamp);
           $scope.bookingStage = $scope.BOOKING_NAV_CONSTANTS.SELECT_ROOM;
+          break;
+      case $scope.BOOKING_NAV_CONSTANTS.SELECT_ROOM :
+          $scope.bookingStage = $scope.BOOKING_NAV_CONSTANTS.SHOW_GUEST_INFO;
+          break;
     }
   };
   $scope.movePrev = function(){
     switch ($scope.bookingStage){
-      case CONSTANTS.BOOKING_NAV.SELECT_ROOM :
-        $scope.bookingStage = $scope.BOOKING_NAV_CONSTANTS.SELECT_DATE;
-        $scope.availableRoomTypes = {}; // clear search results
+      case $scope.BOOKING_NAV_CONSTANTS.SELECT_ROOM :
+          $scope.availableRoomTypes = {}; // clear search results
+          $scope.bookingStage = $scope.BOOKING_NAV_CONSTANTS.SELECT_DATE;
+        break;
+    case $scope.BOOKING_NAV_CONSTANTS.SHOW_GUEST_INFO:
+        $scope.bookingStage = $scope.BOOKING_NAV_CONSTANTS.SELECT_ROOM;
     }
   };
     /*Booking Search Function doing service call*/
@@ -30,6 +37,49 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
             CommonService.handleDefaultErrorResponse("sm", "Search Room Failed!", response, ["OK"]);
         });
     };
+    /*Guest Confirmation Screen*/
+    $scope.showGuestConfirmation = function() {
+        $scope.moveNext(); //move to next booking stage
+    };
+    /*add rooms for selection*/
+    $scope.addRoomsByIndex = function(roomTypeIndex){
+        if (!$scope.availableRoomTypes[roomTypeIndex].selectedCount ||
+            $scope.availableRoomTypes[roomTypeIndex].selectedCount == 0) {
+            $scope.availableRoomTypes[roomTypeIndex].selectedCount = 1;
+        }
+        else
+        {
+            $scope.availableRoomTypes[roomTypeIndex].selectedCount =
+                parseInt($scope.availableRoomTypes[roomTypeIndex].selectedCount) + 1;
+        }
+    };
+    /*remove rooms for selection*/
+    $scope.removeRoomsByIndex = function(roomTypeIndex){
+        if ($scope.availableRoomTypes[roomTypeIndex].selectedCount > 0) {
+            $scope.availableRoomTypes[roomTypeIndex].selectedCount =
+                parseInt($scope.availableRoomTypes[roomTypeIndex].selectedCount) - 1;
+        }
+    };
+    /*disable room qty increase*/
+    $scope.disableRoomQtyIncrease = function(roomTypeIndex){
+        return ($scope.availableRoomTypes[roomTypeIndex].selectedCount ===
+        $scope.availableRoomTypes[roomTypeIndex].availableCount);
+    };
+    /*disable room qty decrease*/
+    $scope.disableRoomQtyDecrease = function(roomTypeIndex){
+        return ($scope.availableRoomTypes[roomTypeIndex].selectedCount === 0);
+    };
+    /*allow movenext to guest info*/
+    $scope.enableMoveToGuestInfo = function(){
+        if ($scope.availableRoomTypes.length>0) {
+            for (var i = 0, len = $scope.availableRoomTypes.length; i < len; i++) {
+                if ($scope.availableRoomTypes[i].selectedCount > 0)
+                    return true;
+            }
+        }
+        return false;
+    };
+
 
 
 
