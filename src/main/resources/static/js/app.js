@@ -148,7 +148,7 @@ PackNGo.factory('faceBookLoginService', ['$rootScope','$q',function($rootScope,$
 }]);
 
 // configure the tooltipProvider to disable angular ui tooltip
-PackNGo.config(['$tooltipProvider', function ($tooltipProvider) {
+/*PackNGo.config(['$tooltipProvider', function ($tooltipProvider) {
 	//var parser = new UAParser();
 	//var result = parser.getResult();
 	//var touch = result.device && (result.device.type === 'tablet' || result.device.type === 'mobile');
@@ -159,8 +159,8 @@ PackNGo.config(['$tooltipProvider', function ($tooltipProvider) {
 
 		$tooltipProvider.options(options);
 	}
-	
-	/*$stateProvider.state('login', {
+
+	$stateProvider.state('login', {
 	    url: '/login',
 	    allowAnonymous: true, //if you move this, don't forget to update
 	                          //variable path in the force-page check.
@@ -171,9 +171,9 @@ PackNGo.config(['$tooltipProvider', function ($tooltipProvider) {
 	        }
 	    }
 	    //Any other config
-	});*/
+	});
 
-}]);
+}]);*/
 
 
 PackNGo.controller('HomeCtrl', function($scope) {

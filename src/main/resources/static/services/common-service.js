@@ -19,10 +19,14 @@ PackNGo.factory('CommonService',function(ModalService) {
         var checkOutMoment = moment(checkOutDate);
         var checkInMoment = moment(checkInDate);
         return checkOutMoment.diff(checkInMoment,'days');
-    }
+    },
+      isObjectEmpty : function(object){
+          return (Object.keys(object).length===0);
+      }
 
   };
 });
 
 PackNGo.value('UserContext', {value:{}});
 PackNGo.value('LastUrl', {value:{}});
+PackNGo.value('SelectedProperty',{value:{}});

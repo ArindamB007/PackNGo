@@ -40,7 +40,8 @@ PackNGo.controller('PropertyCtrl',function($scope,$location,PropertyService,Comm
     });
   }
 	$scope.goBooking = function (prop){
-		console.log("Going for Property: " + prop.name)
+		console.log("Going for Property: " + prop.name);
+        PropertyService.setSelectedProperty(prop);
 		$location.path('/booking');
 	}
   $scope.getAllProperties();

@@ -1,16 +1,22 @@
-PackNGo.factory('PropertyService',function($rootScope,$q,$http,$log,UserContext) {
+PackNGo.factory('PropertyService',function($rootScope,$q,$http,$log,SelectedProperty) {
   return{
-    getProperties : function() {
-      var deferred = $q.defer();
-      $http.get("../services/getAllEnabledProperties")
-        .then(function(response){
-          deferred.resolve(response);
-        })
-        .catch(function(response){
-          deferred.reject(response);
-          $log.error(response);
-        });
-      return deferred.promise;
-    }
-  };
+        getProperties : function() {
+          var deferred = $q.defer();
+          $http.get("../services/getAllEnabledProperties")
+            .then(function(response){
+              deferred.resolve(response);
+            })
+            .catch(function(response){
+              deferred.reject(response);
+              $log.error(response);
+            });
+          return deferred.promise;
+        },
+        getSelectedProperty: function () {
+            return SelectedProperty.value;
+        },
+        setSelectedProperty: function (property) {
+            SelectedProperty.value = property;
+        }
+      };
 });
