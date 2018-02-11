@@ -7,6 +7,7 @@
 <!--  checkinout form STEP1-->
 <div class="container" style="padding-top: 100px;"
 		 ng-show="bookingStage === BOOKING_NAV_CONSTANTS.SELECT_DATE">
+	<a class="header">{{selectedProperty.name}}</a> <i class="fa fa-map-marker"></i>{{selectedProperty.location}}
 	<div class="row" style="line-height: 4.2">
 		<form name="checkinout" class ="form" novalidate>
 			<div class="col-sm-2 col-md-2 text-center">

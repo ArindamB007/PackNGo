@@ -45,7 +45,7 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
     /*add rooms for selection*/
     $scope.addRoomsByIndex = function(roomTypeIndex){
         if (!$scope.availableRoomTypes[roomTypeIndex].selectedCount ||
-            $scope.availableRoomTypes[roomTypeIndex].selectedCount == 0) {
+            $scope.availableRoomTypes[roomTypeIndex].selectedCount === 0) {
             $scope.availableRoomTypes[roomTypeIndex].selectedCount = 1;
         }
         else

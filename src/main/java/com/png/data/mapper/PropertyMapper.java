@@ -34,6 +34,7 @@ public interface PropertyMapper {
 
 		propertyDto.setName( property.getName() );
 		propertyDto.setDescription( property.getDescription() );
+		propertyDto.setLocation(property.getLocation());
 		propertyDto.setShortDesc( property.getShortDesc() );
 		propertyDto.setIdProperty( property.getIdProperty() );
 		propertyDto.setTagLine( property.getTagLine() );
@@ -66,6 +67,7 @@ public interface PropertyMapper {
 
 		property.setName( propertyDto.getName() );
 		property.setDescription( propertyDto.getDescription() );
+		property.setLocation(propertyDto.getLocation());
 		property.setShortDesc( propertyDto.getShortDesc() );
 		property.setIdProperty( propertyDto.getIdProperty() );
 		property.setTagLine( propertyDto.getTagLine() );

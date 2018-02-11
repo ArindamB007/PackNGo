@@ -6,19 +6,19 @@ VALUES ('password','arindam.bandyopadhyay@gmail.com', 'Arindam','Bandyopadhyay',
 INSERT INTO role(name,description) VALUES ("ROLE_USER","An applicaiton user");
 
 /*Property Data*/
-INSERT INTO property (name,tagline,short_desc,description,created_timestamp,
+INSERT INTO property (name,tagline,short_desc,description,location,created_timestamp,
                       updated_timestamp,enabled_flag)
 VALUES ('Property XYZ','Heavenly Comfort',
         'Cozy Comfortable Stay',
         'This is a sprawling property in the heart of the city. Amazing location of the property and connections from this city makes this property and excellent option to spend your stay.',
-        now(),now(),1);
+        "Gangtok",now(),now(),1);
 
-INSERT INTO property (name,tagline,short_desc,description,created_timestamp,
+INSERT INTO property (name,tagline,short_desc,description,location,created_timestamp,
                       updated_timestamp,enabled_flag)
 VALUES ('Property EFGH','Earthly Comfort',
         'Warm Enjoyable Stay',
         'Amazing location of the property and connections from this city makes this property and excellent option to spend your stay. This is a sprawling property in the heart of the city.',
-        now(),now(),1);
+        "Location",now(),now(),1);
 
 /*Facility Data*/
 INSERT INTO facility (name,css_class_name,created_timestamp,updated_timestamp,enabled_flag)

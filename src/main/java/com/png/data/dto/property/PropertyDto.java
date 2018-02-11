@@ -26,6 +26,8 @@ public class PropertyDto {
 
 	private HashMap<String,Object> images;
 
+	private String location;
+
 	public Long getIdProperty() {
 		return idProperty;
 	}
@@ -112,5 +114,13 @@ public class PropertyDto {
 
 	public void setImages(HashMap<String, Object> images) {
 		this.images = images;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 }

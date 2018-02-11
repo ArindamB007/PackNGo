@@ -26,6 +26,9 @@ public class Property extends BaseEntity{
     @Column(name="description")
     private String description;
 
+    @Column(name="location")
+	private String location;
+
 	@ManyToMany
     @JoinTable(name = "properties_facilities", joinColumns = @JoinColumn(name = "id_property"), inverseJoinColumns = @JoinColumn(name = "id_facility"))
     private Set<Facility> facilities;
@@ -88,4 +91,8 @@ public class Property extends BaseEntity{
 	public void setPropertyImages(Set<PropertyImage> propertyImages) {
 		this.propertyImages = propertyImages;
 	}
+
+	public String getLocation() { return location; }
+
+	public void setLocation(String location) { this.location = location; }
 }
