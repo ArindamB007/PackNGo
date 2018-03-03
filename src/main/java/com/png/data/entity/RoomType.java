@@ -16,7 +16,7 @@ public class RoomType extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_room_type")
-    private Integer idRoomType;
+    private Long idRoomType;
 
     @Column (name="type_name", nullable = false,unique = true)
     @NotEmpty
@@ -38,11 +38,15 @@ public class RoomType extends BaseEntity {
     @OneToMany (mappedBy = "roomTypeId")
     private Set<RoomTypeImage> roomTypeImages;
 
-    public Integer getIdRoomType() {
+    @ManyToOne (fetch = FetchType.LAZY, optional = false)
+    @PrimaryKeyJoinColumn
+    private Property property;
+
+    public Long getIdRoomType() {
         return idRoomType;
     }
 
-    public void setIdRoomType(Integer idRoomType) {
+    public void setIdRoomType(Long idRoomType) {
         this.idRoomType = idRoomType;
     }
 
@@ -93,4 +97,8 @@ public class RoomType extends BaseEntity {
     public void setRoomTypeImages(Set<RoomTypeImage> roomTypeImages) {
         this.roomTypeImages = roomTypeImages;
     }
+
+    public Property getProperty() { return property; }
+
+    public void setProperty(Property property) { this.property = property;}
 }

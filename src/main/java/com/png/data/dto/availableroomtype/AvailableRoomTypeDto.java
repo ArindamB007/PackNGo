@@ -8,7 +8,7 @@ import com.png.data.dto.roomtypeimage.RoomTypeImageDto;
 import com.png.data.entity.RoomTypeImage;
 
 public class AvailableRoomTypeDto {
-	    private Integer idRoomType;
+	    private Long idRoomType;
 
 	    private String typeName;
 
@@ -24,11 +24,11 @@ public class AvailableRoomTypeDto {
 
 	    private HashMap<String,RoomTypeImageDto> roomTypeImages;
 
-		public Integer getIdRoomType() {
+		public Long getIdRoomType() {
 			return idRoomType;
 		}
 
-		public void setIdRoomType(Integer idRoomType) {
+		public void setIdRoomType(Long idRoomType) {
 			this.idRoomType = idRoomType;
 		}
 

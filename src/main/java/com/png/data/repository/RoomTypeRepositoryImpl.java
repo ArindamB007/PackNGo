@@ -3,6 +3,7 @@ package com.png.data.repository;
 import com.png.data.entity.AvailableRoomType;
 import com.png.data.entity.Facility;
 import com.png.data.entity.RoomTypeImage;
+import com.png.exception.NoDataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,15 +25,18 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
     private RoomTypeImageRepository roomTypeImageRepository;
 
     @Override
-    public List<AvailableRoomType> getAvailableRoomTypeWithCount(Timestamp checkInTimestamp,Timestamp checkOutTimestamp){
+    public List<AvailableRoomType> getAvailableRoomTypeWithCount(Timestamp checkInTimestamp,Timestamp checkOutTimestamp,
+                                                                 Long idProperty){
         Query query = em.createNativeQuery(
                 "SELECT room_type.id_room_type,room_type.type_name,room_type.base_price,count(rt.type_name) AS count_available,\n" +
                         "    room_type.discount,room_type.description\n" +
-                        "    FROM room \n" +
+                        "    FROM property \n" +
                         "    LEFT JOIN room_type\n" +
-                        "        ON room.room_type_id_room_type = room_type.id_room_type \n" +
-                        "        AND room.enabled_flag = 1 \n" +
+                        "        ON room_type.property_id_property = property.id_property" +
                         "        AND room_type.enabled_flag =1\n" +
+                        "    LEFT JOIN room\n" +
+                        "        ON room.room_type_id_room_type = room_type.id_room_type\n" +
+                        "        AND room.enabled_flag = 1 \n" +
                         "    LEFT JOIN bookings_rooms\n" +
                         "        ON room.id_room = bookings_rooms.id_room\n" +
                         "    LEFT JOIN booking\n" +
@@ -44,9 +48,11 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
                         "        AND ((booking.check_in_timestamp IS NULL AND  booking.check_out_timestamp IS NULL)\n" +
                         "        OR  (:checkInTimestamp < booking.check_in_timestamp AND :checkOutTimestamp < booking.check_in_timestamp)\n" +
                         "        OR  (:checkInTimestamp > booking.check_out_timestamp AND :checkOutTimestamp > booking.check_out_timestamp))\n" +
+                        "    where id_property = :idProperty" +
                         "    GROUP BY room_type.type_name ORDER BY room_type.id_room_type");
         query.setParameter("checkInTimestamp",checkInTimestamp);
         query.setParameter("checkOutTimestamp",checkOutTimestamp);
+        query.setParameter("idProperty",idProperty);
         List<Object[]> results = query.getResultList();
 
 
@@ -71,10 +77,13 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
                 "        OR  ('2017-12-17 00:00:01' < booking.check_in_timestamp AND '2017-12-18 00:00:00' < booking.check_in_timestamp)\n" +
                 "        OR  ('2017-12-17 00:00:01' > booking.check_out_timestamp AND '2017-12-18 00:00:00' > booking.check_out_timestamp))\n" +
                 "\t\tGROUP BY type_name ORDER BY room_type.id_room_type").getResultList();*/
+       if ((results.get(0))[0] == null) {
+           throw new NoDataException("000", "No data for Available Room Types");
+       }
         List<AvailableRoomType> availableRoomTypeList= new ArrayList<>(results.size());
         results.forEach(row->{
             AvailableRoomType availableRoomType = new AvailableRoomType();
-            availableRoomType.setIdRoomType((Integer)row[0]);
+            availableRoomType.setIdRoomType(((BigInteger)row[0]).longValue());
             availableRoomType.setTypeName((String)row[1]);
             availableRoomType.setBasePrice((BigDecimal) row[2]);
             availableRoomType.setAvailableCount(((BigInteger) row[3]).intValue());
@@ -90,7 +99,7 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
     }
 
     @Override
-    public List<Facility>getRoomTypeFacilitiesByIdRoomType(Integer idRoomType){
+    public List<Facility>getRoomTypeFacilitiesByIdRoomType(Long idRoomType){
         List <Object[]> results = em.createNativeQuery("SELECT facility.id_facility,facility.name, facility.enabled_flag FROM facility \n" +
                 "LEFT JOIN room_types_facilities\n" +
                 "ON room_types_facilities.id_facility = facility.id_facility AND\n" +

@@ -132,7 +132,8 @@ public class ServicesControllers {
 			List<AvailableRoomTypeDto> availableRoomTypeDtos =
 					roomTypeService.getAvailableRoomTypes(
 							dateFormatter.getTimestampFromString(checkInOutDetails.getCheckInTimestamp()),
-							dateFormatter.getTimestampFromString(checkInOutDetails.getCheckOutTimestamp()));
+							dateFormatter.getTimestampFromString(checkInOutDetails.getCheckOutTimestamp()),
+							checkInOutDetails.getIdProperty());
 			System.out.println(availableRoomTypeDtos);
 			return new ResponseEntity<Object>(availableRoomTypeDtos,HttpStatus.OK);
 		} catch (Exception e){

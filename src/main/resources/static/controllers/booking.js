@@ -30,6 +30,7 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
     };
     /*Booking Search Function doing service call*/
     $scope.searchRoomsByDate = function() {
+        $scope.checkInOutDetails.idProperty = $scope.selectedProperty.idProperty;
         BookingService.searchRoom($scope.checkInOutDetails).then(function (response) {
             $scope.availableRoomTypes = response.data;
             $scope.moveNext(); //move to next booking stage

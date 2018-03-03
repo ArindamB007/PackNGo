@@ -69,15 +69,22 @@ INSERT INTO properties_facilities (id_property, id_facility)
 VALUES ((select id_property from property where name='Property EFGH'),
         (select id_facility from facility where name='Restaurant'));
 
-/*Room Type Data*/
-INSERT INTO room_type (type_name,base_price, discount, description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ('Deluxe',2500,0,'Our Deluxe rooms offers unique combination of value and comfort. It comes at great pricing while offering all the basic amenities that will make you feel at home',
+/*Room Type Data with property*/
+INSERT INTO room_type (property_id_property,type_name,base_price, discount, description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_property from property where name='Property XYZ'),
+        'Deluxe',2500,0,'Our Deluxe rooms offers unique combination of value and comfort. It comes at great pricing while offering all the basic amenities that will make you feel at home',
         now(),now(),1);
-INSERT INTO room_type (type_name,base_price, discount, description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ('Super Deluxe',2800,0,'Super Deluxe rooms take the comfort level much higher. It provided an excellent offering of super comfort and luxury at modest and affordable pricing',
+INSERT INTO room_type (property_id_property,type_name,base_price, discount, description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_property from property where name='Property XYZ'),
+        'Super Deluxe',2800,0,'Super Deluxe rooms take the comfort level much higher. It provided an excellent offering of super comfort and luxury at modest and affordable pricing',
         now(),now(),1);
-INSERT INTO room_type (type_name,base_price, discount, description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ('Suite',3000,0,'Our Suite rooms are built to spoil you. A cozy pampered stay for you away from home, that is sure to make a long lasting mark when you look back at this trip years later',
+INSERT INTO room_type (property_id_property,type_name,base_price, discount, description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_property from property where name='Property XYZ'),
+        'Suite',3000,0,'Our Suite rooms are built to spoil you. A cozy pampered stay for you away from home, that is sure to make a long lasting mark when you look back at this trip years later',
+        now(),now(),1);
+INSERT INTO room_type (property_id_property,type_name,base_price, discount, description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_property from property where name='Property EFGH'),
+        'Executive',3500,0,'A super cozy pampered stay for you away from home, that is sure to make a long lasting mark when you look back at this trip years later',
         now(),now(),1);
 
 /*Room Type Facility data*/
@@ -167,6 +174,11 @@ INSERT INTO room (room_no,created_timestamp,updated_timestamp,enabled_flag,room_
 VALUES ('9',now(),now(),1, (select id_room_type from room_type where type_name='Deluxe'));
 INSERT INTO room (room_no,created_timestamp,updated_timestamp,enabled_flag,room_type_id_room_type)
 VALUES ('10',now(),now(),1, (select id_room_type from room_type where type_name='Deluxe'));
+INSERT INTO room (room_no,created_timestamp,updated_timestamp,enabled_flag,room_type_id_room_type)
+VALUES ('11',now(),now(),1, (select id_room_type from room_type where type_name='Executive'));
+INSERT INTO room (room_no,created_timestamp,updated_timestamp,enabled_flag,room_type_id_room_type)
+VALUES ('12',now(),now(),1, (select id_room_type from room_type where type_name='Executive'));
+
 
 /*--------- Inserting Test Data---------*/
 INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)

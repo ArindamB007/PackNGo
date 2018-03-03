@@ -17,9 +17,10 @@ import com.png.data.repository.RoomTypeRepository;
 public class RoomTypeService {
 	@Autowired
 	private RoomTypeRepository roomTypeRepository;
-	public List<AvailableRoomTypeDto> getAvailableRoomTypes(Timestamp checkInTimestamp, Timestamp checkOutTimestamp){
+	public List<AvailableRoomTypeDto> getAvailableRoomTypes(Timestamp checkInTimestamp, Timestamp checkOutTimestamp,
+															Long idProperty){
 		List<AvailableRoomType> availableRoomTypeList =
-				roomTypeRepository.getAvailableRoomTypeWithCount(checkInTimestamp,checkOutTimestamp);
+				roomTypeRepository.getAvailableRoomTypeWithCount(checkInTimestamp,checkOutTimestamp, idProperty);
 		System.out.println(availableRoomTypeList.toString());
 
 		List<AvailableRoomTypeDto> availableRoomTypeDtos =

@@ -3,10 +3,10 @@ PackNGo.factory('CommonService',function(ModalService) {
       handleDefaultErrorResponse : function(modalSize,modalTitle,response,modalButtonsList) {
     	  var modalInstance = undefined;
     	  if (response.status === 400 && response.data)
-    		  modalInstance = ModalService.showModal(modalSize,modalTitle + "-" + response.data.error,
+    		  modalInstance = ModalService.showModal(modalSize,modalTitle + "-" + response.data.type,
     				  response.data.message,modalButtonsList);
     	  else if (response.status === 404)
-    		  modalInstance = ModalService.showModal(modalSize,modalTitle,response.data.message,modalButtonsList);
+    		  modalInstance = ModalService.showModal(modalSize,modalTitle,response.data[0].message, modalButtonsList);
     	   modalInstance.result.then(function (response) {
     		        //need to put the focus on the element
     		      }, function (response) {

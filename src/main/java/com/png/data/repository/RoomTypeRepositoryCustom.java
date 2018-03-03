@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public interface RoomTypeRepositoryCustom {
-    List<AvailableRoomType> getAvailableRoomTypeWithCount(Timestamp checkInTimestamp, Timestamp checkOutTimestamp);
-    List<Facility>getRoomTypeFacilitiesByIdRoomType(Integer idRoomType);
+    List<AvailableRoomType> getAvailableRoomTypeWithCount(Timestamp checkInTimestamp, Timestamp checkOutTimestamp,
+                                                          Long idProperty);
+    List<Facility>getRoomTypeFacilitiesByIdRoomType(Long idRoomType);
 }

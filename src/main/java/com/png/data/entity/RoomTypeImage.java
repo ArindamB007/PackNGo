@@ -11,7 +11,7 @@ public class RoomTypeImage extends Image{
     private Long idRoomTypeImage;
 
     @Column (name="room_type_id")
-    private Integer roomTypeId;
+    private Long roomTypeId;
 
     public Long getIdRoomTypeImage() {
         return idRoomTypeImage;
@@ -21,11 +21,11 @@ public class RoomTypeImage extends Image{
         this.idRoomTypeImage = idRoomTypeImage;
     }
 
-    public Integer getRoomTypeId() {
+    public Long getRoomTypeId() {
         return roomTypeId;
     }
 
-    public void setRoomTypeId(Integer roomTypeId) {
+    public void setRoomTypeId(Long roomTypeId) {
         this.roomTypeId = roomTypeId;
     }
 }
