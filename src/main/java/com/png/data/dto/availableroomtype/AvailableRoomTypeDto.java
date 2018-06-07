@@ -18,6 +18,10 @@ public class AvailableRoomTypeDto {
 
 	    private Integer discount;
 
+	    private Integer maxAdultOccupancy;
+
+	    private Integer maxChildOccupancy;
+
 	    private String description;
 
 	    private HashMap<String,Boolean> facilities;
@@ -64,7 +68,23 @@ public class AvailableRoomTypeDto {
 			this.discount = discount;
 		}
 
-		public String getDescription() {
+	public Integer getMaxAdultOccupancy() {
+		return maxAdultOccupancy;
+	}
+
+	public void setMaxAdultOccupancy(Integer maxAdultOccupancy) {
+		this.maxAdultOccupancy = maxAdultOccupancy;
+	}
+
+	public Integer getMaxChildOccupancy() {
+		return maxChildOccupancy;
+	}
+
+	public void setMaxChildOccupancy(Integer maxChildOccupancy) {
+		this.maxChildOccupancy = maxChildOccupancy;
+	}
+
+	public String getDescription() {
 			return description;
 		}
 

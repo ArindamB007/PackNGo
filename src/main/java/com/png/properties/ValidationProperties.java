@@ -2,10 +2,12 @@ package com.png.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.stereotype.Component;
 
 @Component
 @PropertySource("validation.properties")
+//@PropertySources(value = {@PropertySource("classpath:/validation.properties")})
 @ConfigurationProperties
 public class ValidationProperties {
 	private String signupRequired;

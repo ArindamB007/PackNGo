@@ -29,7 +29,8 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
                                                                  Long idProperty){
         Query query = em.createNativeQuery(
                 "SELECT room_type.id_room_type,room_type.type_name,room_type.base_price,count(rt.type_name) AS count_available,\n" +
-                        "    room_type.discount,room_type.description\n" +
+                        "    room_type.discount,room_type.description,\n" +
+                        "    room_type.max_adult_occupancy, room_type.max_child_occupancy\n" +
                         "    FROM property \n" +
                         "    LEFT JOIN room_type\n" +
                         "        ON room_type.property_id_property = property.id_property" +
@@ -89,6 +90,8 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
             availableRoomType.setAvailableCount(((BigInteger) row[3]).intValue());
             availableRoomType.setDiscount((Integer) row[4]);
             availableRoomType.setDescription((String) row[5]);
+            availableRoomType.setMaxAdultOccupancy((Integer) row[6]);
+            availableRoomType.setMaxChildOccupancy((Integer) row[7]);
             availableRoomType.setRoomTypeImages(
                     new HashSet<>(roomTypeImageRepository.findByRoomTypeId(availableRoomType.getIdRoomType())));
             availableRoomType.setFacilities(

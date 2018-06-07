@@ -28,6 +28,12 @@ public class RoomType extends BaseEntity {
     @Column (name="discount")
     private Integer discount;
 
+    @Column (name="max_adult_occupancy",nullable = false)
+    private Integer maxAdultOccupancy;
+
+    @Column (name="max_child_occupancy",nullable = false)
+    private Integer maxChildOccupancy;
+
     @Column(name="description")
     private String description;
 
@@ -73,6 +79,14 @@ public class RoomType extends BaseEntity {
     public void setDiscount(Integer discount) {
         this.discount = discount;
     }
+
+    public Integer getMaxAdultOccupancy() { return maxAdultOccupancy; }
+
+    public void setMaxAdultOccupancy(Integer maxAdultOccupancy) { this.maxAdultOccupancy = maxAdultOccupancy; }
+
+    public Integer getMaxChildOccupancy() { return maxChildOccupancy; }
+
+    public void setMaxChildOccupancy(Integer maxChildOccupancy) { this.maxChildOccupancy = maxChildOccupancy; }
 
     public String getDescription() {
         return description;

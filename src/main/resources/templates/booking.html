@@ -1,201 +1,196 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Booking Property</title>
+  <title>Booking Property</title>
 </head>
 <body>
 <!--  checkinout form STEP1-->
 <div class="container" style="padding-top: 100px;"
-		 ng-show="bookingStage === BOOKING_NAV_CONSTANTS.SELECT_DATE">
-	<a class="header">{{selectedProperty.name}}</a> <i class="fa fa-map-marker"></i>{{selectedProperty.location}}
-	<div class="row" style="line-height: 4.2">
-		<form name="checkinout" class ="form" novalidate>
-			<div class="col-sm-2 col-md-2 text-center">
-				<label>Check In </label>
-			</div>
-			<div class="col-sm-3 col-md-3 text-center"
-					 style="border-right: 1px solid rgba(34, 36, 38, .15);">
-				<div class="ui icon input">
-					<i class="calendar icon"></i> <input type="text" name ="checkIn" required
-														 class="datepicker form-control" id="checkindate" readonly
-														 data-ng-model="checkInOutDetails.checkInTimestamp"
-														 placeholder="Checkin Date ...">
-				</div>
-			</div>
-			<div class="col-sm-2 col-md-2 text-center">
-				<label>Check Out </label>
-			</div>
-			<div class="col-sm-3 col-md-3 text-center">
-				<div class="ui icon input">
-					<i class="calendar icon"></i> <input type="text" name ="checkOut" required
-														 class="datepicker form-control" id="checkoutdate" readonly
-														 data-ng-model="checkInOutDetails.checkOutTimestamp"
-														 placeholder="Checkout Date ...">
-				</div>
-			</div>
-			<div class="col-sm-2 col-md-2 text-center">
-				<button class="png ui basic blue button" ng-click="searchRoomsByDate()" data-ng-disabled="checkinout.$invalid">
-					<i class="icon search"></i> Search Rooms
-				</button>
-			</div>
-		</form>
-	</div>
-	<div class="ui divider"></div>
+     ng-show="bookingStage === BOOKING_NAV_CONSTANTS.SELECT_DATE">
+  <div class = "row text-center">
+    <h4 class="ui block header">
+      {{bookingDetails.selectedProperty.name}} <i class="fa fa-map-marker"></i>
+      {{bookingDetails.selectedProperty.location}}
+    </h4>
+  </div>
+  <div class="row" style="line-height: 4.2">
+    <form name="checkinout" class ="form" novalidate>
+      <div class="col-sm-2 col-md-2 text-center">
+        <label>Check In </label>
+      </div>
+      <div class="col-sm-3 col-md-3 text-center">
+        <div class="ui icon input">
+          <i class="calendar icon"></i> <input type="text" name ="checkIn" required
+                                               class="datepicker form-control" id="checkindate" readonly
+                                               data-ng-model="checkInOutDetails.checkInTimestamp"
+                                               placeholder="Checkin Date ...">
+        </div>
+      </div>
+      <div class="col-sm-2 col-md-2 text-center">
+        <label>Check Out </label>
+      </div>
+      <div class="col-sm-3 col-md-3 text-center">
+        <div class="ui icon input">
+          <i class="calendar icon"></i> <input type="text" name ="checkOut" required
+                                               class="datepicker form-control" id="checkoutdate" readonly
+                                               data-ng-model="checkInOutDetails.checkOutTimestamp"
+                                               placeholder="Checkout Date ...">
+        </div>
+      </div>
+      <div class="col-sm-2 col-md-2 text-center">
+        <button class="png ui basic blue button" ng-click="searchRoomsByDate()" data-ng-disabled="checkinout.$invalid">
+          <i class="icon search"></i> Search Rooms
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="ui divider"></div>
 </div>
 <!--  rooms selection STEP2-->
 <div class="container" style="padding-top: 100px;"
      data-ng-if="bookingStage === BOOKING_NAV_CONSTANTS.SELECT_ROOM">
-    <div class="row" style="line-height: 4.2">
-        <div class="col-sm-2 col-md-2 text-center" style="border-right: 1px solid rgba(34, 36, 38, .15);">
-            <button class="png ui basic blue button" ng-click="movePrev()">
-                <i class="left chevron icon"></i> Change Dates
-            </button>
-        </div>
-        <div class="col-sm-3 col-md-3 text-center">
-            <i class = "checked calendar icon"></i> Check In
-            <div class = "ui label green">{{checkInOutDetails.checkInTimestamp}}</div>
-        </div>
-        <div class="col-sm-2 col-md-2 text-center">
-            <i class = "moon blue icon"></i>{{checkInOutDetails.nights}}
-        </div>
-        <div class="col-sm-3 col-md-3 text-center">
-            <i class = "checked calendar icon"></i> Check Out
-            <div class = "ui label green">{{checkInOutDetails.checkOutTimestamp}}</div>
-        </div>
-        <div class="col-sm-2 col-md-2 text-center" style="border-left: 1px solid rgba(34, 36, 38, .15);">
-            <button data-ng-disabled = "!enableMoveToGuestInfo()"
-                    class="png ui basic blue button" ng-click="showGuestConfirmation()">
-                <i class="right chevron icon"></i> Next
-            </button>
-        </div>
+  <div class = "row text-center">
+    <h4 class="ui block header">
+      {{bookingDetails.selectedProperty.name}} <i class="fa fa-map-marker"></i>
+      {{bookingDetails.selectedProperty.location}}
+    </h4>
+  </div>
+  <div class="row" style="line-height: 4.2">
+    <div class="col-sm-2 col-md-2 text-center" style="border-right: 1px solid rgba(34, 36, 38, .15);">
+      <button class="png ui basic blue button" ng-click="movePrev()">
+        <i class="left chevron icon"></i> Change Dates
+      </button>
     </div>
-    <div class="ui divider"></div>
+    <div class="col-sm-3 col-md-3 text-center">
+      <i class = "checked calendar icon"></i> Check In
+      <div class = "ui label green">{{checkInOutDetails.checkInTimestamp}}</div>
+    </div>
+    <div class="col-sm-2 col-md-2 text-center">
+      <i class = "moon blue icon"></i>{{checkInOutDetails.nights}}
+    </div>
+    <div class="col-sm-3 col-md-3 text-center">
+      <i class = "checked calendar icon"></i> Check Out
+      <div class = "ui label green">{{checkInOutDetails.checkOutTimestamp}}</div>
+    </div>
+    <div class="col-sm-2 col-md-2 text-center" style="border-left: 1px solid rgba(34, 36, 38, .15);">
+      <button data-ng-disabled = "!enableMoveToSelectMealPlan()"
+              class="png ui basic blue button" ng-click="showGuestConfirmation()">
+        <i class="right chevron icon"></i> Next
+      </button>
+    </div>
+  </div>
+  <div class="ui divider"></div>
 </div>
-<!--  guest info STEP3-->
+<!--  meal plan STEP3-->
 <div class="container" style="padding-top: 100px;"
-		 data-ng-if="bookingStage === BOOKING_NAV_CONSTANTS.SHOW_GUEST_INFO">
-	<div class="row" style="line-height: 4.2">
-		<div class="col-sm-2 col-md-2 text-center" style="border-right: 1px solid rgba(34, 36, 38, .15);">
-			<button class="png ui basic blue button" ng-click="movePrev()">
-				<i class="left chevron icon"></i> Room Details
-			</button>
-		</div>
-		<div class="col-sm-3 col-md-3 text-center">
-			<i class = "checked calendar icon"></i> Check In
-			<div class = "ui label green">{{checkInOutDetails.checkInTimestamp}}</div>
-		</div>
-		<div class="col-sm-2 col-md-2 text-center">
-			<i class = "moon blue icon"></i>{{checkInOutDetails.nights}}
-		</div>
-		<div class="col-sm-3 col-md-3 text-center">
-			<i class = "checked calendar icon"></i> Check Out
-			<div class = "ui label green">{{checkInOutDetails.checkOutTimestamp}}</div>
-		</div>
-		<div class="col-sm-2 col-md-2 text-center" style="border-left: 1px solid rgba(34, 36, 38, .15);">
-			<button data-ng-disabled = "!enableMoveToGuestInfo()"
-                    class="png ui basic blue button" ng-click="showGuestConfirmation()">
-				<i class="right chevron icon"></i> Next
-			</button>
-		</div>
-	</div>
-    <div class="row" style="line-height: 4.2">
-        <div class="col-sm-2 col-md-2 text-center" style="border-right: 1px solid rgba(34, 36, 38, .15);">
-            Property Details Selected
-        </div>
-        <div class="col-sm-3 col-md-3 text-center">
-            <i class = "checked calendar icon"></i> Check In
-            <div class = "ui label green">Room Details Selected</div>
-        </div>
-        <div class="col-sm-2 col-md-2 text-center">
-            <i class = "moon blue icon"></i>Some More Details
-        </div>
-        <div class="col-sm-3 col-md-3 text-center">
-            <i class = "checked calendar icon"></i> Check Out
-            <div class = "ui label green">Some Other Details</div>
-        </div>
-        <div class="col-sm-2 col-md-2 text-center" style="border-left: 1px solid rgba(34, 36, 38, .15);">
-            <button data-ng-disabled = "!enableMoveToGuestInfo()"
-                    class="png ui basic blue button" ng-click="showGuestConfirmation()">
-                <i class="right chevron icon"></i> Next
-            </button>
-        </div>
+     data-ng-if="bookingStage === BOOKING_NAV_CONSTANTS.SELECT_MEAL_PLAN">
+  <div class = "row text-center">
+    <h4 class="ui block header">
+      {{bookingDetails.selectedProperty.name}} <i class="fa fa-map-marker"></i>
+      {{bookingDetails.selectedProperty.location}}
+    </h4>
+  </div>
+  <div class="row" style="line-height: 4.2">
+    <div class="col-sm-2 col-md-2 text-center" style="border-right: 1px solid rgba(34, 36, 38, .15);">
+      <button class="png ui basic blue button" ng-click="movePrev()">
+        <i class="left chevron icon"></i> Room Details
+      </button>
     </div>
-	<div class="ui divider"></div>
+    <div class="col-sm-3 col-md-3 text-center">
+      <i class = "checked calendar icon"></i> Check In
+      <div class = "ui label green">{{checkInOutDetails.checkInTimestamp}}</div>
+    </div>
+    <div class="col-sm-2 col-md-2 text-center">
+      <i class = "moon blue icon"></i>{{checkInOutDetails.nights}}
+    </div>
+    <div class="col-sm-3 col-md-3 text-center">
+      <i class = "checked calendar icon"></i> Check Out
+      <div class = "ui label green">{{checkInOutDetails.checkOutTimestamp}}</div>
+    </div>
+    <div class="col-sm-2 col-md-2 text-center" style="border-left: 1px solid rgba(34, 36, 38, .15);">
+      <button data-ng-disabled = "!enableMoveToGuestInfo()"
+              class="png ui basic blue button" ng-click="showGuestConfirmation()">
+        <i class="right chevron icon"></i> Next
+      </button>
+    </div>
+  </div>
+  <div class="ui divider"></div>
 </div>
 <!--   rooms display -->
-	<div class="container" data-ng-if = "(availableRoomTypes | json)!='{}' &&
+<div class="container" data-ng-if = "(availableRoomTypes | json)!='{}' &&
 	bookingStage===BOOKING_NAV_CONSTANTS.SELECT_ROOM">
-		<div class = "ui stackable grid padded">
-			<div class = "sixteen wide column">
-				<div class="png ui divided items">
-					<div class="item" data-ng-repeat="room_type in availableRoomTypes">
-						<div class="png-room ui fluid image crop">
-							<div class="ui blue ribbon label">
-								<i class="hotel icon"></i> {{room_type.typeName}}
-							</div>
-							<img src={{room_type.roomTypeImages.COVER.imgPath}}>
-						</div>
-						<div class="content">
-							<a class="header">{{room_type.typeName}}</a>
-							<div class="meta">
-								<span class="price-per-day">Starting from {{room_type.basePrice}} per day</span>
-							</div>
-							<div class="description">
-								<p>{{room_type.description}}
-								</p>
-							</div>
-							<div class="extra">
-								<div data-ng-if="room_type.facilities.wifi" class="feature-icon" data-tooltip="Free WIFI">
-									<span><i class="wi-fi icon green" data-ng-class = "{'disabled':!room_type.facilities.wifi}"></i>Wifi</span>
-								</div>
-								<div data-ng-if="room_type.facilities.breakfast" class="feature-icon" data-tooltip="Free Breakfast">
-									<span><i class="food icon green" data-ng-class = "{'disabled':!room_type.facilities.breakfast}"></i>Breakfast</span>
-								</div>
-								<div data-ng-if="room_type.facilities.parking" class="feature-icon" data-tooltip="Free Parking">
-									<span><i class="car icon green" data-ng-class = "{'disabled':!room_type.facilities.parking}"></i>Parking</span>
-								</div>
-								<div data-ng-if="room_type.facilities.restaurant" class="feature-icon" data-tooltip="Restaurant">
-									<span><i class="food icon green" data-ng-class = "{'disabled':!room_type.facilities.restaurant}"></i>Restaurant</span>
-								</div>
-								<span class="ui right floated">Price per night
+  <div class = "ui stackable grid padded">
+    <div class = "sixteen wide column">
+      <div class="png ui divided items">
+        <div class="item" data-ng-repeat="room_type in availableRoomTypes">
+          <div class="png-room ui fluid image crop">
+            <div class="ui blue ribbon label">
+              <i class="hotel icon"></i> {{room_type.typeName}}
+            </div>
+            <img src={{room_type.roomTypeImages.COVER.imgPath}}>
+          </div>
+          <div class="content">
+            <a class="header">{{room_type.typeName}}</a>
+            <div class="meta">
+              <span class="price-per-day">Starting from {{room_type.basePrice}} per day</span>
+            </div>
+            <div class="description">
+              <p>{{room_type.description}}
+              </p>
+            </div>
+            <div class="extra">
+              <div data-ng-if="room_type.facilities.wifi" class="feature-icon" data-tooltip="Free WIFI">
+                <span><i class="wi-fi icon green" data-ng-class = "{'disabled':!room_type.facilities.wifi}"></i>Wifi</span>
+              </div>
+              <div data-ng-if="room_type.facilities.breakfast" class="feature-icon" data-tooltip="Free Breakfast">
+                <span><i class="food icon green" data-ng-class = "{'disabled':!room_type.facilities.breakfast}"></i>Breakfast</span>
+              </div>
+              <div data-ng-if="room_type.facilities.parking" class="feature-icon" data-tooltip="Free Parking">
+                <span><i class="car icon green" data-ng-class = "{'disabled':!room_type.facilities.parking}"></i>Parking</span>
+              </div>
+              <div data-ng-if="room_type.facilities.restaurant" class="feature-icon" data-tooltip="Restaurant">
+                <span><i class="food icon green" data-ng-class = "{'disabled':!room_type.facilities.restaurant}"></i>Restaurant</span>
+              </div>
+              <span class="ui right floated">Price per night
 									<a class="ui blue tag label">{{room_type.basePrice}}</a>
 								</span>
-							</div>
-							<div data-ng-if ="room_type.availableCount>0" class="extra">
-								<div class="ui label">
-                                    Rooms Available
-                                    <div class="detail">{{room_type.availableCount}}</div>
-                                </div>
-								<div data-ng-show = "room_type.selectedCount>0" class = "ui label green">
-                                    <i class="hotel icon"></i>Room Selected
-                                    <div class = "detail">{{room_type.selectedCount}}</div>
-								</div>
-                                <div class="ui right floated basic blue icon buttons">
-                                    <button ng-class="{disabled:room_type.selectedCount==0||
+            </div>
+            <div data-ng-if ="room_type.availableCount>0" class="extra">
+              Room Availability Details
+              <div class="ui label">
+                Rooms Available
+                <div class="detail">{{room_type.availableCount}}</div>
+              </div>
+              <div data-ng-show = "room_type.selectedCount>0" class = "ui label green">
+                <i class="hotel icon"></i>Room Selected
+                <div class = "detail">{{room_type.selectedCount}}</div>
+              </div>
+              <div class="ui right floated basic blue icon buttons">
+                <button ng-class="{disabled:room_type.selectedCount==0||
                                                         room_type.selectedCount==undefined}"
-                                            class="ui button basic blue" ng-click="removeRoomsByIndex($index)"
-                                            data-tooltip="Remove a room">
-                                        <i class="minus icon"></i>
-                                    </button>
-                                    <button ng-class="{disabled:room_type.selectedCount==room_type.availableCount}"
-                                            class="ui button basic blue" ng-click="addRoomsByIndex($index)"
-                                            data-tooltip="Add a room">
-                                        <i class="add icon"></i>
-                                    </button>
-                                </div>
-							</div>
-                            <div data-ng-if ="room_type.availableCount<1" class="extra">
-                                Sold Out
-                            </div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-    <div class="container"
-         data-ng-if = "bookingStage==BOOKING_NAV_CONSTANTS.SELECT_ROOM">
-
+                        class="ui button basic blue" ng-click="removeRoomsByIndex($index)"
+                        data-tooltip="Remove a room">
+                  <i class="minus icon"></i>
+                </button>
+                <button ng-class="{disabled:room_type.selectedCount==room_type.availableCount}"
+                        class="ui button basic blue" ng-click="addRoomsByIndex($index)"
+                        data-tooltip="Add a room">
+                  <i class="add icon"></i>
+                </button>
+              </div>
+            </div>
+            <div data-ng-if ="room_type.availableCount<1" class="extra">
+              Sold Out
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+<div class="container"
+     data-ng-if = "bookingStage==BOOKING_NAV_CONSTANTS.SELECT_MEAL_PLAN">
+{{bookingDetails.selectedRooms.selectedCount}}
+</div>
 </body>
 </html>

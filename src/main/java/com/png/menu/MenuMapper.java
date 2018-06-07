@@ -2,9 +2,11 @@ package com.png.menu;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.png.data.entity.Role;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -15,7 +17,7 @@ public class MenuMapper {
         Collection<Menu> menuUnedited;
         Collection<Menu> menuEdited = new ArrayList<Menu>();
         Set <String> actualRoles = new HashSet<>();
-        File jsonFile = new File("src/main/resources/menu.json");
+        File jsonFile = new ClassPathResource("menu.json").getFile();
         ObjectMapper mapper = new ObjectMapper();
         MenuList menuList = mapper.readValue(jsonFile,MenuList.class);
         System.out.println(mapper.writeValueAsString(menuList));
