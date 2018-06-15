@@ -86,6 +86,38 @@ INSERT INTO room_type (property_id_property,type_name,base_price, discount, max_
 VALUES ((select id_property from property where name='Property EFGH'),
         'Executive',3500,0,2,1,'A super cozy pampered stay for you away from home, that is sure to make a long lasting mark when you look back at this trip years later',
         now(),now(),1);
+        
+/*Item Type Data*/
+/* denotes if item is of the following types 
+ * - REGULARITEM
+ * - MEALPLANITEM 
+ * - TRNSPORTITEM
+ * - FOCITEM
+ * - COUPONNITEM*/
+INSERT INTO item_type (item_type_code,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("MEALPLANITEM", "This is a meal plan type item",now(),now(),1);
+INSERT INTO item_type (item_type_code,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("REGULARITEM", "This is a regular type item",now(),now(),1);
+INSERT INTO item_type (item_type_code,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("TRNSPORTITEM", "This is a transport type item",now(),now(),1);
+INSERT INTO item_type (item_type_code,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("FOCITEM", "This is a free of cost type item",now(),now(),1);
+INSERT INTO item_type (item_type_code,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("COUPONNITEM", "This is a coupon type item",now(),now(),1);
+
+/*Item Price and Item Data - start*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (2500,now(),now(),1);
+
+
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='MEALPLANITEM'), 
+last_insert_id(), "Deluxe Room - EP",now(),now(),1);
+/*Item Price and Item Data - end*/
+
+/*Meal Plan Data*/
+/*INSERT INTO meal_plan (meal_plan_code, room_type_id,)
+VALUES () */
 
 /*Room Type Facility data*/
 /*Deluxe*/

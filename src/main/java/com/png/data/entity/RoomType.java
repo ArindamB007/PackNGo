@@ -43,6 +43,9 @@ public class RoomType extends BaseEntity {
     
     @OneToMany (mappedBy = "roomTypeId")
     private Set<RoomTypeImage> roomTypeImages;
+    
+    @OneToMany (mappedBy = "roomTypeId")
+    private Set<MealPlan> mealPlans;
 
     @ManyToOne (fetch = FetchType.LAZY, optional = false)
     @PrimaryKeyJoinColumn
@@ -111,8 +114,16 @@ public class RoomType extends BaseEntity {
     public void setRoomTypeImages(Set<RoomTypeImage> roomTypeImages) {
         this.roomTypeImages = roomTypeImages;
     }
+    public Set<MealPlan> getMealPlans() {
+		return mealPlans;
+	}
 
+	public void setMealPlans(Set<MealPlan> mealPlans) {
+		this.mealPlans = mealPlans;
+	}    
+    
     public Property getProperty() { return property; }
 
     public void setProperty(Property property) { this.property = property;}
+
 }
