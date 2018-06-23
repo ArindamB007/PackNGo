@@ -6,6 +6,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -27,9 +28,10 @@ public class MealPlan extends BaseEntity {
 	@Column (name="room_type_id")
     private Long roomTypeId;
 	
-	@OneToOne (fetch = FetchType.LAZY, optional = false)
-    @PrimaryKeyJoinColumn
-    private Item item;
+	@OneToOne
+	@JoinColumn (name = "item_id")
+	private Item item;
+	
 	
 	@Column(name="description")
     private String description;

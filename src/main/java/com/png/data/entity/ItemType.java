@@ -15,7 +15,7 @@ public class ItemType extends BaseEntity {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_item_type")
-    private Long idItemPrice;
+    private Long idItemType;
 	
 	@Column (name="item_type_code", nullable = false)
     @NotEmpty
@@ -25,12 +25,12 @@ public class ItemType extends BaseEntity {
     @NotEmpty
     private String description;
 
-	public Long getIdItemPrice() {
-		return idItemPrice;
+	public Long getIdItemType() {
+		return idItemType;
 	}
 
-	public void setIdItemPrice(Long idItemPrice) {
-		this.idItemPrice = idItemPrice;
+	public void setIdItemType(Long idItemType) {
+		this.idItemType = idItemType;
 	}
 
 	public String getItemTypeCode() {
@@ -48,5 +48,5 @@ public class ItemType extends BaseEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 }

@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -45,7 +46,7 @@ public class RoomType extends BaseEntity {
     private Set<RoomTypeImage> roomTypeImages;
     
     @OneToMany (mappedBy = "roomTypeId")
-    private Set<MealPlan> mealPlans;
+    private List<MealPlan> mealPlans;
 
     @ManyToOne (fetch = FetchType.LAZY, optional = false)
     @PrimaryKeyJoinColumn
@@ -113,17 +114,18 @@ public class RoomType extends BaseEntity {
 
     public void setRoomTypeImages(Set<RoomTypeImage> roomTypeImages) {
         this.roomTypeImages = roomTypeImages;
-    }
-    public Set<MealPlan> getMealPlans() {
-		return mealPlans;
-	}
-
-	public void setMealPlans(Set<MealPlan> mealPlans) {
-		this.mealPlans = mealPlans;
-	}    
+    }   
     
     public Property getProperty() { return property; }
 
     public void setProperty(Property property) { this.property = property;}
+
+	public List<MealPlan> getMealPlans() {
+		return mealPlans;
+	}
+
+	public void setMealPlans(List<MealPlan> mealPlans) {
+		this.mealPlans = mealPlans;
+	}
 
 }

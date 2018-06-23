@@ -2,6 +2,7 @@ package com.png.data.dto.availableroomtype;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 import com.png.data.dto.roomtypeimage.RoomTypeImageDto;
@@ -27,6 +28,8 @@ public class AvailableRoomTypeDto {
 	    private HashMap<String,Boolean> facilities;
 
 	    private HashMap<String,RoomTypeImageDto> roomTypeImages;
+	    
+	    private List<MealPlanDto> mealPlans;
 
 		public Long getIdRoomType() {
 			return idRoomType;
@@ -107,6 +110,15 @@ public class AvailableRoomTypeDto {
 		public void setFacilities(HashMap<String, Boolean> facilities) {
 			this.facilities = facilities;
 		}
+
+		public List<MealPlanDto> getMealPlans() {
+			return mealPlans;
+		}
+
+		public void setMealPlans(List<MealPlanDto> mealPlans) {
+			this.mealPlans = mealPlans;
+		}
+
 		
 		
 	    

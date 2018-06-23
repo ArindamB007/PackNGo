@@ -23,6 +23,9 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
 
     @Autowired
     private RoomTypeImageRepository roomTypeImageRepository;
+    
+    @Autowired
+    private MealPlanRepository mealPlanRepository;
 
     @Override
     public List<AvailableRoomType> getAvailableRoomTypeWithCount(Timestamp checkInTimestamp,Timestamp checkOutTimestamp,
@@ -96,6 +99,7 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
                     new HashSet<>(roomTypeImageRepository.findByRoomTypeId(availableRoomType.getIdRoomType())));
             availableRoomType.setFacilities(
                     new HashSet<>(getRoomTypeFacilitiesByIdRoomType(availableRoomType.getIdRoomType())));
+            availableRoomType.setMealPlans(mealPlanRepository.findByRoomTypeId(availableRoomType.getIdRoomType()));
             availableRoomTypeList.add(availableRoomType);
         });
         return availableRoomTypeList;

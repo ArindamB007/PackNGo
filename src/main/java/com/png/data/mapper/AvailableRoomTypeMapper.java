@@ -31,6 +31,8 @@ public interface AvailableRoomTypeMapper {
 		availableRoomTypeDto.setFacilities(
 				FacilitiesMapper.INSTANCE.FacilitiesToFacilitiesDto(
 						availableRoomType.getFacilities()).getFacilitiesMap());
+		availableRoomTypeDto.setMealPlans(MealPlanMapper.INSTANCE.MealPlansToMealPlanDtos(
+				availableRoomType.getMealPlans()));
 		return availableRoomTypeDto;
 	}
 
