@@ -7,7 +7,6 @@
 	<artifactId>PackNGo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-
 	<name>PackNGo</name>
 	<description>Startup Project for PackNGo</description>
 
@@ -34,6 +33,7 @@
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-devtools</artifactId>
 	        <optional>true</optional>
+	        <scope>runtime</scope>
     	</dependency>
     	<dependency>
             <groupId>org.springframework</groupId>

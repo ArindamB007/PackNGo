@@ -196,27 +196,27 @@ INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_f
 VALUES (3200,now(),now(),1);
 INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_item_type from item_type where item_type_code='MEALPLANITEM'), 
-last_insert_id(), "Super Deluxe Room - CP",now(),now(),1);
+last_insert_id(), "Suite Room - CP",now(),now(),1);
 INSERT INTO meal_plan (meal_plan_code, room_type_id, item_id,description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ("CP",(select id_room_type from room_type where type_name='Super Deluxe'), last_insert_id(),
+VALUES ("CP",(select id_room_type from room_type where type_name='Suite'), last_insert_id(),
 "Accomodation with complementary breakfast",now(),now(),1);
 
 INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
 VALUES (3900,now(),now(),1);
 INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_item_type from item_type where item_type_code='MEALPLANITEM'), 
-last_insert_id(), "Super Deluxe Room - MAP",now(),now(),1);
+last_insert_id(), "Suite Room - MAP",now(),now(),1);
 INSERT INTO meal_plan (meal_plan_code, room_type_id, item_id,description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ("MAP",(select id_room_type from room_type where type_name='Super Deluxe'), last_insert_id(),
+VALUES ("MAP",(select id_room_type from room_type where type_name='Suite'), last_insert_id(),
 "Accomodation with complementary breakfast and one meal (Lunch or Dinner)",now(),now(),1);
 
 INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
 VALUES (4800,now(),now(),1);
 INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_item_type from item_type where item_type_code='MEALPLANITEM'), 
-last_insert_id(), "Super Deluxe Room - AP",now(),now(),1);
+last_insert_id(), "Suite Room - AP",now(),now(),1);
 INSERT INTO meal_plan (meal_plan_code, room_type_id, item_id,description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ("AP",(select id_room_type from room_type where type_name='Super Deluxe'), last_insert_id(),
+VALUES ("AP",(select id_room_type from room_type where type_name='Suite'), last_insert_id(),
 "Accomodation with complementary breakfast and all meals",now(),now(),1);
 
 /*Item Price, Item and Mealplan data - end*/
@@ -317,25 +317,25 @@ VALUES ('12',now(),now(),1, (select id_room_type from room_type where type_name=
 
 /*--------- Inserting Test Data---------*/
 INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
-    VALUES ('2018-01-10 11:00:00.0','2018-01-12 10:00:00.0',now(),now(),1);
+    VALUES ('2018-07-02 11:00:00.0','2018-07-06 10:00:00.0',now(),now(),1);
 
 INSERT INTO bookings_rooms(id_booking,id_room)
     VALUES (1,10);
     
 INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
-    VALUES ('2018-01-10 11:00:00.0','2018-01-12 10:00:00.0',now(),now(),1);
+    VALUES ('2018-07-02 11:00:00.0','2018-07-06 10:00:00.0',now(),now(),1);
 
 INSERT INTO bookings_rooms(id_booking,id_room)
     VALUES (2,5);
 
 INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
-    VALUES ('2018-01-10 11:00:00.0','2018-01-12 10:00:00.0',now(),now(),1);
+    VALUES ('2018-07-02 11:00:00.0','2018-07-06 10:00:00.0',now(),now(),1);
 
 INSERT INTO bookings_rooms(id_booking,id_room)
     VALUES (3,9);
 
 INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
-    VALUES ('2018-01-10 11:00:00.0','2018-01-12 10:00:00.0',now(),now(),1);
+    VALUES ('2018-07-02 11:00:00.0','2018-07-06 10:00:00.0',now(),now(),1);
 
 INSERT INTO bookings_rooms(id_booking,id_room)
     VALUES (4,4);
