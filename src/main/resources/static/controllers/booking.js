@@ -11,9 +11,6 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
 	/* Booking navigation control logic */
 	$scope.bookingStage = $scope.BOOKING_NAV_CONSTANTS.SELECT_DATE;
 	$scope.moveNext = function(){
-		$('.ui.dropdown')
-		  .dropdown()
-		;
 		switch ($scope.bookingStage){
 		case $scope.BOOKING_NAV_CONSTANTS.SELECT_DATE :
 			$scope.checkInOutDetails.nights =

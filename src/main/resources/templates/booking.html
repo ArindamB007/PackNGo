@@ -247,39 +247,13 @@
 					<h4 class="ui dividing header">Customize your room selection</h4>
 					<div class="field">
 						<label>State</label>
-						<div class="ui selection dropdown">
-							<input type="hidden" name="gender"> <i
-								class="dropdown icon"></i>
-							<div class="default text">Gender</div>
-							<div class="menu">
-								<div class="item" data-value="male" data-text="Male">
-									<i class="male icon"></i> Male
-								</div>
-								<div class="item" data-value="female" data-text="Female">
-									<i class="female icon"></i> Female
-								</div>
-							</div>
-						</div>
+            <select class="ui dropdown" dropdown>
+              <option value="">Gender</option>
+              <option value="1">Male</option>
+              <option value="0">Female</option>
+            </select>
 					</div>
 				</form>
-				<div class="input-group">
-					<span class="input-group-addon"> <i class="material-icons">restaurant_menu</i>
-					</span>
-					<div class="mui-form-group is-empty">
-						Select Meal Plan <select
-							data-ng-model="selectedRoomType.selectedMealPlan"
-							data-ng-options="mealPlan.description for mealPlan in selectedRoomType.mealPlans"
-							class="mui-form-control">
-						</select> <span class="material-input"></span>
-					</div>
-					<div class="png-input-error">
-						<div ng-show="loginForm.$submitted"
-							ng-messages="loginForm.email.$error" role="alert">
-							<span ng-show=loginForm.email.$error.required>Enter email
-								used to sign up</span>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
