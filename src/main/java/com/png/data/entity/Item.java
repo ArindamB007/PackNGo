@@ -30,7 +30,7 @@ public class Item extends BaseEntity {
 	@JoinColumn (name = "item_price_id")
     private ItemPrice itemPrice;
 	
-	@Column (name="description", nullable = false)
+	@Column (name="description", nullable = false, unique = true)
     @NotEmpty
     private String description;
 

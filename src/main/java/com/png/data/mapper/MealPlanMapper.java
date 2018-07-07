@@ -7,6 +7,7 @@ import org.mapstruct.factory.Mappers;
 
 import com.png.data.dto.availableroomtype.MealPlanDto;
 import com.png.data.entity.MealPlan;
+import com.png.data.entity.ItemType;
 
 @Mapper
 public interface MealPlanMapper {
@@ -16,16 +17,28 @@ public interface MealPlanMapper {
 		if (mealPlan == null) {
 			return null;
 		}
-	MealPlanDto mealPlanDto = new MealPlanDto();
-	mealPlanDto.setIdMealPlan(mealPlan.getIdMealPlan());
-	mealPlanDto.setMealPlanCode(mealPlan.getMealPlanCode());
-	mealPlanDto.setDescription(mealPlan.getDescription());
-	mealPlanDto.setItem(ItemMapper.INSTANCE.ItemToItemDto(mealPlan.getItem()));
-	mealPlanDto.setCreatedTimestamp(mealPlan.getCreatedTimestamp());
-	mealPlanDto.setUpdatedTimestamp(mealPlan.getUpdatedTimestamp());
-	mealPlanDto.setDeletedFlag(mealPlan.getDeletedFlag());
-	mealPlanDto.setEnabledFlag(mealPlan.getEnabledFlag());
-	return mealPlanDto;
+		MealPlanDto mealPlanDto = new MealPlanDto();
+		mealPlanDto.setIdMealPlan(mealPlan.getIdMealPlan());
+		mealPlanDto.setMealPlanCode(mealPlan.getMealPlanCode());
+		mealPlanDto.setDescription(mealPlan.getDescription());
+		mealPlan.getItems().forEach(item->{
+			switch(ItemType.ItemTypeCodes.valueOf(item.getItemType().getItemTypeCode())) {
+			case MEALPLANITEM:
+				mealPlanDto.setMealPlanItem(ItemMapper.INSTANCE.ItemToItemDto(item));
+				break;
+			case EXTRABEDADULT:
+				mealPlanDto.setAdultExtraBedItem(ItemMapper.INSTANCE.ItemToItemDto(item));
+				break;
+			case EXTRABEDCHILD:
+				mealPlanDto.setChildExtraBedItem(ItemMapper.INSTANCE.ItemToItemDto(item));
+				break;
+			}
+		});
+		mealPlanDto.setCreatedTimestamp(mealPlan.getCreatedTimestamp());
+		mealPlanDto.setUpdatedTimestamp(mealPlan.getUpdatedTimestamp());
+		mealPlanDto.setDeletedFlag(mealPlan.getDeletedFlag());
+		mealPlanDto.setEnabledFlag(mealPlan.getEnabledFlag());
+		return mealPlanDto;
 	}
 
 }

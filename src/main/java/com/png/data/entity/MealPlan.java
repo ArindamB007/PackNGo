@@ -1,14 +1,16 @@
 package com.png.data.entity;
 
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -28,12 +30,11 @@ public class MealPlan extends BaseEntity {
 	@Column (name="room_type_id")
     private Long roomTypeId;
 	
-	@OneToOne
-	@JoinColumn (name = "item_id")
-	private Item item;
+	@OneToMany
+	@JoinTable(name = "meal_plan_items", joinColumns = @JoinColumn(name = "id_meal_plan"), inverseJoinColumns = @JoinColumn(name = "id_item"))
+	private List<Item> items;
 	
-	
-	@Column(name="description")
+	@Column(name="description", nullable = false)
     private String description;
 
 	public Long getIdMealPlan() {
@@ -60,14 +61,6 @@ public class MealPlan extends BaseEntity {
 		this.roomTypeId = roomTypeId;
 	}
 
-	public Item getItem() {
-		return item;
-	}
-
-	public void setItem(Item item) {
-		this.item = item;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -75,6 +68,15 @@ public class MealPlan extends BaseEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
+
 	
 	
 }

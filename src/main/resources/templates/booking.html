@@ -228,7 +228,7 @@
 									<h3>INR
 										{{selectedRoomType.selectedMealPlan.item.itemPrice.basePrice}}</h3>
 								</div>
-								<label><h3>X</h3></label>
+								<label><i class="fa fa-times"></i></label>
 								<div class="field">
 									<h3>{{selectedRoomType.selectedCount}}</h3>
 								</div>
@@ -236,22 +236,45 @@
 							<div class="inline fields">
 								<label>Your meal plan selection:</label>
 								<div class="field">
-									{{selectedRoomType.selectedMealPlan.description}}</div>
+									{{selectedRoomType.selectedMealPlan.mealPlanCode}}</div>
 							</div>
 						</div>
 					</div>
 					<div class="three wide column">3000</div>
 				</div>
-				<div class="ui divider"></div>
+				<div class="ui grid">
+					<div class = "four wide column">
+						<label>Select to change your meal plan</label>
+					</div>
+					<div class = "six wide column">
+						<select
+								class="ui selection fluid dropdown"
+								data-ng-model="selectedRoomType.selectedMealPlan"
+								data-ng-options="mealPlan.description for mealPlan in selectedRoomType.mealPlans"
+								dropdown='description'>
+							</select>
+					</div>
+				
+				</div>
+				
 				<form class="ui form">
 					<h4 class="ui dividing header">Customize your room selection</h4>
-					<div class="field">
-						<label>State</label>
-            <select class="ui dropdown" dropdown>
-              <option value="">Gender</option>
-              <option value="1">Male</option>
-              <option value="0">Female</option>
-            </select>
+					<div class ="fields">
+						<div class="eight wide field">
+							<label>Select to change your meal plan</label> <select
+								class="ui fluid dropdown"
+								data-ng-model="selectedRoomType.selectedMealPlan"
+								data-ng-options="mealPlan.description for mealPlan in selectedRoomType.mealPlans"
+								dropdown='description'>
+							</select>
+						</div>
+						<div class="eight wide field">
+							<label>Extra Adult</label> <select class="ui fluid dropdown"
+								data-ng-model="selectedRoomType.selectedMealPlan"
+								data-ng-options="mealPlan.description for mealPlan in selectedRoomType.mealPlans"
+								dropdown='description'>
+							</select>
+						</div>
 					</div>
 				</form>
 			</div>

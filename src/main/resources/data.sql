@@ -90,12 +90,18 @@ VALUES ((select id_property from property where name='Property EFGH'),
 /*Item Type Data*/
 /* denotes if item is of the following types 
  * - REGULARITEM
- * - MEALPLANITEM 
+ * - MEALPLANITEM
+ * - EXTRABEDADULT
+ * - EXTRABEDCHILD 
  * - TRNSPORTITEM
  * - FOCITEM
  * - COUPONNITEM*/
 INSERT INTO item_type (item_type_code,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ("MEALPLANITEM", "This is a meal plan type item",now(),now(),1);
+INSERT INTO item_type (item_type_code,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("EXTRABEDADULT", "This is an adult extra bed type item",now(),now(),1);
+INSERT INTO item_type (item_type_code,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("EXTRABEDCHILD", "This is a child extra bed type item",now(),now(),1);
 INSERT INTO item_type (item_type_code,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ("REGULARITEM", "This is a regular type item",now(),now(),1);
 INSERT INTO item_type (item_type_code,description,created_timestamp,updated_timestamp,enabled_flag)
@@ -105,119 +111,633 @@ VALUES ("FOCITEM", "This is a free of cost type item",now(),now(),1);
 INSERT INTO item_type (item_type_code,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ("COUPONNITEM", "This is a coupon type item",now(),now(),1);
 
-/*Item Price, Item and Mealplan data - start*/
+/*Item Price, Item (Meal Plan & Xtra Bed) and Mealplan data - start*/
 
-/*Deluxe*/
+/*Deluxe EP*/
+
+/*Meal Plan Item Price and Item*/
 INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
 VALUES (2500,now(),now(),1);
 INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_item_type from item_type where item_type_code='MEALPLANITEM'), 
 last_insert_id(), "Deluxe Room - EP",now(),now(),1);
-INSERT INTO meal_plan (meal_plan_code, room_type_id, item_id,description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ("EP",(select id_room_type from room_type where type_name='Deluxe'), last_insert_id(),
+
+/*Adult Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (700,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDADULT'), 
+last_insert_id(), "Deluxe Extra Bed Adult - EP",now(),now(),1);
+
+/*Child Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (500,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDCHILD'), 
+last_insert_id(), "Deluxe Extra Bed CHILD - EP",now(),now(),1);
+
+
+/*Insert meal plan and link items*/
+INSERT INTO meal_plan (meal_plan_code, room_type_id, description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("EP",(select id_room_type from room_type where type_name='Deluxe'), 
 "Accomodation only",now(),now(),1);
 
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "EP"
+				AND room_type.type_name= 'Deluxe'),
+		(SELECT id_item from item where description = 'Deluxe Room - EP'));
 
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "EP"
+				AND room_type.type_name='Deluxe'),
+		(SELECT id_item from item where description = 'Deluxe Extra Bed Adult - EP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "EP"
+				AND room_type.type_name='Deluxe'),
+		(SELECT id_item from item where description = 'Deluxe Extra Bed CHILD - EP'));
+		
+		
+/*Deluxe CP*/
+/*Meal Plan Item Price and Item*/
 INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
 VALUES (2800,now(),now(),1);
 INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_item_type from item_type where item_type_code='MEALPLANITEM'), 
 last_insert_id(), "Deluxe Room - CP",now(),now(),1);
-INSERT INTO meal_plan (meal_plan_code, room_type_id, item_id,description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ("CP",(select id_room_type from room_type where type_name='Deluxe'), last_insert_id(),
-"Accomodation with complementary breakfast",now(),now(),1);
 
+/*Adult Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (800,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDADULT'), 
+last_insert_id(), "Deluxe Extra Bed Adult - CP",now(),now(),1);
+
+/*Child Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (600,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDCHILD'), 
+last_insert_id(), "Deluxe Extra Bed Child - CP",now(),now(),1);
+
+/*Insert meal plan and link items*/
+INSERT INTO meal_plan (meal_plan_code, room_type_id, description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("CP",(select id_room_type from room_type where type_name='Deluxe'),
+"Accomodation with complimentary breakfast",now(),now(),1);
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "CP"
+				AND room_type.type_name='Deluxe'),
+		(SELECT id_item from item where description = 'Deluxe Room - CP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "CP"
+				AND room_type.type_name='Deluxe'),
+		(SELECT id_item from item where description = 'Deluxe Extra Bed Adult - CP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "CP"
+				AND room_type.type_name='Deluxe'),
+		(SELECT id_item from item where description = 'Deluxe Extra Bed Child - CP'));
+
+
+
+/*Deluxe MAP*/
+/*Meal Plan Item Price and Item*/
 INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
 VALUES (3500,now(),now(),1);
 INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_item_type from item_type where item_type_code='MEALPLANITEM'), 
 last_insert_id(), "Deluxe Room - MAP",now(),now(),1);
-INSERT INTO meal_plan (meal_plan_code, room_type_id, item_id,description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ("MAP",(select id_room_type from room_type where type_name='Deluxe'), last_insert_id(),
-"Accomodation with complementary breakfast and one meal (Lunch or Dinner)",now(),now(),1);
 
+/*Adult Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (900,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDADULT'), 
+last_insert_id(), "Deluxe Extra Bed Adult - MAP",now(),now(),1);
+
+/*Child Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (700,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDCHILD'), 
+last_insert_id(), "Deluxe Extra Bed Child - MAP",now(),now(),1);
+
+
+/*Insert meal plan and link items*/
+INSERT INTO meal_plan (meal_plan_code, room_type_id,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("MAP",(select id_room_type from room_type where type_name='Deluxe'),
+"Accomodation with complimentary breakfast and one meal (Lunch or Dinner)",now(),now(),1);
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "MAP"
+				AND room_type.type_name='Deluxe'),
+		(SELECT id_item from item where description = 'Deluxe Room - MAP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "MAP"
+				AND room_type.type_name='Deluxe'),
+		(SELECT id_item from item where description = 'Deluxe Extra Bed Adult - MAP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type 
+				AND meal_plan.meal_plan_code = "MAP"
+				AND room_type.type_name='Deluxe'),
+		(SELECT id_item from item where description = 'Deluxe Extra Bed Child - MAP'));
+
+
+/*Deluxe AP*/
+/*Meal Plan Item Price and Item*/
 INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
 VALUES (4400,now(),now(),1);
 INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_item_type from item_type where item_type_code='MEALPLANITEM'), 
 last_insert_id(), "Deluxe Room - AP",now(),now(),1);
-INSERT INTO meal_plan (meal_plan_code, room_type_id, item_id,description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ("AP",(select id_room_type from room_type where type_name='Deluxe'), last_insert_id(),
-"Accomodation with complementary breakfast and all meals",now(),now(),1);
 
-/*Super Deluxe*/
+/*Adult Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (1000,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDADULT'), 
+last_insert_id(), "Deluxe Extra Bed Adult - AP",now(),now(),1);
+
+/*Child Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (800,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDCHILD'), 
+last_insert_id(), "Deluxe Extra Bed Child - AP",now(),now(),1);
+
+/*Insert meal plan and link items*/
+INSERT INTO meal_plan (meal_plan_code, room_type_id, description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("AP",(select id_room_type from room_type where type_name='Deluxe'),
+"Accomodation with complimentary breakfast and all meals",now(),now(),1);
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "AP"
+				AND room_type.type_name='Deluxe'),
+		(SELECT id_item from item where description = 'Deluxe Room - AP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "AP"
+				AND room_type.type_name='Deluxe'),
+		(SELECT id_item from item where description = 'Deluxe Extra Bed Adult - AP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "AP"
+				AND room_type.type_name='Deluxe'),
+		(SELECT id_item from item where description = 'Deluxe Extra Bed Child - AP'));
+
+
+/*Super Deluxe EP*/
+
+/*Meal Plan Item Price and Item*/
 INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
 VALUES (2700,now(),now(),1);
 INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_item_type from item_type where item_type_code='MEALPLANITEM'), 
 last_insert_id(), "Super Deluxe Room - EP",now(),now(),1);
-INSERT INTO meal_plan (meal_plan_code, room_type_id, item_id,description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ("EP",(select id_room_type from room_type where type_name='Super Deluxe'), last_insert_id(),
+
+/*Adult Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (800,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDADULT'), 
+last_insert_id(), "Super Deluxe Extra Bed Adult - EP",now(),now(),1);
+
+/*Child Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (600,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDCHILD'), 
+last_insert_id(), "Super Deluxe Extra Bed Child - EP",now(),now(),1);
+
+
+/*Insert meal plan and link items*/
+INSERT INTO meal_plan (meal_plan_code, room_type_id, description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("EP",(select id_room_type from room_type where type_name='Super Deluxe'), 
 "Accomodation only",now(),now(),1);
 
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "EP"
+				AND room_type.type_name='Super Deluxe'),
+		(SELECT id_item from item where description = 'Super Deluxe Room - EP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "EP"
+				AND room_type.type_name='Super Deluxe'),
+		(SELECT id_item from item where description = 'Super Deluxe Extra Bed Adult - EP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "EP"
+				AND room_type.type_name='Super Deluxe'),
+		(SELECT id_item from item where description = 'Super Deluxe Extra Bed Child - EP'));
+
+/*Super Deluxe CP*/
+/*Meal Plan Item Price and Item*/
 INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
 VALUES (3000,now(),now(),1);
 INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_item_type from item_type where item_type_code='MEALPLANITEM'), 
 last_insert_id(), "Super Deluxe Room - CP",now(),now(),1);
-INSERT INTO meal_plan (meal_plan_code, room_type_id, item_id,description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ("CP",(select id_room_type from room_type where type_name='Super Deluxe'), last_insert_id(),
-"Accomodation with complementary breakfast",now(),now(),1);
 
+/*Adult Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (900,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDADULT'), 
+last_insert_id(), "Super Deluxe Extra Bed Adult - CP",now(),now(),1);
+
+/*Child Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (700,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDCHILD'), 
+last_insert_id(), "Super Deluxe Extra Bed Child - CP",now(),now(),1);
+
+/*Insert meal plan and link items*/
+INSERT INTO meal_plan (meal_plan_code, room_type_id, description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("CP",(select id_room_type from room_type where type_name='Super Deluxe'),
+"Accomodation with complimentary breakfast",now(),now(),1);
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "CP"
+				AND room_type.type_name='Super Deluxe'),
+		(SELECT id_item from item where description = 'Super Deluxe Room - CP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "CP"
+				AND room_type.type_name='Super Deluxe'),
+		(SELECT id_item from item where description = 'Super Deluxe Extra Bed Adult - CP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "CP"
+				AND room_type.type_name='Super Deluxe'),
+		(SELECT id_item from item where description = 'Super Deluxe Extra Bed Child - CP'));
+
+
+/*Super Deluxe MAP*/
+/*Meal Plan Item Price and Item*/
 INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
 VALUES (3700,now(),now(),1);
 INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_item_type from item_type where item_type_code='MEALPLANITEM'), 
 last_insert_id(), "Super Deluxe Room - MAP",now(),now(),1);
-INSERT INTO meal_plan (meal_plan_code, room_type_id, item_id,description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ("MAP",(select id_room_type from room_type where type_name='Super Deluxe'), last_insert_id(),
-"Accomodation with complementary breakfast and one meal (Lunch or Dinner)",now(),now(),1);
 
+/*Adult Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (1000,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDADULT'), 
+last_insert_id(), "Super Deluxe Extra Bed Adult - MAP",now(),now(),1);
+
+/*Child Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (800,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDCHILD'), 
+last_insert_id(), "Super Deluxe Extra Bed Child - MAP",now(),now(),1);
+
+/*Insert meal plan and link items*/
+INSERT INTO meal_plan (meal_plan_code, room_type_id, description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("MAP",(select id_room_type from room_type where type_name='Super Deluxe'),
+"Accomodation with complimentary breakfast and one meal (Lunch or Dinner)",now(),now(),1);
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "MAP"
+				AND room_type.type_name='Super Deluxe'),
+		(SELECT id_item from item where description = 'Super Deluxe Room - MAP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "MAP"
+				AND room_type.type_name='Super Deluxe'),
+		(SELECT id_item from item where description = 'Super Deluxe Extra Bed Adult - MAP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "MAP"
+				AND room_type.type_name='Super Deluxe'),
+		(SELECT id_item from item where description = 'Super Deluxe Extra Bed Child - MAP'));
+
+
+/*Super Deluxe AP*/
+/*Meal Plan Item Price and Item*/
 INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
 VALUES (4600,now(),now(),1);
 INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_item_type from item_type where item_type_code='MEALPLANITEM'), 
 last_insert_id(), "Super Deluxe Room - AP",now(),now(),1);
-INSERT INTO meal_plan (meal_plan_code, room_type_id, item_id,description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ("AP",(select id_room_type from room_type where type_name='Super Deluxe'), last_insert_id(),
-"Accomodation with complementary breakfast and all meals",now(),now(),1);
 
-/*Suite*/
+/*Adult Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (1100,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDADULT'), 
+last_insert_id(), "Super Deluxe Extra Bed Adult - AP",now(),now(),1);
+
+/*Child Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (900,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDCHILD'), 
+last_insert_id(), "Super Deluxe Extra Bed Child - AP",now(),now(),1);
+
+
+/*Insert meal plan and link items*/
+INSERT INTO meal_plan (meal_plan_code, room_type_id, description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("AP",(select id_room_type from room_type where type_name='Super Deluxe'),
+"Accomodation with complimentary breakfast and all meals",now(),now(),1);
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "AP"
+				AND room_type.type_name='Super Deluxe'),
+		(SELECT id_item from item where description = 'Super Deluxe Room - AP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "AP"
+				AND room_type.type_name='Super Deluxe'),
+		(SELECT id_item from item where description = 'Super Deluxe Extra Bed Adult - AP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "AP"
+				AND room_type.type_name='Super Deluxe'),
+		(SELECT id_item from item where description = 'Super Deluxe Extra Bed Child - AP'));
+
+
+/*Suite EP*/
+/*Meal Plan Item Price and Item*/
 INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
 VALUES (2900,now(),now(),1);
 INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_item_type from item_type where item_type_code='MEALPLANITEM'), 
 last_insert_id(), "Suite Room - EP",now(),now(),1);
-INSERT INTO meal_plan (meal_plan_code, room_type_id, item_id,description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ("EP",(select id_room_type from room_type where type_name='Suite'), last_insert_id(),
+
+/*Adult Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (1200,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDADULT'), 
+last_insert_id(), "Suite Extra Bed Adult - EP",now(),now(),1);
+
+/*Child Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (1000,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDCHILD'), 
+last_insert_id(), "Suite Extra Bed Child - EP",now(),now(),1);
+
+/*Insert meal plan and link items*/
+INSERT INTO meal_plan (meal_plan_code, room_type_id, description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("EP",(select id_room_type from room_type where type_name='Suite'),
 "Accomodation only",now(),now(),1);
 
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "EP"
+				AND room_type.type_name='Suite'),
+		(SELECT id_item from item where description = 'Suite Room - EP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "EP"
+				AND room_type.type_name='Suite'),
+		(SELECT id_item from item where description = 'Suite Extra Bed Adult - EP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "EP"
+				AND room_type.type_name='Suite'),
+		(SELECT id_item from item where description = 'Suite Extra Bed Child - EP'));
+
+/*Suite CP*/
+/*Meal Plan Item Price and Item*/
 INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
 VALUES (3200,now(),now(),1);
 INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_item_type from item_type where item_type_code='MEALPLANITEM'), 
 last_insert_id(), "Suite Room - CP",now(),now(),1);
-INSERT INTO meal_plan (meal_plan_code, room_type_id, item_id,description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ("CP",(select id_room_type from room_type where type_name='Suite'), last_insert_id(),
-"Accomodation with complementary breakfast",now(),now(),1);
 
+/*Adult Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (1300,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDADULT'), 
+last_insert_id(), "Suite Extra Bed Adult - CP",now(),now(),1);
+
+/*Child Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (1100,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDCHILD'), 
+last_insert_id(), "Suite Extra Bed Child - CP",now(),now(),1);
+
+/*Insert meal plan and link items*/
+INSERT INTO meal_plan (meal_plan_code, room_type_id, description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("CP",(select id_room_type from room_type where type_name='Suite'),
+"Accomodation with complimentary breakfast",now(),now(),1);
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "CP"
+				AND room_type.type_name='Suite'),
+		(SELECT id_item from item where description = 'Suite Room - CP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "CP"
+				AND room_type.type_name='Suite'),
+		(SELECT id_item from item where description = 'Suite Extra Bed Adult - CP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "CP"
+				AND room_type.type_name='Suite'),
+		(SELECT id_item from item where description = 'Suite Extra Bed Child - CP'));
+
+/*Suite MAP*/
+/*Meal Plan Item Price and Item*/
 INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
 VALUES (3900,now(),now(),1);
 INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_item_type from item_type where item_type_code='MEALPLANITEM'), 
 last_insert_id(), "Suite Room - MAP",now(),now(),1);
-INSERT INTO meal_plan (meal_plan_code, room_type_id, item_id,description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ("MAP",(select id_room_type from room_type where type_name='Suite'), last_insert_id(),
-"Accomodation with complementary breakfast and one meal (Lunch or Dinner)",now(),now(),1);
 
+/*Adult Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (1400,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDADULT'), 
+last_insert_id(), "Suite Extra Bed Adult - MAP",now(),now(),1);
+
+/*Child Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (1200,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDCHILD'), 
+last_insert_id(), "Suite Extra Bed Child - MAP",now(),now(),1);
+
+/*Insert meal plan and link items*/
+INSERT INTO meal_plan (meal_plan_code, room_type_id, description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("MAP",(select id_room_type from room_type where type_name='Suite'),
+"Accomodation with complimentary breakfast and one meal (Lunch or Dinner)",now(),now(),1);
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "MAP"
+				AND room_type.type_name='Suite'),
+		(SELECT id_item from item where description = 'Suite Room - MAP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "MAP"
+				AND room_type.type_name='Suite'),
+		(SELECT id_item from item where description = 'Suite Extra Bed Adult - MAP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "MAP"
+				AND room_type.type_name='Suite'),
+		(SELECT id_item from item where description = 'Suite Extra Bed Child - MAP'));
+
+/*Suite AP*/
+/*Meal Plan Item Price and Item*/
 INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
 VALUES (4800,now(),now(),1);
 INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_item_type from item_type where item_type_code='MEALPLANITEM'), 
 last_insert_id(), "Suite Room - AP",now(),now(),1);
-INSERT INTO meal_plan (meal_plan_code, room_type_id, item_id,description,created_timestamp,updated_timestamp,enabled_flag)
-VALUES ("AP",(select id_room_type from room_type where type_name='Suite'), last_insert_id(),
-"Accomodation with complementary breakfast and all meals",now(),now(),1);
+
+/*Adult Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (1500,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDADULT'), 
+last_insert_id(), "Suite Extra Bed Adult - AP",now(),now(),1);
+
+/*Child Extra Bed Price and Item*/
+INSERT INTO item_price (base_price,created_timestamp,updated_timestamp,enabled_flag)
+VALUES (1300,now(),now(),1);
+INSERT INTO item (item_type_id_item_type, item_price_id ,description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code='EXTRABEDCHILD'), 
+last_insert_id(), "Suite Extra Bed Child - AP",now(),now(),1);
+
+/*Insert meal plan and link items*/
+INSERT INTO meal_plan (meal_plan_code, room_type_id, description,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("AP",(select id_room_type from room_type where type_name='Suite'),
+"Accomodation with complimentary breakfast and all meals",now(),now(),1);
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "AP"
+				AND room_type.type_name='Suite'),
+		(SELECT id_item from item where description = 'Suite Room - AP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "AP"
+				AND room_type.type_name='Suite'),
+		(SELECT id_item from item where description = 'Suite Extra Bed Adult - AP'));
+
+INSERT INTO meal_plan_items (id_meal_plan,id_item)
+VALUES ((SELECT id_meal_plan from meal_plan 
+			INNER JOIN room_type
+				ON meal_plan.room_type_id = room_type.id_room_type
+				AND meal_plan.meal_plan_code = "AP"
+				AND room_type.type_name='Suite'),
+		(SELECT id_item from item where description = 'Suite Extra Bed Child - AP'));
 
 /*Item Price, Item and Mealplan data - end*/
 

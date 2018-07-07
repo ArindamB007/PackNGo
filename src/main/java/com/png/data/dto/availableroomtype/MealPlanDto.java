@@ -7,7 +7,10 @@ public class MealPlanDto extends BaseEntityDto{
 	private Long idMealPlan;
 	private String mealPlanCode;
 	private String description;
-	private ItemDto item;
+	private ItemDto mealPlanItem;
+	private ItemDto adultExtraBedItem;
+	private ItemDto childExtraBedItem;
+	
 	public Long getIdMealPlan() {
 		return idMealPlan;
 	}
@@ -26,11 +29,22 @@ public class MealPlanDto extends BaseEntityDto{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public ItemDto getItem() {
-		return item;
+	public ItemDto getMealPlanItem() {
+		return mealPlanItem;
 	}
-	public void setItem(ItemDto item) {
-		this.item = item;
+	public void setMealPlanItem(ItemDto mealPlanItem) {
+		this.mealPlanItem = mealPlanItem;
 	}
-	
+	public ItemDto getAdultExtraBedItem() {
+		return adultExtraBedItem;
+	}
+	public void setAdultExtraBedItem(ItemDto adultExtraBedItem) {
+		this.adultExtraBedItem = adultExtraBedItem;
+	}
+	public ItemDto getChildExtraBedItem() {
+		return childExtraBedItem;
+	}
+	public void setChildExtraBedItem(ItemDto childExtraBedItem) {
+		this.childExtraBedItem = childExtraBedItem;
+	}
 }

@@ -4,10 +4,8 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
 	$scope.availableRoomTypes = {}; // available rooms
 	$scope.checkInOutDetails = {}; // selected check in out dates
 	$scope.bookingDetails = {}; // selected booking details
-	$scope.bookingDetails.selectedProperty = PropertyService.getSelectedProperty();// assigning
-	// the
-	// selected
-	// property
+	/*assigning the selected property*/
+	$scope.bookingDetails.selectedProperty = PropertyService.getSelectedProperty();
 	/* Booking navigation control logic */
 	$scope.bookingStage = $scope.BOOKING_NAV_CONSTANTS.SELECT_DATE;
 	$scope.moveNext = function(){
@@ -65,7 +63,7 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
 	$scope.sortMealPlansByPriceAsc = function (){
 		$scope.availableRoomTypes.map(function(roomType){
 			roomType.mealPlans.sort(function(mp1,mp2){
-				return  mp1.item.itemPrice.basePrice - mp2.item.itemPrice.basePrice;
+				return  mp1.mealPlanItem.itemPrice.basePrice - mp2.mealPlanItem.itemPrice.basePrice;
 			})
 		});
 	};

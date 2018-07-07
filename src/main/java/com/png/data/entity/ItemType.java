@@ -17,6 +17,13 @@ public class ItemType extends BaseEntity {
     @Column(name = "id_item_type")
     private Long idItemType;
 	
+	/*public enum ItemTypeCodes {REGULARITEM , MEALPLANITEM,
+		EXTRABEDADULT, EXTRABEDCHILD, TRANSPORTITEM,
+		FOCITEM, COUPONNITEM}*/
+	
+	public enum ItemTypeCodes {MEALPLANITEM,
+		EXTRABEDADULT, EXTRABEDCHILD}
+	
 	@Column (name="item_type_code", nullable = false)
     @NotEmpty
     private String itemTypeCode;
