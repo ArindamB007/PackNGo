@@ -8696,3 +8696,38 @@ a.scroll_arrow_down i {
   vertical-align: middle;
   width: 31%;
   background-color: transparent; }
+
+/*customization for booking*/
+.ui.header.png-detailed-header {
+  display: flex;
+  padding-right: 1em; }
+
+.png-detailed-header > .png-header-label {
+  color: #665c5c;
+  padding-left: 1.5em;
+  padding-right: 0.5em;
+  display: flex;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 0.85em;
+  font-weight: bold;
+  line-height: 1.6em;
+  text-transform: none; }
+
+.png-detailed-header > .png-header-value {
+  color: #ef4500;
+  padding-right: 0.5em;
+  display: flex;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 0.85em;
+  line-height: 1.6em;
+  text-transform: none; }
+
+.item > .content > .description {
+  margin-bottom: 1.0em; }
+
+.ui.divider.list-end {
+  margin: 0.0em; }
+
+.ui.grid > .booking-line-item {
+  line-height: 2.0;
+  font-size: 1.2em; }

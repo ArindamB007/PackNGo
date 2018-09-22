@@ -34,7 +34,16 @@ public class RoomType extends BaseEntity {
 
     @Column (name="max_child_occupancy",nullable = false)
     private Integer maxChildOccupancy;
+    
+    @Column (name="max_extra_adult_occupancy",nullable = false)
+    private Integer maxExtraAdultOccupancy;
 
+    @Column (name="max_extra_child_occupancy",nullable = false)
+    private Integer maxExtraChildOccupancy;
+
+    @Column (name="max_total_occupancy",nullable = false)
+    private Integer maxTotalOccupancy;
+    
     @Column(name="description")
     private String description;
 
@@ -126,6 +135,30 @@ public class RoomType extends BaseEntity {
 
 	public void setMealPlans(List<MealPlan> mealPlans) {
 		this.mealPlans = mealPlans;
+	}
+
+	public Integer getMaxExtraAdultOccupancy() {
+		return maxExtraAdultOccupancy;
+	}
+
+	public void setMaxExtraAdultOccupancy(Integer maxExtraAdultOccupancy) {
+		this.maxExtraAdultOccupancy = maxExtraAdultOccupancy;
+	}
+
+	public Integer getMaxExtraChildOccupancy() {
+		return maxExtraChildOccupancy;
+	}
+
+	public void setMaxExtraChildOccupancy(Integer maxExtraChildOccupancy) {
+		this.maxExtraChildOccupancy = maxExtraChildOccupancy;
+	}
+
+	public Integer getMaxTotalOccupancy() {
+		return maxTotalOccupancy;
+	}
+
+	public void setMaxTotalOccupancy(Integer maxTotalOccupancy) {
+		this.maxTotalOccupancy = maxTotalOccupancy;
 	}
 
 }

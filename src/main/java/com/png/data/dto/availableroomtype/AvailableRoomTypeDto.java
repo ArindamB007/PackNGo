@@ -23,6 +23,12 @@ public class AvailableRoomTypeDto {
 
 	    private Integer maxChildOccupancy;
 
+	    private List<Integer> maxExtraAdultOccupancy;
+
+	    private List<Integer> maxExtraChildOccupancy;
+	    
+	    private Integer maxTotalOccupancy;
+	    
 	    private String description;
 
 	    private HashMap<String,Boolean> facilities;
@@ -117,6 +123,31 @@ public class AvailableRoomTypeDto {
 
 		public void setMealPlans(List<MealPlanDto> mealPlans) {
 			this.mealPlans = mealPlans;
+		}
+
+		
+		public Integer getMaxTotalOccupancy() {
+			return maxTotalOccupancy;
+		}
+
+		public void setMaxTotalOccupancy(Integer maxTotalOccupancy) {
+			this.maxTotalOccupancy = maxTotalOccupancy;
+		}
+
+		public List<Integer> getMaxExtraAdultOccupancy() {
+			return maxExtraAdultOccupancy;
+		}
+
+		public void setMaxExtraAdultOccupancy(List<Integer> maxExtraAdultOccupancy) {
+			this.maxExtraAdultOccupancy = maxExtraAdultOccupancy;
+		}
+
+		public List<Integer> getMaxExtraChildOccupancy() {
+			return maxExtraChildOccupancy;
+		}
+
+		public void setMaxExtraChildOccupancy(List<Integer> maxExtraChildOccupancy) {
+			this.maxExtraChildOccupancy = maxExtraChildOccupancy;
 		}
 
 		

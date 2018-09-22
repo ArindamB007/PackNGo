@@ -1,6 +1,7 @@
 PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,CommonService,PropertyService){
 	$scope.BOOKING_NAV_CONSTANTS = CONSTANTS.BOOKING_NAV; // booking nav constants
 	// in scope variable
+	$scope.currency = "INR ";
 	$scope.availableRoomTypes = {}; // available rooms
 	$scope.checkInOutDetails = {}; // selected check in out dates
 	$scope.bookingDetails = {}; // selected booking details
@@ -20,9 +21,12 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
 			$scope.bookingStage = $scope.BOOKING_NAV_CONSTANTS.SELECT_ROOM;
 			break;
 		case $scope.BOOKING_NAV_CONSTANTS.SELECT_ROOM :
+			if (!$scope.enableMoveToSelectMealPlan())
+				return;
 			$scope.bookingDetails.selectedRoomTypes = $scope.getSelectedRoomType($scope.availableRoomTypes);
 			$scope.bookingStage = $scope.BOOKING_NAV_CONSTANTS.SELECT_MEAL_PLAN;
 			$scope.bookingDetails.selectedRoomTypes = $scope.setDefaultMealPlan($scope.bookingDetails.selectedRoomTypes);
+			$scope.calculateGrandTotal();
 			console.log($scope.bookingDetails);
 			break;
 		case $scope.BOOKING_NAV_CONSTANTS.SELECT_MEAL_PLAN :
@@ -67,14 +71,34 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
 			})
 		});
 	};
-
+	//setting default meal plan, extra occupancy count
 	$scope.setDefaultMealPlan = function(selectedRoomTypes){
 		selectedRoomTypes.map(function(roomType){
+			roomType.selectedExtraAdultCount = roomType.maxExtraAdultOccupancy[0];
+			roomType.selectedExtraChildCount = roomType.maxExtraChildOccupancy[0];
 			roomType.selectedMealPlan = roomType.mealPlans[0];
+			if (parseInt(roomType.maxAdultOccupancy) > 1)
+				roomType.maxAdultOccupancyText = roomType.maxAdultOccupancy + " Adults"
+			else
+				roomType.maxAdultOccupancyText = roomType.maxAdultOccupancy + " Adult"
+			if (parseInt(roomType.maxChildOccupancy) > 1)
+				roomType.maxChildOccupancyText = roomType.maxChildOccupancy + " Children"
+			else
+				roomType.maxChildOccupancyText = roomType.maxChildOccupancy + " Child"
 			return roomType;
 		});
 		return selectedRoomTypes;
 	};
+	//calculating the grand total of the items selected
+	$scope.calculateGrandTotal = function(){
+		var roomSubTotal = 0;
+		$scope.bookingDetails.selectedRoomTypes.map(function(selectedRoomType){
+			roomSubTotal = roomSubTotal + (selectedRoomType.selectedMealPlan.mealPlanItem.itemPrice.basePrice * selectedRoomType.selectedCount +
+								selectedRoomType.selectedMealPlan.adultExtraBedItem.itemPrice.basePrice * selectedRoomType.selectedExtraAdultCount +
+								selectedRoomType.selectedMealPlan.childExtraBedItem.itemPrice.basePrice * selectedRoomType.selectedExtraChildCount);
+		})
+		$scope.bookingDetails.grandTotal = roomSubTotal * $scope.checkInOutDetails.nights
+	}
 
 	/* Guest Confirmation Screen */
 	$scope.showGuestConfirmation = function() {
@@ -119,12 +143,10 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
 	};
 	/* allow movenext to guest info */
 	$scope.enableMoveToGuestInfo = function(){
-		/*
-		 * if ($scope.availableRoomTypes.length>0) { for (var i = 0, len =
-		 * $scope.availableRoomTypes.length; i < len; i++) { if
-		 * ($scope.availableRoomTypes[i].selectedCount > 0) return true; } }
-		 */
-		return false;
+		/*if ($scope.bookingDetails.selectedRoomTypes.length>0) {
+			$scope.bookingDetails.selectedRoomTypes
+		}*/
+		return true;
 	};
 
 	/* get rooms selected */

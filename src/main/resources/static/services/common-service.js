@@ -1,4 +1,4 @@
-PackNGo.factory('CommonService',function(ModalService) {
+PackNGo.factory('CommonService',function(ModalService,CONSTANTS) {
   return{
       handleDefaultErrorResponse : function(modalSize,modalTitle,response,modalButtonsList) {
     	  var modalInstance = undefined;
@@ -7,11 +7,17 @@ PackNGo.factory('CommonService',function(ModalService) {
     				  response.data.message,modalButtonsList);
     	  else if (response.status === 404)
     		  modalInstance = ModalService.showModal(modalSize,modalTitle,response.data[0].message, modalButtonsList);
-    	   modalInstance.result.then(function (response) {
+    	  else if (response.status === CONSTANTS.RESPONSE_CODES.REQUEST_IN_PROGRESS)
+    		  {
+	    		  modalInstance = ModalService.showModal(modalSize,modalTitle,response.data[0].message, modalButtonsList);
+	    		  alert("Duplicate Request");
+    		  }
+    		  
+    	  /* modalInstance.result.then(function (response) {
     		        //need to put the focus on the element
     		      }, function (response) {
     		        //need to put the focus on the element
-    		      });
+    		      });*/
         },
     getNightsFromCheckInOut : function(checkOutDateString, checkInDateString) {
         var checkOutDate = Date.parse(checkOutDateString);

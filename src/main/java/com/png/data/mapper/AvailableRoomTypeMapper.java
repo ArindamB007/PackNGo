@@ -1,5 +1,6 @@
 package com.png.data.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -22,6 +23,9 @@ public interface AvailableRoomTypeMapper {
 		availableRoomTypeDto.setTypeName(availableRoomType.getTypeName());
 		availableRoomTypeDto.setMaxAdultOccupancy(availableRoomType.getMaxAdultOccupancy());
 		availableRoomTypeDto.setMaxChildOccupancy(availableRoomType.getMaxChildOccupancy());
+		availableRoomTypeDto.setMaxExtraAdultOccupancy(availableRoomType.getExtraOccupancyList(availableRoomType.getMaxExtraAdultOccupancy()));
+		availableRoomTypeDto.setMaxExtraChildOccupancy(availableRoomType.getExtraOccupancyList(availableRoomType.getMaxExtraChildOccupancy()));
+		availableRoomTypeDto.setMaxTotalOccupancy(availableRoomType.getMaxTotalOccupancy());
 		availableRoomTypeDto.setDiscount(availableRoomType.getDiscount());
 		availableRoomTypeDto.setDescription(availableRoomType.getDescription());
 		availableRoomTypeDto.setAvailableCount(availableRoomType.getAvailableCount());

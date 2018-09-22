@@ -1,4 +1,5 @@
-PackNGo.factory('PropertyService',function($rootScope,$q,$http,$log,SelectedProperty) {
+PackNGo.factory('PropertyService',function($rootScope,$q,$http,$log,SelectedProperty,
+		LocalStorageService) {
   return{
         getProperties : function() {
           var deferred = $q.defer();
@@ -13,10 +14,12 @@ PackNGo.factory('PropertyService',function($rootScope,$q,$http,$log,SelectedProp
           return deferred.promise;
         },
         getSelectedProperty: function () {
-            return SelectedProperty.value;
+            //return SelectedProperty.value;
+        	return LocalStorageService.getLocalStore('SelectedProperty');
         },
         setSelectedProperty: function (property) {
-            SelectedProperty.value = property;
+        	LocalStorageService.setLocalStore('SelectedProperty',property)
+            //SelectedProperty.value = property;
         }
       };
 });

@@ -70,21 +70,21 @@ VALUES ((select id_property from property where name='Property EFGH'),
         (select id_facility from facility where name='Restaurant'));
 
 /*Room Type Data with property*/
-INSERT INTO room_type (property_id_property,type_name,base_price, discount, max_adult_occupancy, max_child_occupancy, description,created_timestamp,updated_timestamp,enabled_flag)
+INSERT INTO room_type (property_id_property,type_name,base_price, discount, max_adult_occupancy, max_child_occupancy, max_extra_adult_occupancy, max_extra_child_occupancy, max_total_occupancy, description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_property from property where name='Property XYZ'),
-        'Deluxe',2500,0,2,1,'Our Deluxe rooms offers unique combination of value and comfort. It comes at great pricing while offering all the basic amenities that will make you feel at home',
+        'Deluxe',2500,0,2,1,2,2,5,'Our Deluxe rooms offers unique combination of value and comfort. It comes at great pricing while offering all the basic amenities that will make you feel at home',
         now(),now(),1);
-INSERT INTO room_type (property_id_property,type_name,base_price, discount, max_adult_occupancy,max_child_occupancy, description,created_timestamp,updated_timestamp,enabled_flag)
+INSERT INTO room_type (property_id_property,type_name,base_price, discount, max_adult_occupancy,max_child_occupancy, max_extra_adult_occupancy, max_extra_child_occupancy, max_total_occupancy, description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_property from property where name='Property XYZ'),
-        'Super Deluxe',2800,0,2,1,'Super Deluxe rooms take the comfort level much higher. It provided an excellent offering of super comfort and luxury at modest and affordable pricing',
+        'Super Deluxe',2800,0,2,1,2,2,5,'Super Deluxe rooms take the comfort level much higher. It provided an excellent offering of super comfort and luxury at modest and affordable pricing',
         now(),now(),1);
-INSERT INTO room_type (property_id_property,type_name,base_price, discount, max_adult_occupancy, max_child_occupancy, description,created_timestamp,updated_timestamp,enabled_flag)
+INSERT INTO room_type (property_id_property,type_name,base_price, discount, max_adult_occupancy, max_child_occupancy, max_extra_adult_occupancy, max_extra_child_occupancy, max_total_occupancy, description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_property from property where name='Property XYZ'),
-        'Suite',3000,0,2,1,'Our Suite rooms are built to spoil you. A cozy pampered stay for you away from home, that is sure to make a long lasting mark when you look back at this trip years later',
+        'Suite',3000,0,2,1,2,2,5,'Our Suite rooms are built to spoil you. A cozy pampered stay for you away from home, that is sure to make a long lasting mark when you look back at this trip years later',
         now(),now(),1);
-INSERT INTO room_type (property_id_property,type_name,base_price, discount, max_adult_occupancy, max_child_occupancy, description,created_timestamp,updated_timestamp,enabled_flag)
+INSERT INTO room_type (property_id_property,type_name,base_price, discount, max_adult_occupancy, max_child_occupancy, max_extra_adult_occupancy, max_extra_child_occupancy, max_total_occupancy, description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ((select id_property from property where name='Property EFGH'),
-        'Executive',3500,0,2,1,'A super cozy pampered stay for you away from home, that is sure to make a long lasting mark when you look back at this trip years later',
+        'Executive',3500,0,2,1,2,2,5,'A super cozy pampered stay for you away from home, that is sure to make a long lasting mark when you look back at this trip years later',
         now(),now(),1);
         
 /*Item Type Data*/
@@ -837,25 +837,25 @@ VALUES ('12',now(),now(),1, (select id_room_type from room_type where type_name=
 
 /*--------- Inserting Test Data---------*/
 INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
-    VALUES ('2018-07-02 11:00:00.0','2018-07-06 10:00:00.0',now(),now(),1);
+    VALUES ('2018-09-16 11:00:00.0','2018-09-18 11:00:00.0',now(),now(),1);
 
 INSERT INTO bookings_rooms(id_booking,id_room)
     VALUES (1,10);
     
 INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
-    VALUES ('2018-07-02 11:00:00.0','2018-07-06 10:00:00.0',now(),now(),1);
+    VALUES ('2018-09-12 11:00:00.0','2018-09-15 11:00:00.0',now(),now(),1);
 
 INSERT INTO bookings_rooms(id_booking,id_room)
     VALUES (2,5);
 
 INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
-    VALUES ('2018-07-02 11:00:00.0','2018-07-06 10:00:00.0',now(),now(),1);
+    VALUES ('2018-09-12 11:00:00.0','2018-09-15 10:00:00.0',now(),now(),1);
 
 INSERT INTO bookings_rooms(id_booking,id_room)
     VALUES (3,9);
 
 INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
-    VALUES ('2018-07-02 11:00:00.0','2018-07-06 10:00:00.0',now(),now(),1);
+    VALUES ('2018-09-16 11:00:00.0','2018-09-20 11:00:00.0',now(),now(),1);
 
 INSERT INTO bookings_rooms(id_booking,id_room)
     VALUES (4,4);
