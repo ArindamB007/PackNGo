@@ -74,21 +74,34 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
 	//setting default meal plan, extra occupancy count
 	$scope.setDefaultMealPlan = function(selectedRoomTypes){
 		selectedRoomTypes.map(function(roomType){
-			roomType.selectedExtraAdultCount = roomType.maxExtraAdultOccupancy[0];
-			roomType.selectedExtraChildCount = roomType.maxExtraChildOccupancy[0];
+      roomType.maxExtraAdultOccupancyList = getOccupancySelectList(roomType.maxExtraAdultOccupancy*roomType.selectedCount);
+      roomType.maxExtraChildOccupancyList = getOccupancySelectList(roomType.maxExtraChildOccupancy*roomType.selectedCount);
+			roomType.selectedExtraAdultCount = roomType.maxExtraAdultOccupancyList[0];
+			roomType.selectedExtraChildCount = roomType.maxExtraChildOccupancyList[0];
 			roomType.selectedMealPlan = roomType.mealPlans[0];
 			if (parseInt(roomType.maxAdultOccupancy) > 1)
-				roomType.maxAdultOccupancyText = roomType.maxAdultOccupancy + " Adults"
+				roomType.maxAdultOccupancyText = roomType.maxAdultOccupancy + " Adults";
 			else
-				roomType.maxAdultOccupancyText = roomType.maxAdultOccupancy + " Adult"
+				roomType.maxAdultOccupancyText = roomType.maxAdultOccupancy + " Adult";
 			if (parseInt(roomType.maxChildOccupancy) > 1)
-				roomType.maxChildOccupancyText = roomType.maxChildOccupancy + " Children"
+				roomType.maxChildOccupancyText = roomType.maxChildOccupancy + " Children";
 			else
-				roomType.maxChildOccupancyText = roomType.maxChildOccupancy + " Child"
+				roomType.maxChildOccupancyText = roomType.maxChildOccupancy + " Child";
 			return roomType;
 		});
 		return selectedRoomTypes;
 	};
+	//get selection list array from a max number
+	var getOccupancySelectList = function(maxOccupancy){
+	  var selectionList = [];
+	  if (!maxOccupancy){
+	    return ["0"];
+    }
+	  for (i=0;i<=maxOccupancy;i++){
+      selectionList.push(i.toString());
+    }
+    return selectionList;
+  };
 	//calculating the grand total of the items selected
 	$scope.calculateGrandTotal = function(){
 		var roomSubTotal = 0;
@@ -154,9 +167,9 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
 		var selectedRoomTypes = availableRoomTypes.filter(function(roomType){
 			if (roomType.selectedCount>0)
 				return roomType;
-		})
+		});
 		return selectedRoomTypes;
-	}
+	};
 
 
 	/* Date picker control logic */

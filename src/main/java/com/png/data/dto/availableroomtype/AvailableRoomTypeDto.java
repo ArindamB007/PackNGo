@@ -23,9 +23,9 @@ public class AvailableRoomTypeDto {
 
 	    private Integer maxChildOccupancy;
 
-	    private List<Integer> maxExtraAdultOccupancy;
+	    private Integer maxExtraAdultOccupancy;
 
-	    private List<Integer> maxExtraChildOccupancy;
+	    private Integer maxExtraChildOccupancy;
 	    
 	    private Integer maxTotalOccupancy;
 	    
@@ -134,23 +134,19 @@ public class AvailableRoomTypeDto {
 			this.maxTotalOccupancy = maxTotalOccupancy;
 		}
 
-		public List<Integer> getMaxExtraAdultOccupancy() {
+		public Integer getMaxExtraAdultOccupancy() {
 			return maxExtraAdultOccupancy;
 		}
 
-		public void setMaxExtraAdultOccupancy(List<Integer> maxExtraAdultOccupancy) {
+		public void setMaxExtraAdultOccupancy(Integer maxExtraAdultOccupancy) {
 			this.maxExtraAdultOccupancy = maxExtraAdultOccupancy;
 		}
 
-		public List<Integer> getMaxExtraChildOccupancy() {
+		public Integer getMaxExtraChildOccupancy() {
 			return maxExtraChildOccupancy;
 		}
 
-		public void setMaxExtraChildOccupancy(List<Integer> maxExtraChildOccupancy) {
+		public void setMaxExtraChildOccupancy(Integer maxExtraChildOccupancy) {
 			this.maxExtraChildOccupancy = maxExtraChildOccupancy;
 		}
-
-		
-		
-	    
 }

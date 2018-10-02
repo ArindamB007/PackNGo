@@ -23,8 +23,8 @@ public interface AvailableRoomTypeMapper {
 		availableRoomTypeDto.setTypeName(availableRoomType.getTypeName());
 		availableRoomTypeDto.setMaxAdultOccupancy(availableRoomType.getMaxAdultOccupancy());
 		availableRoomTypeDto.setMaxChildOccupancy(availableRoomType.getMaxChildOccupancy());
-		availableRoomTypeDto.setMaxExtraAdultOccupancy(availableRoomType.getExtraOccupancyList(availableRoomType.getMaxExtraAdultOccupancy()));
-		availableRoomTypeDto.setMaxExtraChildOccupancy(availableRoomType.getExtraOccupancyList(availableRoomType.getMaxExtraChildOccupancy()));
+		availableRoomTypeDto.setMaxExtraAdultOccupancy(availableRoomType.getMaxExtraAdultOccupancy());
+		availableRoomTypeDto.setMaxExtraChildOccupancy(availableRoomType.getMaxExtraChildOccupancy());
 		availableRoomTypeDto.setMaxTotalOccupancy(availableRoomType.getMaxTotalOccupancy());
 		availableRoomTypeDto.setDiscount(availableRoomType.getDiscount());
 		availableRoomTypeDto.setDescription(availableRoomType.getDescription());
