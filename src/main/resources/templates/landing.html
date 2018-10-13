@@ -103,31 +103,31 @@
                 </div>
                 <div class="extra">
                   <div data-ng-if="prop.facilities.parking" class="feature-icon" data-tooltip="Free Parking">
-                  	<span><i class="car icon green"></i>Parking</span>
+                  	<span><i class="car icon red"></i>Parking</span>
                   </div>
                   <div data-ng-if="!prop.facilities.parking" class="feature-icon">
-                  	<span><i class="car icon green" data-ng-class = "{'disabled':!prop.facilities.parking}"></i>Parking</span>
+                  	<span><i class="car icon red" data-ng-class = "{'disabled':!prop.facilities.parking}"></i>Parking</span>
                   </div>
                   <div data-ng-if="prop.facilities.wifi" class="feature-icon" data-tooltip="Free WIFI">
-                    <span><i class="wi-fi icon green"></i>Wifi</span>
+                    <span><i class="wi-fi icon red"></i>Wifi</span>
                   </div>
                   <div data-ng-if="!prop.facilities.wifi" class="feature-icon">
-                    <span><i class="wi-fi icon green" data-ng-class = "{'disabled':!prop.facilities.wifi}"></i>Wifi</span>
+                    <span><i class="wi-fi icon red" data-ng-class = "{'disabled':!prop.facilities.wifi}"></i>Wifi</span>
                   </div>
                   <div data-ng-if="prop.facilities.breakfast" class="feature-icon" data-tooltip="Free Breakfast">
-                    <span><i class="food icon green"></i>Breakfast</span>
+                    <span><i class="food icon red"></i>Breakfast</span>
                   </div>
                   <div data-ng-if="!prop.facilities.breakfast" class="feature-icon">
-                    <span><i class="food icon green" data-ng-class = "{'disabled':!prop.facilities.breakfast}"></i>Breakfast</span>
+                    <span><i class="food icon red" data-ng-class = "{'disabled':!prop.facilities.breakfast}"></i>Breakfast</span>
                   </div>
                   <div data-ng-if="prop.facilities.restaurant" class="feature-icon" data-tooltip="Free Breakfast">
-                    <span><i class="food icon green"></i>Restaurant</span>
+                    <span><i class="food icon red"></i>Restaurant</span>
                   </div>
                   <div data-ng-if="!prop.facilities.restaurant" class="feature-icon">
-                    <span><i class="food icon green" data-ng-class = "{'disabled':!prop.facilities.restaurant}"></i>Restaurant</span>
+                    <span><i class="food icon red" data-ng-class = "{'disabled':!prop.facilities.restaurant}"></i>Restaurant</span>
                   </div>
                   <span class="right floated">
-                    <button class="png ui basic blue button" ng-click = "goBooking(prop)"> <i class="icon user"></i> Reserve</button>
+                    <button class="png ui basic red button" ng-click = "goBooking(prop)"> <i class="icon user"></i> Reserve</button>
                   </span>
                 </div>
               </div>
@@ -154,7 +154,7 @@
                   <div class="ui label">IMAX</div>
                   <div class="ui label"><i class="globe icon"></i> Additional Languages</div>
                   <span class="right floated">
-                    <button class="png ui basic blue button"> <i class="icon user"></i> Reserve</button>
+                    <button class="png ui basic red button"> <i class="icon user"></i> Reserve</button>
                   </span>
                 </div>
               </div>
@@ -285,28 +285,28 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-3 col-sm-6">
+          <div class="col-md-3 col-sm-6 landing_tile">
             <div class="card add-animation animation-1">
               <h5 class="text-gray">01.</h5>
               <h3>Quality</h3>
               <p>We set exacting standards and strive for consistency and precision in everything we do. We are committed to continuously improving our capabilities.</p>
             </div>
           </div>
-          <div class="col-md-3 col-sm-6">
+          <div class="col-md-3 col-sm-6 landing_tile">
             <div class="card add-animation animation-2">
               <h5 class="text-gray">02.</h5>
               <h3>Integrity</h3>
               <p>We take individual and collective responsibility for keeping our promises, acting ethically and demonstrating exemplary business conduct at all times because it is the right thing to do.</p>
             </div>
           </div>
-          <div class="col-md-3 col-sm-6">
+          <div class="col-md-3 col-sm-6 landing_tile">
             <div class="card add-animation animation-3">
               <h5 class="text-gray">03.</h5>
               <h3>Attention to details</h3>
               <p>We are dedicated to making every details look amazing. You can count on the fact that no thing slides and everything will look just right. </p>
             </div>
           </div>
-          <div class="col-md-3 col-sm-6">
+          <div class="col-md-3 col-sm-6 landing_tile">
             <div class="card add-animation animation-4">
               <h5 class="text-gray">04.</h5>
               <h3>Safety</h3>
