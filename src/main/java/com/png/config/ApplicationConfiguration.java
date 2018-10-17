@@ -13,4 +13,6 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
     WebSecurityConfig webSecurityConfig;
     @Autowired
     RedisConfiguration redisConfiguration;
+    @Autowired
+    ThymeleafConfiguration thymeleafConfiguration;
 }

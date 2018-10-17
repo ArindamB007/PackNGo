@@ -65,13 +65,13 @@
 		<dependency>
   			<groupId>org.thymeleaf</groupId>
   			<artifactId>thymeleaf</artifactId>
-  			<version>3.0.0.RELEASE</version>
+  			<version>3.0.10.RELEASE</version>
 		</dependency>
 		<dependency>
   			<groupId>org.thymeleaf</groupId>
   			<artifactId>thymeleaf-spring4</artifactId>
-  			<version>3.0.0.RELEASE</version>  
-		</dependency>   
+  			<version>3.0.10.RELEASE</version>
+		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
