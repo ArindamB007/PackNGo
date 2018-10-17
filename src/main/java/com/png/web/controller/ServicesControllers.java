@@ -3,6 +3,8 @@ package com.png.web.controller;
 import com.png.auth.service.SecurityService;
 import com.png.auth.service.UserService;
 import com.png.auth.validator.UserValidator;
+import com.png.comms.email.EmailService;
+import com.png.comms.email.Mail;
 import com.png.data.dto.availableroomtype.AvailableRoomTypeDto;
 import com.png.data.dto.checkinoutdetails.CheckInOutDetailsDto;
 import com.png.data.dto.property.PropertyDto;
@@ -58,6 +60,9 @@ public class ServicesControllers {
 	@Autowired
 	private DateFormatter dateFormatter;
 
+	@Autowired
+    private EmailService emailService;
+
 	@RequestMapping(value ="/sign_up",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> signup(@RequestBody User user,BindingResult bindingResult) throws ValidationException{
@@ -73,7 +78,16 @@ public class ServicesControllers {
 			}
 			return new ResponseEntity<Object>(errorList,HttpStatus.BAD_REQUEST);
 		}
-		userService.save(user);
+
+		try {
+			userService.save(user);
+			emailService.sendEmailAsync(user.getFirstName(),user.getEmail());
+		} catch(Exception e){
+			HashMap<String,String> errorDetails = new HashMap<String,String>();
+			errorDetails.put("type", e.getClass().getSimpleName());
+			errorDetails.put("message", e.getMessage());
+			return new ResponseEntity<Object>(errorDetails, HttpStatus.NOT_FOUND);
+		}
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 
