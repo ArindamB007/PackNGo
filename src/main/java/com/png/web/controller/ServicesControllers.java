@@ -10,6 +10,7 @@ import com.png.data.dto.checkinoutdetails.CheckInOutDetailsDto;
 import com.png.data.dto.property.PropertyDto;
 import com.png.data.dto.user.UserContext;
 import com.png.data.entity.User;
+import com.png.exception.BaseException;
 import com.png.exception.ValidationException;
 import com.png.menu.Menu;
 import com.png.services.CustomUserDetailsService;
@@ -63,6 +64,13 @@ public class ServicesControllers {
 	@Autowired
     private EmailService emailService;
 
+	private HashMap<String,String> populateErrorDetails(BaseException e){
+		HashMap<String,String> errorDetails = new HashMap<String,String>();
+		errorDetails.put("type", e.getClass().getSimpleName());
+		errorDetails.put("errorCode",e.getErrorCode());
+		errorDetails.put("message", e.getErrorMessage());
+		return errorDetails;
+	}
 	@RequestMapping(value ="/sign_up",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> signup(@RequestBody User user,BindingResult bindingResult) throws ValidationException{
@@ -81,7 +89,8 @@ public class ServicesControllers {
 
 		try {
 			userService.save(user);
-			emailService.sendEmailAsync(user.getFirstName(),user.getEmail());
+			emailService.sendValidationEmailAsync(user.getFirstName(),user.getEmail(),
+					user.getEmailValidUptoTimestamp(),user.getEmailValidationCode());
 		} catch(Exception e){
 			HashMap<String,String> errorDetails = new HashMap<String,String>();
 			errorDetails.put("type", e.getClass().getSimpleName());
@@ -98,15 +107,28 @@ public class ServicesControllers {
 		System.out.println("Password: " + payload.get("password"));
 		try {
 			UserContext userContext = securityService.login(payload.get("email"), payload.get("password"));
-			return new ResponseEntity<Object>(userContext, HttpStatus.OK);
-		} catch (Exception e){
-					HashMap<String,String> errorDetails = new HashMap<String,String>();
-					errorDetails.put("type", e.getClass().getSimpleName());
-					errorDetails.put("message", e.getMessage());
-					return new ResponseEntity<Object>(errorDetails, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(userContext, HttpStatus.OK);
+		} catch (BaseException e){
+					return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.NOT_FOUND);
 		}
 
 	}
+
+	@RequestMapping(value ="/resend_verification_email",method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Object> resendVerificationEmail(@RequestBody Map<String,String> payload){
+		System.out.println("User Name: " + payload.get("email"));
+		try {
+			User user = userService.resendEmailValidationCode(payload.get("email"));
+			emailService.sendValidationEmailAsync(user.getFirstName(),user.getEmail(),
+					user.getEmailValidUptoTimestamp(),user.getEmailValidationCode());
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		} catch (BaseException e){
+			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.NOT_FOUND);
+		}
+
+	}
+
 	@RequestMapping(value ="/user_menu",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> userMenu(@RequestBody UserContext userContext){

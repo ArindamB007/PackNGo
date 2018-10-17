@@ -160,7 +160,7 @@ PackNGo.factory('PnGInterceptor', function($q,$injector,$sessionStorage,CONSTANT
         var dfd = $q.defer();
         var DUPLICATED_REQUEST_STATUS_CODE = CONSTANTS.RESPONSE_CODES.REQUEST_IN_PROGRESS;
         // build response for duplicated request
-        var response = {data:[{'message':'Request is already in progress.'}], headers: {}, status: DUPLICATED_REQUEST_STATUS_CODE, config: requestConfig};
+        var response = {data:{'message':'Request is already in progress.'}, headers: {}, status: DUPLICATED_REQUEST_STATUS_CODE, config: requestConfig};
         console.info('Such request is already in progres, rejecting this one with', response);
         // reject promise with response above
         dfd.reject(response);

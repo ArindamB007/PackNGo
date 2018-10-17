@@ -4,6 +4,7 @@ import com.png.data.dto.user.UserContext;
 import com.png.data.entity.Role;
 import com.png.data.entity.User;
 import com.png.data.repository.UserRepository;
+import com.png.exception.EmailNotVerifiedException;
 import com.png.menu.Menu;
 import com.png.menu.MenuMapper;
 import org.springframework.beans.factory.annotation.Autowired;

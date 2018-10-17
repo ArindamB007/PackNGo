@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Set;
+import java.util.UUID;
 
 
 /**
@@ -28,6 +29,15 @@ public class User {
 
     @Column (name = "email_validated")
     private Boolean emailValidated = false;
+
+    @Column (name = "email_validation_code")
+    private String emailValidationCode;
+
+    @Column (name = "email_sent_timestamp")
+    private Timestamp emailSentTimestamp;
+
+    @Column (name = "email_valid_upto_timestamp")
+    private Timestamp emailValidUptoTimestamp;
 
     @Column (name="password")
     @Length (min = 5)
@@ -90,10 +100,12 @@ public class User {
 	public String getConfirmPassword() {
 		return confirmPassword;
 	}
+
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
-    public Long getIdUser() {
+
+	public Long getIdUser() {
         return idUser;
     }
 
@@ -107,6 +119,30 @@ public class User {
 
     public void setEmailValidated(Boolean emailValidated) {
         this.emailValidated = emailValidated;
+    }
+
+    public String getEmailValidationCode() {
+        return emailValidationCode;
+    }
+
+    public void setEmailValidationCode(String emailValidationCode) {
+        this.emailValidationCode = emailValidationCode;
+    }
+
+    public Timestamp getEmailSentTimestamp() {
+        return emailSentTimestamp;
+    }
+
+    public void setEmailSentTimestamp(Timestamp emailSentTimestamp) {
+        this.emailSentTimestamp = emailSentTimestamp;
+    }
+
+    public Timestamp getEmailValidUptoTimestamp() {
+        return emailValidUptoTimestamp;
+    }
+
+    public void setEmailValidUptoTimestamp(Timestamp emailValidUptoTimestamp) {
+        this.emailValidUptoTimestamp = emailValidUptoTimestamp;
     }
 
     public Boolean getDeleteFlag() {
@@ -168,4 +204,8 @@ public class User {
 		this.lastName = this.lastName.trim();
 		this.email = this.email.trim();
 	}
+	public String generateEmailValidationCode(){
+        String validationCode = UUID.randomUUID().toString();
+        return validationCode;
+    }
 }

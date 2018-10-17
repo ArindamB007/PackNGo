@@ -1,6 +1,7 @@
 package com.png.auth.service;
 
 import com.png.data.dto.user.UserContext;
+import com.png.exception.EmailNotVerifiedException;
 import com.png.services.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,9 +69,13 @@ public class SecurityServiceImpl implements SecurityService{
 				new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 		authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 		if (usernamePasswordAuthenticationToken.isAuthenticated()) {
+			userContext = userDetailsService.getUserContext();
+			if (!userContext.getEmailValidated())
+				throw new EmailNotVerifiedException("1001",
+						String.format("Email not validated, validation email sent to %s",userContext.getEmail()));
 			userDetailsService.updateLastLoginTimeStamp(new Timestamp(new java.util.Date().getTime()));
 			userDetailsService.saveUser();
-			userContext = userDetailsService.getUserContext();
+
 			SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 			System.out.println(String.format("User %s logged in successfully!", email));
 		}

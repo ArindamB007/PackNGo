@@ -1,6 +1,7 @@
 package com.png.exception.handler;
 
 import com.png.exception.BaseException;
+import com.png.exception.EmailNotVerifiedException;
 import com.png.exception.NoDataException;
 import com.png.exception.ValidationException;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,10 @@ public class GlobalPngExceptionHandler {
     @ExceptionHandler(value = BaseException.class)
     @ResponseBody
     public ResponseEntity<?> handleBaseException(ValidationException e){
+        return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+    }
+    @ResponseBody
+    public ResponseEntity<?> handleBaseException(EmailNotVerifiedException e){
         return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
     }
     @ResponseBody

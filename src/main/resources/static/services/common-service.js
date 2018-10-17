@@ -6,10 +6,10 @@ PackNGo.factory('CommonService',function(ModalService,CONSTANTS) {
     		  modalInstance = ModalService.showModal(modalSize,modalTitle + "-" + response.data.type,
     				  response.data.message,modalButtonsList);
     	  else if (response.status === 404)
-    		  modalInstance = ModalService.showModal(modalSize,modalTitle,response.data[0].message, modalButtonsList);
+    		  modalInstance = ModalService.showModal(modalSize,modalTitle,response.data.message, modalButtonsList);
     	  else if (response.status === CONSTANTS.RESPONSE_CODES.REQUEST_IN_PROGRESS)
     		  {
-	    		  modalInstance = ModalService.showModal(modalSize,modalTitle,response.data[0].message, modalButtonsList);
+	    		  modalInstance = ModalService.showModal(modalSize,modalTitle,response.data.message, modalButtonsList);
 	    		  alert("Duplicate Request");
     		  }
     		  
