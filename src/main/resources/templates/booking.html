@@ -297,6 +297,171 @@
 				</div>
 			</div>
 		</div>
+		
+		<!--   Guest Information Form and Tariff Details -->
+		<div data-ng-if="bookingStage==BOOKING_NAV_CONSTANTS.GET_GUEST_INFO">
+			<div class="row meal_planner" style="line-height: 4.2">
+				<div class="col-sm-2 col-md-2 text-center"
+					 style="border-right: 1px solid rgba(34, 36, 38, .15);">
+					<button class="png ui basic red button" ng-click="movePrev()">
+						<i class="left chevron icon"></i> Change Details
+					</button>
+				</div>
+				<div class="col-sm-3 col-md-3 text-center">
+					<i class="checked calendar icon"></i> Check In
+					<div class="ui label red ng-binding">{{checkInOutDetails.checkInTimestamp}}</div>
+				</div>
+				<div class="col-sm-2 col-md-2 text-center">
+					<i class="moon red icon"></i>{{checkInOutDetails.nights}}
+				</div>
+				<div class="col-sm-3 col-md-3 text-center">
+					<i class="checked calendar icon"></i> Check Out
+					<div class="ui label red ng-binding">{{checkInOutDetails.checkOutTimestamp}}</div>
+				</div>
+				<div class="col-sm-2 col-md-2 text-center"
+					 style="border-left: 1px solid rgba(34, 36, 38, .15);">
+					<button data-ng-disabled="!enableMoveToGuestInfo()"
+							class="png ui basic red button"
+							ng-click="showGuestConfirmation()">
+						<i class="right chevron icon"></i> Continue
+					</button>
+				</div>
+			</div>
+			<div class="ui divider"></div>
+			<div class="row traveller">
+					<div class="col-sm-9 col-md-9">
+						<h3>Traveler Details</h3>
+						<div class="row">
+								<div class="col-sm-3 col-md-3 form-lebel">
+								Contact Details
+							</div>
+							<div class="col-sm-5 col-md-5">
+								<input type="text" name="additionalContactEmail" id="additionalContactEmail" ng-model="additionalContact.email" placeholder="Email" ng-pattern="/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/" ng-disabled="isloggedIn &amp;&amp; additionalContact.email !=''" required="" class="form-control ng-pristine ">
+							</div>
+							<div class="col-sm-3 col-md-3">
+								<input type="text" id="additionalContactMobile" name="additionalContactMobile" ng-pattern="/^[0-9]*$/" ng-model="additionalContact.mobile" placeholder="Mobile Number" ng-minlength="10" ng-maxlength="10" maxlength="10" class="form-control ng-pristine" required="">
+							</div>
+						</div>
+						<div class="row"><span class="col-sm-12 col-md-12" style="color:#ef4500;padding-bottom: 15px;border-bottom:2px solid #dcdcdc;">Your booking details will be sent to this email address and mobile number.</span></div>
+						<div class="row">
+							<div class="col-sm-3 col-md-3 form-lebel">
+								Guest Name
+							</div>
+							<div class="col-sm-3 col-md-3 form-lebel">
+							<input type="text" name="fname0"  ng-model="traveller.travellerDetails.firstName.value" ng-pattern="/^[A-Za-z\s]+$/" placeholder="First Name" ng-required="traveller.travellerDetails.firstName.isMandatory" id="travellerf0" ng-text="" class="form-control ng-pristine ng-scope ng-valid-pattern ng-touched" required="required">
+							</div>
+							<div class="col-sm-3 col-md-3">
+								<input type="text" name="Mname0" id="travellerl0" ng-model="traveller.travellerDetails.middleName.value" ng-pattern="/^[A-Za-z\s]+$/" placeholder="Middle Name" ng-required="traveller.travellerDetails.middleName.isMandatory" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" required="required">
+							</div>
+							<div class="col-sm-3 col-md-3">
+								<input type="text" name="lname0" id="travellerl0" ng-model="traveller.travellerDetails.lastName.value" ng-pattern="/^[A-Za-z\s]+$/" placeholder="Last Name" ng-required="traveller.travellerDetails.lastName.isMandatory" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" required="required">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-3 col-md-3 form-lebel">
+								Special Request
+							</div>
+							<div class="col-sm-9 col-md-9 form-lebel">
+								<textarea placeholder="e.g. I want early check-in or specify the time you will check-in." cols="80" row="5" ng-model="specialRequest.value" class="ng-pristine ng-valid ng-empty ng-touched"></textarea>
+								<span style="color:#ef4500">Special request can't be guaranteed. We will pass these requests to the hotels.</span>
+							</div>
+						
+						</div>
+						<div class="row">
+							
+									<div class="col-sm-10 col-md-10">
+									<span class="bold" style="display:block;">Add your GST Details (Optional)</span>
+									<span class="gray">Claim credit of GST charges. Your taxes may get updated post submitting your GST details.</span>
+								</div>
+								<button type="button" class="btn btn-info ui basic red button" data-toggle="collapse" data-target="#demo">Add GST</button>
+													
+							<div id="demo" class="col-sm-12 col-md-12 collapse">
+							<div class="row">
+								<div class="col-sm-2 col-md-2 form-lebel">
+									GST Number:
+								</div>
+								<div class="col-sm-4 col-md-4"> 
+									<input type="text" id="elem1" name="gstRegNo" ng-model="getSaveGstParams.custGSTNumber" maxlength="15" class="ng-pristine ng-valid ng-empty ng-valid-maxlength ng-touched form-control">
+								</div>
+								<div class="col-sm-2 col-md-2 form-lebel"> 
+									Email Id:
+								</div>
+								<div class="col-sm-4 col-md-4"> 
+									 <input type="text" id="elem3" name="userEmail" ng-model="getSaveGstParams.custGSTCompanyEmailId" class="ng-pristine ng-valid ng-empty ng-touched form-control">
+								</div>
+							</div>
+							<div class="row">
+							<div class="col-sm-2 col-md-2 form-lebel"> 
+									Mobile Number
+								</div>
+								<div class="col-sm-4 col-md-4">
+									<input type="text" id="elem9" name="userPhone" ng-model="getSaveGstParams.custGSTPhoneNumber" maxlength="17" ng-keypress="onlyNumbers($event)" class="ng-pristine ng-valid ng-empty ng-valid-maxlength ng-touched form-control">
+								</div>
+								<div class="col-sm-2 col-md-2 form-lebel"> 
+									Pincode:
+								</div>
+								<div class="col-sm-4 col-md-4"> 
+									<input type="text" id="elem6" name="userPinCode" ng-model="getSaveGstParams.custGSTPinCode" class="ng-pristine ng-valid ng-empty ng-touched form-control">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-2 col-md-2 form-lebel"> 
+									Company Name
+								</div>
+								<div class="col-sm-4 col-md-4">
+									<input type="text" id="elem2" name="gstCompName" ng-model="getSaveGstParams.custGSTCompanyName" maxlength="50" class="ng-pristine ng-valid ng-empty ng-valid-maxlength ng-touched form-control">
+								</div>
+								<div class="col-sm-2 col-md-2 form-lebel"> 
+									Address
+								</div>
+								<div class="col-sm-4 col-md-4"> 
+									<input type="text" id="elem4" name="userAddress" ng-model="getSaveGstParams.custGSTCompanyAddress" class="ng-pristine ng-valid ng-empty ng-touched form-control">
+								</div>
+							</div>
+								
+								
+							</div>
+						</div>
+						
+						
+					</div>
+					<div class="col-sm-3 col-md-3">
+						<h3>Tariff <div class="ui red tag label ng-binding">Total {{bookingDetails.grandTotal | currency:currency}}</div></h3>
+						<div class="row">
+								<div class="col-sm-6 col-md-6 form-lebel">
+									Hotel Charges
+								</div>
+								<div class="col-sm-6 col-md-6 form-lebel">
+									{{bookingDetails.grandTotal}}
+								</div>
+						</div>
+						<div class="row">
+								<div class="col-sm-6 col-md-6 form-lebel">
+									Hotel GST
+								</div>
+								<div class="col-sm-6 col-md-6 form-lebel">
+									{{bookingDetails.grandTotal*0.18}}
+								</div>
+						</div>
+						<div class="row">
+								<div class="col-sm-6 col-md-6 form-lebel">
+									Inclusion
+								</div>
+								<div class="col-sm-6 col-md-6 form-lebel">
+									123456
+								</div>
+						</div>
+						<div class="row">
+								<div class="col-sm-6 col-md-6 form-lebel">
+									Total Payment
+								</div>
+								<div class="col-sm-6 col-md-6 form-lebel">
+									123456
+								</div>
+						</div>
+					</div>
+				</div>
+		</div>
 	</div>
 </div>
 </body>
