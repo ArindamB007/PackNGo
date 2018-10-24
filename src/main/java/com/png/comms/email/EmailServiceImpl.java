@@ -102,7 +102,7 @@ public class EmailServiceImpl implements EmailService{
             mail.setFromName("Maples 'N' Mist - Online");
             mail.setTemplateModel(modelMap);
             mail.setToList(new String[]{email});
-            mail.setBcc("arindam.bandyopadhyay@gmail.com");
+            mail.setBcc("patraanup123@gmail.com");
             mail.setSubject("Hi, " + firstName + " verify your email (Do Not Reply)");
             sendMessageWithAttachment(mail);
         } catch (Exception e){
@@ -122,8 +122,8 @@ public class EmailServiceImpl implements EmailService{
             mail.setFromName("Maples 'N' Mist - Online");
             mail.setTemplateModel(modelMap);
             mail.setToList(new String[]{email});
-            mail.setBcc("arindam.bandyopadhyay@gmail.com");
-            mail.setSubject("Hi, " + firstName + " verify your email (Do Not Reply)");
+            mail.setBccList(new String [] {"arindam.bandyopadhyay@gmail.com","patraanup123@gmail.com"});
+            mail.setSubject("Hi, " + firstName + " verify your email (Do not reply)");
             sendMessageWithAttachment(mail);
         } catch (Exception e){
 
