@@ -51,6 +51,18 @@ PackNGo.factory('LoginService',function($rootScope,$q,$http,$log,UserContext) {
         },
         isLoggedIn : function() {
         	return !(Object.keys(UserContext.value).length==0)
-        }
+        },
+        verifyEmail : function(emailValidationCode) {
+            var deferred = $q.defer();
+            $http.post("../services/verify_email/" + emailValidationCode)
+                .then(function(response){
+                    deferred.resolve(response);
+                })
+                .catch(function(response){
+                    deferred.reject(response);
+                    $log.error(response);
+                });
+            return deferred.promise;
+          }
   };
 });

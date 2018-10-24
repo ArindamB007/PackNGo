@@ -42,6 +42,16 @@ public class UserServiceImpl implements UserService{
 	public User findByEmailValidationCode(String emailValidationCode){
 		return userRepository.findByEmailValidationCode(emailValidationCode);
 	}
+	@Override
+	public User resetEmailValidationCode(String emailValidationCode){
+		User user = userRepository.findByEmailValidationCode(emailValidationCode);
+		user.setEmailValidated(true);
+		user.setEmailValidationCode(null);
+		user.setEmailValidUptoTimestamp(null);
+		userRepository.save(user);
+		return user;
+	}
+	@Override
 	public User resendEmailValidationCode(String email){
 		User user = userRepository.findByEmail(email);
 		//set email validation related data

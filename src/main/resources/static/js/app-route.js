@@ -29,12 +29,13 @@ PackNGo.config(['$routeProvider',
 			controller : 'BookingCtrl',
       allowAnonymous : true // remove this config
 		}).
+        when('/verify-email/:verificationCode', {
+            templateUrl : '/verify-email',
+            controller : 'VerifyEmailCtrl',
+            allowAnonymous : true // remove this config
+        }).
 		when('/samples', {
 			templateUrl : '/samples',
 			controller : 'SamplesCtrl'
-		}).
-		when('/about', {
-			templateUrl : '/about',
-			controller : 'aboutCtrl'
 		})
 	}]);

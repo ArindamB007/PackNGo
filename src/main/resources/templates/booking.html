@@ -260,7 +260,7 @@
 												<label>Extra Adult</label>
 												<select class="ui dropdown"
 														data-ng-model="selectedRoomType.selectedExtraAdultCount"
-														data-ng-options="o as o for o in selectedRoomType.maxExtraAdultOccupancy"
+														data-ng-options="o as o for o in selectedRoomType.maxExtraAdultOccupancyList"
 														data-ng-change="calculateGrandTotal()"
 														dropdown='description'>
 												</select>
@@ -277,7 +277,7 @@
 												<label>Extra Child</label>
 												<select class="ui dropdown"
 														data-ng-model="selectedRoomType.selectedExtraChildCount"
-														data-ng-options="o as o for o in selectedRoomType.maxExtraChildOccupancy"
+														data-ng-options="o as o for o in selectedRoomType.maxExtraChildOccupancyList"
 														data-ng-change="calculateGrandTotal()"
 														dropdown='description'>
 												</select>

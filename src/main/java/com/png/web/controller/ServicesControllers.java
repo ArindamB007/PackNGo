@@ -4,13 +4,14 @@ import com.png.auth.service.SecurityService;
 import com.png.auth.service.UserService;
 import com.png.auth.validator.UserValidator;
 import com.png.comms.email.EmailService;
-import com.png.comms.email.Mail;
 import com.png.data.dto.availableroomtype.AvailableRoomTypeDto;
 import com.png.data.dto.checkinoutdetails.CheckInOutDetailsDto;
 import com.png.data.dto.property.PropertyDto;
 import com.png.data.dto.user.UserContext;
 import com.png.data.entity.User;
 import com.png.exception.BaseException;
+import com.png.exception.EmailVerificationExpiredException;
+import com.png.exception.InvalidEmailVerificationCodeException;
 import com.png.exception.ValidationException;
 import com.png.menu.Menu;
 import com.png.services.CustomUserDetailsService;
@@ -27,14 +28,13 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring4.SpringTemplateEngine;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
+import java.sql.Timestamp;
 import java.util.*;
 
 @Controller
@@ -64,13 +64,16 @@ public class ServicesControllers {
 	@Autowired
     private EmailService emailService;
 
-	private HashMap<String,String> populateErrorDetails(BaseException e){
-		HashMap<String,String> errorDetails = new HashMap<String,String>();
-		errorDetails.put("type", e.getClass().getSimpleName());
-		errorDetails.put("errorCode",e.getErrorCode());
-		errorDetails.put("message", e.getErrorMessage());
-		return errorDetails;
-	}
+    @Autowired
+    private SpringTemplateEngine springTemplateEngine;
+
+    private HashMap<String,String> populateErrorDetails(BaseException e){
+        HashMap<String,String> errorDetails = new HashMap<String,String>();
+        errorDetails.put("type", e.getClass().getSimpleName());
+        errorDetails.put("errorCode",e.getErrorCode());
+        errorDetails.put("message", e.getErrorMessage());
+        return errorDetails;
+    }
 	@RequestMapping(value ="/sign_up",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> signup(@RequestBody User user,BindingResult bindingResult) throws ValidationException{
@@ -129,7 +132,7 @@ public class ServicesControllers {
 
 	}
 
-	@RequestMapping(value ="/user_menu",method = RequestMethod.POST)
+    @RequestMapping(value ="/user_menu",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> userMenu(@RequestBody UserContext userContext){
 		ArrayList <HashMap <String,String>> errorList = new ArrayList<HashMap <String,String>>();
@@ -198,4 +201,24 @@ public class ServicesControllers {
 			return new ResponseEntity<Object>(errorList, HttpStatus.NOT_FOUND);
 		}
 	}
+
+    @RequestMapping(value ="/verify_email/{verificationCode}",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Object> verifyEmail(@PathVariable String verificationCode){
+        try {
+            User user = userService.findByEmailValidationCode(verificationCode);
+            if (user == null)
+                throw new InvalidEmailVerificationCodeException("1003","Invalid Email Verification Code");
+            if (new Timestamp(new java.util.Date().getTime()).after(user.getEmailValidUptoTimestamp()))
+                throw new EmailVerificationExpiredException("1002",
+                        String.format("Email verification code expired on %s",
+                                DateFormatter.getDateStringFromTimestamp(user.getEmailValidUptoTimestamp())));
+            System.out.println("Service called");
+            userService.resetEmailValidationCode(verificationCode);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } catch (BaseException e){
+            return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);
+        }
+
+    }
 }

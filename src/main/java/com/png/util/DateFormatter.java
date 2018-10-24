@@ -10,11 +10,11 @@ import java.text.SimpleDateFormat;
 @Component
 public class DateFormatter {
 
-    public Timestamp getTimestampFromString(String dateString) throws ParseException{
+    public static Timestamp getTimestampFromString(String dateString) throws ParseException{
         DateFormat df = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");
         return new Timestamp(df.parse(dateString).getTime());
     }
-    public String getDateStringFromTimestamp(Timestamp timestamp){
+    public static String getDateStringFromTimestamp(Timestamp timestamp){
         DateFormat df = new SimpleDateFormat("dd-MMM-yyyy hh:mm a");
         return df.format(timestamp);
     }

@@ -7,5 +7,6 @@ public interface UserService {
 
     User findByUsername(String email);
     User findByEmailValidationCode(String validationCode);
-    public User resendEmailValidationCode(String email);
+    User resendEmailValidationCode(String email);
+    User resetEmailValidationCode(String emailValidationCode);
 }

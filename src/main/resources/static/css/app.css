@@ -8158,10 +8158,10 @@ button.close {
 .material-icons.md-48 {
   font-size: 48px !important; }
 
-body {
-  /*font-family: 'Open Sans', sans-serif;
-  font-size: 16px;*/ }
-
+/*body{
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+}*/
 .fix-to-top {
   position: fixed !important;
   margin-top: 0 !important;
@@ -8730,13 +8730,12 @@ a.scroll_arrow_down i {
 
 /*Anup Style starts*/
 body {
-  font-family: 'Poiret One', cursive !important;
+  font-family: 'Montserrat', sans-serif !important;
   color: #000; }
 
 p, label, .title h5, .png > .title h5 {
-  font-family: 'Poiret One', cursive;
-  color: #000;
-  font-weight: bold; }
+  font-family: 'Open Sans Condensed', sans-serif;
+  color: #000; }
 
 /*Common Style Starts*/
 .button_default,
@@ -8787,7 +8786,7 @@ p, label, .title h5, .png > .title h5 {
 
 .booking_search {
   width: 161px;
-  background: #D80000;
+  background: #d80000;
   color: #fff;
   border-radius: 10px;
   height: auto; }
@@ -8887,3 +8886,41 @@ p, label, .title h5, .png > .title h5 {
 .login-row .ui.basic.button {
   color: #fff;
   font-size: 18px; }
+
+/*Traveler Style starts*/
+.traveller {
+  background: #fff;
+  padding: 20px 0px; }
+
+.traveller h3 {
+  border-bottom: 1px solid rgba(34, 36, 38, 0.15); }
+
+.form-lebel {
+  line-height: 35px;
+  font-size: 13px; }
+
+.traveller input[type=text],
+.traveller input[type=password] {
+  border: 1px solid #a3a3a3;
+  color: #333;
+  padding: .8rem;
+  border-radius: 2px; }
+
+.traveller .mui-form-group {
+  margin: 0; }
+
+.traveller .row {
+  margin-bottom: 15px; }
+
+.traveller textarea {
+  border: 1px solid #bfbfbf;
+  padding: 5px;
+  width: 100%; }
+
+.traveller .form_dev {
+  border-bottom: 2px solid #e4e4e4; }
+
+.gray {
+  color: #666; }
+
+/*Traveler Style ends*/
