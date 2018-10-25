@@ -6,7 +6,7 @@ PackNGo.controller('VerifyEmailCtrl',function($scope,$routeParams,LoginService,C
             })
             .catch(function(response){
                 console.log(response);
-                CommonService.handleDefaultErrorResponse("sm","Error Validating Email", response,["OK"]);
+                CommonService.handleDefaultErrorResponse("md","Error Validating Email", response,["OK"]);
             });
     };
     $scope.doVerifyEmail();

@@ -6,7 +6,7 @@ $scope.doSignUp = function(){
     //reset the user details after successful submission
     $scope.signup.$setPristine();
     $scope.userDetails = {};
-    var modalInstance = ModalService.showModal("sm","Signup Success",
+    var modalInstance = ModalService.showModal("md","Signup Success",
 			"We are delighted to have you with us! Please login!",["OK"]);
     modalInstance.result.then(function (response) {
       $log.info('Modal dismissed at: ' + new Date() + 'Response: ' + response);
