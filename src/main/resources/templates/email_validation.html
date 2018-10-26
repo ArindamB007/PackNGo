@@ -3,16 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        /** Email template starts**/
+        .email_body  {
+            margin-top: 100px;
+            padding-top: 47px;
+            padding-left: 61px;
+            padding-right: 61px;
+            padding-bottom: 59px;
+            background: rgba(255, 255, 255, 0.26);
+            border-radius: 12px;
+        }
+        .col-sm-12.email_body,
+        .col-md-12.email_body{
+            min-height: 200px
+        }
+        .email_content{
+            background: #fff;
+            padding: 15px 0;
+            border-radius: 10px
+        }
+        .error_email{
+            color:  #ff5733 ;
+            font-size: 58px;
+            border: 3px solid #fff;
+            border-radius: 31px;
+            background: #fff;
+            margin-bottom: 14px;
+        }
+        .success_email{
+            color: #2ecc71;
+            font-size: 58px;
+            border: 3px solid #fff;
+            border-radius: 31px;
+            background: #fff;
+            margin-bottom: 14px;
+        }
+        /** Email template Ends**/
+    </style>
 </head>
 <body>
-<div id="shade_body">
-        <div class="main_check">
-
-            <div class="email_body">
-                Email Validation Page
+    <div class="container" ng-controller="VerifyEmailCtrl">
+        <div class="email_body col-sm-12 col-md-12 text-center">
+            <i class="material-icons info_email" ng-class="info">info</i>
+            <div class="email_content">
+                <h4>{{message}}</h4>
             </div>
         </div>
-
-</div>
+    </div>
 </body>
 </html>

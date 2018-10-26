@@ -715,6 +715,7 @@ p, label, .title h5 {
 /*Booking Page Style*/
 #shade_body{
   background: url(../img/bg.jpg) no-repeat center bottom;
+  min-height:500px;
 }
 .main_check,
 .booking_page2{
@@ -941,6 +942,10 @@ button.social-signin.twitter {
 
 button.social-signin.google {
   background: #DD4B39;
+}
+#login-box .row.login-row .mui-form-control,
+#login-box .mui-form-group .mui-form-control{
+  color:#000;
 }
 /*Signup Page Ends*/
 /*Traveler Style starts*/
