@@ -1,13 +1,10 @@
 package com.png.data.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import java.util.Set;
 
 @Entity
 @Table(name="item_type")
@@ -55,5 +52,4 @@ public class ItemType extends BaseEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 }

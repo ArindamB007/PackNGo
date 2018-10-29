@@ -3,10 +3,8 @@ package com.png.data.dto.availableroomtype;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 import com.png.data.dto.roomtypeimage.RoomTypeImageDto;
-import com.png.data.entity.RoomTypeImage;
 
 public class AvailableRoomTypeDto {
 	    private Long idRoomType;
@@ -77,25 +75,25 @@ public class AvailableRoomTypeDto {
 			this.discount = discount;
 		}
 
-	public Integer getMaxAdultOccupancy() {
-		return maxAdultOccupancy;
-	}
-
-	public void setMaxAdultOccupancy(Integer maxAdultOccupancy) {
-		this.maxAdultOccupancy = maxAdultOccupancy;
-	}
-
-	public Integer getMaxChildOccupancy() {
-		return maxChildOccupancy;
-	}
-
-	public void setMaxChildOccupancy(Integer maxChildOccupancy) {
-		this.maxChildOccupancy = maxChildOccupancy;
-	}
-
-	public String getDescription() {
-			return description;
+		public Integer getMaxAdultOccupancy() {
+			return maxAdultOccupancy;
 		}
+
+		public void setMaxAdultOccupancy(Integer maxAdultOccupancy) {
+			this.maxAdultOccupancy = maxAdultOccupancy;
+		}
+
+		public Integer getMaxChildOccupancy() {
+			return maxChildOccupancy;
+		}
+
+		public void setMaxChildOccupancy(Integer maxChildOccupancy) {
+			this.maxChildOccupancy = maxChildOccupancy;
+		}
+
+		public String getDescription() {
+				return description;
+			}
 
 		public void setDescription(String description) {
 			this.description = description;

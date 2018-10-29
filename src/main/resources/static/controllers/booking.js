@@ -6,7 +6,8 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
 	$scope.checkInOutDetails = {}; // selected check in out dates
 	$scope.bookingDetails = {}; // selected booking details
 	/*assigning the selected property*/
-	$scope.bookingDetails.selectedProperty = PropertyService.getSelectedProperty();
+	//$scope.bookingDetails.selectedProperty = PropertyService.getSelectedProperty();
+    $scope.selectedProperty = PropertyService.getSelectedProperty();
 	/* Booking navigation control logic */
 	$scope.bookingStage = $scope.BOOKING_NAV_CONSTANTS.SELECT_DATE;
 	$scope.moveNext = function(){
@@ -15,9 +16,10 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
 			$scope.checkInOutDetails.nights =
 				CommonService.getNightsFromCheckInOut($scope.checkInOutDetails.checkOutTimestamp,
 						$scope.checkInOutDetails.checkInTimestamp);
-			$scope.bookingDetails.checkInTimestamp = $scope.checkInOutDetails.checkInTimestamp;
+			/*$scope.bookingDetails.checkInTimestamp = $scope.checkInOutDetails.checkInTimestamp;
 			$scope.bookingDetails.checkOutTimestamp = $scope.checkInOutDetails.checkOutTimestamp;
-			$scope.bookingDetails.nights = $scope.checkInOutDetails.nights
+			$scope.bookingDetails.nights = $scope.checkInOutDetails.nights;*/
+			$scope.bookingDetails.checkInOutDetails = $scope.checkInOutDetails;
 			$scope.bookingStage = $scope.BOOKING_NAV_CONSTANTS.SELECT_ROOM;
 			break;
 		case $scope.BOOKING_NAV_CONSTANTS.SELECT_ROOM :
@@ -31,6 +33,8 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
 			break;
 		case $scope.BOOKING_NAV_CONSTANTS.SELECT_MEAL_PLAN :
 			$scope.bookingStage = $scope.BOOKING_NAV_CONSTANTS.GET_GUEST_INFO;
+            console.log($scope.bookingDetails);
+            createBookingCart();
 			break;
 		}
 	};
@@ -52,7 +56,7 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
 	};
 	/* Booking Search Function doing service call */
 	$scope.searchRoomsByDate = function() {
-		$scope.checkInOutDetails.idProperty = $scope.bookingDetails.selectedProperty.idProperty;
+		$scope.checkInOutDetails.idProperty = $scope.selectedProperty.idProperty;
 		BookingService.searchRoom($scope.checkInOutDetails).then(function (response) {
 			$scope.availableRoomTypes = response.data;
 			if ($scope.availableRoomTypes.length>0)
@@ -74,8 +78,8 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
 	//setting default meal plan, extra occupancy count
 	$scope.setDefaultMealPlan = function(selectedRoomTypes){
 		selectedRoomTypes.map(function(roomType){
-      roomType.maxExtraAdultOccupancyList = getOccupancySelectList(roomType.maxExtraAdultOccupancy*roomType.selectedCount);
-      roomType.maxExtraChildOccupancyList = getOccupancySelectList(roomType.maxExtraChildOccupancy*roomType.selectedCount);
+      roomType.maxExtraAdultOccupancyList = getOccupancySelectList(roomType.maxExtraAdultOccupancy*roomType.selectedRoomCount);
+      roomType.maxExtraChildOccupancyList = getOccupancySelectList(roomType.maxExtraChildOccupancy*roomType.selectedRoomCount);
 			roomType.selectedExtraAdultCount = roomType.maxExtraAdultOccupancyList[0];
 			roomType.selectedExtraChildCount = roomType.maxExtraChildOccupancyList[0];
 			roomType.selectedMealPlan = roomType.mealPlans[0];
@@ -106,12 +110,12 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
 	$scope.calculateGrandTotal = function(){
 		var roomSubTotal = 0;
 		$scope.bookingDetails.selectedRoomTypes.map(function(selectedRoomType){
-			roomSubTotal = roomSubTotal + (selectedRoomType.selectedMealPlan.mealPlanItem.itemPrice.basePrice * selectedRoomType.selectedCount +
+			roomSubTotal = roomSubTotal + (selectedRoomType.selectedMealPlan.mealPlanItem.itemPrice.basePrice * selectedRoomType.selectedRoomCount +
 								selectedRoomType.selectedMealPlan.adultExtraBedItem.itemPrice.basePrice * selectedRoomType.selectedExtraAdultCount +
 								selectedRoomType.selectedMealPlan.childExtraBedItem.itemPrice.basePrice * selectedRoomType.selectedExtraChildCount);
-		})
-		$scope.bookingDetails.grandTotal = roomSubTotal * $scope.checkInOutDetails.nights
-	}
+		});
+		$scope.bookingDetails.grandTotal = roomSubTotal * $scope.checkInOutDetails.nights;
+	};
 
 	/* Guest Confirmation Screen */
 	$scope.showGuestConfirmation = function() {
@@ -119,37 +123,37 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
 	};
 	/* add rooms for selection */
 	$scope.addRoomsByIndex = function(roomTypeIndex){
-		if (!$scope.availableRoomTypes[roomTypeIndex].selectedCount ||
-				$scope.availableRoomTypes[roomTypeIndex].selectedCount === 0) {
-			$scope.availableRoomTypes[roomTypeIndex].selectedCount = 1;
+		if (!$scope.availableRoomTypes[roomTypeIndex].selectedRoomCount ||
+				$scope.availableRoomTypes[roomTypeIndex].selectedRoomCount === 0) {
+			$scope.availableRoomTypes[roomTypeIndex].selectedRoomCount = 1;
 		}
 		else
 		{
-			$scope.availableRoomTypes[roomTypeIndex].selectedCount =
-				parseInt($scope.availableRoomTypes[roomTypeIndex].selectedCount) + 1;
+			$scope.availableRoomTypes[roomTypeIndex].selectedRoomCount =
+				parseInt($scope.availableRoomTypes[roomTypeIndex].selectedRoomCount) + 1;
 		}
 	};
 	/* remove rooms for selection */
 	$scope.removeRoomsByIndex = function(roomTypeIndex){
-		if ($scope.availableRoomTypes[roomTypeIndex].selectedCount > 0) {
-			$scope.availableRoomTypes[roomTypeIndex].selectedCount =
-				parseInt($scope.availableRoomTypes[roomTypeIndex].selectedCount) - 1;
+		if ($scope.availableRoomTypes[roomTypeIndex].selectedRoomCount > 0) {
+			$scope.availableRoomTypes[roomTypeIndex].selectedRoomCount =
+				parseInt($scope.availableRoomTypes[roomTypeIndex].selectedRoomCount) - 1;
 		}
 	};
 	/* disable room qty increase */
 	$scope.disableRoomQtyIncrease = function(roomTypeIndex){
-		return ($scope.availableRoomTypes[roomTypeIndex].selectedCount ===
+		return ($scope.availableRoomTypes[roomTypeIndex].selectedRoomCount ===
 			$scope.availableRoomTypes[roomTypeIndex].availableCount);
 	};
 	/* disable room qty decrease */
 	$scope.disableRoomQtyDecrease = function(roomTypeIndex){
-		return ($scope.availableRoomTypes[roomTypeIndex].selectedCount === 0);
+		return ($scope.availableRoomTypes[roomTypeIndex].selectedRoomCount === 0);
 	};
 	/* allow movenext to select meal plan */
 	$scope.enableMoveToSelectMealPlan = function(){
 		if ($scope.availableRoomTypes.length>0) {
 			var atLeastOneRoomSelected = $scope.availableRoomTypes.some(function(roomType){
-				return roomType.selectedCount > 0;
+				return roomType.selectedRoomCount > 0;
 			}) 
 		}
 		return atLeastOneRoomSelected;
@@ -165,11 +169,34 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
 	/* get rooms selected */
 	$scope.getSelectedRoomType = function(availableRoomTypes){
 		var selectedRoomTypes = availableRoomTypes.filter(function(roomType){
-			if (roomType.selectedCount>0)
+			if (roomType.selectedRoomCount>0)
 				return roomType;
 		});
 		return selectedRoomTypes;
 	};
+	var createBookingCart = function(){
+	    var bookingCart = {};
+	    bookingCart.checkInOutDetails = $scope.bookingDetails.checkInOutDetails;
+        bookingCart.roomDetails = [];
+        $scope.bookingDetails.selectedRoomTypes.map(function(selectedRoomType){
+            var roomDetail = {};
+            roomDetail.idRoomType = selectedRoomType.idRoomType;
+            roomDetail.selectedRoomCount = selectedRoomType.selectedRoomCount;
+            roomDetail.selectedMealPlanItemId = selectedRoomType.selectedMealPlan.idMealPlan;
+            var mealPlanItems = {};
+            mealPlanItems.adultExtraBedIdItem =
+                selectedRoomType.selectedMealPlan.adultExtraBedItem.idItem;
+            mealPlanItems.childExtraBedIdItem =
+                selectedRoomType.selectedMealPlan.childExtraBedItem.idItem;
+            mealPlanItems.adultExtraBedCount =
+                selectedRoomType.selectedExtraAdultCount;
+            mealPlanItems.childExtraBedCount =
+                selectedRoomType.selectedExtraChildCount;
+            roomDetail.mealPlanItems = mealPlanItems;
+            bookingCart.roomDetails.push(roomDetail);
+        });
+        console.log(bookingCart);
+    };
 
 
 	/* Date picker control logic */

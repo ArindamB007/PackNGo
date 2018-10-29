@@ -86,7 +86,14 @@ INSERT INTO room_type (property_id_property,type_name,base_price, discount, max_
 VALUES ((select id_property from property where name='Property EFGH'),
         'Executive',3500,0,2,1,2,2,5,'A super cozy pampered stay for you away from home, that is sure to make a long lasting mark when you look back at this trip years later',
         now(),now(),1);
-        
+
+/*Item Tax Data*/
+INSERT INTO item_tax (item_tax_code,item_tax_description,item_tax_percent,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("CGST", "CGST",0,now(),now(),1);
+INSERT INTO item_tax (item_tax_code,item_tax_description,item_tax_percent,created_timestamp,updated_timestamp,enabled_flag)
+VALUES ("SGST", "SGST",0,now(),now(),1);
+
+
 /*Item Type Data*/
 /* denotes if item is of the following types 
  * - REGULARITEM

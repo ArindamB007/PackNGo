@@ -14,8 +14,8 @@
 			<div class="row " style="line-height: 4.2">
 				<div class="row text-center">
 					<h4 class="booking_header">
-						{{bookingDetails.selectedProperty.name}} <i class="fa fa-map-marker"></i>
-						{{bookingDetails.selectedProperty.location}} {{disableRoomSearch}}
+						{{selectedProperty.name}} <i class="fa fa-map-marker"></i>
+						{{selectedProperty.location}} {{disableRoomSearch}}
 					</h4>
 				</div>
 				<form name="checkinout" class="form booking_form" novalidate>
@@ -178,22 +178,22 @@
 										Rooms Available
 										<div class="detail">{{room_type.availableCount}}</div>
 									</div>
-									<div data-ng-show="room_type.selectedCount>0"
+									<div data-ng-show="room_type.selectedRoomCount>0"
 										 class="ui label red">
 										<i class="hotel icon"></i>Room Selected
-										<div class="detail">{{room_type.selectedCount}}</div>
+										<div class="detail">{{room_type.selectedRoomCount}}</div>
 									</div>
 									<div class="ui right floated basic red icon buttons">
 										<button
-												ng-class="{disabled:room_type.selectedCount==0||
-                                                        room_type.selectedCount==undefined}"
+												ng-class="{disabled:room_type.selectedRoomCount==0||
+                                                        room_type.selectedRoomCount==undefined}"
 												class="ui button basic red"
 												ng-click="removeRoomsByIndex($index)"
 												data-tooltip="Remove a room">
 											<i class="minus icon"></i>
 										</button>
 										<button
-												ng-class="{disabled:room_type.selectedCount==room_type.availableCount}"
+												ng-class="{disabled:room_type.selectedRoomCount==room_type.availableCount}"
 												class="ui button basic red"
 												ng-click="addRoomsByIndex($index)" data-tooltip="Add a room">
 											<i class="add icon"></i>
@@ -224,7 +224,7 @@
 								<div class="png-header-label">Best for </div>
 								<div class="png-header-value">{{selectedRoomType.maxAdultOccupancyText}}, {{selectedRoomType.maxChildOccupancyText}}</div>
 								<div class="png-header-label">Total </div>
-								<div class="png-header-value">{{(selectedRoomType.selectedMealPlan.mealPlanItem.itemPrice.basePrice * selectedRoomType.selectedCount) +
+								<div class="png-header-value">{{(selectedRoomType.selectedMealPlan.mealPlanItem.itemPrice.basePrice * selectedRoomType.selectedRoomCount) +
 									(selectedRoomType.selectedMealPlan.adultExtraBedItem.itemPrice.basePrice * selectedRoomType.selectedExtraAdultCount) +
 									(selectedRoomType.selectedMealPlan.childExtraBedItem.itemPrice.basePrice * selectedRoomType.selectedExtraChildCount) | currency:currency}}</div>
 								<div class="png-header-value">per night</div>
@@ -251,9 +251,9 @@
 										</div>
 										<div class="two wide column text-right booking-line-item">{{selectedRoomType.selectedMealPlan.mealPlanItem.itemPrice.basePrice|currency:currency}}</div>
 										<div class="one wide column text-right booking-line-item"><i class = "fa fa-times"></i></div>
-										<div class="one wide column text-center booking-line-item">{{selectedRoomType.selectedCount}}</div>
+										<div class="one wide column text-center booking-line-item">{{selectedRoomType.selectedRoomCount}}</div>
 										<div class="four wide column text-right booking-line-item">
-											{{selectedRoomType.selectedMealPlan.mealPlanItem.itemPrice.basePrice * selectedRoomType.selectedCount|currency:currency}}
+											{{selectedRoomType.selectedMealPlan.mealPlanItem.itemPrice.basePrice * selectedRoomType.selectedRoomCount|currency:currency}}
 										</div>
 										<div class="eight wide column">
 											<div class="field inline">

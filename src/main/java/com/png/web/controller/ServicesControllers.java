@@ -192,7 +192,7 @@ public class ServicesControllers {
 		try {
 			ArrayList <PropertyDto> properties = propertyService.getAllProperties();
 			System.out.println(properties);
-			return new ResponseEntity<Object>(properties,HttpStatus.OK);
+			return new ResponseEntity<>(properties,HttpStatus.OK);
 		} catch (Exception e){
 			HashMap<String,String> errors = new HashMap<String,String>();
 			errors.put("type", e.getClass().getSimpleName());
