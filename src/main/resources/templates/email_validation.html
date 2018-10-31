@@ -26,7 +26,7 @@
         .error_email{
             color:  #ff5733 ;
             font-size: 58px;
-            border: 3px solid #fff;
+            border: 3px solid #ff5733;
             border-radius: 31px;
             background: #fff;
             margin-bottom: 14px;
@@ -34,7 +34,7 @@
         .success_email{
             color: #2ecc71;
             font-size: 58px;
-            border: 3px solid #fff;
+            border: 3px solid #2ecc71;
             border-radius: 31px;
             background: #fff;
             margin-bottom: 14px;
@@ -45,9 +45,10 @@
 <body>
     <div class="container" ng-controller="VerifyEmailCtrl">
         <div class="email_body col-sm-12 col-md-12 text-center">
-            <i class="material-icons info_email" ng-class="info">info</i>
             <div class="email_content">
+                <i class="material-icons info_email" ng-class="info">info</i>
                 <h4>{{message}}</h4>
+                <h4 ng-if="login">Click <a href="/login">Here</a> to login</h4>
             </div>
         </div>
     </div>

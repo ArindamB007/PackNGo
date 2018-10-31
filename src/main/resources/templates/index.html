@@ -81,7 +81,7 @@
 
   <!-- The loading div-->
   <div class="loading" id="loader">
-    <p style="padding: 30px">
+    <!--<p style="padding: 30px">
       <img class="loader" src="../img/loading.svg"
            style = "margin: 0 auto;
               width: 100px;
@@ -95,10 +95,41 @@
               -ms-transform: translate3d(0, -50%, 0);
               transform: translate3d(0, -50%, 0);
               top: 45%;"/>
-    </p>
-    <div class="loading-container fadeIn">
-      <p>Welcome! One moment please ...</p>
+    </p>-->
+    <div style="width:100%; text-align: center;padding-top: 60px">
+      <h4 class="loder_content">Welcome! One moment please ...</h4>
+      <div class="lds-dual-ring"></div>
+      <style>
+        .lds-dual-ring {
+          display: inline-block;
+          width: 64px;
+          height: 64px;
+        }
+        .lds-dual-ring:after {
+          content: " ";
+          display: block;
+          width: 46px;
+          height: 46px;
+          margin: 1px;
+          border-radius: 50%;
+          border: 5px solid #fff;
+          border-color: #d80000 transparent #d80000 transparent;
+          animation: lds-dual-ring 1.2s linear infinite;
+        }
+        @keyframes lds-dual-ring {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      </style>
     </div>
+
+    <!--<div class="loading-container fadeIn">
+      <p>Welcome! One moment please ...</p>
+    </div>-->
   </div>
 
   <!-- The Modals -->
@@ -133,7 +164,7 @@
         </button>
         <div class="navbar-brand">
           <a  href="#/">
-            {{companyDetails.name}}
+            <img style="width:100px;border-radius: 5px;" src="../img/logo/logo.jpg"></img>
           </a>
         </div>
       </div>
@@ -248,7 +279,7 @@
 <script type="application/x-javascript" src="../services/login-service.js" ></script>
 <script type="application/x-javascript" src="../services/local-storage-service.js" ></script>
 <script type="application/x-javascript" src="../services/booking-service.js" ></script>
-<script type="application/x-javascript" src="../services/property-service.js" ></script>
+<script type="application/x-ABC Inc.javascript" src="../services/property-service.js" ></script>
 <script type="text/javascript" src="../controllers/login.js" ></script>
 <script type="text/javascript" src="../controllers/logoff.js" ></script>
 <script type="text/javascript" src="../controllers/signup.js" ></script>
