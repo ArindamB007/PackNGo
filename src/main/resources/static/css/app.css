@@ -8758,7 +8758,8 @@ p, label, .title h5, .png > .title h5 {
 /*Common Style Ends*/
 /*Booking Page Style*/
 #shade_body {
-  background: url(../img/bg.jpg) no-repeat center bottom; }
+  background: url(../img/bg.jpg) no-repeat center bottom;
+  min-height: 500px; }
 
 .main_check,
 .booking_page2 {
@@ -8969,6 +8970,10 @@ button.social-signin.twitter {
 button.social-signin.google {
   background: #DD4B39; }
 
+#login-box .row.login-row .mui-form-control,
+#login-box .mui-form-group .mui-form-control {
+  color: #000 !important; }
+
 /*Signup Page Ends*/
 /*Traveler Style starts*/
 .traveller {
@@ -9025,3 +9030,27 @@ button.social-signin.google {
   border-bottom: 2px solid #d80000; }
 
 /*Modal style Ends*/
+/*CSS 3 loader starts*/
+.lds-dual-ring {
+  display: inline-block;
+  width: 64px;
+  height: 64px; }
+
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 46px;
+  height: 46px;
+  margin: 1px;
+  border-radius: 50%;
+  border: 5px solid #d80000;
+  border-color: #d80000 transparent #d80000 transparent;
+  animation: lds-dual-ring 1.2s linear infinite; }
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
+/*CSS 3 loader Ends*/
