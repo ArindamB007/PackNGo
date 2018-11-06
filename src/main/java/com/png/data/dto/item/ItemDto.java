@@ -7,6 +7,7 @@ public class ItemDto extends BaseEntityDto {
 	private String description;
 	private ItemTypeDto itemType;
 	private ItemPriceDto itemPrice;
+	private Integer quantity;
 	
 	public Long getIdItem() {
 		return idItem;
@@ -33,4 +34,11 @@ public class ItemDto extends BaseEntityDto {
 		this.itemPrice = itemPrice;
 	}
 
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
 }

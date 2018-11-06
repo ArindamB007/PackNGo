@@ -26,7 +26,7 @@
 						<div class="ui icon input">
 							<i class="calendar icon"></i> <input type="text" name="checkIn"
 																 required class="datepicker form-control" id="checkindate"
-																 readonly data-ng-model="checkInOutDetails.checkInTimestamp"
+																 readonly data-ng-model="checkInOutSearchParams.checkInTimestamp"
 																 placeholder="Checkin Date ...">
 						</div>
 					</div>
@@ -37,7 +37,7 @@
 						<div class="ui icon input">
 							<i class="calendar icon"></i> <input type="text" name="checkOut"
 																 required class="datepicker form-control" id="checkoutdate"
-																 readonly data-ng-model="checkInOutDetails.checkOutTimestamp"
+																 readonly data-ng-model="checkInOutSearchParams.checkOutTimestamp"
 																 placeholder="Checkout Date ...">
 						</div>
 					</div>
@@ -65,14 +65,14 @@
 					</div>
 					<div class="col-sm-3 col-md-3 text-center">
 						<i class="checked calendar icon"></i> Check In
-						<div class="ui label red">{{checkInOutDetails.checkInTimestamp}}</div>
+						<div class="ui label red">{{checkInOutSearchParams.checkInTimestamp}}</div>
 					</div>
 					<div class="col-sm-2 col-md-2 text-center">
-						<i class="moon red icon"></i>{{checkInOutDetails.nights}}
+						<i class="moon red icon"></i>{{checkInOutSearchParams.nights}}
 					</div>
 					<div class="col-sm-3 col-md-3 text-center">
 						<i class="checked calendar icon"></i> Check Out
-						<div class="ui label red">{{checkInOutDetails.checkOutTimestamp}}</div>
+						<div class="ui label red">{{checkInOutSearchParams.checkOutTimestamp}}</div>
 					</div>
 					<div class="col-sm-2 col-md-2 text-center"
 						 style="border-left: 1px solid rgba(34, 36, 38, .15);">
@@ -99,14 +99,14 @@
 				</div>
 				<div class="col-sm-2 col-md-2 text-center">
 					<i class="checked calendar icon"></i> Check In
-					<div class="ui label red ng-binding">{{checkInOutDetails.checkInTimestamp}}</div>
+					<div class="ui label red ng-binding">{{checkInOutSearchParams.checkInTimestamp}}</div>
 				</div>
 				<div class="col-sm-1 col-md-1 text-center">
-					<i class="moon red icon"></i>{{checkInOutDetails.nights}}
+					<i class="moon red icon"></i>{{checkInOutSearchParams.nights}}
 				</div>
 				<div class="col-sm-3 col-md-3 text-center">
 					<i class="checked calendar icon"></i> Check Out
-					<div class="ui label red ng-binding">{{checkInOutDetails.checkOutTimestamp}}</div>
+					<div class="ui label red ng-binding">{{checkInOutSearchParams.checkOutTimestamp}}</div>
 				</div>
 				<div class="col-sm-2 col-md-2 text-center">
 					<div class="ui red tag label ng-binding">Total {{bookingDetails.grandTotal | currency:currency}}</div>
@@ -309,14 +309,14 @@
 				</div>
 				<div class="col-sm-3 col-md-3 text-center">
 					<i class="checked calendar icon"></i> Check In
-					<div class="ui label red ng-binding">{{checkInOutDetails.checkInTimestamp}}</div>
+					<div class="ui label red ng-binding">{{checkInOutSearchParams.checkInTimestamp}}</div>
 				</div>
 				<div class="col-sm-2 col-md-2 text-center">
-					<i class="moon red icon"></i>{{checkInOutDetails.nights}}
+					<i class="moon red icon"></i>{{checkInOutSearchParams.nights}}
 				</div>
 				<div class="col-sm-3 col-md-3 text-center">
 					<i class="checked calendar icon"></i> Check Out
-					<div class="ui label red ng-binding">{{checkInOutDetails.checkOutTimestamp}}</div>
+					<div class="ui label red ng-binding">{{checkInOutSearchParams.checkOutTimestamp}}</div>
 				</div>
 				<div class="col-sm-2 col-md-2 text-center"
 					 style="border-left: 1px solid rgba(34, 36, 38, .15);">

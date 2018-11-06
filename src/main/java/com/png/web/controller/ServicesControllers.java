@@ -5,7 +5,9 @@ import com.png.auth.service.UserService;
 import com.png.auth.validator.UserValidator;
 import com.png.comms.email.EmailService;
 import com.png.data.dto.availableroomtype.AvailableRoomTypeDto;
-import com.png.data.dto.checkinoutdetails.CheckInOutDetailsDto;
+import com.png.data.dto.bookingcart.BookingCartDto;
+import com.png.data.dto.checkinoutdetails.CheckInOutSearchParamsDto;
+import com.png.data.dto.invoice.InvoiceDto;
 import com.png.data.dto.property.PropertyDto;
 import com.png.data.dto.user.UserContext;
 import com.png.data.entity.User;
@@ -159,20 +161,20 @@ public class ServicesControllers {
 	}
 	@RequestMapping(value ="/search_room_types",method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Object> searchRoom(@RequestBody CheckInOutDetailsDto checkInOutDetails){
+	public ResponseEntity<Object> searchRoom(@RequestBody CheckInOutSearchParamsDto checkInSearchParams){
 		List <HashMap <String,String>> errorList = new ArrayList<HashMap <String,String>>();
 		try{
-			System.out.println("Checkin Date : " + checkInOutDetails.getCheckInTimestamp());
+			System.out.println("Checkin Date : " + checkInSearchParams.getCheckInTimestamp());
 			System.out.println("Checkin Date Converted : " +
-					dateFormatter.getTimestampFromString(checkInOutDetails.getCheckInTimestamp()));
-			System.out.println("Checkout Date : " + checkInOutDetails.getCheckOutTimestamp());
+					dateFormatter.getTimestampFromString(checkInSearchParams.getCheckInTimestamp()));
+			System.out.println("Checkout Date : " + checkInSearchParams.getCheckOutTimestamp());
 			System.out.println("Checkout Date Converted : " +
-					dateFormatter.getTimestampFromString(checkInOutDetails.getCheckOutTimestamp()));
+					dateFormatter.getTimestampFromString(checkInSearchParams.getCheckOutTimestamp()));
 			List<AvailableRoomTypeDto> availableRoomTypeDtos =
 					roomTypeService.getAvailableRoomTypes(
-							dateFormatter.getTimestampFromString(checkInOutDetails.getCheckInTimestamp()),
-							dateFormatter.getTimestampFromString(checkInOutDetails.getCheckOutTimestamp()),
-							checkInOutDetails.getIdProperty());
+							dateFormatter.getTimestampFromString(checkInSearchParams.getCheckInTimestamp()),
+							dateFormatter.getTimestampFromString(checkInSearchParams.getCheckOutTimestamp()),
+							checkInSearchParams.getIdProperty());
 			System.out.println(availableRoomTypeDtos);
 			return new ResponseEntity<Object>(availableRoomTypeDtos,HttpStatus.OK);
 		} catch (Exception e){
@@ -221,4 +223,15 @@ public class ServicesControllers {
         }
 
     }
+
+	@RequestMapping(value ="/getInvoice/",method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Object> prepareInvoice(@RequestBody BookingCartDto bookingCartDto){
+		try {
+			InvoiceDto invoice = new InvoiceDto(bookingCartDto);
+			return new ResponseEntity<>(invoice, HttpStatus.OK);
+		} catch (BaseException e){
+			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);
+		}
+	}
 }

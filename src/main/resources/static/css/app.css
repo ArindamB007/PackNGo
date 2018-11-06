@@ -8892,7 +8892,7 @@ p, label, .title h5, .png > .title h5 {
 /*Signup Page starts*/
 #login-box {
   position: relative;
-  margin: 7% auto;
+  margin: 100px auto;
   width: 660px;
   height: 513px;
   background: #FFF;
@@ -8974,6 +8974,9 @@ button.social-signin.google {
 #login-box .mui-form-group .mui-form-control {
   color: #000 !important; }
 
+#login-box .form-control-feedback {
+  right: -36px !important; }
+
 /*Signup Page Ends*/
 /*Traveler Style starts*/
 .traveller {
@@ -9054,3 +9057,27 @@ button.social-signin.google {
     transform: rotate(360deg); } }
 
 /*CSS 3 loader Ends*/
+/*logoff style starts*/
+.logoff_container {
+  padding-top: 100px; }
+
+.logoff_page_content {
+  background: #fff;
+  padding: 32px 6px;
+  text-align: center; }
+
+.material-icons.success_logoff {
+  color: green;
+  font-size: 80px; }
+
+.logoff_page {
+  padding-top: 47px;
+  padding-left: 61px;
+  padding-right: 61px;
+  padding-bottom: 59px;
+  background: rgba(255, 255, 255, 0.26);
+  border-radius: 12px;
+  margin-top: 100px;
+  margin-bottom: 50px; }
+
+/*logoff style ends*/
