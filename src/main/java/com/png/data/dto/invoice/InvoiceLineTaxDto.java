@@ -1,6 +1,15 @@
 package com.png.data.dto.invoice;
 
+import java.math.BigDecimal;
+
 public class InvoiceLineTaxDto {
+    private Long idInvoiceLineTax;
+    private Long invoiceLineId;
+    private String itemTaxCode;
+    private String itemTaxDescription;
+    private String itemTaxPercent;
+    private BigDecimal itemTaxAmount;
+
     public Long getIdInvoiceLineTax() {
         return idInvoiceLineTax;
     }
@@ -41,18 +50,11 @@ public class InvoiceLineTaxDto {
         this.itemTaxPercent = itemTaxPercent;
     }
 
-    public String getItemTaxAmount() {
+    public BigDecimal getItemTaxAmount() {
         return itemTaxAmount;
     }
 
-    public void setItemTaxAmount(String itemTaxAmount) {
+    public void setItemTaxAmount(BigDecimal itemTaxAmount) {
         this.itemTaxAmount = itemTaxAmount;
     }
-
-    private Long idInvoiceLineTax;
-    private Long invoiceLineId;
-    private String itemTaxCode;
-    private String itemTaxDescription;
-    private String itemTaxPercent;
-    private String itemTaxAmount;
 }

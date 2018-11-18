@@ -192,14 +192,17 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
                 if (availableRoomTypesSearchResult[i].idRoomType === selectedRoomType.idRoomType)
                     {
                         //set meal plan
-                        for (var j = 0; i< availableRoomTypesSearchResult[i].mealPlans.length; j++) {
+                        for (var j = 0; j< availableRoomTypesSearchResult[i].mealPlans.length; j++) {
                             if (availableRoomTypesSearchResult[i].mealPlans[j].idMealPlan === selectedRoomType.selectedMealPlan.idMealPlan)
-                                {
-                                    availableRoomTypesSearchResult[i].mealPlans[j].mealPlanItem.quantity = selectedRoomType.selectedRoomCount;
-                                    availableRoomTypesSearchResult[i].mealPlans[j].adultExtraBedItem.quantity = selectedRoomType.selectedExtraAdultCount;
-                                    availableRoomTypesSearchResult[i].mealPlans[j].childExtraBedItem.quantity = selectedRoomType.selectedExtraChildCount;
-                                    break;
-                                }
+                            {
+                            	availableRoomTypesSearchResult[i].mealPlans[j].mealPlanItem.quantity = selectedRoomType.selectedRoomCount;
+                                availableRoomTypesSearchResult[i].mealPlans[j].adultExtraBedItem.quantity = selectedRoomType.selectedExtraAdultCount;
+                                availableRoomTypesSearchResult[i].mealPlans[j].childExtraBedItem.quantity = selectedRoomType.selectedExtraChildCount;
+                            } else{
+                                availableRoomTypesSearchResult[i].mealPlans[j].mealPlanItem.quantity = 0;
+                                availableRoomTypesSearchResult[i].mealPlans[j].adultExtraBedItem.quantity = 0;
+                                availableRoomTypesSearchResult[i].mealPlans[j].childExtraBedItem.quantity = 0;
+							}
                         }
                         bookingCart.selectedRoomTypes.push (availableRoomTypesSearchResult[i]);
                         break;
@@ -209,6 +212,9 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
             bookingCart.selectedProperty = $scope.selectedProperty;
         });
         console.log(bookingCart);
+        var invoice = BookingService.prepareInvoice(bookingCart);
+        console.log("Invoice");
+        console.log(invoice);
     };
 
 	/* Date picker control logic */

@@ -8,7 +8,12 @@ public class ItemDto extends BaseEntityDto {
 	private ItemTypeDto itemType;
 	private ItemPriceDto itemPrice;
 	private Integer quantity;
-	
+
+	public ItemDto(){
+	    super();
+	    this.quantity = 0;
+    }
+
 	public Long getIdItem() {
 		return idItem;
 	}

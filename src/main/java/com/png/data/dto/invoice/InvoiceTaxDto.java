@@ -1,35 +1,29 @@
-package com.png.data.entity;
+package com.png.data.dto.invoice;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import java.math.BigDecimal;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name="item_tax")
-public class ItemTax extends BaseEntity{
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_item_tax")
-    private Integer idItemTax;
-
-    @Column (name="item_tax_code", nullable = false, unique = true)
-    @NotEmpty
+public class InvoiceTaxDto {
+    private Long idInvoiceTax;
+    private Long invoiceId;
     private String itemTaxCode;
-
-    @Column (name="item_tax_description", nullable = false)
-    @NotEmpty
     private String itemTaxDescription;
-
-    @Column (name="item_tax_percent", nullable = false)
-    @NotEmpty
     private String itemTaxPercent;
+    private BigDecimal itemTaxAmount;
 
-    public Integer getIdItemTax() {
-        return idItemTax;
+    public Long getIdInvoiceTax() {
+        return idInvoiceTax;
     }
 
-    public void setIdItemTax(Integer idItemTax) {
-        this.idItemTax = idItemTax;
+    public void setIdInvoiceTax(Long idInvoiceTax) {
+        this.idInvoiceTax = idInvoiceTax;
+    }
+
+    public Long getInvoiceId() {
+        return invoiceId;
+    }
+
+    public void setInvoiceId(Long invoiceId) {
+        this.invoiceId = invoiceId;
     }
 
     public String getItemTaxCode() {
@@ -54,5 +48,13 @@ public class ItemTax extends BaseEntity{
 
     public void setItemTaxPercent(String itemTaxPercent) {
         this.itemTaxPercent = itemTaxPercent;
+    }
+
+    public BigDecimal getItemTaxAmount() {
+        return itemTaxAmount;
+    }
+
+    public void setItemTaxAmount(BigDecimal itemTaxAmount) {
+        this.itemTaxAmount = itemTaxAmount;
     }
 }

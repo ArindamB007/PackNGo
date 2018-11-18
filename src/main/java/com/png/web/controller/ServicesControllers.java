@@ -17,6 +17,7 @@ import com.png.exception.InvalidEmailVerificationCodeException;
 import com.png.exception.ValidationException;
 import com.png.menu.Menu;
 import com.png.services.CustomUserDetailsService;
+import com.png.services.InvoiceProcessorService;
 import com.png.services.PropertyService;
 import com.png.services.RoomTypeService;
 
@@ -31,8 +32,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring4.SpringTemplateEngine;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -66,8 +65,8 @@ public class ServicesControllers {
 	@Autowired
     private EmailService emailService;
 
-    @Autowired
-    private SpringTemplateEngine springTemplateEngine;
+	@Autowired
+	private InvoiceProcessorService invoiceProcessorService;
 
     private HashMap<String,String> populateErrorDetails(BaseException e){
         HashMap<String,String> errorDetails = new HashMap<String,String>();
@@ -224,11 +223,11 @@ public class ServicesControllers {
 
     }
 
-	@RequestMapping(value ="/getInvoice/",method = RequestMethod.POST)
+	@RequestMapping(value ="/prepare_invoice",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> prepareInvoice(@RequestBody BookingCartDto bookingCartDto){
 		try {
-			InvoiceDto invoice = new InvoiceDto(bookingCartDto);
+			InvoiceDto invoice = invoiceProcessorService.createInvoice(bookingCartDto);
 			return new ResponseEntity<>(invoice, HttpStatus.OK);
 		} catch (BaseException e){
 			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);

@@ -11,6 +11,18 @@ PackNGo.factory('BookingService',function($rootScope,$q,$http,$log,UserContext) 
           $log.error(response);
         });
       return deferred.promise;
-    }
+    },
+      prepareInvoice : function(bookingCart) {
+          var deferred = $q.defer();
+          $http.post("../services/prepare_invoice",bookingCart)
+              .then(function(response){
+                  deferred.resolve(response);
+              })
+              .catch(function(response){
+                  deferred.reject(response);
+                  $log.error(response);
+              });
+          return deferred.promise;
+      }
   };
 });

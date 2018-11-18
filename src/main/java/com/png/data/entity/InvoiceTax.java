@@ -4,37 +4,37 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "invoice_line_tax")
-public class InvoiceLineTax extends BaseEntity{
+@Table(name = "invoice_tax")
+public class InvoiceTax {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_invoice_line_tax")
-    private Long idInvoiceLineTax;
-    @Column(name = "invoice_line_id")
-    private Long invoiceLineId;
-    @Column(name = "item_tax_code")
+    @Column(name = "id_invoice_tax")
+    private Long idInvoiceTax;
+    @Column(name="invoice_id")
+    private Long invoiceId;
+    @Column(name="item_tax_code")
     private String itemTaxCode;
-    @Column(name = "item_tax_description")
+    @Column(name="item_tax_description")
     private String itemTaxDescription;
-    @Column(name = "item_tax_percent")
+    @Column(name="item_tax_percent")
     private String itemTaxPercent;
-    @Column(name = "item_tax_amount")
+    @Column(name="item_tax_amount")
     private BigDecimal itemTaxAmount;
 
-    public Long getIdInvoiceLineTax() {
-        return idInvoiceLineTax;
+    public Long getIdInvoiceTax() {
+        return idInvoiceTax;
     }
 
-    public void setIdInvoiceLineTax(Long idInvoiceLineTax) {
-        this.idInvoiceLineTax = idInvoiceLineTax;
+    public void setIdInvoiceTax(Long idInvoiceTax) {
+        this.idInvoiceTax = idInvoiceTax;
     }
 
-    public Long getInvoiceLineId() {
-        return invoiceLineId;
+    public Long getInvoiceId() {
+        return invoiceId;
     }
 
-    public void setInvoiceLineId(Long invoiceLineId) {
-        this.invoiceLineId = invoiceLineId;
+    public void setInvoiceId(Long invoiceId) {
+        this.invoiceId = invoiceId;
     }
 
     public String getItemTaxCode() {
