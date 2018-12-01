@@ -30,6 +30,7 @@ public class InvoiceProcessorService {
     public InvoiceDto createInvoice(BookingCartDto bookingCartDto){
         invoiceDto = new InvoiceDto();
         applicableTaxes = itemTaxRepository.findAll();
+        invoiceDto.setInvoiceNo(getInvoiceNumber());
         invoiceDto.setInvoiceStatusCode(Invoice.InvoiceStatusCodes.TOTALED.name());
         invoiceDto.setUserContext(bookingCartDto.getUserContext());
         invoiceDto.setProperty(bookingCartDto.getSelectedProperty());
@@ -194,5 +195,17 @@ public class InvoiceProcessorService {
     }
     private Integer getInvoiceLineSequence(List<InvoiceLineItemDto> invoiceLines){
         return invoiceLines.size() +1;
+    }
+
+    private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    public static String getInvoiceNumber() {
+        int invNoLength = 8;
+        StringBuilder builder = new StringBuilder();
+        while (invNoLength-- != 0) {
+            int character = (int)(Math.random()*ALPHA_NUMERIC_STRING.length());
+            builder.append(ALPHA_NUMERIC_STRING.charAt(character));
+        }
+        return builder.toString();
     }
 }
