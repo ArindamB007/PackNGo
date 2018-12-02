@@ -141,7 +141,7 @@
 											class="ui red tag label">{{room_type.basePrice}}</a>
 										</span>
 								<div class="basic_desc">
-									<a data-ng-model="room_type($index)" class="header">{{room_type.typeName}}</a>
+									<a class="header">{{room_type.typeName}}</a>
 								<div class="meta">
 										<span class="price-per-day">Starting from
 											{{room_type.mealPlans[0].item.itemPrice.basePrice}} per day</span>
@@ -244,7 +244,7 @@
 												<select class="ui dropdown"
 														data-ng-model="selectedRoomType.selectedMealPlan"
 														data-ng-options="mealPlan.description for mealPlan in selectedRoomType.mealPlans"
-														data-ng-change="calculateGrandTotal($index)"
+														data-ng-change="calculateGrandTotal()"
 														dropdown='description'>
 												</select>
 											</div>
@@ -424,7 +424,8 @@
 						</div>
                         <!--Test Code for Payment integration - todo remove when re-designing-->
                         <div class="row" style="text-align: center">
-                            <button type="button" class="btn btn-info ui basic red button" ng-click="initiatePayment();">Pay</button>
+                            <button type="button" class="btn btn-info ui basic red button"
+									ng-click="initiatePayment();" data-ng-disabled="disablePay">Pay</button>
                         </div>
 						
 						

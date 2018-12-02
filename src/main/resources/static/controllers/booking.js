@@ -8,8 +8,9 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
 	$scope.checkInOutSearchParams = {}; // selected check in out dates
 	$scope.bookingDetails = {}; // selected booking details
 	/*assigning the selected property*/
-	//$scope.bookingDetails.selectedProperty = PropertyService.getSelectedProperty();
     $scope.selectedProperty = PropertyService.getSelectedProperty();
+    /*pay button disabled until pre-invoice*/
+    $scope.disablePay = true;
 	/* Booking navigation control logic */
 	$scope.bookingStage = $scope.BOOKING_NAV_CONSTANTS.SELECT_DATE;
 	$scope.moveNext = function(){
@@ -213,9 +214,17 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
         });
         console.log(bookingCart);
         $scope.preInvoice = undefined;
-        $scope.preInvoice = BookingService.prepareInvoice(bookingCart);
-        console.log("Invoice");
-        console.log($scope.preInvoice);
+        BookingService.prepareInvoice(bookingCart).then(function(response){
+        	console.log("Invoice Response");
+        	console.log(response.data);
+            $scope.preInvoice = response.data;
+            $scope.disablePay = false;
+		})
+			.catch(function(response){
+                $scope.preInvoice = undefined;
+                $scope.disablePay = false;
+                CommonService.handleDefaultErrorResponse("sm", "Pre Invoice Error", response, ["OK"]);
+			});
     };
 
     /*initiate payment*/
