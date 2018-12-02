@@ -1159,7 +1159,7 @@ output {
 }
 .mui-form-group.is-focused .mui-form-control {
   outline: none;
-  background-image: linear-gradient(#5f76b9, #5f76b9), linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: linear-gradient(#d80000, #d80000), linear-gradient(#D2D2D2, #D2D2D2);
   background-size: 100% 2px, 100% 1px;
   box-shadow: none;
   transition-duration: 0.3s;
@@ -1834,7 +1834,7 @@ legend {
   color: #ffffff;
 }
 .navbar .dropdown-menu, .navbar.navbar-default .dropdown-menu {
-  border-radius: 5px !important;
+  border-radius: 0 !important;
 }
 .navbar .dropdown-menu li > a:hover, .navbar .dropdown-menu li > a:focus, .navbar.navbar-default .dropdown-menu li > a:hover, .navbar.navbar-default .dropdown-menu li > a:focus {
   color: #FFFFFF;
