@@ -28,6 +28,9 @@ PackNGo.factory('CommonService',function(ModalService,CONSTANTS) {
     },
       isObjectEmpty : function(object){
           return (Object.keys(object).length===0);
+      },
+      getPaisaFromRupee : function(rupeeValue){
+          return (rupeeValue*100).toString(10);
       }
 
   };

@@ -212,9 +212,39 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
             bookingCart.selectedProperty = $scope.selectedProperty;
         });
         console.log(bookingCart);
-        var invoice = BookingService.prepareInvoice(bookingCart);
+        $scope.preInvoice = undefined;
+        $scope.preInvoice = BookingService.prepareInvoice(bookingCart);
         console.log("Invoice");
-        console.log(invoice);
+        console.log($scope.preInvoice);
+    };
+
+    /*initiate payment*/
+    $scope.initiatePayment = function(){
+        var options = {
+            "key": "rzp_test_9LJbdDeHn1EYIr", // move to server side
+            "amount": CommonService.getPaisaFromRupee($scope.preInvoice.invoiceTotalWithTax), // 2000 paise = INR 20
+            "name": "Maples N Mist Travel Management Private Limited", // move to server side
+            "description": "Invoice No. " + $scope.preInvoice.invoiceNo ,
+            "image": "../img/logo/MnM-Logo.png", //base 64 image has to be put
+            "handler": function (response){
+                console.log("Payment response: ");
+                console.log(response);
+                alert(response.razorpay_payment_id);
+            },
+            "prefill": {
+                "name": $scope.preInvoice.userContext.firstName + $scope.preInvoice.userContext.lastName,
+                "email": $scope.preInvoice.userContext.email,
+                "contact": "9836966558"
+            },
+            "notes": {
+                "address": "Hello World"
+            },
+            "theme": {
+                "color": "#D80000"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
     };
 
 	/* Date picker control logic */
