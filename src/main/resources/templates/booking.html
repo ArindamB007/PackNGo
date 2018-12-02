@@ -141,7 +141,7 @@
 											class="ui red tag label">{{room_type.basePrice}}</a>
 										</span>
 								<div class="basic_desc">
-									<a class="header">{{room_type.typeName}}</a>
+									<a data-ng-model="room_type($index)" class="header">{{room_type.typeName}}</a>
 								<div class="meta">
 										<span class="price-per-day">Starting from
 											{{room_type.mealPlans[0].item.itemPrice.basePrice}} per day</span>
@@ -244,7 +244,7 @@
 												<select class="ui dropdown"
 														data-ng-model="selectedRoomType.selectedMealPlan"
 														data-ng-options="mealPlan.description for mealPlan in selectedRoomType.mealPlans"
-														data-ng-change="calculateGrandTotal()"
+														data-ng-change="calculateGrandTotal($index)"
 														dropdown='description'>
 												</select>
 											</div>
@@ -253,7 +253,7 @@
 										<div class="one wide column text-right booking-line-item"><i class = "fa fa-times"></i></div>
 										<div class="one wide column text-center booking-line-item">{{selectedRoomType.selectedRoomCount}}</div>
 										<div class="four wide column text-right booking-line-item">
-											{{selectedRoomType.selectedMealPlan.mealPlanItem.itemPrice.basePrice * selectedRoomType.selectedRoomCount|currency:currency}}
+                                            landing_tile								{{selectedRoomType.selectedMealPlan.mealPlanItem.itemPrice.basePrice * selectedRoomType.selectedRoomCount|currency:currency}}
 										</div>
 										<div class="eight wide column">
 											<div class="field inline">
