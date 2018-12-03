@@ -2,12 +2,14 @@ package com.png.web.controller;
 
 import com.png.auth.service.SecurityService;
 import com.png.auth.service.UserService;
+import com.png.auth.validator.EmailValidator;
 import com.png.auth.validator.UserValidator;
 import com.png.comms.email.EmailService;
 import com.png.data.dto.availableroomtype.AvailableRoomTypeDto;
 import com.png.data.dto.bookingcart.BookingCartDto;
 import com.png.data.dto.checkinoutdetails.CheckInOutSearchParamsDto;
 import com.png.data.dto.invoice.InvoiceDto;
+import com.png.data.dto.otpvalidation.EmailOtpValidationDto;
 import com.png.data.dto.property.PropertyDto;
 import com.png.data.dto.user.UserContext;
 import com.png.data.entity.User;
@@ -16,10 +18,7 @@ import com.png.exception.EmailVerificationExpiredException;
 import com.png.exception.InvalidEmailVerificationCodeException;
 import com.png.exception.ValidationException;
 import com.png.menu.Menu;
-import com.png.services.CustomUserDetailsService;
-import com.png.services.InvoiceProcessorService;
-import com.png.services.PropertyService;
-import com.png.services.RoomTypeService;
+import com.png.services.*;
 
 import com.png.util.DateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +42,12 @@ import java.util.*;
 public class ServicesControllers {
 	@Autowired
 	UserValidator userValidator;
+
+	@Autowired
+	EmailValidator emailValidator;
+
+	@Autowired
+	OtpGeneratorService otpGeneratorService;
 	
 	@Autowired
 	UserService userService;
@@ -75,6 +80,19 @@ public class ServicesControllers {
         errorDetails.put("message", e.getErrorMessage());
         return errorDetails;
     }
+    private List <HashMap <String,String>> getBindingErrors(BindingResult bindingResult) {
+		List<HashMap<String, String>> errorList = new ArrayList<HashMap<String, String>>();
+		if (bindingResult.hasErrors()) {
+			for (FieldError error : bindingResult.getFieldErrors()) {
+				HashMap<String, String> errors = new HashMap<String, String>();
+				errors.put("fieldName", error.getField());
+				errors.put("errorType", error.getCode());
+				errors.put("message", error.getDefaultMessage());
+				errorList.add(errors);
+			}
+		}
+		return errorList;
+	}
 	@RequestMapping(value ="/sign_up",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> signup(@RequestBody User user,BindingResult bindingResult) throws ValidationException{
@@ -229,6 +247,22 @@ public class ServicesControllers {
 		try {
 			InvoiceDto invoice = invoiceProcessorService.createInvoice(bookingCartDto);
 			return new ResponseEntity<>(invoice, HttpStatus.OK);
+		} catch (BaseException e){
+			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value ="/send_email_otp",method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Object> sendEmailOtp(@RequestBody EmailOtpValidationDto emailOtp,
+											   BindingResult bindingResult) throws ValidationException{
+		try {
+			List <HashMap <String,String>> errorList = new ArrayList<HashMap <String,String>>();
+			emailValidator.validate(emailOtp, bindingResult);
+			if (bindingResult.hasErrors()){
+				return new ResponseEntity<Object>(getBindingErrors(bindingResult),HttpStatus.BAD_REQUEST);
+			}
+			return new ResponseEntity<>(otpGeneratorService.generateEmailOpt(emailOtp), HttpStatus.OK);
 		} catch (BaseException e){
 			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);
 		}

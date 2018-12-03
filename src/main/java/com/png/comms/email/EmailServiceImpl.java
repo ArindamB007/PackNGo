@@ -32,6 +32,7 @@ public class EmailServiceImpl implements EmailService{
     @Autowired
     private DateFormatter dateFormatter;
 
+    @Async
     public void sendSimpleMessage(Mail mail) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
