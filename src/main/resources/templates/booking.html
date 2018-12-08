@@ -253,7 +253,7 @@
 										<div class="one wide column text-right booking-line-item"><i class = "fa fa-times"></i></div>
 										<div class="one wide column text-center booking-line-item">{{selectedRoomType.selectedRoomCount}}</div>
 										<div class="four wide column text-right booking-line-item">
-                                            landing_tile								{{selectedRoomType.selectedMealPlan.mealPlanItem.itemPrice.basePrice * selectedRoomType.selectedRoomCount|currency:currency}}
+                                            {{selectedRoomType.selectedMealPlan.mealPlanItem.itemPrice.basePrice * selectedRoomType.selectedRoomCount|currency:currency}}
 										</div>
 										<div class="eight wide column">
 											<div class="field inline">
@@ -290,6 +290,8 @@
 											{{selectedRoomType.selectedMealPlan.childExtraBedItem.itemPrice.basePrice * selectedRoomType.selectedExtraChildCount|currency:currency}}
 										</div>
 									</div>
+								
+								
 								</div>
 							</div>
 						</div>
@@ -299,173 +301,127 @@
 		</div>
 		
 		<!--   Guest Information Form and Tariff Details -->
-		<div data-ng-if="bookingStage==BOOKING_NAV_CONSTANTS.GET_GUEST_INFO">
-			<div class="row meal_planner" style="line-height: 4.2">
-				<div class="col-sm-2 col-md-2 text-center"
-					 style="border-right: 1px solid rgba(34, 36, 38, .15);">
-					<button class="png ui basic red button" ng-click="movePrev()">
-						<i class="left chevron icon"></i> Change Details
-					</button>
+		<div data-ng-if="bookingStage==BOOKING_NAV_CONSTANTS.GET_GUEST_INFO" class="pre_payment">
+			<a class="pay-now" ng-click="initiatePayment();" data-ng-disabled="disablePay"><img style="" src="../img/pay-now.png"></a>
+			    <div class="row"> 
+			  <div class="col-sm-6" style="padding-left:0;">
+				<div class="panel panel-default cust_panel">
+				  <div class="panel-heading">
+					<h3 class="panel-title">Customer Details</h3>
+				  </div>
+				  <div class="panel-body">
+					<dl class="dl-horizontal">
+					  <dt>Name</dt>
+					  <dd>{{preInvoice.userContext.firstName}} {{preInvoice.userContext.middleName}} {{preInvoice.userContext.lastName}}</dd>
+					  <dt>Location</dt>
+					  <dd>{{preInvoice.property.tagLine}}, {{preInvoice.property.location}}</dd>
+					 <!-- <dd>{{preInvoice.property.description}}</dd> -->
+					  <dt>Hotel Name</dt>
+					  <dd>{{preInvoice.property.name}}, {{preInvoice.property.shortDesc}}</dd>
+					  <dt>Check In</dt>
+					  <dd>{{checkInOutSearchParams.checkInTimestamp}}</dd>
+					  <dt>Check Out</dt>
+					  <dd>{{checkInOutSearchParams.checkOutTimestamp}}</dd>
+					  <dt>Phone</dt>
+					  <dd>(425) 882-8080</dd>
+					  <dt>Email</dt>
+					  <dd>{{preInvoice.userContext.email}}</dd>
+					  <dt>Facilities</dt>
+					  <dd>
+						<i ng-if="preInvoice.property.facilities.wifi" class="wi-fi icon red"></i>
+				  <i ng-if="preInvoice.property.facilities.parking" class="car icon red"></i>
+				  <i ng-if="preInvoice.property.facilities.breakfast" class="food icon red"></i>
+				  <i ng-if="preInvoice.property.facilities.restaurant" class="food icon red"></i>
+					  </dd>
+					  
+					  <button class="png ui basic red button" style="position: fixed;top: 198px;left: 63px;border-radius: 0 0 15px 15px;-moz-transform: rotate(-90deg);-ms-transform: rotate(-90deg);-webkit-transform: rotate(-90deg);filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);-o-transform: rotate(-90deg);;z-index: 9999;" ng-click="movePrev()">Change Details </button>
+					  
+				  </div>
 				</div>
-				<div class="col-sm-3 col-md-3 text-center">
-					<i class="checked calendar icon"></i> Check In
-					<div class="ui label red ng-binding">{{checkInOutSearchParams.checkInTimestamp}}</div>
+			  </div>
+			  <div class="col-sm-6"  style="padding-right:0;">
+				<div class="panel panel-default traveller_d">
+				  <div class="panel-heading">
+					<h3 class="panel-title">Traveller Details</h3>
+				  </div>
+				  <div class="panel-body">
+					<dl class="dl-horizontal">
+					  <dt>Name</dt>
+					  <dd><input type="text"  ng-value="preInvoice.userContext.firstName" class="form-control"></dd>
+					  <dd><input type="text"  ng-value="preInvoice.userContext.middleName" class="form-control"></dd>
+					  <dd><input type="text"  ng-value="preInvoice.userContext.lastName" class="form-control"></dd>
+					  <dt>Email</dt>
+					  <dd><input type="text" name="cust_email" id="additionalContactEmail" ng-model="preInvoice.userContext.email" placeholder="Email" class="form-control"></dd>
+					  <dt>Phone Number</dt>
+					  <dd><input type="text" id="additionalContactMobile" name="additionalContactMobile" ng-pattern="/^[0-9]*$/" ng-value="preInvoice.userContext.phone" placeholder="Mobile Number" maxlength="10" class="form-control ng-pristine" required=""></dd>
+				  </div>
 				</div>
-				<div class="col-sm-2 col-md-2 text-center">
-					<i class="moon red icon"></i>{{checkInOutSearchParams.nights}}
-				</div>
-				<div class="col-sm-3 col-md-3 text-center">
-					<i class="checked calendar icon"></i> Check Out
-					<div class="ui label red ng-binding">{{checkInOutSearchParams.checkOutTimestamp}}</div>
-				</div>
-				<div class="col-sm-2 col-md-2 text-center"
-					 style="border-left: 1px solid rgba(34, 36, 38, .15);">
-					<button data-ng-disabled="!enableMoveToGuestInfo()"
-							class="png ui basic red button"
-							ng-click="showGuestConfirmation()">
-						<i class="right chevron icon"></i> Continue
-					</button>
-				</div>
+			  </div>
+			  
 			</div>
-			<div class="ui divider"></div>
-			<div class="row traveller">
-					<div class="col-sm-9 col-md-9">
-						<h3>Traveler Details</h3>
-						<div class="row">
-								<div class="col-sm-3 col-md-3 form-lebel">
-								Contact Details
-							</div>
-							<div class="col-sm-5 col-md-5">
-								<input type="text" name="additionalContactEmail" id="additionalContactEmail" ng-model="additionalContact.email" placeholder="Email" ng-pattern="/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/" ng-disabled="isloggedIn &amp;&amp; additionalContact.email !=''" required="" class="form-control ng-pristine ">
-							</div>
-							<div class="col-sm-3 col-md-3">
-								<input type="text" id="additionalContactMobile" name="additionalContactMobile" ng-pattern="/^[0-9]*$/" ng-model="additionalContact.mobile" placeholder="Mobile Number" ng-minlength="10" ng-maxlength="10" maxlength="10" class="form-control ng-pristine" required="">
-							</div>
-						</div>
-						<div class="row"><span class="col-sm-12 col-md-12" style="color:#ef4500;padding-bottom: 15px;border-bottom:2px solid #dcdcdc;">Your booking details will be sent to this email address and mobile number.</span></div>
-						<div class="row">
-							<div class="col-sm-3 col-md-3 form-lebel">
-								Guest Name
-							</div>
-							<div class="col-sm-3 col-md-3 form-lebel">
-							<input type="text" name="fname0"  ng-model="traveller.travellerDetails.firstName.value" ng-pattern="/^[A-Za-z\s]+$/" placeholder="First Name" ng-required="traveller.travellerDetails.firstName.isMandatory" id="travellerf0" ng-text="" class="form-control ng-pristine ng-scope ng-valid-pattern ng-touched" required="required">
-							</div>
-							<div class="col-sm-3 col-md-3">
-								<input type="text" name="Mname0" id="travellerl0" ng-model="traveller.travellerDetails.middleName.value" ng-pattern="/^[A-Za-z\s]+$/" placeholder="Middle Name" ng-required="traveller.travellerDetails.middleName.isMandatory" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" required="required">
-							</div>
-							<div class="col-sm-3 col-md-3">
-								<input type="text" name="lname0" id="travellerl0" ng-model="traveller.travellerDetails.lastName.value" ng-pattern="/^[A-Za-z\s]+$/" placeholder="Last Name" ng-required="traveller.travellerDetails.lastName.isMandatory" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" required="required">
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-3 col-md-3 form-lebel">
-								Special Request
-							</div>
-							<div class="col-sm-9 col-md-9 form-lebel">
-								<textarea placeholder="e.g. I want early check-in or specify the time you will check-in." cols="80" row="5" ng-model="specialRequest.value" class="ng-pristine ng-valid ng-empty ng-touched"></textarea>
-								<span style="color:#ef4500">Special request can't be guaranteed. We will pass these requests to the hotels.</span>
-							</div>
+			<div class="row">
+							  <!-- Hotel Details starts -->
+			      <div class="panel panel-default">
+					  <div class="panel-heading">
+						<h3 class="panel-title">Hotel Details</h3>
 						
-						</div>
-						<div class="row">
-							
-									<div class="col-sm-10 col-md-10">
-									<span class="bold" style="display:block;">Add your GST Details (Optional)</span>
-									<span class="gray">Claim credit of GST charges. Your taxes may get updated post submitting your GST details.</span>
-								</div>
-								<button type="button" class="btn btn-info ui basic red button" data-toggle="collapse" data-target="#demo">Add GST</button>
-													
-							<div id="demo" class="col-sm-12 col-md-12 collapse">
-							<div class="row">
-								<div class="col-sm-2 col-md-2 form-lebel">
-									GST Number:
-								</div>
-								<div class="col-sm-4 col-md-4"> 
-									<input type="text" id="elem1" name="gstRegNo" ng-model="getSaveGstParams.custGSTNumber" maxlength="15" class="ng-pristine ng-valid ng-empty ng-valid-maxlength ng-touched form-control">
-								</div>
-								<div class="col-sm-2 col-md-2 form-lebel"> 
-									Email Id:
-								</div>
-								<div class="col-sm-4 col-md-4"> 
-									 <input type="text" id="elem3" name="userEmail" ng-model="getSaveGstParams.custGSTCompanyEmailId" class="ng-pristine ng-valid ng-empty ng-touched form-control">
-								</div>
-							</div>
-							<div class="row">
-							<div class="col-sm-2 col-md-2 form-lebel"> 
-									Mobile Number
-								</div>
-								<div class="col-sm-4 col-md-4">
-									<input type="text" id="elem9" name="userPhone" ng-model="getSaveGstParams.custGSTPhoneNumber" maxlength="17" ng-keypress="onlyNumbers($event)" class="ng-pristine ng-valid ng-empty ng-valid-maxlength ng-touched form-control">
-								</div>
-								<div class="col-sm-2 col-md-2 form-lebel"> 
-									Pincode:
-								</div>
-								<div class="col-sm-4 col-md-4"> 
-									<input type="text" id="elem6" name="userPinCode" ng-model="getSaveGstParams.custGSTPinCode" class="ng-pristine ng-valid ng-empty ng-touched form-control">
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-2 col-md-2 form-lebel"> 
-									Company Name
-								</div>
-								<div class="col-sm-4 col-md-4">
-									<input type="text" id="elem2" name="gstCompName" ng-model="getSaveGstParams.custGSTCompanyName" maxlength="50" class="ng-pristine ng-valid ng-empty ng-valid-maxlength ng-touched form-control">
-								</div>
-								<div class="col-sm-2 col-md-2 form-lebel"> 
-									Address
-								</div>
-								<div class="col-sm-4 col-md-4"> 
-									<input type="text" id="elem4" name="userAddress" ng-model="getSaveGstParams.custGSTCompanyAddress" class="ng-pristine ng-valid ng-empty ng-touched form-control">
-								</div>
-							</div>
-								
-								
-							</div>
-						</div>
-                        <!--Test Code for Payment integration - todo remove when re-designing-->
-                        <div class="row" style="text-align: center">
-                            <button type="button" class="btn btn-info ui basic red button"
-									ng-click="initiatePayment();" data-ng-disabled="disablePay">Pay</button>
-                        </div>
-						
-						
+					  </div>
+				<table class="table table-bordered table-condensed">
+						<thead>
+						  <tr>
+							<th class="text-center colfix">Sl#</th>
+							<th class="text-center colfix">Room Details</th>
+							<th class="text-center colfix">Room Counts</th>
+							<th class="text-center colfix">Inclusion</th>
+							<th class="text-center colfix">Tariif</th>
+							<th class="text-center colfix">{{preInvoice.appliedTaxes[0].itemTaxCode}} {{preInvoice.appliedTaxes[0].itemTaxPercent}}%</th>
+							<th class="text-center colfix">{{preInvoice.appliedTaxes[1].itemTaxCode}} {{preInvoice.appliedTaxes[1].itemTaxPercent}}%</th>
+							<th class="text-center colfix">Total</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr ng-repeat="i in invoiceLines">
+							<td>{{i.sequenceNo}}</td>
+							<td>{{i.description}}</td>
+							<td>{{i.quantity}}</td>
+							<td>{{i.includes[0]}} {{i.includes[1]}} {{i.includes[2]}}</td>
+							<td>{{i.price}}</td>
+							<td>{{i.invoiceLineTaxes[0].itemTaxAmount}}</td>
+							<td>{{i.invoiceLineTaxes[1].itemTaxAmount}}</td>
+							<td>{{i.amountWithTax}}</td>
+						  </tr>
+						   
+						  </tr>
+						</tbody>
+					  </table>
 					</div>
-					<div class="col-sm-3 col-md-3">
-						<h3>Tariff <div class="ui red tag label ng-binding">Total {{bookingDetails.grandTotal | currency:currency}}</div></h3>
-						<div class="row">
-								<div class="col-sm-6 col-md-6 form-lebel">
-									Hotel Charges
-								</div>
-								<div class="col-sm-6 col-md-6 form-lebel">
-									{{bookingDetails.grandTotal}}
-								</div>
-						</div>
-						<div class="row">
-								<div class="col-sm-6 col-md-6 form-lebel">
-									Hotel GST
-								</div>
-								<div class="col-sm-6 col-md-6 form-lebel">
-									{{bookingDetails.grandTotal*0.18}}
-								</div>
-						</div>
-						<div class="row">
-								<div class="col-sm-6 col-md-6 form-lebel">
-									Inclusion
-								</div>
-								<div class="col-sm-6 col-md-6 form-lebel">
-									123456
-								</div>
-						</div>
-						<div class="row">
-								<div class="col-sm-6 col-md-6 form-lebel">
-									Total Payment
-								</div>
-								<div class="col-sm-6 col-md-6 form-lebel">
-									123456
-								</div>
-						</div>
+					
+					<div class="panel panel-default">
+					  <table class="table table-bordered table-condensed">
+						<thead>
+						  <tr>
+							<td class="text-center col-sm-1">Sub Total</td>
+							<td class="text-center col-sm-1">Discount</td>
+							<td class="text-center col-sm-1">Total</td>
+							<td class="text-center col-sm-1">Tax</td>
+							<td class="text-center col-sm-1">Final</td>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr>
+							<th class="text-center rowtotal mono">{{preInvoice.invoiceTotal}}</th>
+							<th class="text-center rowtotal mono">0.00</th>
+							<th class="text-center rowtotal mono">{{preInvoice.invoiceTotal}}</th>
+							<th class="text-center rowtotal mono">{{preInvoice.invoiceTotalTax}}</th>
+							<th class="text-center rowtotal mono">{{preInvoice.invoiceTotalWithTax}}</th>
+						  </tr>
+						</tbody>
+					  </table>
 					</div>
-				</div>
+					
+					<button type="button" class="png ui basic red button" ng-click="initiatePayment();" data-ng-disabled="disablePay">Pay Now</button>
+			</div>
+
 		</div>
 	</div>
 </div>

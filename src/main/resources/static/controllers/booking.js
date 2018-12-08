@@ -218,6 +218,7 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
         	console.log("Invoice Response");
         	console.log(response.data);
             $scope.preInvoice = response.data;
+            $scope.invoiceLines = response.data.invoiceLines;
             $scope.disablePay = false;
 		})
 			.catch(function(response){
