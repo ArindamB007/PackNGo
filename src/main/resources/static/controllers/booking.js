@@ -1,5 +1,5 @@
 PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,CommonService,PropertyService,
-                                          UserContext){
+                                          UserContext,$location){
 	$scope.BOOKING_NAV_CONSTANTS = CONSTANTS.BOOKING_NAV; // booking nav constants
 	// in scope variable
 	$scope.currency = "INR ";
@@ -236,11 +236,8 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
             "name": "Maples N Mist Travel Management Private Limited", // move to server side
             "description": "Invoice No. " + $scope.preInvoice.invoiceNo ,
             "image": "../img/logo/MnM-Logo.png", //base 64 image has to be put
-            "handler": function (response){
-                console.log("Payment response: ");
-                console.log(response);
-                alert(response.razorpay_payment_id);
-            },
+            "handler": paymentHandler,
+			"modal" : {"ondismiss": checkPayment},
             "prefill": {
                 "name": $scope.preInvoice.userContext.firstName + $scope.preInvoice.userContext.lastName,
                 "email": $scope.preInvoice.userContext.email,
@@ -256,6 +253,22 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
         var rzp1 = new Razorpay(options);
         rzp1.open();
     };
+    var paymentHandler = function(response){
+        console.log("Payment response: ");
+        console.log(response);
+        $scope.paymentResponse = response;
+        alert(response.razorpay_payment_id);
+        $location.path('/invoice');
+        $scope.$apply();
+
+	};
+    var checkPayment = function(){
+    	alert("Please complete your payment");
+	};
+
+    var redirectToInvoice = function(){
+
+	};
 
 	/* Date picker control logic */
 	$scope.$on('$routeChangeStart', function(event){

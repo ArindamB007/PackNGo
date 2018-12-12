@@ -9114,6 +9114,33 @@ button.social-signin.google {
 /*Landing Page Style Ends*/
 /*Main Menu Style starts*/
 /*Main Menu Style Ends*/
+.pre_payment .panel-heading,
+.pre_payment .panel > .panel-heading,
+.pre_payment .panel.panel-default > .panel-heading {
+  background: #d80000;
+  color: #fff; }
+
+.traveller_d .mui-form-group {
+  margin: 3px 0 0 0; }
+
+.pre_payment * {
+  font-size: 13px; }
+
+.cust_panel .panel-body {
+  min-height: 236px; }
+
+.pay-now {
+  position: fixed;
+  top: 130px;
+  right: 11px;
+  z-index: 9999;
+  width: 100px;
+  height: 100px;
+  cursor: pointer; }
+
+.pay-now img {
+  width: 100%; }
+
 @media (min-width: 992px) {
   /*Menu Bar style change*/
   .navbar .navbar-nav > :hover, .navbar .navbar-nav .active, .navbar-default .navbar-nav > :hover, .navbar-default .navbar-nav .active, .navbar-default .navbar .navbar-nav > :hover, .navbar-default .navbar .navbar-nav .active, .navbar-inverse .navbar-nav > :hover, .navbar-inverse .navbar-nav .active, .navbar-default .navbar-nav .navbar-nav > :hover, .navbar-default .navbar-nav .navbar-nav .active {

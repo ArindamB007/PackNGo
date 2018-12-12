@@ -62,6 +62,11 @@ public class PnGController {
 		System.out.println("booking!");
 		return "booking";
 	}
+	@RequestMapping("/invoice")
+	public String invoice() {
+		System.out.println("invoice!");
+		return "invoice";
+	}
 	@RequestMapping("/samples")
 	public String sample() {
 		System.out.println("samples!");

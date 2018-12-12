@@ -29,6 +29,11 @@ PackNGo.config(['$routeProvider',
             controller : 'BookingCtrl',
             allowAnonymous : false //allows the url to be accessed anonymously
         }).
+        when('/invoice', {
+            templateUrl : '/invoice',
+            controller : 'InvoiceCtrl',
+            allowAnonymous : false //allows the url to be accessed anonymously
+        }).
         when('/verify-email/:verificationCode', {
             templateUrl : '/verify-email',
             controller : 'VerifyEmailCtrl',
