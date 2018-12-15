@@ -2,15 +2,15 @@
 INSERT INTO role(name,description) VALUES ("ROLE_USER","An applicaiton user");
 
 /*User Data*/
-INSERT INTO user (password,email,first_name,last_name,email_validated,created_timestamp,updated_timestamp,deleted_flag)
-VALUES ('$2a$10$OoCsci6KuXyZoADVKs4Jw.NsgqTFUGYWWxSXNTE85F3EybjoDbu..','arindam.bandyopadhyay@gmail.com', 'Arindam','Bandyopadhyay',TRUE , now(),now(),FALSE );
+INSERT INTO user (password,mobile,email,first_name,last_name,email_validated,created_timestamp,updated_timestamp,deleted_flag)
+VALUES ('$2a$10$OoCsci6KuXyZoADVKs4Jw.NsgqTFUGYWWxSXNTE85F3EybjoDbu..','9836966558','arindam.bandyopadhyay@gmail.com', 'Arindam','Bandyopadhyay',TRUE , now(),now(),FALSE );
 
 INSERT INTO users_roles (id_user,id_role)
 values((select id_user from user where email = 'arindam.bandyopadhyay@gmail.com'),
 			 (select id_role from role where name = "ROLE_USER"));
 
-INSERT INTO user (password,email,first_name,last_name,email_validated,created_timestamp,updated_timestamp,deleted_flag)
-VALUES ('$2a$10$q2y/OlNVXSobdKN2zOLDUOlO49zVUGSQ4ZBTpuaNuEe6ZSc9b0Gbu','patraanup123@gmail.com', 'Anup','Patra',TRUE , now(),now(),FALSE );
+INSERT INTO user (password,mobile,email,first_name,last_name,email_validated,created_timestamp,updated_timestamp,deleted_flag)
+VALUES ('$2a$10$q2y/OlNVXSobdKN2zOLDUOlO49zVUGSQ4ZBTpuaNuEe6ZSc9b0Gbu','9674971030','patraanup123@gmail.com', 'Anup','Patra',TRUE , now(),now(),FALSE );
 
 INSERT INTO users_roles (id_user,id_role)
 values((select id_user from user where email = 'patraanup123@gmail.com'),

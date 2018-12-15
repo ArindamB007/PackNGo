@@ -6,6 +6,7 @@ public interface UserService {
 	void save(User user);
 
     User findByUsername(String email);
+    User findByMobile(String mobile);
     User findByEmailValidationCode(String validationCode);
     User resendEmailValidationCode(String email);
     User resetEmailValidationCode(String emailValidationCode);

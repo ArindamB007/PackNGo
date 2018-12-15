@@ -13,7 +13,9 @@ public class ValidationProperties {
 	private String signupRequired;
 	private String signupRequiredFirstName;
 	private String signupRequiredLastName;
+	private String signupRequiredMobile;
 	private String signupInvalidEmail;
+	private String signupInvalidMobile;
 	private String signupDuplicateEmail;
 	private String signupSizeEmail;
 	private String signupSizePassword;
@@ -67,4 +69,19 @@ public class ValidationProperties {
 		this.signupRequiredLastName = signupRequiredLastName;
 	}
 
+	public String getSignupRequiredMobile() {
+		return signupRequiredMobile;
+	}
+
+	public void setSignupRequiredMobile(String signupRequiredMobile) {
+		this.signupRequiredMobile = signupRequiredMobile;
+	}
+
+	public String getSignupInvalidMobile() {
+		return signupInvalidMobile;
+	}
+
+	public void setSignupInvalidMobile(String signupInvalidMobile) {
+		this.signupInvalidMobile = signupInvalidMobile;
+	}
 }

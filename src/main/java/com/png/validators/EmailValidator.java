@@ -1,4 +1,4 @@
-package com.png.auth.validator;
+package com.png.validators;
 
 import com.png.data.dto.otpvalidation.EmailOtpValidationDto;
 import com.png.messages.CustomMessages;

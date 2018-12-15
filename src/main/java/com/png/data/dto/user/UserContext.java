@@ -1,30 +1,39 @@
 package com.png.data.dto.user;
 
+import com.png.data.entity.Traveller;
 import com.png.data.entity.User;
+import com.png.data.mapper.TravellerMapper;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserContext {
-    private Long idUser;
+	private Long idUser;
 
-    private String email;
+	private String email;
 
-    private Boolean emailValidated = false;
+	private String mobile;
 
-    private String firstName;
-    
-    private String lastName;
-    
+	private Boolean emailValidated = false;
+
+	private String firstName;
+
+	private String middleName;
+
+	private String lastName;
+
 	private Timestamp lastLoginTimestamp;
-	
+
 	private Timestamp createdTimestamp;
-	
+
 	private Timestamp updatedTimestamp;
 
-    private Boolean deleteFlag =false;
-    
-    private ArrayList<String> userRoles;
+	private Boolean deleteFlag =false;
+
+	private ArrayList<String> userRoles;
+
+	private List <TravellerDto> travellers;
 
 	public Long getIdUser() {
 		return idUser;
@@ -42,6 +51,14 @@ public class UserContext {
 		this.email = email;
 	}
 
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
 	public Boolean getEmailValidated() {
 		return emailValidated;
 	}
@@ -57,17 +74,28 @@ public class UserContext {
 	public void setDeleteFlag(Boolean deleteFlag) {
 		this.deleteFlag = deleteFlag;
 	}
-	
+
+	public List<TravellerDto> getTravellers() {
+		return travellers;
+	}
+
+	public void setTravellers(List<TravellerDto> travellers) {
+		this.travellers = travellers;
+	}
+
 	public void setUserDetails(User user){
 		this.idUser = user.getIdUser();
 		this.email = user.getEmail();
+		this.mobile = user.getMobile();
 		this.emailValidated = user.getEmailValidated();
 		this.firstName = user.getFirstName();
+		this.middleName = user.getMiddleName();
 		this.lastName = user.getLastName();
 		this.lastLoginTimestamp = user.getLastLoginTimestamp();
 		this.createdTimestamp = user.getCreatedTimestamp();
 		this.updatedTimestamp = user.getUpdatedTimestamp();
-		this.deleteFlag =user.getDeleteFlag();
+		this.deleteFlag = user.getDeletedFlag();
+		this.travellers = TravellerMapper.INSTANCE.TravellersToTravellerDtos(user.getTravellers());
 	}
 
 	public Timestamp getLastLoginTimestamp() {
@@ -108,6 +136,14 @@ public class UserContext {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
 	}
 
 	public String getLastName() {

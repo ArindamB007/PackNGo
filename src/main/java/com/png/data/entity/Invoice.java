@@ -1,6 +1,9 @@
 package com.png.data.entity;
 
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
@@ -35,6 +38,24 @@ public class Invoice extends BaseEntity{
 
     @OneToMany (mappedBy = "invoiceId")
     private List<InvoiceLine> invoiceLines;
+
+    @Column(name="traveller_first_name")
+    private String travellerFirstName;
+
+    @Column(name="traveller_middle_name")
+    private String travellerMiddleName;
+
+    @Column(name="traveller_last_name")
+    private String travellerLastName;
+
+    @Column(name="traveller_email")
+    @Email
+    @NotEmpty
+    private String travellerEmail;
+
+    @Column (name="traveller_mobile")
+    @NotEmpty
+    private String travellerMobile;
 
     @ManyToOne (fetch = FetchType.LAZY, optional = false)
     @PrimaryKeyJoinColumn
@@ -123,5 +144,45 @@ public class Invoice extends BaseEntity{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getTravellerFirstName() {
+        return travellerFirstName;
+    }
+
+    public void setTravellerFirstName(String travellerFirstName) {
+        this.travellerFirstName = travellerFirstName;
+    }
+
+    public String getTravellerMiddleName() {
+        return travellerMiddleName;
+    }
+
+    public void setTravellerMiddleName(String travellerMiddleName) {
+        this.travellerMiddleName = travellerMiddleName;
+    }
+
+    public String getTravellerLastName() {
+        return travellerLastName;
+    }
+
+    public void setTravellerLastName(String travellerLastName) {
+        this.travellerLastName = travellerLastName;
+    }
+
+    public String getTravellerEmail() {
+        return travellerEmail;
+    }
+
+    public void setTravellerEmail(String travellerEmail) {
+        this.travellerEmail = travellerEmail;
+    }
+
+    public String getTravellerMobile() {
+        return travellerMobile;
+    }
+
+    public void setTravellerMobile(String travellerMobile) {
+        this.travellerMobile = travellerMobile;
     }
 }

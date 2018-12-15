@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -16,11 +17,15 @@ import java.util.UUID;
 
 @Entity
 @Table(name="user")
-public class User {
+public class User extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_user")
     private Long idUser;
+
+    @Column (name="mobile")
+    @NotEmpty
+    private String mobile;
 
     @Column (name="email")
     @Email
@@ -46,7 +51,10 @@ public class User {
 
     @Column(name="first_name")
     private String firstName;
-    
+
+    @Column(name="middle_name")
+    private String middleName;
+
     @Column(name="last_name")
     private String lastName;
 
@@ -56,22 +64,23 @@ public class User {
     @Column (name= "last_logoff_timestamp")
     private Timestamp lastLogOffTimestamp;
 
-	@Column(name = "created_timestamp")
-	private Timestamp createdTimestamp;
-
-	@Column(name = "updated_timestamp")
-	private Timestamp updatedTimestamp;
-
-	@Column(name = "deleted_flag")
-    private Boolean deleteFlag =false;
-
     @Transient
     private String confirmPassword;
 
+    @OneToMany (mappedBy= "userId")
+    private List<Traveller> travellers;
 
 	@ManyToMany
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_role"))
     private Set<Role> roles;
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
     public String getEmail() {
 		return email;
@@ -145,36 +154,12 @@ public class User {
         this.emailValidUptoTimestamp = emailValidUptoTimestamp;
     }
 
-    public Boolean getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(Boolean deleteFlag) {
-        this.deleteFlag = deleteFlag;
-    }
-
     public Timestamp getLastLoginTimestamp() {
         return lastLoginTimestamp;
     }
 
     public void setLastLoginTimestamp(Timestamp lastLoginTimestamp) {
         this.lastLoginTimestamp = lastLoginTimestamp;
-    }
-
-    public Timestamp getCreatedTimestamp() {
-        return createdTimestamp;
-    }
-
-    public void setCreatedTimestamp(Timestamp createdTimestamp) {
-        this.createdTimestamp = createdTimestamp;
-    }
-
-    public Timestamp getUpdatedTimestamp() {
-        return updatedTimestamp;
-    }
-
-    public void setUpdatedTimestamp(Timestamp updatedTimestamp) {
-        this.updatedTimestamp = updatedTimestamp;
     }
 
     public Timestamp getLastLogOffTimestamp() { return lastLogOffTimestamp; }
@@ -190,6 +175,14 @@ public class User {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
 
 	public String getLastName() {
 		return lastName;
@@ -207,5 +200,13 @@ public class User {
 	public String generateEmailValidationCode(){
         String validationCode = UUID.randomUUID().toString();
         return validationCode;
+    }
+
+    public List<Traveller> getTravellers() {
+        return travellers;
+    }
+
+    public void setTravellers(List<Traveller> travellers) {
+        this.travellers = travellers;
     }
 }

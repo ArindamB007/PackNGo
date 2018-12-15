@@ -2,8 +2,8 @@ package com.png.web.controller;
 
 import com.png.auth.service.SecurityService;
 import com.png.auth.service.UserService;
-import com.png.auth.validator.EmailValidator;
-import com.png.auth.validator.UserValidator;
+import com.png.validators.EmailValidator;
+import com.png.validators.UserValidator;
 import com.png.comms.email.EmailService;
 import com.png.data.dto.availableroomtype.AvailableRoomTypeDto;
 import com.png.data.dto.bookingcart.BookingCartDto;
