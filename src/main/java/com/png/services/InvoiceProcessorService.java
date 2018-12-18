@@ -1,16 +1,19 @@
 package com.png.services;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.png.data.dto.availableroomtype.AvailableRoomTypeDto;
 import com.png.data.dto.availableroomtype.MealPlanDto;
 import com.png.data.dto.bookingcart.BookingCartDto;
 import com.png.data.dto.invoice.*;
 import com.png.data.dto.item.ItemDto;
-import com.png.data.entity.Invoice;
-import com.png.data.entity.InvoiceLine;
-import com.png.data.entity.ItemTax;
-import com.png.data.entity.ItemType;
+import com.png.data.entity.*;
 import com.png.data.repository.ItemTaxRepository;
+import com.png.data.repository.RazorpayResponseRepository;
 import com.png.util.StringGenerator;
+import com.razorpay.Payment;
+import com.razorpay.RazorpayClient;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +28,9 @@ public class InvoiceProcessorService {
 
     @Autowired
     private ItemTaxRepository itemTaxRepository;
+
+    @Autowired
+    private RazorpayResponseRepository razorpayResponseRepository;
 
     private List<ItemTax> applicableTaxes;
 
@@ -41,6 +47,52 @@ public class InvoiceProcessorService {
         invoiceDto.setInvoiceTotalWithTax(calculateInvoiceTotalWithTax());
         invoiceDto.setInvoiceTotal(calculateInvoiceTotal());
         return invoiceDto;
+    }
+
+    public InvoiceDto processInvoice(InvoiceDto invoice){
+        //Book the room
+        //if error do not capture payment, customer will be auto refunded
+        //send email
+
+        //get payment
+        RazorpayResponse razorpayResponse =
+                captureRazorPayment(invoice.getPayment().getProviderPaymentId(),
+                invoice.getPayment().getAmountPaid());
+        // incase of any error in razorpay response we need stop the booking
+        razorpayResponseRepository.save(razorpayResponse);
+
+        //process Payment
+        //send email
+        return invoice;
+    }
+
+    private RazorpayResponse captureRazorPayment(String razor_payment_id, String amountPaid){
+        RazorpayResponse razorpayResponse = null;
+        try {
+            RazorpayClient razorpayClient = new RazorpayClient("rzp_test_9LJbdDeHn1EYIr",
+                    "ZCdjpt0xMYnO3yuYtiAgQBLf");
+            JSONObject options = new JSONObject();
+            options.put("amount",new BigDecimal(amountPaid));
+
+            Payment razorpayPayment= razorpayClient.Payments.capture(razor_payment_id,options);
+            System.out.println(razorpayPayment.toString());
+            System.out.println("Status: " + razorpayPayment.get("status").toString());
+
+            ObjectMapper razorpayMapper = new ObjectMapper();
+            razorpayMapper.configure(
+                    DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            try{
+                razorpayResponse = razorpayMapper.readValue(razorpayPayment.toString(),RazorpayResponse.class);
+                razorpayResponse.setIdPaymentResponse(razor_payment_id);
+                razorpayResponse.setPaymentProvider(PaymentResponse.PaymentProviders.RAZORPAY.name());
+            } catch (Exception e){
+                System.out.println(e.getMessage()); // put logs
+            }
+
+        } catch(Exception e){
+            //log the exception
+        }
+        return razorpayResponse;
     }
 
     private List<InvoiceLineItemDto> getInvoiceLinesForMealPlans(List<AvailableRoomTypeDto> selectedRoomTypes){

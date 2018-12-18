@@ -252,6 +252,17 @@ public class ServicesControllers {
 		}
 	}
 
+	@RequestMapping(value ="/process_invoice",method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Object> processInvoice(@RequestBody InvoiceDto preInvoice){
+		try {
+			InvoiceDto invoice = invoiceProcessorService.processInvoice(preInvoice);
+			return new ResponseEntity<>(invoice, HttpStatus.OK);
+		} catch (BaseException e){
+			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);
+		}
+	}
+
 	@RequestMapping(value ="/send_email_otp",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> sendEmailOtp(@RequestBody EmailOtpValidationDto emailOtp,

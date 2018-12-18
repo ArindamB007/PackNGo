@@ -215,7 +215,7 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
         console.log(bookingCart);
         $scope.preInvoice = undefined;
         BookingService.prepareInvoice(bookingCart).then(function(response){
-        	console.log("Invoice Response");
+        	console.log("Pre Invoice Response");
         	console.log(response.data);
             $scope.preInvoice = response.data;
             $scope.invoiceLines = response.data.invoiceLines;
@@ -253,11 +253,23 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
         var rzp1 = new Razorpay(options);
         rzp1.open();
     };
-    var paymentHandler = function(response){
-        console.log("Payment response: ");
-        console.log(response);
-        $scope.paymentResponse = response;
-        alert(response.razorpay_payment_id);
+    var paymentHandler = function(paymentResponse){
+        console.log("Payment response: " + paymentResponse.razorpay_payment_id);
+        $scope.preInvoice.payment = {providerPaymentId:paymentResponse.razorpay_payment_id};
+        $scope.preInvoice.payment.amountPaid =
+			CommonService.getPaisaFromRupee($scope.preInvoice.invoiceTotalWithTax);
+
+        BookingService.processInvoice($scope.preInvoice).then(function(){
+            console.log("Final Invoice Response");
+            console.log(response.data);
+            $scope.finalInvoice = response.data;
+			})
+            .catch(function(response){
+                $scope.preInvoice = undefined;
+                $scope.disablePay = false;
+                CommonService.handleDefaultErrorResponse("sm", "Final Invoice Error", response, ["OK"]);
+            });
+		;
         $location.path('/invoice');
         $scope.$apply();
 

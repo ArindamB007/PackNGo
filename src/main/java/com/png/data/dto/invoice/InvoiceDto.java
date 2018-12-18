@@ -26,6 +26,7 @@ public class InvoiceDto {
     private List<InvoiceLineItemDto> invoiceLines;
     private PropertyDto property;
     private UserContext userContext;
+    private PaymentDto payment;
 
     public Long getIdInvoice() {
         return idInvoice;
@@ -115,4 +116,11 @@ public class InvoiceDto {
         this.userContext = userContext;
     }
 
+    public PaymentDto getPayment() {
+        return payment;
+    }
+
+    public void setPayment(PaymentDto payment) {
+        this.payment = payment;
+    }
 }
