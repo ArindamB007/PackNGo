@@ -8,6 +8,7 @@ public class ItemDto extends BaseEntityDto {
 	private ItemTypeDto itemType;
 	private ItemPriceDto itemPrice;
 	private Integer quantity;
+	private Integer noOfNights;
 
 	public ItemDto(){
 	    super();
@@ -45,5 +46,13 @@ public class ItemDto extends BaseEntityDto {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	public Integer getNoOfNights() {
+		return noOfNights;
+	}
+
+	public void setNoOfNights(Integer noOfNights) {
+		this.noOfNights = noOfNights;
 	}
 }

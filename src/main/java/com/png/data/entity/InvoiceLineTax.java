@@ -20,6 +20,20 @@ public class InvoiceLineTax extends BaseEntity{
     private String itemTaxPercent;
     @Column(name = "item_tax_amount")
     private BigDecimal itemTaxAmount;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
+    private InvoiceLine invoiceLine;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof InvoiceLineTax )) return false;
+        return idInvoiceLineTax != null && idInvoiceLineTax.equals(((InvoiceLineTax) o).idInvoiceLineTax);
+    }
+    @Override
+    public int hashCode() {
+        return 103;
+    }
 
     public Long getIdInvoiceLineTax() {
         return idInvoiceLineTax;
@@ -67,5 +81,13 @@ public class InvoiceLineTax extends BaseEntity{
 
     public void setItemTaxAmount(BigDecimal itemTaxAmount) {
         this.itemTaxAmount = itemTaxAmount;
+    }
+
+    public InvoiceLine getInvoiceLine() {
+        return invoiceLine;
+    }
+
+    public void setInvoiceLine(InvoiceLine invoiceLine) {
+        this.invoiceLine = invoiceLine;
     }
 }

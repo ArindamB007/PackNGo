@@ -2,11 +2,9 @@ package com.png.data.repository;
 
 import com.png.data.entity.AvailableRoomType;
 import com.png.data.entity.Facility;
-import com.png.data.entity.RoomTypeImage;
+import com.png.data.entity.Room;
 import com.png.exception.NoDataException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -14,6 +12,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -31,31 +30,31 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
     public List<AvailableRoomType> getAvailableRoomTypeWithCount(Timestamp checkInTimestamp,Timestamp checkOutTimestamp,
                                                                  Long idProperty){
         Query query = em.createNativeQuery(
-                "SELECT room_type.id_room_type,room_type.type_name,room_type.base_price,count(rt.type_name) AS count_available,\n" +
-                        "    room_type.discount,room_type.description,\n" +
-                        "    room_type.max_adult_occupancy, room_type.max_child_occupancy,\n" +
-                        "    room_type.max_extra_adult_occupancy, room_type.max_extra_child_occupancy,\n" +
-                        "    room_type.max_total_occupancy\n" +
-                        "    FROM property \n" +
+                "  select A.id_room_type,A.type_name,A.base_price,count(B.id_room) as count_available, \n" +
+                        "    A.discount,A.description,A.max_adult_occupancy, A.max_child_occupancy,\n" +
+                        "    A.max_extra_adult_occupancy, A.max_extra_child_occupancy, A.max_total_occupancy from\n" +
+                        " (select * from room_type)  AS A\n" +
+                        "  LEFT JOIN\n" +
+                        " (select room.id_room, room.room_no, room_type.id_room_type,room_type.type_name\n" +
+                        "    from room \n" +
+                        "    LEFT JOIN room_type \n" +
+                        "    on room.room_type_id_room_type = room_type.id_room_type\n" +
+                        "  where id_room not in (\n" +
+                        "     select room.id_room from room \n" +
                         "    LEFT JOIN room_type\n" +
-                        "        ON room_type.property_id_property = property.id_property" +
-                        "        AND room_type.enabled_flag =1\n" +
-                        "    LEFT JOIN room\n" +
-                        "        ON room.room_type_id_room_type = room_type.id_room_type\n" +
-                        "        AND room.enabled_flag = 1 \n" +
+                        "      on room.room_type_id_room_type = room_type.id_room_type\n" +
                         "    LEFT JOIN bookings_rooms\n" +
-                        "        ON room.id_room = bookings_rooms.id_room\n" +
-                        "    LEFT JOIN booking\n" +
-                        "        ON booking.id_booking = bookings_rooms.id_booking \n" +
-                        "        AND booking.enabled_flag = 1 \n" +
-                        "        AND booking.cancelled_timestamp IS NULL\n" +
-                        "    LEFT JOIN room_type rt\n" +
-                        "        ON rt.id_room_type = room_type.id_room_type\n" +
-                        "        AND ((booking.check_in_timestamp IS NULL AND  booking.check_out_timestamp IS NULL)\n" +
-                        "        OR  (:checkInTimestamp < booking.check_in_timestamp AND :checkOutTimestamp < booking.check_in_timestamp)\n" +
-                        "        OR  (:checkInTimestamp > booking.check_out_timestamp AND :checkOutTimestamp > booking.check_out_timestamp))\n" +
-                        "    where id_property = :idProperty" +
-                        "    GROUP BY room_type.type_name ORDER BY room_type.id_room_type");
+                        "      on room.id_room = bookings_rooms.id_room\n" +
+                        "    LEFT JOIN  booking\n" +
+                        "      on booking.id_booking = bookings_rooms.id_booking where\n" +
+                        "           (:checkInTimestamp <= booking.check_in_timestamp and " +
+                        "               :checkOutTimestamp >= booking.check_in_timestamp) OR\n" +
+                        "           (:checkInTimestamp <= booking.check_out_timestamp and " +
+                        "               :checkOutTimestamp >= booking.check_out_timestamp))\n" +
+                        "  and room_type.property_id_property = :idProperty ) AS B\n" +
+                        "    ON A.id_room_type = B.id_room_type\n" +
+                        "    WHERE A.property_id_property = :idProperty\n" +
+                        "    GROUP BY A.type_name order by A.id_room_type;");
         query.setParameter("checkInTimestamp",checkInTimestamp);
         query.setParameter("checkOutTimestamp",checkOutTimestamp);
         query.setParameter("idProperty",idProperty);
@@ -125,6 +124,47 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
             facilities.add(facility);
         });
         return facilities;
+    }
+
+    @Override
+    public List<Room> getRoomsToBeBooked(Long idProperty, String roomTypeName, Integer roomQuantity,
+                                                    Timestamp checkInTimestamp, Timestamp checkOutTimestamp){
+        Query query = em.createNativeQuery(
+                " select room.id_room, room.room_no,room_type.id_room_type,room_type.type_name\n" +
+                        "    from room \n" +
+                        "    LEFT JOIN room_type \n" +
+                        "    ON room.room_type_id_room_type = room_type.id_room_type\n" +
+                        "    AND room_type.type_name = :roomTypeName\n"+
+                        "  WHERE id_room NOT IN (\n" +
+                        "     select room.id_room from room \n" +
+                        "    LEFT JOIN room_type\n" +
+                        "      on room.room_type_id_room_type = room_type.id_room_type\n" +
+                        "    LEFT JOIN bookings_rooms\n" +
+                        "      on room.id_room = bookings_rooms.id_room\n" +
+                        "    LEFT JOIN  booking\n" +
+                        "      on booking.id_booking = bookings_rooms.id_booking where \n" +
+                        "           (:checkInTimestamp <= booking.check_in_timestamp AND \n" +
+                        "           :checkOutTimestamp >= booking.check_in_timestamp) OR \n" +
+                        "           (:checkInTimestamp <= booking.check_out_timestamp AND \n" +
+                        "           :checkOutTimestamp >= booking.check_out_timestamp)) \n" +
+                        " AND room_type.property_id_property = :idProperty\n" +
+                        " order by room.room_no*1 LIMIT :roomQuantity");
+        query.setParameter("checkInTimestamp",checkInTimestamp);
+        query.setParameter("checkOutTimestamp",checkOutTimestamp);
+        query.setParameter("idProperty",idProperty);
+        query.setParameter("roomTypeName",roomTypeName);
+        query.setParameter("roomQuantity",roomQuantity);
+        List<Object[]> results = query.getResultList();
+        List<Room> roomAllotmentList = new ArrayList<>();
+        if ((results.get(0))[0] == null)
+            return roomAllotmentList;
+        results.forEach(row-> {
+            Room room  = new Room();
+            room.setIdRoom((Integer)row[0]);
+            room.setRoomNo(row[1].toString());
+            roomAllotmentList.add(room);
+        });
+        return roomAllotmentList;
     }
 
 }

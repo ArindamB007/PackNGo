@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "razorpay_response")
-@PrimaryKeyJoinColumn(name="id")
+@PrimaryKeyJoinColumn(name="id_razorpay_response")
 public class RazorpayResponse extends PaymentResponse{
       public enum PaymentStatus {created, authorized, captured, refunded, failed}
       public enum RefundStatus {partial, full}

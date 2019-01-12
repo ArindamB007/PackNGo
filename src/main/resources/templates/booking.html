@@ -335,7 +335,7 @@
 					  </dd>
 					  
 					  <button class="png ui basic red button" style="position: fixed;top: 198px;left: 63px;border-radius: 0 0 15px 15px;-moz-transform: rotate(-90deg);-ms-transform: rotate(-90deg);-webkit-transform: rotate(-90deg);filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);-o-transform: rotate(-90deg);;z-index: 9999;" ng-click="movePrev()">Change Details </button>
-					  
+					</dl>
 				  </div>
 				</div>
 			  </div>
@@ -347,13 +347,21 @@
 				  <div class="panel-body">
 					<dl class="dl-horizontal">
 					  <dt>Name</dt>
-					  <dd><input type="text"  ng-value="preInvoice.userContext.firstName" class="form-control"></dd>
-					  <dd><input type="text"  ng-value="preInvoice.userContext.middleName" class="form-control"></dd>
-					  <dd><input type="text"  ng-value="preInvoice.userContext.lastName" class="form-control"></dd>
+					  <dd><input type="text"  class="form-control" ng-model="preInvoice.travellerFirstName"></dd>
+					  <dd><input type="text"  ng-init="preInvoice.userContext.middleName" class="form-control"
+								 ng-model="preInvoice.travellerMiddleName"></dd>
+					  <dd><input type="text"  class="form-control" ng-model="preInvoice.travellerLastName"></dd>
 					  <dt>Email</dt>
-					  <dd><input type="text" name="cust_email" id="additionalContactEmail" ng-model="preInvoice.userContext.email" placeholder="Email" class="form-control"></dd>
+					  <dd><input type="text" name="cust_email" id="additionalContactEmail"
+								 placeholder="Email" class="form-control"
+								 ng-model="preInvoice.travellerEmail"></dd>
 					  <dt>Phone Number</dt>
-					  <dd><input type="text" id="additionalContactMobile" name="additionalContactMobile" ng-pattern="/^[0-9]*$/" ng-value="preInvoice.userContext.phone" placeholder="Mobile Number" maxlength="10" class="form-control ng-pristine" required=""></dd>
+					  <dd><input type="text" id="additionalContactMobile" name="additionalContactMobile"
+								 ng-pattern="/^[0-9]*$/"
+								 ng-model="preInvoice.travellerMobile"
+								 placeholder="Mobile Number" maxlength="10" class="form-control ng-pristine"
+								 required=""></dd>
+					</dl>
 				  </div>
 				</div>
 			  </div>

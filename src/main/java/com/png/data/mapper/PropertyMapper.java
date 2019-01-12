@@ -1,5 +1,8 @@
 package com.png.data.mapper;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.png.data.dto.property.PropertyDto;
 import com.png.data.entity.Facility;
 import com.png.data.entity.Property;
@@ -62,7 +65,7 @@ public interface PropertyMapper {
 		return propertyDto;
 	}
 
-	default Property propertyDTOToProperty(PropertyDto propertyDto){
+/*	default Property propertyDTOToProperty(PropertyDto propertyDto) {
 		Property property = new Property();
 
 		property.setName( propertyDto.getName() );
@@ -75,20 +78,27 @@ public interface PropertyMapper {
 		property.setUpdatedTimestamp( propertyDto.getUpdatedTimestamp() );
 		property.setDeletedFlag( propertyDto.getDeleteFlag() );
 		property.setEnabledFlag( propertyDto.getEnabledFlag() );
+
 		Set<Facility> facilitySet = new HashSet<Facility>();
 		propertyDto.getFacilities().forEach((k,v)->{
 			Facility facility = new Facility();
 			facility.setName(k);
+			facility.set
 			facilitySet.add(facility);
 		});
 		property.setFacilities(facilitySet);
 		Set<PropertyImage> imagesSet = new HashSet<PropertyImage>();
-		propertyDto.getFacilities().forEach((k,v)->{
-			PropertyImage image = new PropertyImage();
-			//image.setName set the image
-			imagesSet.add(image);
-		});
-		property.setPropertyImages(imagesSet);
+		ObjectMapper propertyImageMapper= new ObjectMapper();
+        propertyDto.getImages().forEach((k, v) -> {
+            try {
+                PropertyImage image = propertyImageMapper.readValue(v.toString(), PropertyImage.class);
+                //image.setName set the image
+                imagesSet.add(image);
+            } catch(Exception e){
+
+            }
+        });
+        property.setPropertyImages(imagesSet);
 		return property;
-	}
+	}*/
 }

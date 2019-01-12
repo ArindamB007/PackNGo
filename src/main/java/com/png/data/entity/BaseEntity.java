@@ -1,5 +1,7 @@
 package com.png.data.entity;
 
+import com.png.util.DateFormatter;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import java.sql.Timestamp;
@@ -17,6 +19,11 @@ public class BaseEntity {
 	
 	@Column(name = "enabled_flag")
     private Boolean enabledFlag =true;
+
+	BaseEntity(){
+		this.createdTimestamp = DateFormatter.getCurrentTime();
+		this.updatedTimestamp = DateFormatter.getCurrentTime();
+	}
 
 	public Timestamp getCreatedTimestamp() {
 		return createdTimestamp;

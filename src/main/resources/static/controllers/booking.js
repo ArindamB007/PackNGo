@@ -196,13 +196,22 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
                         for (var j = 0; j< availableRoomTypesSearchResult[i].mealPlans.length; j++) {
                             if (availableRoomTypesSearchResult[i].mealPlans[j].idMealPlan === selectedRoomType.selectedMealPlan.idMealPlan)
                             {
-                            	availableRoomTypesSearchResult[i].mealPlans[j].mealPlanItem.quantity = selectedRoomType.selectedRoomCount;
-                                availableRoomTypesSearchResult[i].mealPlans[j].adultExtraBedItem.quantity = selectedRoomType.selectedExtraAdultCount;
-                                availableRoomTypesSearchResult[i].mealPlans[j].childExtraBedItem.quantity = selectedRoomType.selectedExtraChildCount;
+                            	availableRoomTypesSearchResult[i].mealPlans[j].mealPlanItem.quantity =
+                                    selectedRoomType.selectedRoomCount;
+                                availableRoomTypesSearchResult[i].mealPlans[j].mealPlanItem.noOfNights =
+                                    checkInOutDetails.nights;
+                                availableRoomTypesSearchResult[i].mealPlans[j].adultExtraBedItem.quantity =
+                                    selectedRoomType.selectedExtraAdultCount;
+                                availableRoomTypesSearchResult[i].mealPlans[j].adultExtraBedItem.noOfNights =
+                                    checkInOutDetails.nights;
+                                availableRoomTypesSearchResult[i].mealPlans[j].childExtraBedItem.quantity =
+                                    selectedRoomType.selectedExtraChildCount;
+                                availableRoomTypesSearchResult[i].mealPlans[j].childExtraBedItem.noOfNights =
+                                    checkInOutDetails.nights;
                             } else{
                                 availableRoomTypesSearchResult[i].mealPlans[j].mealPlanItem.quantity = 0;
                                 availableRoomTypesSearchResult[i].mealPlans[j].adultExtraBedItem.quantity = 0;
-                                availableRoomTypesSearchResult[i].mealPlans[j].childExtraBedItem.quantity = 0;
+                                availableRoomTypesSearchResult[i].mealPlans[j].childExtraBedItem.noOfNights = 0;
 							}
                         }
                         bookingCart.selectedRoomTypes.push (availableRoomTypesSearchResult[i]);
@@ -219,6 +228,11 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
         	console.log(response.data);
             $scope.preInvoice = response.data;
             $scope.invoiceLines = response.data.invoiceLines;
+            $scope.preInvoice.travellerFirstName = $scope.preInvoice.userContext.firstName;
+            $scope.preInvoice.travellerMiddleName = $scope.preInvoice.userContext.middleName;
+            $scope.preInvoice.travellerLastName = $scope.preInvoice.userContext.lastName;
+            $scope.preInvoice.travellerEmail = $scope.preInvoice.userContext.email;
+            $scope.preInvoice.travellerMobile = $scope.preInvoice.userContext.mobile;
             $scope.disablePay = false;
 		})
 			.catch(function(response){
@@ -259,7 +273,7 @@ PackNGo.controller('BookingCtrl',function($scope,BookingService,CONSTANTS,Common
         $scope.preInvoice.payment.amountPaid =
 			CommonService.getPaisaFromRupee($scope.preInvoice.invoiceTotalWithTax);
 
-        BookingService.processInvoice($scope.preInvoice).then(function(){
+        BookingService.processInvoice($scope.preInvoice).then(function(response){
             console.log("Final Invoice Response");
             console.log(response.data);
             $scope.finalInvoice = response.data;

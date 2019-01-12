@@ -1,12 +1,20 @@
 package com.png.data.dto.invoice;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "invoiceLineTypeCode", visible = true)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = InvoiceLineItemDto.class, name = "ITEM"),
+        @JsonSubTypes.Type(value = InvoiceLineItemDto.class, name = "EXTRA_PERSON"),
+        @JsonSubTypes.Type(value = InvoiceMealPlanLineDto.class, name = "MEALPLAN")
+})
 public class InvoiceLineDto {
     private Long idInvoiceLine;
-    private Long invoiceId;
     private int sequenceNo;
     private int groupSequenceNo;
     private String invoiceLineTypeCode;
@@ -21,14 +29,6 @@ public class InvoiceLineDto {
 
     public void setIdInvoiceLine(Long idInvoiceLine) {
         this.idInvoiceLine = idInvoiceLine;
-    }
-
-    public Long getInvoiceId() {
-        return invoiceId;
-    }
-
-    public void setInvoiceId(Long invoiceId) {
-        this.invoiceId = invoiceId;
     }
 
     public int getSequenceNo() {
@@ -85,7 +85,6 @@ public class InvoiceLineDto {
             this.invoiceLineTaxes.forEach(invoiceLineTax->{
                 InvoiceLineTaxDto invLineTax = new InvoiceLineTaxDto();
                 invLineTax.setIdInvoiceLineTax(invoiceLineTax.getIdInvoiceLineTax());
-                invLineTax.setInvoiceLineId(invoiceLineTax.getInvoiceLineId());
                 invLineTax.setItemTaxPercent(invoiceLineTax.getItemTaxPercent());
                 invLineTax.setItemTaxDescription(invoiceLineTax.getItemTaxDescription());
                 invLineTax.setItemTaxCode(invoiceLineTax.getItemTaxCode());

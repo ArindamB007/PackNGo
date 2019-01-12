@@ -12,6 +12,7 @@ import com.png.data.entity.ItemType;
 public interface ItemTypeMapper {
 	ItemTypeMapper INSTANCE = Mappers.getMapper(ItemTypeMapper.class);
 	List<ItemTypeDto> ItemTypesToItemTypeDtos(List<ItemType> itemTypes);
+	List<ItemType> ItemTypeDtosToItemTypes(List<ItemTypeDto> itemTypeDtos);
 	default ItemTypeDto ItemTypeToItemTypeDto(ItemType itemType) {
 		if (itemType == null) {
 			return null;
@@ -21,6 +22,16 @@ public interface ItemTypeMapper {
 		itemTypeDto.setItemTypeCode(itemType.getItemTypeCode());
 		itemTypeDto.setDescription(itemType.getDescription());
 		return itemTypeDto;
+	}
+	default ItemType ItemTypeDtoToItemType(ItemTypeDto itemTypeDto) {
+		if (itemTypeDto == null) {
+			return null;
+		}
+		ItemType itemType = new ItemType();
+		itemType.setIdItemType(itemTypeDto.getIdItemType());
+		itemType.setItemTypeCode(itemTypeDto.getItemTypeCode());
+		itemType.setDescription(itemTypeDto.getDescription());
+		return itemType;
 	}
 	
 }

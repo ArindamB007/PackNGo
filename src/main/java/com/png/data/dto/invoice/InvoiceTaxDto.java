@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 public class InvoiceTaxDto {
     private Long idInvoiceTax;
-    private Long invoiceId;
     private String itemTaxCode;
     private String itemTaxDescription;
     private String itemTaxPercent;
@@ -16,14 +15,6 @@ public class InvoiceTaxDto {
 
     public void setIdInvoiceTax(Long idInvoiceTax) {
         this.idInvoiceTax = idInvoiceTax;
-    }
-
-    public Long getInvoiceId() {
-        return invoiceId;
-    }
-
-    public void setInvoiceId(Long invoiceId) {
-        this.invoiceId = invoiceId;
     }
 
     public String getItemTaxCode() {

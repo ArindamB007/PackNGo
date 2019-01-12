@@ -1,15 +1,10 @@
 package com.png.data.dto.invoice;
 
-import com.png.data.dto.availableroomtype.AvailableRoomTypeDto;
-import com.png.data.dto.availableroomtype.MealPlanDto;
-import com.png.data.dto.bookingcart.BookingCartDto;
-import com.png.data.dto.item.ItemDto;
+import com.png.data.dto.checkinoutdetails.InvoiceCheckInOutDetailsDto;
 import com.png.data.dto.property.PropertyDto;
 import com.png.data.dto.user.UserContext;
-import com.png.data.entity.*;
-import com.png.data.repository.ItemTaxRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.png.data.entity.InvoiceLine;
+import com.png.data.entity.ItemType;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,9 +16,19 @@ public class InvoiceDto {
     private BigDecimal invoiceTotal;
     private BigDecimal invoiceTotalWithTax;
     private BigDecimal invoiceTotalTax;
-    private List<InvoiceTaxDto> appliedTaxes;
+    private BigDecimal amountToBePaid;
+    private BigDecimal amountPaid;
+    private BigDecimal amountPending;
     private String invoiceStatusCode;
-    private List<InvoiceLineItemDto> invoiceLines;
+    private String travellerFirstName;
+    private String travellerMiddleName;
+    private String travellerLastName;
+    private String travellerEmail;
+    private String travellerMobile;
+    private List<InvoiceTaxDto> appliedTaxes;
+    private InvoiceCheckInOutDetailsDto invoiceCheckInOutDetails;
+    private List<InvoiceLineDto> invoiceLines;
+    private List<InvoicePaymentLineDto> invoicePaymentLines;
     private PropertyDto property;
     private UserContext userContext;
     private PaymentDto payment;
@@ -92,11 +97,11 @@ public class InvoiceDto {
         this.appliedTaxes = appliedTaxes;
     }
 
-    public List<InvoiceLineItemDto> getInvoiceLines() {
+    public List<InvoiceLineDto> getInvoiceLines() {
         return invoiceLines;
     }
 
-    public void setInvoiceLines(List<InvoiceLineItemDto> invoiceLines) {
+    public void setInvoiceLines(List<InvoiceLineDto> invoiceLines) {
         this.invoiceLines = invoiceLines;
     }
 
@@ -122,5 +127,112 @@ public class InvoiceDto {
 
     public void setPayment(PaymentDto payment) {
         this.payment = payment;
+    }
+
+    public InvoiceCheckInOutDetailsDto getInvoiceCheckInOutDetails() {
+        return invoiceCheckInOutDetails;
+    }
+
+    public void setInvoiceCheckInOutDetails(InvoiceCheckInOutDetailsDto invoiceCheckInOutDetails) {
+        this.invoiceCheckInOutDetails = invoiceCheckInOutDetails;
+    }
+
+    public List<InvoicePaymentLineDto> getInvoicePaymentLines() {
+        return invoicePaymentLines;
+    }
+
+    public void setInvoicePaymentLines(List<InvoicePaymentLineDto> invoicePaymentLines) {
+        this.invoicePaymentLines = invoicePaymentLines;
+    }
+
+    public String getTravellerFirstName() {
+        return travellerFirstName;
+    }
+
+    public void setTravellerFirstName(String travellerFirstName) {
+        this.travellerFirstName = travellerFirstName;
+    }
+
+    public String getTravellerMiddleName() {
+        return travellerMiddleName;
+    }
+
+    public void setTravellerMiddleName(String travellerMiddleName) {
+        this.travellerMiddleName = travellerMiddleName;
+    }
+
+    public String getTravellerLastName() {
+        return travellerLastName;
+    }
+
+    public void setTravellerLastName(String travellerLastName) {
+        this.travellerLastName = travellerLastName;
+    }
+
+    public String getTravellerEmail() {
+        return travellerEmail;
+    }
+
+    public void setTravellerEmail(String travellerEmail) {
+        this.travellerEmail = travellerEmail;
+    }
+
+    public String getTravellerMobile() {
+        return travellerMobile;
+    }
+
+    public void setTravellerMobile(String travellerMobile) {
+        this.travellerMobile = travellerMobile;
+    }
+
+    public BigDecimal getAmountToBePaid() {
+        return amountToBePaid;
+    }
+
+    public void setAmountToBePaid(BigDecimal amountToBePaid) {
+        this.amountToBePaid = amountToBePaid;
+    }
+
+    public BigDecimal getAmountPaid() {
+        return amountPaid;
+    }
+
+    public void setAmountPaid(BigDecimal amountPaid) {
+        this.amountPaid = amountPaid;
+    }
+
+    public BigDecimal getAmountPending() {
+        return amountPending;
+    }
+
+    public void setAmountPending(BigDecimal amountPending) {
+        this.amountPending = amountPending;
+    }
+
+    public void setOccupancyInfo (){
+        InvoiceCheckInOutDetailsDto invoiceCheckInOutDetails = this.getInvoiceCheckInOutDetails();
+        Integer maxAdults = 0;
+        Integer maxChilds = 0;
+        Integer maxExtraChilds = 0;
+        Integer maxExtraAdults = 0;
+        for (InvoiceLineDto invoiceLine: this.invoiceLines){
+            if (invoiceLine.getInvoiceLineTypeCode().equals(InvoiceLine.InvoiceLineTypeCodes.MEALPLAN.name())){
+                maxAdults = maxAdults + ((InvoiceMealPlanLineDto)invoiceLine).getMaxAdults();
+                maxChilds = maxChilds + ((InvoiceMealPlanLineDto)invoiceLine).getMaxChilds();
+            }
+            else if(invoiceLine.getInvoiceLineTypeCode().equals(InvoiceLine.InvoiceLineTypeCodes.EXTRA_PERSON.name())){
+                if (((InvoiceLineItemDto)invoiceLine).getItemType()
+                        .equals(ItemType.ItemTypeCodes.EXTRABEDADULT.name()))
+                    maxExtraAdults = maxExtraAdults + ((InvoiceLineItemDto)invoiceLine).getQuantity();
+                else if (((InvoiceLineItemDto)invoiceLine).getItemType()
+                        .equals(ItemType.ItemTypeCodes.EXTRABEDCHILD.name()))
+                    maxExtraChilds = maxExtraChilds + ((InvoiceLineItemDto)invoiceLine).getQuantity();
+            }
+        }
+        invoiceCheckInOutDetails.setMaxAdults(maxAdults);
+        invoiceCheckInOutDetails.setMaxChilds(maxChilds);
+        invoiceCheckInOutDetails.setMaxExtraAdults(maxExtraAdults);
+        invoiceCheckInOutDetails.setMaxExtraChilds(maxExtraChilds);
+        this.invoiceCheckInOutDetails = invoiceCheckInOutDetails;
     }
 }

@@ -18,5 +18,14 @@ public interface ItemPriceMapper {
 		itemPriceDto.setBasePrice(itemPrice.getBasePrice());
 		return itemPriceDto;
 	}
+	default ItemPrice ItemPriceDtoToItemPrice(ItemPriceDto itemPriceDto) {
+		if (itemPriceDto == null) {
+			return null;
+		}
+		ItemPrice itemPrice = new ItemPrice();
+		itemPriceDto.setIdItemPrice(itemPrice.getIdItemPrice());
+		itemPriceDto.setBasePrice(itemPrice.getBasePrice());
+		return itemPrice;
+	}
 
 }

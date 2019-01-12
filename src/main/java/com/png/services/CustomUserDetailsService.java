@@ -8,6 +8,7 @@ import com.png.exception.EmailNotVerifiedException;
 import com.png.menu.Menu;
 import com.png.menu.MenuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +28,7 @@ import java.util.Set;
 ;
 
 @Service
+@Configurable
 public class CustomUserDetailsService implements UserDetailsService{
 	@Autowired
 	private UserRepository userRepository;
@@ -47,7 +49,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthorities(user));
 	}
 
-	private User getUserByUserContext(UserContext userContext){
+	public User getUserByUserContext(UserContext userContext){
 		return userRepository.findByEmail(userContext.getEmail());
 	}
 	

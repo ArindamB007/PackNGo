@@ -1,21 +1,26 @@
-package com.png.data.dto.invoice;
+package com.png.data.entity;
 
-import com.png.data.dto.availableroomtype.MealPlanDto;
-
+import javax.persistence.*;
 import java.util.List;
 
-public class InvoiceMealPlanLineDto extends InvoiceLineItemDto {
-    private List<String> includes;
+@Entity
+@Table(name = "invoice_meal_plan_line")
+@PrimaryKeyJoinColumn (name = "invoice_meal_plan_line_id")
+public class InvoiceMealPlanLine extends InvoiceLineItem {
+    @OneToMany(mappedBy = "invoiceMealPlanLineId")
+    private List<MealPlanInclude> mealPlanIncludes;
+    @Column (name = "room_type_name")
     private String roomTypeName;
+
     private Integer maxAdults;
     private Integer maxChilds;
 
-    public List<String> getIncludes() {
-        return includes;
+    public List<MealPlanInclude> getMealPlanIncludes() {
+        return mealPlanIncludes;
     }
 
-    public void setIncludes(List<String> includes) {
-        this.includes = includes;
+    public void setMealPlanIncludes(List<MealPlanInclude> mealPlanIncludes) {
+        this.mealPlanIncludes = mealPlanIncludes;
     }
 
     public String getRoomTypeName() {

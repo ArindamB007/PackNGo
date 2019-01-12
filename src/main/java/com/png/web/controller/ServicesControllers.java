@@ -73,11 +73,16 @@ public class ServicesControllers {
 	@Autowired
 	private InvoiceProcessorService invoiceProcessorService;
 
-    private HashMap<String,String> populateErrorDetails(BaseException e){
+    private HashMap<String,String> populateErrorDetails(Exception e){
         HashMap<String,String> errorDetails = new HashMap<String,String>();
         errorDetails.put("type", e.getClass().getSimpleName());
-        errorDetails.put("errorCode",e.getErrorCode());
-        errorDetails.put("message", e.getErrorMessage());
+        if (e.getClass() == BaseException.class) {
+			errorDetails.put("errorCode", ((BaseException)e).getErrorCode());
+			errorDetails.put("message", ((BaseException)e).getErrorMessage());
+		} else{
+			errorDetails.put("errorCode", "NA");
+			errorDetails.put("message", e.getMessage());
+		}
         return errorDetails;
     }
     private List <HashMap <String,String>> getBindingErrors(BindingResult bindingResult) {
@@ -194,12 +199,10 @@ public class ServicesControllers {
 							checkInSearchParams.getIdProperty());
 			System.out.println(availableRoomTypeDtos);
 			return new ResponseEntity<Object>(availableRoomTypeDtos,HttpStatus.OK);
+		} catch (BaseException e){
+			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);
 		} catch (Exception e){
-			HashMap<String,String> errors = new HashMap<String,String>();
-			errors.put("type", e.getClass().getSimpleName());
-			errors.put("message", e.getMessage());
-			errorList.add(errors);
-			return new ResponseEntity<Object>(errorList, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);
 		}
 		
 	}

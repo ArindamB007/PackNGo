@@ -67,7 +67,7 @@ public class User extends BaseEntity{
     @Transient
     private String confirmPassword;
 
-    @OneToMany (mappedBy= "userId")
+    @OneToMany (mappedBy= "userId",fetch = FetchType.LAZY)
     private List<Traveller> travellers;
 
 	@ManyToMany

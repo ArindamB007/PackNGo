@@ -877,23 +877,50 @@ INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,up
 
 INSERT INTO bookings_rooms(id_booking,id_room)
     VALUES (4,4);
-    
-/*
- select room_type.id_room_type,room_type.type_name,room_type.base_price,count(*) as count_available,
-    room_type.discount,room_type.description
-    from room 
+
+/* find rooms to be booked
+ select room.id_room, room.room_no,room_type.id_room_type,room_type.type_name
+    from room
+    LEFT JOIN room_type
+    on room.room_type_id_room_type = room_type.id_room_type
+    AND room_type.type_name = 'DELUXE'
+	where id_room not in (
+     select room.id_room from room
 		LEFT JOIN room_type
 			on room.room_type_id_room_type = room_type.id_room_type
 		LEFT JOIN bookings_rooms
 			on room.id_room = bookings_rooms.id_room
-		LEFT JOIN booking
-			on booking.id_booking = bookings_rooms.id_booking
-		INNER JOIN room_type as rt
-			on rt.id_room_type = room_type.id_room_type AND
-			((booking.check_in_timestamp IS NULL AND  booking.check_out_timestamp IS NULL) OR
-            ('2017-12-17 00:00:01' < booking.check_in_timestamp and '2017-12-18 00:00:00' < booking.check_in_timestamp) OR
-			('2017-12-17 00:00:01' > booking.check_out_timestamp and '2017-12-18 00:00:00' > booking.check_out_timestamp))
-		group by type_name order by room_type.id_room_type;
+		LEFT JOIN  booking
+			on booking.id_booking = bookings_rooms.id_booking where
+           ('2019-01-21 10:00:01' <= booking.check_in_timestamp and '2019-01-22 11:00:01' >= booking.check_in_timestamp) OR
+           ('2019-01-21 10:00:01' <= booking.check_out_timestamp and '2019-01-22 11:00:01' >= booking.check_out_timestamp))
+	and room_type.property_id_property = 1
+	order by room.room_no*1 Limit 10;
+ */
+/* search rooms
+ select A.id_room_type,A.type_name,A.base_price,count(B.id_room) as count_available,
+    A.discount,A.description,A.max_adult_occupancy, A.max_child_occupancy,
+    A.max_extra_adult_occupancy, A.max_extra_child_occupancy, A.max_total_occupancy from
+ (select * from room_type)  AS A
+  LEFT JOIN
+ (select room.id_room, room.room_no, room_type.id_room_type,room_type.type_name
+    from room
+    LEFT JOIN room_type
+    on room.room_type_id_room_type = room_type.id_room_type
+	where id_room not in (
+     select room.id_room from room
+		LEFT JOIN room_type
+			on room.room_type_id_room_type = room_type.id_room_type
+		LEFT JOIN bookings_rooms
+			on room.id_room = bookings_rooms.id_room
+		LEFT JOIN  booking
+			on booking.id_booking = bookings_rooms.id_booking where
+           ('2019-01-15 10:00:01' <= booking.check_in_timestamp and '2019-01-16 11:00:01' >= booking.check_in_timestamp) OR
+           ('2019-01-15 10:00:01' <= booking.check_out_timestamp and '2019-01-16 11:00:01' >= booking.check_out_timestamp))
+	and room_type.property_id_property = 1 ) AS B
+    ON A.id_room_type = B.id_room_type
+    WHERE A.property_id_property = 1
+    GROUP BY A.type_name order by A.id_room_type;
  */    
     
     /*

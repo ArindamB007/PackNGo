@@ -2,6 +2,7 @@ package com.png.data.repository;
 
 import java.util.List;
 
+import com.png.data.entity.RoomType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.png.data.entity.MealPlan;

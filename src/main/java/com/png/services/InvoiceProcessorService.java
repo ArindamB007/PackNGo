@@ -8,17 +8,24 @@ import com.png.data.dto.bookingcart.BookingCartDto;
 import com.png.data.dto.invoice.*;
 import com.png.data.dto.item.ItemDto;
 import com.png.data.entity.*;
-import com.png.data.repository.ItemTaxRepository;
-import com.png.data.repository.RazorpayResponseRepository;
+import com.png.data.mapper.InvoiceMapper;
+import com.png.data.mapper.MealPlanMapper;
+import com.png.data.repository.*;
+import com.png.exception.RoomJustSoldOutException;
+import com.png.util.DateFormatter;
 import com.png.util.StringGenerator;
 import com.razorpay.Payment;
 import com.razorpay.RazorpayClient;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -30,7 +37,16 @@ public class InvoiceProcessorService {
     private ItemTaxRepository itemTaxRepository;
 
     @Autowired
-    private RazorpayResponseRepository razorpayResponseRepository;
+    private PropertyRepository propertyRepository;
+
+    @Autowired
+    CustomUserDetailsService customUserDetailsService;
+
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+
+    @Autowired
+    private RoomTypeRepository roomTypeRepository;
 
     private List<ItemTax> applicableTaxes;
 
@@ -38,32 +54,103 @@ public class InvoiceProcessorService {
         invoiceDto = new InvoiceDto();
         applicableTaxes = itemTaxRepository.findAll();
         invoiceDto.setInvoiceNo(createInvoiceNumber());
+        invoiceDto.setInvoiceCheckInOutDetails(bookingCartDto.getCheckInOutDetails());
         invoiceDto.setInvoiceStatusCode(Invoice.InvoiceStatusCodes.TOTALED.name());
         invoiceDto.setUserContext(bookingCartDto.getUserContext());
         invoiceDto.setProperty(bookingCartDto.getSelectedProperty());
         invoiceDto.setInvoiceLines(getInvoiceLinesForMealPlans(bookingCartDto.getSelectedRoomTypes()));
+        invoiceDto.setOccupancyInfo();
         invoiceDto.setAppliedTaxes(calculateInvoiceLevelTaxes());
         invoiceDto.setInvoiceTotalTax(calculateInvoiceTotalTax(invoiceDto.getAppliedTaxes()));;
         invoiceDto.setInvoiceTotalWithTax(calculateInvoiceTotalWithTax());
         invoiceDto.setInvoiceTotal(calculateInvoiceTotal());
+        invoiceDto.setAmountPaid(BigDecimal.ZERO);
+        invoiceDto.setAmountToBePaid(invoiceDto.getInvoiceTotalWithTax());
+        invoiceDto.setAmountPending(invoiceDto.getAmountToBePaid());
         return invoiceDto;
     }
+    @Transactional
+    public synchronized InvoiceDto processInvoice(InvoiceDto invoice){
+        try {
+            List<Room> totalRoomsToBeBooked = new ArrayList<>();
+            for (InvoiceLineDto invoiceLine : invoice.getInvoiceLines()) {
+                if (invoiceLine.getInvoiceLineTypeCode().equals(InvoiceLine.InvoiceLineTypeCodes.MEALPLAN.name())) {
+                    Integer roomQtyRequired = ((InvoiceMealPlanLineDto) invoiceLine).getQuantity();
+                    List<Room> roomsToBeBooked =
+                            roomTypeRepository.getRoomsToBeBooked(
+                                    invoice.getProperty().getIdProperty(),
+                                    ((InvoiceMealPlanLineDto) invoiceLine).getRoomTypeName(),
+                                    roomQtyRequired,
+                                    DateFormatter.getTimestampFromString(invoice.getInvoiceCheckInOutDetails()
+                                            .getCheckInTimestamp()),
+                                    DateFormatter.getTimestampFromString(invoice.getInvoiceCheckInOutDetails()
+                                            .getCheckOutTimestamp()));
+                    //check and throw error if the count is not as expected and do not take payment
+                    System.out.println("Rooms to be booked Count:" + roomsToBeBooked.size());
+                    if (roomsToBeBooked.size() < roomQtyRequired)
+                        throw new RoomJustSoldOutException("1005",
+                                "The rooms are already sold, please change search parameters and try again");
+                    totalRoomsToBeBooked.addAll(roomsToBeBooked);
+                }
+            }
+                    //capture payment
+                    RazorpayResponse razorpayResponse =
+                            captureRazorPayment(invoice.getPayment().getProviderPaymentId(),
+                                    invoice.getPayment().getAmountPaid());
+                    // incase of any error in razorpay response we need stop the booking
+                    //razorpayResponseRepository.save(razorpayResponse);
 
-    public InvoiceDto processInvoice(InvoiceDto invoice){
+
+                    // create new invoice
+                    Invoice newInvoice = InvoiceMapper.INSTANCE.InvoiceDtoToInvoice(invoice);
+                    //add property details
+                    newInvoice.setProperty(propertyRepository.findByIdProperty(invoice.getProperty().getIdProperty()));
+                    newInvoice.setUser(customUserDetailsService.getUserByUserContext(invoice.getUserContext()));
+                    //add payment line
+                    newInvoice.addInvoicePaymentLine(getInvoicePaymentLine(razorpayResponse));
+
+                    //create new booking
+                    Booking booking = new Booking();
+                    booking.setCheckInTimestamp(DateFormatter.getTimestampFromString(
+                            invoice.getInvoiceCheckInOutDetails().getCheckInTimestamp()));
+                    booking.setCheckOutTimestamp(DateFormatter.getTimestampFromString(
+                            invoice.getInvoiceCheckInOutDetails().getCheckOutTimestamp()));
+                    booking.setRooms(totalRoomsToBeBooked);
+                    booking.setUpdatedTimestamp(DateFormatter.getCurrentTime());
+                    newInvoice.setBooking(booking);
+                    newInvoice.setCreatedTimestamp(DateFormatter.getCurrentTime());
+
+                    //save the invoice
+                    newInvoice = invoiceRepository.save(newInvoice);
+                    return InvoiceMapper.INSTANCE.InvoiceToInvoiceDto(newInvoice);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        //roomTypeRepository.getRoomsToBeBooked()
         //Book the room
         //if error do not capture payment, customer will be auto refunded
-        //send email
-
-        //get payment
-        RazorpayResponse razorpayResponse =
-                captureRazorPayment(invoice.getPayment().getProviderPaymentId(),
-                invoice.getPayment().getAmountPaid());
-        // incase of any error in razorpay response we need stop the booking
-        razorpayResponseRepository.save(razorpayResponse);
+            // send email
+            // return error response
+        //else
+            //get payment
+            //create an invoice from dto
+            //add payment lines
+            // update invoice status
+            // save invoice
+            // convert to DTO
+            // send response
 
         //process Payment
         //send email
-        return invoice;
+        return null;
+    }
+
+    private InvoicePaymentLine getInvoicePaymentLine(PaymentResponse paymentResponse){
+        //create new payment line
+        InvoicePaymentLine invoicePaymentLine = new InvoicePaymentLine();
+        invoicePaymentLine.setPaymentResponse(paymentResponse);
+        invoicePaymentLine.setTransactionType(InvoicePaymentLine.TransactionTypes.PAYMENT.name());
+        return invoicePaymentLine;
     }
 
     private RazorpayResponse captureRazorPayment(String razor_payment_id, String amountPaid){
@@ -95,15 +182,21 @@ public class InvoiceProcessorService {
         return razorpayResponse;
     }
 
-    private List<InvoiceLineItemDto> getInvoiceLinesForMealPlans(List<AvailableRoomTypeDto> selectedRoomTypes){
+    private List<InvoiceLineDto> getInvoiceLinesForMealPlans(List<AvailableRoomTypeDto> selectedRoomTypes){
         int groupSequenceNo = 1;
-        List<InvoiceLineItemDto> invoiceLines = new ArrayList<>();
+        List<InvoiceLineDto> invoiceLines = new ArrayList<>();
         for (AvailableRoomTypeDto selectedRoomType:selectedRoomTypes)
         {
             List<MealPlanDto> mealPlans = selectedRoomType.getMealPlans();
             for(MealPlanDto mealPlan:mealPlans){
-                if (mealPlan.getMealPlanItem().getQuantity()>0){
+                Integer mealPLanQuantity = mealPlan.getMealPlanItem().getQuantity();
+                if (mealPLanQuantity>0){
                     InvoiceLineItemDto invoiceLine = getInvoiceLineForMealPlan(mealPlan);
+                    ((InvoiceMealPlanLineDto) invoiceLine).setRoomTypeName(selectedRoomType.getTypeName());
+                    ((InvoiceMealPlanLineDto) invoiceLine)
+                            .setMaxAdults(selectedRoomType.getMaxAdultOccupancy() * mealPLanQuantity);
+                    ((InvoiceMealPlanLineDto) invoiceLine)
+                            .setMaxChilds(selectedRoomType.getMaxChildOccupancy() * mealPLanQuantity);
                     invoiceLine.setSequenceNo(getInvoiceLineSequence(invoiceLines));
                     invoiceLine.setGroupSequenceNo(groupSequenceNo);
                     List<InvoiceLineTaxDto> invoiceLineTaxesForMealPlan = invoiceLine.getInvoiceLineTaxes();
@@ -158,7 +251,7 @@ public class InvoiceProcessorService {
 
     private List<InvoiceTaxDto> calculateInvoiceLevelTaxes(){
         List <InvoiceTaxDto> appliedTaxes = new ArrayList<>();
-        for (InvoiceLineItemDto invoiceLine: this.invoiceDto.getInvoiceLines()){
+        for (InvoiceLineDto invoiceLine: this.invoiceDto.getInvoiceLines()){
             for(InvoiceLineTaxDto invoiceLineTax: invoiceLine.getInvoiceLineTaxes()){
                 InvoiceTaxDto currentInvoiceTax = appliedTaxes.stream()
                         .filter(appliedTax -> invoiceLineTax.getItemTaxCode().equals(appliedTax.getItemTaxCode()))
@@ -166,7 +259,7 @@ public class InvoiceProcessorService {
                         .orElse(null);
                 if (currentInvoiceTax == null){ //new tax code
                     InvoiceTaxDto appliedTax = new InvoiceTaxDto();
-                    appliedTax.setInvoiceId(invoiceLine.getInvoiceId());
+                    appliedTax.setIdInvoiceTax(invoiceLineTax.getIdInvoiceLineTax());
                     appliedTax.setItemTaxCode(invoiceLineTax.getItemTaxCode());
                     appliedTax.setItemTaxDescription(invoiceLineTax.getItemTaxDescription());
                     appliedTax.setItemTaxPercent(invoiceLineTax.getItemTaxPercent());
@@ -187,15 +280,19 @@ public class InvoiceProcessorService {
 
     private InvoiceLineItemDto getInvoiceLineForMealPlan(MealPlanDto mealPlan){
         InvoiceMealPlanLineDto invoiceLine = new InvoiceMealPlanLineDto();
-        invoiceLine.setInvoiceLineTypeCode(InvoiceLine.InvoiceLineTypeCodes.ITEM.name());
+        invoiceLine.setInvoiceLineTypeCode(InvoiceLine.InvoiceLineTypeCodes.MEALPLAN.name());
         invoiceLine.setDescription(mealPlan.getMealPlanItem().getDescription());
         List<String> includes = new ArrayList<>();
         includes.add(mealPlan.getDescription());
         invoiceLine.setIncludes(includes);
         invoiceLine.setPrice(mealPlan.getMealPlanItem().getItemPrice().getBasePrice());
         invoiceLine.setQuantity(mealPlan.getMealPlanItem().getQuantity());
+        invoiceLine.setNoOfNights(mealPlan.getMealPlanItem().getNoOfNights());
         invoiceLine.setAmount(invoiceLine.getPrice().multiply(
                 new BigDecimal(invoiceLine.getQuantity())));
+        if (invoiceLine.getNoOfNights()!=null && invoiceLine.getNoOfNights()>1)
+            invoiceLine.setAmount(invoiceLine.getAmount().multiply(
+                    new BigDecimal((invoiceLine.getNoOfNights()))));
         invoiceLine.setInvoiceLineTaxes(getInvoiceLineTaxesForMealPlan(mealPlan));
         invoiceLine.calculateAmountWithTax();
         return invoiceLine;
@@ -205,12 +302,19 @@ public class InvoiceProcessorService {
         if (item.getQuantity() == null || item.getQuantity() == 0)
             return null;
         InvoiceLineItemDto invoiceLine = new InvoiceLineItemDto();
-        invoiceLine.setInvoiceLineTypeCode(InvoiceLine.InvoiceLineTypeCodes.ITEM.name());
+        if (item.getItemType().getItemTypeCode().equals(ItemType.ItemTypeCodes.EXTRABEDADULT.name()) ||
+                (item.getItemType().getItemTypeCode().equals(ItemType.ItemTypeCodes.EXTRABEDCHILD.name())))
+        invoiceLine.setInvoiceLineTypeCode(InvoiceLine.InvoiceLineTypeCodes.EXTRA_PERSON.name());
         invoiceLine.setDescription(item.getDescription());
         invoiceLine.setPrice(item.getItemPrice().getBasePrice());
         invoiceLine.setQuantity(item.getQuantity());
+        invoiceLine.setNoOfNights(item.getNoOfNights());
+        invoiceLine.setItemType(item.getItemType().getItemTypeCode());
         invoiceLine.setAmount(invoiceLine.getPrice().multiply(
                 new BigDecimal(invoiceLine.getQuantity())));
+        if (invoiceLine.getNoOfNights()!=null && invoiceLine.getNoOfNights()>1)
+            invoiceLine.setAmount(invoiceLine.getAmount().multiply(
+                    new BigDecimal((invoiceLine.getNoOfNights()))));
         return invoiceLine;
     }
 
@@ -246,8 +350,12 @@ public class InvoiceProcessorService {
         });
         return invoiceLineTaxes;
     }
-    private Integer getInvoiceLineSequence(List<InvoiceLineItemDto> invoiceLines){
+    private Integer getInvoiceLineSequence(List<InvoiceLineDto> invoiceLines){
         return invoiceLines.size() +1;
+    }
+
+    private Integer getInvoicePaymentLineSequence(List<InvoicePaymentLine> invoicePaymentLines){
+        return invoicePaymentLines.size() +1;
     }
 
     public static String createInvoiceNumber() {

@@ -4,19 +4,19 @@ import com.png.data.dto.invoice.InvoiceLineTaxDto;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "invoice_line")
+@Inheritance(strategy =InheritanceType.JOINED)
 public class InvoiceLine extends BaseEntity{
-    public enum InvoiceLineTypeCodes {MEALPLAN,
+    public enum InvoiceLineTypeCodes {MEALPLAN,EXTRA_PERSON,
     ITEM, TAX,LINE_DISCOUNT,TXN_DISCOUNT,ADJUSTMENT,SUBTOTAL,TOTAL};
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_invoice_line")
     private Long idInvoiceLine;
-    @Column(name = "invoice_id")
-    private Long invoiceId;
     @Column(name = "sequence_no")
     private int sequenceNo;
     @Column(name = "group_sequence_no")
@@ -25,16 +25,26 @@ public class InvoiceLine extends BaseEntity{
     private String invoiceLineTypeCode;
     @Column(name = "description")
     private String description;
-    @Column(name = "price")
-    private BigDecimal price;
-    @Column(name = "quantity")
-    private Integer quantity;
     @Column(name = "amount")
     private BigDecimal amount;
     @Column(name = "amount_with_tax")
     private BigDecimal amountWithTax;
-//    @Column(name = "id_invoice_line")
-//    private List<InvoiceLineTaxDto> invoiceLineTaxes;
+    @OneToMany (mappedBy = "invoiceLine", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<InvoiceLineTax> invoiceLineTaxes;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "invoice_id")
+    private Invoice invoice;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof InvoiceLine )) return false;
+        return idInvoiceLine != null && idInvoiceLine.equals(((InvoiceLine) o).idInvoiceLine);
+    }
+    @Override
+    public int hashCode() {
+        return 101;
+    }
 
     public Long getIdInvoiceLine() {
         return idInvoiceLine;
@@ -42,14 +52,6 @@ public class InvoiceLine extends BaseEntity{
 
     public void setIdInvoiceLine(Long idInvoiceLine) {
         this.idInvoiceLine = idInvoiceLine;
-    }
-
-    public Long getInvoiceId() {
-        return invoiceId;
-    }
-
-    public void setInvoiceId(Long invoiceId) {
-        this.invoiceId = invoiceId;
     }
 
     public int getSequenceNo() {
@@ -84,22 +86,6 @@ public class InvoiceLine extends BaseEntity{
         this.description = description;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
     public BigDecimal getAmount() {
         return amount;
     }
@@ -114,5 +100,36 @@ public class InvoiceLine extends BaseEntity{
 
     public void setAmountWithTax(BigDecimal amountWithTax) {
         this.amountWithTax = amountWithTax;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
+
+    public void addInvoiceLineTax(InvoiceLineTax invoiceLineTax){
+        if (invoiceLineTax == null)
+            return;
+        if (this.invoiceLineTaxes == null)
+            this.invoiceLineTaxes = new ArrayList<>();
+        this.invoiceLineTaxes.add(invoiceLineTax);
+        invoiceLineTax.setInvoiceLine(this);
+    }
+
+    public void removeInvoiceLineTax(InvoiceLineTax invoiceLineTax){
+        this.invoiceLineTaxes.remove(invoiceLineTax);
+        if (invoiceLineTax!=null)
+            invoiceLineTax.setInvoiceLine(null);
+    }
+
+    public List<InvoiceLineTax> getInvoiceLineTaxes() {
+        return invoiceLineTaxes;
+    }
+
+    public void setInvoiceLineTaxes(List<InvoiceLineTax> invoiceLineTaxes) {
+        this.invoiceLineTaxes = invoiceLineTaxes;
     }
 }

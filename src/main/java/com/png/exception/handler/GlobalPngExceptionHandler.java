@@ -26,6 +26,11 @@ public class GlobalPngExceptionHandler {
     public ResponseEntity<?> handleBaseException(NoDataException e){
         return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
     }
+
+    @ResponseBody
+    public ResponseEntity<?> handleBaseException(RoomJustSoldOutException e){
+        return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
+    }
     
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) 
     @ExceptionHandler(value = Exception.class)  

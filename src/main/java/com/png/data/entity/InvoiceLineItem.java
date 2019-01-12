@@ -1,25 +1,33 @@
-package com.png.data.dto.invoice;
+package com.png.data.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
-public class InvoiceLineItemDto extends InvoiceLineDto{
+@Entity
+@Table(name = "invoice_line_item")
+@PrimaryKeyJoinColumn(name="id_invoice_line_item")
+public class InvoiceLineItem extends InvoiceLine {
+    @Column(name = "price")
     private BigDecimal price;
+    @Column(name = "quantity")
     private Integer quantity;
+    @Column (name = "no_of_nights")
     private Integer noOfNights;
+
     private String itemType;
 
     public BigDecimal getPrice() {
         return price;
     }
-
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-
     public Integer getQuantity() {
         return quantity;
     }
-
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
