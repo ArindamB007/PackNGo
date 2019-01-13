@@ -34,6 +34,24 @@
     {"@type": "menuItem","menuLabel": "Contact Us","linkURL": "#"},
     {"@type": "subMenuItem","menuLabel": "Account", "showLabel":true, "type": "dropDown",
       "icon": "material-icons md-24 orangeC00", "iconClass": "account_box",
-      "submenuItems": [{"@type": "menuItem","menuLabel": "Logoff","linkURL": "#/logoff"}]}]
+      "submenuItems": [
+        {
+          "@type": "menuItem",
+          "menuLabel": "Profile",
+          "linkURL": "#/profile"
+        },
+        {
+          "@type": "menuItem",
+          "menuLabel": "My Bookings",
+          "linkURL": "#/view_booking"
+        },
+        {
+          "@type": "menuItem",
+          "menuLabel": "Logoff",
+          "linkURL": "#/logoff"
+        }
+      ]
+    }
+  ]
 
 }
