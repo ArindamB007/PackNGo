@@ -11,8 +11,9 @@ public class InvoiceMealPlanLine extends InvoiceLineItem {
     private List<MealPlanInclude> mealPlanIncludes;
     @Column (name = "room_type_name")
     private String roomTypeName;
-
+    @Column(name = "max_adults")
     private Integer maxAdults;
+    @Column(name = "max_childs")
     private Integer maxChilds;
 
     public List<MealPlanInclude> getMealPlanIncludes() {

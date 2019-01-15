@@ -13,6 +13,13 @@ public class InvoiceDto {
     private Long idInvoice;
     private String invoiceDate;
     private String invoiceNo;
+    private String checkInTimestamp;
+    private String checkOutTimestamp;
+    private Integer maxAdults = 0;
+    private Integer maxChilds = 0;
+    private Integer maxExtraChilds = 0;
+    private Integer maxExtraAdults = 0;
+    private Integer nights;
     private BigDecimal invoiceTotal;
     private BigDecimal invoiceTotalWithTax;
     private BigDecimal invoiceTotalTax;
@@ -26,7 +33,6 @@ public class InvoiceDto {
     private String travellerEmail;
     private String travellerMobile;
     private List<InvoiceTaxDto> appliedTaxes;
-    private InvoiceCheckInOutDetailsDto invoiceCheckInOutDetails;
     private List<InvoiceLineDto> invoiceLines;
     private List<InvoicePaymentLineDto> invoicePaymentLines;
     private PropertyDto property;
@@ -129,14 +135,6 @@ public class InvoiceDto {
         this.payment = payment;
     }
 
-    public InvoiceCheckInOutDetailsDto getInvoiceCheckInOutDetails() {
-        return invoiceCheckInOutDetails;
-    }
-
-    public void setInvoiceCheckInOutDetails(InvoiceCheckInOutDetailsDto invoiceCheckInOutDetails) {
-        this.invoiceCheckInOutDetails = invoiceCheckInOutDetails;
-    }
-
     public List<InvoicePaymentLineDto> getInvoicePaymentLines() {
         return invoicePaymentLines;
     }
@@ -209,8 +207,63 @@ public class InvoiceDto {
         this.amountPending = amountPending;
     }
 
-    public void setOccupancyInfo (){
-        InvoiceCheckInOutDetailsDto invoiceCheckInOutDetails = this.getInvoiceCheckInOutDetails();
+    public String getCheckInTimestamp() {
+        return checkInTimestamp;
+    }
+
+    public void setCheckInTimestamp(String checkInTimestamp) {
+        this.checkInTimestamp = checkInTimestamp;
+    }
+
+    public String getCheckOutTimestamp() {
+        return checkOutTimestamp;
+    }
+
+    public void setCheckOutTimestamp(String checkOutTimestamp) {
+        this.checkOutTimestamp = checkOutTimestamp;
+    }
+
+    public Integer getMaxAdults() {
+        return maxAdults;
+    }
+
+    public void setMaxAdults(Integer maxAdults) {
+        this.maxAdults = maxAdults;
+    }
+
+    public Integer getMaxChilds() {
+        return maxChilds;
+    }
+
+    public void setMaxChilds(Integer maxChilds) {
+        this.maxChilds = maxChilds;
+    }
+
+    public Integer getMaxExtraChilds() {
+        return maxExtraChilds;
+    }
+
+    public void setMaxExtraChilds(Integer maxExtraChilds) {
+        this.maxExtraChilds = maxExtraChilds;
+    }
+
+    public Integer getMaxExtraAdults() {
+        return maxExtraAdults;
+    }
+
+    public void setMaxExtraAdults(Integer maxExtraAdults) {
+        this.maxExtraAdults = maxExtraAdults;
+    }
+
+    public Integer getNights() {
+        return nights;
+    }
+
+    public void setNights(Integer nights) {
+        this.nights = nights;
+    }
+
+    public void setInvoiceOccupancyInfo() {
         Integer maxAdults = 0;
         Integer maxChilds = 0;
         Integer maxExtraChilds = 0;
@@ -229,10 +282,9 @@ public class InvoiceDto {
                     maxExtraChilds = maxExtraChilds + ((InvoiceLineItemDto)invoiceLine).getQuantity();
             }
         }
-        invoiceCheckInOutDetails.setMaxAdults(maxAdults);
-        invoiceCheckInOutDetails.setMaxChilds(maxChilds);
-        invoiceCheckInOutDetails.setMaxExtraAdults(maxExtraAdults);
-        invoiceCheckInOutDetails.setMaxExtraChilds(maxExtraChilds);
-        this.invoiceCheckInOutDetails = invoiceCheckInOutDetails;
+        this.setMaxAdults(maxAdults);
+        this.setMaxChilds(maxChilds);
+        this.setMaxExtraAdults(maxExtraAdults);
+        this.setMaxExtraChilds(maxExtraChilds);
     }
 }

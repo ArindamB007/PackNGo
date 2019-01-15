@@ -27,10 +27,10 @@ public class Booking extends BaseEntity{
     @Column (name = "cancelled_timestamp")
     private Timestamp cancelledTimestamp;
 
-    @Column (name = "check_in_timestamp")
+    @Column(name = "check_in_timestamp", nullable = false)
     private Timestamp checkInTimestamp;
 
-    @Column (name = "check_out_timestamp")
+    @Column(name = "check_out_timestamp", nullable = false)
     private Timestamp checkOutTimestamp;
 
     public Long getIdBooking() {

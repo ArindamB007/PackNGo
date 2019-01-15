@@ -1,4 +1,4 @@
-PackNGo.factory('BookingService',function($rootScope,$q,$http,$log,UserContext) {
+PackNGo.factory('BookingService', function ($rootScope, $q, $http, $log) {
     return{
         searchRoom : function(checkInOutDetails) {
             var deferred = $q.defer();

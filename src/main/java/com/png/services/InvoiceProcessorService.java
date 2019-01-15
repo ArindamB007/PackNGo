@@ -51,24 +51,34 @@ public class InvoiceProcessorService {
     private List<ItemTax> applicableTaxes;
 
     public InvoiceDto createInvoice(BookingCartDto bookingCartDto){
-        invoiceDto = new InvoiceDto();
-        applicableTaxes = itemTaxRepository.findAll();
-        invoiceDto.setInvoiceNo(createInvoiceNumber());
-        invoiceDto.setInvoiceCheckInOutDetails(bookingCartDto.getCheckInOutDetails());
-        invoiceDto.setInvoiceStatusCode(Invoice.InvoiceStatusCodes.TOTALED.name());
-        invoiceDto.setUserContext(bookingCartDto.getUserContext());
-        invoiceDto.setProperty(bookingCartDto.getSelectedProperty());
-        invoiceDto.setInvoiceLines(getInvoiceLinesForMealPlans(bookingCartDto.getSelectedRoomTypes()));
-        invoiceDto.setOccupancyInfo();
-        invoiceDto.setAppliedTaxes(calculateInvoiceLevelTaxes());
-        invoiceDto.setInvoiceTotalTax(calculateInvoiceTotalTax(invoiceDto.getAppliedTaxes()));;
-        invoiceDto.setInvoiceTotalWithTax(calculateInvoiceTotalWithTax());
-        invoiceDto.setInvoiceTotal(calculateInvoiceTotal());
-        invoiceDto.setAmountPaid(BigDecimal.ZERO);
-        invoiceDto.setAmountToBePaid(invoiceDto.getInvoiceTotalWithTax());
-        invoiceDto.setAmountPending(invoiceDto.getAmountToBePaid());
+        try {
+            invoiceDto = new InvoiceDto();
+            String checkIn = bookingCartDto.getCheckInOutDetails().getCheckInTimestamp();
+            String checkOut = bookingCartDto.getCheckInOutDetails().getCheckOutTimestamp();
+            applicableTaxes = itemTaxRepository.findAll();
+            invoiceDto.setInvoiceNo(createInvoiceNumber());
+            invoiceDto.setCheckInTimestamp(checkIn);
+            invoiceDto.setCheckOutTimestamp(checkOut);
+            invoiceDto.setNights(DateFormatter.getNights(DateFormatter.getTimestampFromString(checkOut),
+                    DateFormatter.getTimestampFromString(checkOut)));
+            invoiceDto.setInvoiceStatusCode(Invoice.InvoiceStatusCodes.TOTALED.name());
+            invoiceDto.setUserContext(bookingCartDto.getUserContext());
+            invoiceDto.setProperty(bookingCartDto.getSelectedProperty());
+            invoiceDto.setInvoiceLines(getInvoiceLinesForMealPlans(bookingCartDto.getSelectedRoomTypes()));
+            invoiceDto.setAppliedTaxes(calculateInvoiceLevelTaxes());
+            invoiceDto.setInvoiceTotalTax(calculateInvoiceTotalTax(invoiceDto.getAppliedTaxes()));
+            invoiceDto.setInvoiceTotalWithTax(calculateInvoiceTotalWithTax());
+            invoiceDto.setInvoiceTotal(calculateInvoiceTotal());
+            invoiceDto.setAmountPaid(BigDecimal.ZERO);
+            invoiceDto.setAmountToBePaid(invoiceDto.getInvoiceTotalWithTax());
+            invoiceDto.setAmountPending(invoiceDto.getAmountToBePaid());
+            invoiceDto.setInvoiceOccupancyInfo();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return invoiceDto;
     }
+
     @Transactional
     public synchronized InvoiceDto processInvoice(InvoiceDto invoice){
         try {
@@ -81,10 +91,8 @@ public class InvoiceProcessorService {
                                     invoice.getProperty().getIdProperty(),
                                     ((InvoiceMealPlanLineDto) invoiceLine).getRoomTypeName(),
                                     roomQtyRequired,
-                                    DateFormatter.getTimestampFromString(invoice.getInvoiceCheckInOutDetails()
-                                            .getCheckInTimestamp()),
-                                    DateFormatter.getTimestampFromString(invoice.getInvoiceCheckInOutDetails()
-                                            .getCheckOutTimestamp()));
+                                    DateFormatter.getTimestampFromString(invoice.getCheckInTimestamp()),
+                                    DateFormatter.getTimestampFromString(invoice.getCheckOutTimestamp()));
                     //check and throw error if the count is not as expected and do not take payment
                     System.out.println("Rooms to be booked Count:" + roomsToBeBooked.size());
                     if (roomsToBeBooked.size() < roomQtyRequired)
@@ -111,11 +119,9 @@ public class InvoiceProcessorService {
 
                     //create new booking
                     Booking booking = new Booking();
-                    booking.setCheckInTimestamp(DateFormatter.getTimestampFromString(
-                            invoice.getInvoiceCheckInOutDetails().getCheckInTimestamp()));
-                    booking.setCheckOutTimestamp(DateFormatter.getTimestampFromString(
-                            invoice.getInvoiceCheckInOutDetails().getCheckOutTimestamp()));
                     booking.setRooms(totalRoomsToBeBooked);
+            booking.setCheckInTimestamp(DateFormatter.getTimestampFromString(invoice.getCheckInTimestamp()));
+            booking.setCheckOutTimestamp(DateFormatter.getTimestampFromString(invoice.getCheckOutTimestamp()));
                     booking.setUpdatedTimestamp(DateFormatter.getCurrentTime());
                     newInvoice.setBooking(booking);
                     newInvoice.setCreatedTimestamp(DateFormatter.getCurrentTime());

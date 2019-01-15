@@ -2,6 +2,8 @@ package com.png.web.controller;
 
 import com.png.auth.service.SecurityService;
 import com.png.auth.service.UserService;
+import com.png.data.dto.search.InvoiceSearchDto;
+import com.png.data.dto.search.PagedRequest;
 import com.png.validators.EmailValidator;
 import com.png.validators.UserValidator;
 import com.png.comms.email.EmailService;
@@ -22,6 +24,7 @@ import com.png.services.*;
 
 import com.png.util.DateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -72,6 +75,9 @@ public class ServicesControllers {
 
 	@Autowired
 	private InvoiceProcessorService invoiceProcessorService;
+
+	@Autowired
+	private InvoiceSearchService invoiceSearchService;
 
     private HashMap<String,String> populateErrorDetails(Exception e){
         HashMap<String,String> errorDetails = new HashMap<String,String>();
@@ -278,6 +284,22 @@ public class ServicesControllers {
 			}
 			return new ResponseEntity<>(otpGeneratorService.generateEmailOpt(emailOtp), HttpStatus.OK);
 		} catch (BaseException e){
+			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value = "/findInvoice", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Object> findInvoice(@RequestBody InvoiceSearchDto invoiceSearch) {
+		try {
+			/*return new ResponseEntity<>(invoiceSearchService
+					.searchInvoiceByUserId(invoiceSearch.getUserId(),"DESC"), HttpStatus.OK);*/
+			return new ResponseEntity<>(invoiceSearchService
+					.searchPagedInvoiceByUserId(
+							invoiceSearch.getUserId(), invoiceSearch.getPageNo() - 1, invoiceSearch.getPageSize(),
+							invoiceSearch.getSortDirection()),
+					HttpStatus.OK);
+		} catch (BaseException e) {
 			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);
 		}
 	}

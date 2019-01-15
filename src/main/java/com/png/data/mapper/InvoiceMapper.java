@@ -18,6 +18,8 @@ import java.util.List;
 @Mapper
 public interface InvoiceMapper {
     InvoiceMapper INSTANCE = Mappers.getMapper(InvoiceMapper.class);
+
+    List<InvoiceDto> InvoicesToInvoiceDtos(List<Invoice> invoices);
     default Invoice InvoiceDtoToInvoice(InvoiceDto invoiceDto) {
         if (invoiceDto == null) {
             return null;
@@ -52,13 +54,17 @@ public interface InvoiceMapper {
 
     default InvoiceDto InvoiceToInvoiceDto(Invoice invoice) {
         UserContext userContext = new UserContext();
-        InvoiceCheckInOutDetailsDto invoiceCheckInOutDetailsDto= new InvoiceCheckInOutDetailsDto();
         if (invoice == null) {
             return null;
         }
+        Timestamp checkIn = invoice.getBooking().getCheckInTimestamp();
+        Timestamp checkOut = invoice.getBooking().getCheckOutTimestamp();
         InvoiceDto invoiceDto = new InvoiceDto();
         invoiceDto.setIdInvoice(invoice.getIdInvoice());
         invoiceDto.setInvoiceNo(invoice.getInvoiceNo());
+        invoiceDto.setCheckInTimestamp(DateFormatter.getDateStringFromTimestamp(checkIn));
+        invoiceDto.setCheckOutTimestamp(DateFormatter.getDateStringFromTimestamp(checkOut));
+        invoiceDto.setNights(DateFormatter.getNights(checkOut, checkIn));
         invoiceDto.setInvoiceTotal(invoice.getInvoiceTotal());
         invoiceDto.setInvoiceTotalWithTax(invoice.getInvoiceTotalWithTax());
         invoiceDto.setInvoiceTotalTax(invoice.getInvoiceTotalTax());
@@ -80,17 +86,9 @@ public interface InvoiceMapper {
                 .InvoiceLinesToInvoiceLineDtos(invoice.getInvoiceLines()));
         invoiceDto.setInvoicePaymentLines(InvoicePaymentLineMapper.INSTANCE
                 .InvoicePaymentLineToInvoicePaymentLineDtos(invoice.getInvoicePaymentLines()));
+        invoiceDto.setInvoiceOccupancyInfo();
         userContext.setUserDetails(invoice.getUser());
         invoiceDto.setUserContext(userContext);
-        Timestamp checkInStamp = invoice.getBooking().getCheckInTimestamp();
-        Timestamp checkOutStamp = invoice.getBooking().getCheckOutTimestamp();
-        invoiceCheckInOutDetailsDto.setCheckInTimestamp(
-                DateFormatter.getDateStringFromTimestamp(invoice.getBooking().getCheckInTimestamp()));
-        invoiceCheckInOutDetailsDto.setCheckOutTimestamp(
-                DateFormatter.getDateStringFromTimestamp(invoice.getBooking().getCheckOutTimestamp()));
-        invoiceCheckInOutDetailsDto.setNights(DateFormatter.getNights(checkInStamp,checkOutStamp));
-        invoiceDto.setInvoiceCheckInOutDetails(invoiceCheckInOutDetailsDto);
-        invoiceDto.setOccupancyInfo();
         return invoiceDto;
     }
 }
