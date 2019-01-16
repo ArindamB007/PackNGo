@@ -291,6 +291,7 @@ public class InvoiceProcessorService {
         List<String> includes = new ArrayList<>();
         includes.add(mealPlan.getDescription());
         invoiceLine.setIncludes(includes);
+        invoiceLine.setItemType(mealPlan.getMealPlanItem().getItemType().getItemTypeCode());
         invoiceLine.setPrice(mealPlan.getMealPlanItem().getItemPrice().getBasePrice());
         invoiceLine.setQuantity(mealPlan.getMealPlanItem().getQuantity());
         invoiceLine.setNoOfNights(mealPlan.getMealPlanItem().getNoOfNights());

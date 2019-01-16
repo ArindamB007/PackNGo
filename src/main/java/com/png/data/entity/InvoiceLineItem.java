@@ -16,7 +16,7 @@ public class InvoiceLineItem extends InvoiceLine {
     private Integer quantity;
     @Column (name = "no_of_nights")
     private Integer noOfNights;
-
+    @Column(name = "item_type")
     private String itemType;
 
     public BigDecimal getPrice() {

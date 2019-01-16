@@ -33,6 +33,7 @@ public interface InvoiceLineMapper {
             invoiceLineItem.setAmountWithTax(invoiceLineDto.getAmountWithTax());
             invoiceLineItem.setPrice(((InvoiceLineItemDto)invoiceLineDto).getPrice());
             invoiceLineItem.setQuantity(((InvoiceLineItemDto)invoiceLineDto).getQuantity());
+            invoiceLineItem.setItemType(((InvoiceLineItemDto) invoiceLineDto).getItemType());
             invoiceLineItem.setNoOfNights(((InvoiceLineItemDto)invoiceLineDto).getNoOfNights());
             invoiceLineItem.setItemType(((InvoiceLineItemDto)invoiceLineDto).getItemType());
             List<InvoiceLineTax> invoiceLineTaxes = InvoiceLineTaxMapper.INSTANCE
@@ -49,8 +50,9 @@ public interface InvoiceLineMapper {
             invoiceMealPlanLine.setDescription(invoiceLineDto.getDescription());
             invoiceMealPlanLine.setAmount(invoiceLineDto.getAmount());
             invoiceMealPlanLine.setAmountWithTax(invoiceLineDto.getAmountWithTax());
-            invoiceMealPlanLine.setPrice(((InvoiceLineItemDto)invoiceLineDto).getPrice());
+            invoiceMealPlanLine.setPrice(((InvoiceMealPlanLineDto) invoiceLineDto).getPrice());
             invoiceMealPlanLine.setQuantity(((InvoiceMealPlanLineDto)invoiceLineDto).getQuantity());
+            invoiceMealPlanLine.setItemType(((InvoiceMealPlanLineDto) invoiceLineDto).getItemType());
             invoiceMealPlanLine.setNoOfNights(((InvoiceMealPlanLineDto)invoiceLineDto).getNoOfNights());
             invoiceMealPlanLine.setMaxAdults(((InvoiceMealPlanLineDto)invoiceLineDto).getMaxAdults());
             invoiceMealPlanLine.setMaxChilds(((InvoiceMealPlanLineDto)invoiceLineDto).getMaxChilds());
@@ -105,6 +107,7 @@ public interface InvoiceLineMapper {
             invoiceMealPlanLineDto.setMaxAdults(((InvoiceMealPlanLine)invoiceLine).getMaxAdults());
             invoiceMealPlanLineDto.setMaxChilds(((InvoiceMealPlanLine)invoiceLine).getMaxChilds());
             invoiceMealPlanLineDto.setRoomTypeName(((InvoiceMealPlanLine)invoiceLine).getRoomTypeName());
+            invoiceMealPlanLineDto.setItemType(((InvoiceMealPlanLine) invoiceLine).getItemType());
             invoiceMealPlanLineDto.setIncludes(MealPlanIncludeMapper
                     .INSTANCE.MealPlanIncludesToIncludes(((InvoiceMealPlanLine)invoiceLine)
                             .getMealPlanIncludes()));
