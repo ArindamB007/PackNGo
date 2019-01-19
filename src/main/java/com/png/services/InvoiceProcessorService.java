@@ -101,50 +101,56 @@ public class InvoiceProcessorService {
                     totalRoomsToBeBooked.addAll(roomsToBeBooked);
                 }
             }
-                    //capture payment
-                    RazorpayResponse razorpayResponse =
-                            captureRazorPayment(invoice.getPayment().getProviderPaymentId(),
-                                    invoice.getPayment().getAmountPaid());
-                    // incase of any error in razorpay response we need stop the booking
-                    //razorpayResponseRepository.save(razorpayResponse);
+            //capture payment
+            RazorpayResponse razorpayResponse =
+                    captureRazorPayment(invoice.getPayment().getProviderPaymentId(),
+                            invoice.getPayment().getAmountPaid());
+            // incase of any error in razorpay response we need stop the booking
+            //razorpayResponseRepository.save(razorpayResponse);
 
 
-                    // create new invoice
-                    Invoice newInvoice = InvoiceMapper.INSTANCE.InvoiceDtoToInvoice(invoice);
-                    //add property details
-                    newInvoice.setProperty(propertyRepository.findByIdProperty(invoice.getProperty().getIdProperty()));
-                    newInvoice.setUser(customUserDetailsService.getUserByUserContext(invoice.getUserContext()));
-                    //add payment line
-                    newInvoice.addInvoicePaymentLine(getInvoicePaymentLine(razorpayResponse));
+            // create new invoice
+            Invoice newInvoice = InvoiceMapper.INSTANCE.InvoiceDtoToInvoice(invoice);
+            //add property details
+            newInvoice.setProperty(propertyRepository.findByIdProperty(invoice.getProperty().getIdProperty()));
+            newInvoice.setUser(customUserDetailsService.getUserByUserContext(invoice.getUserContext()));
+            //add payment line
+            newInvoice.addInvoicePaymentLine(getInvoicePaymentLine(razorpayResponse));
 
-                    //create new booking
-                    Booking booking = new Booking();
-                    booking.setRooms(totalRoomsToBeBooked);
-            booking.setCheckInTimestamp(DateFormatter.getTimestampFromString(invoice.getCheckInTimestamp()));
-            booking.setCheckOutTimestamp(DateFormatter.getTimestampFromString(invoice.getCheckOutTimestamp()));
-                    booking.setUpdatedTimestamp(DateFormatter.getCurrentTime());
-                    newInvoice.setBooking(booking);
-                    newInvoice.setCreatedTimestamp(DateFormatter.getCurrentTime());
+            //create new bookings for each room
+            List<Booking> newBookings = new ArrayList<>();
+            for (Room roomToBeBooked : totalRoomsToBeBooked) {
+                Booking booking = new Booking();
+                booking.setRoom(roomToBeBooked);
+                booking.setCheckInTimestamp(DateFormatter.getTimestampFromString(invoice.getCheckInTimestamp()));
+                booking.setCheckOutTimestamp(DateFormatter.getTimestampFromString(invoice.getCheckOutTimestamp()));
+                booking.setUpdatedTimestamp(DateFormatter.getCurrentTime());
+                newBookings.add(booking);
+            }
+            for (Booking newBooking : newBookings) {
+                newInvoice.addBooking(newBooking);
+            }
+            newInvoice.setCreatedTimestamp(DateFormatter.getCurrentTime());
 
-                    //save the invoice
-                    newInvoice = invoiceRepository.save(newInvoice);
-                    return InvoiceMapper.INSTANCE.InvoiceToInvoiceDto(newInvoice);
+            //save the invoice
+            newInvoice = invoiceRepository.save(newInvoice);
+            return InvoiceMapper.INSTANCE.InvoiceToInvoiceDto(newInvoice);
         } catch(Exception e) {
             e.printStackTrace();
         }
         //roomTypeRepository.getRoomsToBeBooked()
         //Book the room
         //if error do not capture payment, customer will be auto refunded
-            // send email
-            // return error response
+        // send email
+        // return error response
         //else
-            //get payment
-            //create an invoice from dto
-            //add payment lines
-            // update invoice status
-            // save invoice
-            // convert to DTO
-            // send response
+        //get payment
+        //create an invoice from dto
+        //add payment lines
+        // update invoice status
+        // save invoice
+        // convert to DTO
+        // send response
 
         //process Payment
         //send email
@@ -311,7 +317,7 @@ public class InvoiceProcessorService {
         InvoiceLineItemDto invoiceLine = new InvoiceLineItemDto();
         if (item.getItemType().getItemTypeCode().equals(ItemType.ItemTypeCodes.EXTRABEDADULT.name()) ||
                 (item.getItemType().getItemTypeCode().equals(ItemType.ItemTypeCodes.EXTRABEDCHILD.name())))
-        invoiceLine.setInvoiceLineTypeCode(InvoiceLine.InvoiceLineTypeCodes.EXTRA_PERSON.name());
+            invoiceLine.setInvoiceLineTypeCode(InvoiceLine.InvoiceLineTypeCodes.EXTRA_PERSON.name());
         invoiceLine.setDescription(item.getDescription());
         invoiceLine.setPrice(item.getItemPrice().getBasePrice());
         invoiceLine.setQuantity(item.getQuantity());

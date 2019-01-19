@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +64,13 @@ public class Invoice extends BaseEntity{
     @NotEmpty
     private String travellerMobile;
 
+
+    @Column(name = "check_in_timestamp", nullable = false)
+    private Timestamp checkInTimestamp;
+
+    @Column(name = "check_out_timestamp", nullable = false)
+    private Timestamp checkOutTimestamp;
+
     @OneToMany (mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<InvoiceTax> appliedTaxes;
 
@@ -72,8 +80,8 @@ public class Invoice extends BaseEntity{
     @OneToMany (mappedBy = "invoice",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<InvoicePaymentLine> invoicePaymentLines;
 
-    @OneToOne (mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
-    private Booking booking;
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Booking> bookings;
 
     @ManyToOne (fetch = FetchType.LAZY, optional = false)
     @PrimaryKeyJoinColumn
@@ -212,19 +220,12 @@ public class Invoice extends BaseEntity{
         this.invoicePaymentLines = invoicePaymentLines;
     }
 
-    public Booking getBooking() {
-        return booking;
+    public List<Booking> getBookings() {
+        return bookings;
     }
 
-    public void setBooking(Booking booking) {
-        if (booking ==null){
-            if (this.booking != null)
-                this.booking.setInvoice(null);
-        }
-        else{
-            booking.setInvoice(this);
-        }
-        this.booking = booking;
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     public BigDecimal getAmountToBePaid() {
@@ -249,6 +250,22 @@ public class Invoice extends BaseEntity{
 
     public void setAmountPending(BigDecimal amountPending) {
         this.amountPending = amountPending;
+    }
+
+    public Timestamp getCheckInTimestamp() {
+        return checkInTimestamp;
+    }
+
+    public void setCheckInTimestamp(Timestamp checkInTimestamp) {
+        this.checkInTimestamp = checkInTimestamp;
+    }
+
+    public Timestamp getCheckOutTimestamp() {
+        return checkOutTimestamp;
+    }
+
+    public void setCheckOutTimestamp(Timestamp checkOutTimestamp) {
+        this.checkOutTimestamp = checkOutTimestamp;
     }
 
     public void addInvoiceTax(InvoiceTax invoiceTax){
@@ -297,6 +314,20 @@ public class Invoice extends BaseEntity{
         invoiceLines.remove(invoiceLine);
         if (invoiceLine != null)
             invoiceLine.setInvoice(null);
+    }
+
+    public void addBooking(Booking booking) {
+        if (bookings == null)
+            bookings = new ArrayList<>();
+        bookings.add(booking);
+        if (booking != null)
+            booking.setInvoice(this);
+    }
+
+    public void removeBooking(Booking booking) {
+        bookings.remove(booking);
+        if (booking != null)
+            booking.setInvoice(null);
     }
 
     private void processTotals(InvoicePaymentLine invoicePaymentLine){

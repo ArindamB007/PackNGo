@@ -41,12 +41,8 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
                         "    on room.room_type_id_room_type = room_type.id_room_type\n" +
                         "  where id_room not in (\n" +
                         "     select room.id_room from room \n" +
-                        "    LEFT JOIN room_type\n" +
-                        "      on room.room_type_id_room_type = room_type.id_room_type\n" +
-                        "    LEFT JOIN bookings_rooms\n" +
-                        "      on room.id_room = bookings_rooms.id_room\n" +
                         "    LEFT JOIN  booking\n" +
-                        "      on booking.id_booking = bookings_rooms.id_booking where\n" +
+                        "      on room.id_room = booking.room_id_room where\n" +
                         "           (:checkInTimestamp <= booking.check_in_timestamp and " +
                         "               :checkOutTimestamp >= booking.check_in_timestamp) OR\n" +
                         "           (:checkInTimestamp <= booking.check_out_timestamp and " +
@@ -137,12 +133,8 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
                         "    AND room_type.type_name = :roomTypeName\n"+
                         "  WHERE id_room NOT IN (\n" +
                         "     select room.id_room from room \n" +
-                        "    LEFT JOIN room_type\n" +
-                        "      on room.room_type_id_room_type = room_type.id_room_type\n" +
-                        "    LEFT JOIN bookings_rooms\n" +
-                        "      on room.id_room = bookings_rooms.id_room\n" +
                         "    LEFT JOIN  booking\n" +
-                        "      on booking.id_booking = bookings_rooms.id_booking where \n" +
+                        "      on room.id_room = booking.room_id_room where \n" +
                         "           (:checkInTimestamp <= booking.check_in_timestamp AND \n" +
                         "           :checkOutTimestamp >= booking.check_in_timestamp) OR \n" +
                         "           (:checkInTimestamp <= booking.check_out_timestamp AND \n" +

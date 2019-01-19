@@ -16,13 +16,17 @@ public class Booking extends BaseEntity{
     @Column(name = "id_booking")
     private Long idBooking;
 
-    @OneToOne (fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Invoice invoice;
 
-    @ManyToMany
+    @OneToOne(fetch = FetchType.LAZY)
+    private Room room;
+
+
+   /* @ManyToMany
     @JoinTable(name = "bookings_rooms", joinColumns = @JoinColumn(name = "id_booking"),
             inverseJoinColumns = @JoinColumn(name = "id_room"))
-    private List<Room> rooms;
+    private List<Room> rooms;*/
 
     @Column (name = "cancelled_timestamp")
     private Timestamp cancelledTimestamp;
@@ -65,19 +69,19 @@ public class Booking extends BaseEntity{
         this.checkOutTimestamp = checkOutTimestamp;
     }
 
-    public List<Room> getRooms() {
-        return rooms;
-    }
-
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
-    }
-
     public Invoice getInvoice() {
         return invoice;
     }
 
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 }

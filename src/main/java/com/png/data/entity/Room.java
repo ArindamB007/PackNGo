@@ -17,6 +17,9 @@ public class Room extends BaseEntity {
     @Column (name = "room_no", nullable = false, unique = true)
     private String roomNo;
 
+    @OneToOne(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
+    private Booking booking;
+
     @ManyToOne (fetch = FetchType.LAZY, optional = false)
     @PrimaryKeyJoinColumn
     private RoomType roomType;
@@ -43,5 +46,13 @@ public class Room extends BaseEntity {
 
     public void setRoomType(RoomType roomType) {
         this.roomType = roomType;
+    }
+
+    public Booking getBooking() {
+        return booking;
+    }
+
+    public void setBooking(Booking booking) {
+        this.booking = booking;
     }
 }

@@ -854,29 +854,29 @@ VALUES ('12',now(),now(),1, (select id_room_type from room_type where type_name=
 
 
 /*--------- Inserting Test Data---------*/
-INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
-    VALUES ('2018-09-16 11:00:00.0','2018-09-18 11:00:00.0',now(),now(),1);
+/*INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
+    VALUES ('2018-09-16 11:00:00.0','2018-09-18 11:00:00.0',now(),now(),1);*/
 
-INSERT INTO bookings_rooms(id_booking,id_room)
-    VALUES (1,10);
-    
-INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
-    VALUES ('2018-09-12 11:00:00.0','2018-09-15 11:00:00.0',now(),now(),1);
+/*INSERT INTO bookings_rooms(id_booking,id_room)
+    VALUES (1,10);*/
 
-INSERT INTO bookings_rooms(id_booking,id_room)
-    VALUES (2,5);
+/*INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
+    VALUES ('2018-09-12 11:00:00.0','2018-09-15 11:00:00.0',now(),now(),1);*/
 
-INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
-    VALUES ('2018-09-12 11:00:00.0','2018-09-15 10:00:00.0',now(),now(),1);
+/*INSERT INTO bookings_rooms(id_booking,id_room)
+    VALUES (2,5);*/
 
-INSERT INTO bookings_rooms(id_booking,id_room)
-    VALUES (3,9);
+/*INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
+    VALUES ('2018-09-12 11:00:00.0','2018-09-15 10:00:00.0',now(),now(),1);*/
 
-INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
-    VALUES ('2018-09-16 11:00:00.0','2018-09-20 11:00:00.0',now(),now(),1);
+/*INSERT INTO bookings_rooms(id_booking,id_room)
+    VALUES (3,9);*/
 
-INSERT INTO bookings_rooms(id_booking,id_room)
-    VALUES (4,4);
+/*INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)
+    VALUES ('2018-09-16 11:00:00.0','2018-09-20 11:00:00.0',now(),now(),1);*/
+
+# INSERT INTO bookings_rooms(id_booking,id_room)
+#     VALUES (4,4);
 
 /* find rooms to be booked
  select room.id_room, room.room_no,room_type.id_room_type,room_type.type_name
@@ -909,12 +909,8 @@ INSERT INTO bookings_rooms(id_booking,id_room)
     on room.room_type_id_room_type = room_type.id_room_type
 	where id_room not in (
      select room.id_room from room
-		LEFT JOIN room_type
-			on room.room_type_id_room_type = room_type.id_room_type
-		LEFT JOIN bookings_rooms
-			on room.id_room = bookings_rooms.id_room
 		LEFT JOIN  booking
-			on booking.id_booking = bookings_rooms.id_booking where
+			on room.id_room = booking.room_id_room where
            ('2019-01-15 10:00:01' <= booking.check_in_timestamp and '2019-01-16 11:00:01' >= booking.check_in_timestamp) OR
            ('2019-01-15 10:00:01' <= booking.check_out_timestamp and '2019-01-16 11:00:01' >= booking.check_out_timestamp))
 	and room_type.property_id_property = 1 ) AS B

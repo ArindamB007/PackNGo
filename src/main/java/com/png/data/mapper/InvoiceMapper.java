@@ -25,30 +25,36 @@ public interface InvoiceMapper {
             return null;
         }
         Invoice invoice = new Invoice();
-        invoice.setIdInvoice(invoiceDto.getIdInvoice());
-        invoice.setInvoiceNo(invoiceDto.getInvoiceNo());
-        invoice.setInvoiceTotal(invoiceDto.getInvoiceTotal());
-        invoice.setInvoiceTotalWithTax(invoiceDto.getInvoiceTotalWithTax());
-        invoice.setInvoiceTotalTax(invoiceDto.getInvoiceTotalTax());
-        invoice.setAmountPaid(invoiceDto.getAmountPaid());
-        invoice.setAmountPending(invoiceDto.getAmountPending());
-        invoice.setAmountToBePaid(invoiceDto.getAmountToBePaid());
-        invoice.setInvoiceStatusCode(invoiceDto.getInvoiceStatusCode());
-        invoice.setTravellerEmail(invoiceDto.getTravellerEmail());
-        invoice.setTravellerFirstName(invoiceDto.getTravellerFirstName());
-        invoice.setTravellerLastName(invoiceDto.getTravellerLastName());
-        invoice.setTravellerMiddleName(invoiceDto.getTravellerMiddleName());
-        invoice.setTravellerMobile(invoiceDto.getTravellerMobile());
-        List<InvoiceTax> appliedTaxes = InvoiceTaxMapper.INSTANCE.InvoiceTaxDtosToInvoiceTaxes(
-                invoiceDto.getAppliedTaxes());
-        appliedTaxes.forEach(invoice::addInvoiceTax);
-        List<InvoiceLine> invoiceLines = InvoiceLineMapper.INSTANCE.InvoiceLineDtosToInvoiceLines(
-                invoiceDto.getInvoiceLines());
-        invoiceLines.forEach(invoice::addInvoiceLine);
-        invoice.setProperty(null); // will be set after payment is added
-        invoice.setUser(null); // will be set after payment line is added
-        invoice.setInvoicePaymentLines(null); //payment yet to be done
-        invoice.setBooking(null); // Booking yet to be done
+        try {
+            invoice.setIdInvoice(invoiceDto.getIdInvoice());
+            invoice.setInvoiceNo(invoiceDto.getInvoiceNo());
+            invoice.setInvoiceTotal(invoiceDto.getInvoiceTotal());
+            invoice.setInvoiceTotalWithTax(invoiceDto.getInvoiceTotalWithTax());
+            invoice.setInvoiceTotalTax(invoiceDto.getInvoiceTotalTax());
+            invoice.setAmountPaid(invoiceDto.getAmountPaid());
+            invoice.setAmountPending(invoiceDto.getAmountPending());
+            invoice.setAmountToBePaid(invoiceDto.getAmountToBePaid());
+            invoice.setInvoiceStatusCode(invoiceDto.getInvoiceStatusCode());
+            invoice.setTravellerEmail(invoiceDto.getTravellerEmail());
+            invoice.setTravellerFirstName(invoiceDto.getTravellerFirstName());
+            invoice.setTravellerLastName(invoiceDto.getTravellerLastName());
+            invoice.setTravellerMiddleName(invoiceDto.getTravellerMiddleName());
+            invoice.setTravellerMobile(invoiceDto.getTravellerMobile());
+            invoice.setCheckInTimestamp(DateFormatter.getTimestampFromString(invoiceDto.getCheckInTimestamp()));
+            invoice.setCheckOutTimestamp(DateFormatter.getTimestampFromString(invoiceDto.getCheckOutTimestamp()));
+            List<InvoiceTax> appliedTaxes = InvoiceTaxMapper.INSTANCE.InvoiceTaxDtosToInvoiceTaxes(
+                    invoiceDto.getAppliedTaxes());
+            appliedTaxes.forEach(invoice::addInvoiceTax);
+            List<InvoiceLine> invoiceLines = InvoiceLineMapper.INSTANCE.InvoiceLineDtosToInvoiceLines(
+                    invoiceDto.getInvoiceLines());
+            invoiceLines.forEach(invoice::addInvoiceLine);
+            invoice.setProperty(null); // will be set after payment is added
+            invoice.setUser(null); // will be set after payment line is added
+            invoice.setInvoicePaymentLines(null); //payment yet to be done
+            invoice.setBookings(null); // Booking yet to be done
+        } catch (Exception e) {
+            e.printStackTrace(); // todo add logging
+        }
         return invoice;
     }
 
@@ -57,8 +63,8 @@ public interface InvoiceMapper {
         if (invoice == null) {
             return null;
         }
-        Timestamp checkIn = invoice.getBooking().getCheckInTimestamp();
-        Timestamp checkOut = invoice.getBooking().getCheckOutTimestamp();
+        Timestamp checkIn = invoice.getCheckInTimestamp();
+        Timestamp checkOut = invoice.getCheckOutTimestamp();
         InvoiceDto invoiceDto = new InvoiceDto();
         invoiceDto.setIdInvoice(invoice.getIdInvoice());
         invoiceDto.setInvoiceNo(invoice.getInvoiceNo());
