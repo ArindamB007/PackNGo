@@ -28,7 +28,7 @@ public class InvoiceSearchService {
                                                                 Integer pageSize,
                                                                 Sort.Direction sortDirection) {
         PageRequest pageRequest = new PageRequest(pageNo, pageSize, new Sort(sortDirection,
-                "booking.checkInTimestamp"));
+                "checkInTimestamp"));
 
         Page<Invoice> invoicesPage = invoiceRepository.findPagedInvoicesByUserId(userId, pageRequest);
         return new PagedResponse<>(InvoiceMapper.INSTANCE.InvoicesToInvoiceDtos(invoicesPage.getContent()),

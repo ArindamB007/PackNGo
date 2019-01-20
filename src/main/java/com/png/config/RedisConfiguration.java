@@ -11,15 +11,15 @@ import org.springframework.session.web.context.AbstractHttpSessionApplicationIni
 import org.springframework.session.web.http.HeaderHttpSessionStrategy;
 import org.springframework.session.web.http.HttpSessionStrategy;
 
-@Configuration
+/*@Configuration
 @EnableRedisHttpSession
 public class RedisConfiguration extends AbstractHttpSessionApplicationInitializer {
     @Bean
     public HttpSessionStrategy httpSessionStrategy(){
         return new HeaderHttpSessionStrategy();
     }
-    /*@Bean
+    *//*@Bean
     public LettuceConnectionFactory connectionFactory() {
         return new LettuceConnectionFactory();
-    }*/
-}
+    }*//*
+}*/

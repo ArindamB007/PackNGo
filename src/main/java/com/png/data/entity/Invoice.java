@@ -14,7 +14,8 @@ import java.util.List;
 @Table(name = "invoice")
 public class Invoice extends BaseEntity{
     public enum InvoiceStatusCodes {TOTALED,
-        PAID,PAYMENT_PENDING,PAID_PENDING_BANK};
+        PAID, PAYMENT_PENDING, REFUNDED, PARTIAL_REFUNDED, REFUND_PENDING
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_invoice")
@@ -35,11 +36,24 @@ public class Invoice extends BaseEntity{
     @Column(name = "amount_paid")
     private BigDecimal amountPaid;
 
-    @Column (name= "amount_pending")
+    @Column(name = "amount_pending")
     private BigDecimal amountPending;
 
     @Column(name = "invoice_total_tax")
     private BigDecimal invoiceTotalTax;
+
+    @Column(name = "invoice_total_refund")
+    private BigDecimal invoiceTotalRefund;
+
+    @Column(name = "invoice_total_with_tax_refund")
+    private BigDecimal invoiceTotalWithTaxRefund;
+
+    @Column(name = "amount_to_be_refunded")
+    private BigDecimal amountToBeRefunded;
+
+    @Column(name = "amount_refunded")
+    private BigDecimal amountRefunded;
+
 
     @Column(name = "invoice_status_code")
     private String invoiceStatusCode;
@@ -250,6 +264,38 @@ public class Invoice extends BaseEntity{
 
     public void setAmountPending(BigDecimal amountPending) {
         this.amountPending = amountPending;
+    }
+
+    public BigDecimal getInvoiceTotalRefund() {
+        return invoiceTotalRefund;
+    }
+
+    public void setInvoiceTotalRefund(BigDecimal invoiceTotalRefund) {
+        this.invoiceTotalRefund = invoiceTotalRefund;
+    }
+
+    public BigDecimal getInvoiceTotalWithTaxRefund() {
+        return invoiceTotalWithTaxRefund;
+    }
+
+    public void setInvoiceTotalWithTaxRefund(BigDecimal invoiceTotalWithTaxRefund) {
+        this.invoiceTotalWithTaxRefund = invoiceTotalWithTaxRefund;
+    }
+
+    public BigDecimal getAmountToBeRefunded() {
+        return amountToBeRefunded;
+    }
+
+    public void setAmountToBeRefunded(BigDecimal amountToBeRefunded) {
+        this.amountToBeRefunded = amountToBeRefunded;
+    }
+
+    public BigDecimal getAmountRefunded() {
+        return amountRefunded;
+    }
+
+    public void setAmountRefunded(BigDecimal amountRefunded) {
+        this.amountRefunded = amountRefunded;
     }
 
     public Timestamp getCheckInTimestamp() {
