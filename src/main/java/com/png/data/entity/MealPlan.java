@@ -1,17 +1,10 @@
 package com.png.data.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -33,6 +26,9 @@ public class MealPlan extends BaseEntity {
 	@OneToMany
 	@JoinTable(name = "meal_plan_items", joinColumns = @JoinColumn(name = "id_meal_plan"), inverseJoinColumns = @JoinColumn(name = "id_item"))
 	private List<Item> items;
+
+	@OneToMany(mappedBy = "mealPlan", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<MealPlanInclude> mealPlanIncludes;
 	
 	@Column(name="description", nullable = false)
     private String description;
@@ -75,6 +71,22 @@ public class MealPlan extends BaseEntity {
 
 	public void setItems(List<Item> items) {
 		this.items = items;
+	}
+
+	public void addMealPlanInclude(MealPlanInclude mealPlanInclude) {
+		if (mealPlanInclude == null)
+			return;
+		if (this.mealPlanIncludes == null) {
+			this.mealPlanIncludes = new ArrayList<>();
+		}
+		this.mealPlanIncludes.add(mealPlanInclude);
+		mealPlanInclude.setMealPlan(this);
+	}
+
+	public void removeMealPlanInclude(MealPlanInclude mealPlanInclude) {
+		this.mealPlanIncludes.remove(mealPlanInclude);
+		if (mealPlanInclude != null)
+			mealPlanInclude.setMealPlan(null);
 	}
 
 	

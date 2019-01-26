@@ -54,7 +54,6 @@ public class Invoice extends BaseEntity{
     @Column(name = "amount_refunded")
     private BigDecimal amountRefunded;
 
-
     @Column(name = "invoice_status_code")
     private String invoiceStatusCode;
 

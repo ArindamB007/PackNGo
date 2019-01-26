@@ -7,18 +7,31 @@ import javax.persistence.*;
 @Table(name = "meal_plan_include")
 public class MealPlanInclude {
     @Id
-    @Column (name = "invoice_meal_plan_line_id")
-    private Long invoiceMealPlanLineId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_meal_plan_include")
+    private Long idMealPlanInclude;
 
     @Column (name = "include_string")
     private String includeString;
 
-   public Long getInvoiceMealPlanLineId() {
-        return invoiceMealPlanLineId;
+    @ManyToOne
+    @PrimaryKeyJoinColumn
+    private MealPlan mealPlan;
+
+    public Long getIdMealPlanInclude() {
+        return idMealPlanInclude;
     }
 
-    public void setInvoiceMealPlanLineId(Long invoiceMealPlanLineId) {
-        this.invoiceMealPlanLineId = invoiceMealPlanLineId;
+    public void setIdMealPlanInclude(Long idMealPlanInclude) {
+        this.idMealPlanInclude = idMealPlanInclude;
+    }
+
+    public MealPlan getMealPlan() {
+        return mealPlan;
+    }
+
+    public void setMealPlan(MealPlan mealPlan) {
+        this.mealPlan = mealPlan;
     }
 
     public String getIncludeString() {

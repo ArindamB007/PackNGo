@@ -1,7 +1,5 @@
 package com.png.data.dto.invoice;
 
-import com.png.data.dto.availableroomtype.MealPlanDto;
-
 import java.util.List;
 
 public class InvoiceMealPlanLineDto extends InvoiceLineItemDto {

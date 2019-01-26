@@ -57,9 +57,6 @@ public interface InvoiceLineMapper {
             invoiceMealPlanLine.setMaxAdults(((InvoiceMealPlanLineDto)invoiceLineDto).getMaxAdults());
             invoiceMealPlanLine.setMaxChilds(((InvoiceMealPlanLineDto)invoiceLineDto).getMaxChilds());
             invoiceMealPlanLine.setRoomTypeName(((InvoiceMealPlanLineDto)invoiceLineDto).getRoomTypeName());
-            invoiceMealPlanLine.setMealPlanIncludes(
-                    MealPlanIncludeMapper.INSTANCE.IncludesToMealPlanIncludes(
-                            ((InvoiceMealPlanLineDto)invoiceLineDto).getIncludes()));
             List<InvoiceLineTax> invoiceLineTaxes = InvoiceLineTaxMapper.INSTANCE
                     .InvoiceLineTaxDtosToInvoiceLineTaxes(invoiceLineDto.getInvoiceLineTaxes());
             invoiceLineTaxes.forEach(invoiceMealPlanLine::addInvoiceLineTax);
@@ -108,9 +105,6 @@ public interface InvoiceLineMapper {
             invoiceMealPlanLineDto.setMaxChilds(((InvoiceMealPlanLine)invoiceLine).getMaxChilds());
             invoiceMealPlanLineDto.setRoomTypeName(((InvoiceMealPlanLine)invoiceLine).getRoomTypeName());
             invoiceMealPlanLineDto.setItemType(((InvoiceMealPlanLine) invoiceLine).getItemType());
-            invoiceMealPlanLineDto.setIncludes(MealPlanIncludeMapper
-                    .INSTANCE.MealPlanIncludesToIncludes(((InvoiceMealPlanLine)invoiceLine)
-                            .getMealPlanIncludes()));
             invoiceLineDto = invoiceMealPlanLineDto ;
         }
         return invoiceLineDto;

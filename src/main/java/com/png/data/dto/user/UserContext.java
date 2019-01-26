@@ -84,18 +84,20 @@ public class UserContext {
 	}
 
 	public void setUserDetails(User user){
-		this.idUser = user.getIdUser();
-		this.email = user.getEmail();
-		this.mobile = user.getMobile();
-		this.emailValidated = user.getEmailValidated();
-		this.firstName = user.getFirstName();
-		this.middleName = user.getMiddleName();
-		this.lastName = user.getLastName();
-		this.lastLoginTimestamp = user.getLastLoginTimestamp();
-		this.createdTimestamp = user.getCreatedTimestamp();
-		this.updatedTimestamp = user.getUpdatedTimestamp();
-		this.deleteFlag = user.getDeletedFlag();
-		this.travellers = TravellerMapper.INSTANCE.TravellersToTravellerDtos(user.getTravellers());
+		if (user != null) {
+			this.idUser = user.getIdUser();
+			this.email = user.getEmail();
+			this.mobile = user.getMobile();
+			this.emailValidated = user.getEmailValidated();
+			this.firstName = user.getFirstName();
+			this.middleName = user.getMiddleName();
+			this.lastName = user.getLastName();
+			this.lastLoginTimestamp = user.getLastLoginTimestamp();
+			this.createdTimestamp = user.getCreatedTimestamp();
+			this.updatedTimestamp = user.getUpdatedTimestamp();
+			this.deleteFlag = user.getDeletedFlag();
+			this.travellers = TravellerMapper.INSTANCE.TravellersToTravellerDtos(user.getTravellers());
+		}
 	}
 
 	public Timestamp getLastLoginTimestamp() {

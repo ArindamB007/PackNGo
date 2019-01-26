@@ -31,7 +31,7 @@ import java.util.List;
 @Service
 public class InvoiceProcessorService {
 
-    private InvoiceDto invoiceDto;
+    private Invoice invoice;
 
     @Autowired
     private ItemTaxRepository itemTaxRepository;
@@ -51,27 +51,31 @@ public class InvoiceProcessorService {
     private List<ItemTax> applicableTaxes;
 
     public InvoiceDto createInvoice(BookingCartDto bookingCartDto){
+        InvoiceDto invoiceDto = null;
         try {
-            invoiceDto = new InvoiceDto();
+            invoice = new Invoice();
             String checkIn = bookingCartDto.getCheckInOutDetails().getCheckInTimestamp();
             String checkOut = bookingCartDto.getCheckInOutDetails().getCheckOutTimestamp();
             applicableTaxes = itemTaxRepository.findAll();
+            invoice.setCheckInTimestamp(DateFormatter.getTimestampFromString(checkIn));
+            invoice.setCheckOutTimestamp(DateFormatter.getTimestampFromString(checkOut));
+            invoice.setInvoiceStatusCode(Invoice.InvoiceStatusCodes.TOTALED.name());
+            invoice.setProperty(propertyRepository.findByIdProperty(bookingCartDto.getSelectedProperty().getIdProperty()));
+            invoice.setInvoiceLines(getInvoiceLinesForMealPlans(bookingCartDto.getSelectedRoomTypes()));
+            invoice.setAppliedTaxes(calculateInvoiceLevelTaxes());
+            invoice.setInvoiceTotalTax(calculateInvoiceTotalTax(invoice.getAppliedTaxes()));
+            invoice.setInvoiceTotalWithTax(calculateInvoiceTotalWithTax());
+            invoice.setInvoiceTotal(calculateInvoiceTotal());
+            invoice.setAmountPaid(BigDecimal.ZERO);
+            invoice.setAmountToBePaid(invoice.getInvoiceTotalWithTax());
+            invoice.setAmountPending(invoice.getAmountToBePaid());
+
+            invoiceDto = InvoiceMapper.INSTANCE.InvoiceToInvoiceDto(invoice);
+
             invoiceDto.setInvoiceNo(createInvoiceNumber());
-            invoiceDto.setCheckInTimestamp(checkIn);
-            invoiceDto.setCheckOutTimestamp(checkOut);
             invoiceDto.setNights(DateFormatter.getNights(DateFormatter.getTimestampFromString(checkOut),
                     DateFormatter.getTimestampFromString(checkOut)));
-            invoiceDto.setInvoiceStatusCode(Invoice.InvoiceStatusCodes.TOTALED.name());
             invoiceDto.setUserContext(bookingCartDto.getUserContext());
-            invoiceDto.setProperty(bookingCartDto.getSelectedProperty());
-            invoiceDto.setInvoiceLines(getInvoiceLinesForMealPlans(bookingCartDto.getSelectedRoomTypes()));
-            invoiceDto.setAppliedTaxes(calculateInvoiceLevelTaxes());
-            invoiceDto.setInvoiceTotalTax(calculateInvoiceTotalTax(invoiceDto.getAppliedTaxes()));
-            invoiceDto.setInvoiceTotalWithTax(calculateInvoiceTotalWithTax());
-            invoiceDto.setInvoiceTotal(calculateInvoiceTotal());
-            invoiceDto.setAmountPaid(BigDecimal.ZERO);
-            invoiceDto.setAmountToBePaid(invoiceDto.getInvoiceTotalWithTax());
-            invoiceDto.setAmountPending(invoiceDto.getAmountToBePaid());
             invoiceDto.setInvoiceOccupancyInfo();
         } catch (Exception e) {
             e.printStackTrace();
@@ -194,24 +198,24 @@ public class InvoiceProcessorService {
         return razorpayResponse;
     }
 
-    private List<InvoiceLineDto> getInvoiceLinesForMealPlans(List<AvailableRoomTypeDto> selectedRoomTypes){
+    private List<InvoiceLine> getInvoiceLinesForMealPlans(List<AvailableRoomTypeDto> selectedRoomTypes) {
         int groupSequenceNo = 1;
-        List<InvoiceLineDto> invoiceLines = new ArrayList<>();
+        List<InvoiceLine> invoiceLines = new ArrayList<>();
         for (AvailableRoomTypeDto selectedRoomType:selectedRoomTypes)
         {
             List<MealPlanDto> mealPlans = selectedRoomType.getMealPlans();
             for(MealPlanDto mealPlan:mealPlans){
                 Integer mealPLanQuantity = mealPlan.getMealPlanItem().getQuantity();
                 if (mealPLanQuantity>0){
-                    InvoiceLineItemDto invoiceLine = getInvoiceLineForMealPlan(mealPlan);
-                    ((InvoiceMealPlanLineDto) invoiceLine).setRoomTypeName(selectedRoomType.getTypeName());
-                    ((InvoiceMealPlanLineDto) invoiceLine)
+                    InvoiceLineItem invoiceLine = getInvoiceLineForMealPlan(mealPlan);
+                    ((InvoiceMealPlanLine) invoiceLine).setRoomTypeName(selectedRoomType.getTypeName());
+                    ((InvoiceMealPlanLine) invoiceLine)
                             .setMaxAdults(selectedRoomType.getMaxAdultOccupancy() * mealPLanQuantity);
-                    ((InvoiceMealPlanLineDto) invoiceLine)
+                    ((InvoiceMealPlanLine) invoiceLine)
                             .setMaxChilds(selectedRoomType.getMaxChildOccupancy() * mealPLanQuantity);
                     invoiceLine.setSequenceNo(getInvoiceLineSequence(invoiceLines));
                     invoiceLine.setGroupSequenceNo(groupSequenceNo);
-                    List<InvoiceLineTaxDto> invoiceLineTaxesForMealPlan = invoiceLine.getInvoiceLineTaxes();
+                    List<InvoiceLineTax> invoiceLineTaxesForMealPlan = invoiceLine.getInvoiceLineTaxes();
                     invoiceLines.add(invoiceLine);
                     invoiceLine = getInvoiceLineForItem(mealPlan.getAdultExtraBedItem());
                     if (invoiceLine != null) {
@@ -239,7 +243,7 @@ public class InvoiceProcessorService {
 
     private BigDecimal calculateInvoiceTotal(){
         BigDecimal invoiceTotal = BigDecimal.ZERO;
-        for (InvoiceLineDto invoiceLine: this.invoiceDto.getInvoiceLines()){
+        for (InvoiceLine invoiceLine : this.invoice.getInvoiceLines()) {
             invoiceTotal = invoiceTotal.add(invoiceLine.getAmount());
         }
         return invoiceTotal;
@@ -247,30 +251,30 @@ public class InvoiceProcessorService {
 
     private BigDecimal calculateInvoiceTotalWithTax(){
         BigDecimal invoiceTotalWithTax = BigDecimal.ZERO;
-        for (InvoiceLineDto invoiceLine: this.invoiceDto.getInvoiceLines()){
+        for (InvoiceLine invoiceLine : this.invoice.getInvoiceLines()) {
             invoiceTotalWithTax = invoiceTotalWithTax.add(invoiceLine.getAmountWithTax());
         }
         return invoiceTotalWithTax;
     }
 
-    private BigDecimal calculateInvoiceTotalTax(List<InvoiceTaxDto> appliedTaxes){
+    private BigDecimal calculateInvoiceTotalTax(List<InvoiceTax> appliedTaxes) {
         BigDecimal totalInvoiceTax = BigDecimal.ZERO;
-        for (InvoiceTaxDto appliedTax: appliedTaxes){
+        for (InvoiceTax appliedTax : appliedTaxes) {
             totalInvoiceTax = totalInvoiceTax.add(appliedTax.getItemTaxAmount());
         }
         return totalInvoiceTax;
     }
 
-    private List<InvoiceTaxDto> calculateInvoiceLevelTaxes(){
-        List <InvoiceTaxDto> appliedTaxes = new ArrayList<>();
-        for (InvoiceLineDto invoiceLine: this.invoiceDto.getInvoiceLines()){
-            for(InvoiceLineTaxDto invoiceLineTax: invoiceLine.getInvoiceLineTaxes()){
-                InvoiceTaxDto currentInvoiceTax = appliedTaxes.stream()
+    private List<InvoiceTax> calculateInvoiceLevelTaxes() {
+        List<InvoiceTax> appliedTaxes = new ArrayList<>();
+        for (InvoiceLine invoiceLine : this.invoice.getInvoiceLines()) {
+            for (InvoiceLineTax invoiceLineTax : invoiceLine.getInvoiceLineTaxes()) {
+                InvoiceTax currentInvoiceTax = appliedTaxes.stream()
                         .filter(appliedTax -> invoiceLineTax.getItemTaxCode().equals(appliedTax.getItemTaxCode()))
                         .findAny()
                         .orElse(null);
                 if (currentInvoiceTax == null){ //new tax code
-                    InvoiceTaxDto appliedTax = new InvoiceTaxDto();
+                    InvoiceTax appliedTax = new InvoiceTax();
                     appliedTax.setIdInvoiceTax(invoiceLineTax.getIdInvoiceLineTax());
                     appliedTax.setItemTaxCode(invoiceLineTax.getItemTaxCode());
                     appliedTax.setItemTaxDescription(invoiceLineTax.getItemTaxDescription());
@@ -290,13 +294,10 @@ public class InvoiceProcessorService {
         return appliedTaxes;
     }
 
-    private InvoiceLineItemDto getInvoiceLineForMealPlan(MealPlanDto mealPlan){
-        InvoiceMealPlanLineDto invoiceLine = new InvoiceMealPlanLineDto();
+    private InvoiceLineItem getInvoiceLineForMealPlan(MealPlanDto mealPlan) {
+        InvoiceMealPlanLine invoiceLine = new InvoiceMealPlanLine();
         invoiceLine.setInvoiceLineTypeCode(InvoiceLine.InvoiceLineTypeCodes.MEALPLAN.name());
         invoiceLine.setDescription(mealPlan.getMealPlanItem().getDescription());
-        List<String> includes = new ArrayList<>();
-        includes.add(mealPlan.getDescription());
-        invoiceLine.setIncludes(includes);
         invoiceLine.setItemType(mealPlan.getMealPlanItem().getItemType().getItemTypeCode());
         invoiceLine.setPrice(mealPlan.getMealPlanItem().getItemPrice().getBasePrice());
         invoiceLine.setQuantity(mealPlan.getMealPlanItem().getQuantity());
@@ -311,10 +312,10 @@ public class InvoiceProcessorService {
         return invoiceLine;
     }
 
-    private InvoiceLineItemDto getInvoiceLineForItem(ItemDto item){
+    private InvoiceLineItem getInvoiceLineForItem(ItemDto item) {
         if (item.getQuantity() == null || item.getQuantity() == 0)
             return null;
-        InvoiceLineItemDto invoiceLine = new InvoiceLineItemDto();
+        InvoiceLineItem invoiceLine = new InvoiceLineItem();
         if (item.getItemType().getItemTypeCode().equals(ItemType.ItemTypeCodes.EXTRABEDADULT.name()) ||
                 (item.getItemType().getItemTypeCode().equals(ItemType.ItemTypeCodes.EXTRABEDCHILD.name())))
             invoiceLine.setInvoiceLineTypeCode(InvoiceLine.InvoiceLineTypeCodes.EXTRA_PERSON.name());
@@ -331,10 +332,10 @@ public class InvoiceProcessorService {
         return invoiceLine;
     }
 
-    private List<InvoiceLineTaxDto> getInvoiceLineTaxesForMealPlan(MealPlanDto mealPlan){
-        List<InvoiceLineTaxDto> invoiceLineTaxes = new ArrayList<>();
+    private List<InvoiceLineTax> getInvoiceLineTaxesForMealPlan(MealPlanDto mealPlan) {
+        List<InvoiceLineTax> invoiceLineTaxes = new ArrayList<>();
         applicableTaxes.forEach(applicableTax->{
-            InvoiceLineTaxDto invoiceLineTax = new InvoiceLineTaxDto();
+            InvoiceLineTax invoiceLineTax = new InvoiceLineTax();
             //calculating total price of an item for the room, extra bed etc
             BigDecimal totalPrice = mealPlan.getMealPlanItem().getItemPrice().getBasePrice();
             if (mealPlan.getAdultExtraBedItem().getQuantity()>0)
@@ -363,7 +364,8 @@ public class InvoiceProcessorService {
         });
         return invoiceLineTaxes;
     }
-    private Integer getInvoiceLineSequence(List<InvoiceLineDto> invoiceLines){
+
+    private Integer getInvoiceLineSequence(List<InvoiceLine> invoiceLines) {
         return invoiceLines.size() +1;
     }
 

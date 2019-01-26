@@ -10,7 +10,7 @@ public class CheckInOutDetailsDto {
     }
 
     public void setCheckInTimestamp(String checkInTimestamp) {
-        this.checkInTimestamp = checkInTimestamp + " 11:00:00";
+        this.checkInTimestamp = checkInTimestamp + " 11:00 AM";
     }
 
     public String getCheckOutTimestamp() {
@@ -18,6 +18,6 @@ public class CheckInOutDetailsDto {
     }
 
     public void setCheckOutTimestamp(String checkOutTimestamp) {
-        this.checkOutTimestamp = checkOutTimestamp + " 10:00:00";
+        this.checkOutTimestamp = checkOutTimestamp + " 10:00 AM";
     }
 }

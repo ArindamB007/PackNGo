@@ -78,25 +78,6 @@ public class InvoiceLineDto {
     public void setInvoiceLineTaxes(List<InvoiceLineTaxDto> invoiceLineTaxes) {
         this.invoiceLineTaxes = invoiceLineTaxes;
     }
-    public void calculateAmountWithTax(){
-        this.amountWithTax = BigDecimal.ZERO;
-        List<InvoiceLineTaxDto> invLineTaxes = new ArrayList<>();
-        if (this.invoiceLineTaxes.size()>0){
-            this.invoiceLineTaxes.forEach(invoiceLineTax->{
-                InvoiceLineTaxDto invLineTax = new InvoiceLineTaxDto();
-                invLineTax.setIdInvoiceLineTax(invoiceLineTax.getIdInvoiceLineTax());
-                invLineTax.setItemTaxPercent(invoiceLineTax.getItemTaxPercent());
-                invLineTax.setItemTaxDescription(invoiceLineTax.getItemTaxDescription());
-                invLineTax.setItemTaxCode(invoiceLineTax.getItemTaxCode());
-                invLineTax.setItemTaxAmount(this.amount.multiply(new BigDecimal(invoiceLineTax.getItemTaxPercent()))
-                        .divide(new BigDecimal(100)));
-                this.amountWithTax = this.amountWithTax.add(invLineTax.getItemTaxAmount());
-                invLineTaxes.add(invLineTax);
-            });
-            this.invoiceLineTaxes = invLineTaxes;
-            this.amountWithTax = this.amountWithTax.add(this.amount);
-        }
-    }
 
     public int getGroupSequenceNo() {
         return groupSequenceNo;

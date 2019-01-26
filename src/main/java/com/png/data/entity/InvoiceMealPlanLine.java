@@ -7,22 +7,12 @@ import java.util.List;
 @Table(name = "invoice_meal_plan_line")
 @PrimaryKeyJoinColumn (name = "invoice_meal_plan_line_id")
 public class InvoiceMealPlanLine extends InvoiceLineItem {
-    @OneToMany(mappedBy = "invoiceMealPlanLineId")
-    private List<MealPlanInclude> mealPlanIncludes;
     @Column (name = "room_type_name")
     private String roomTypeName;
     @Column(name = "max_adults")
     private Integer maxAdults;
     @Column(name = "max_childs")
     private Integer maxChilds;
-
-    public List<MealPlanInclude> getMealPlanIncludes() {
-        return mealPlanIncludes;
-    }
-
-    public void setMealPlanIncludes(List<MealPlanInclude> mealPlanIncludes) {
-        this.mealPlanIncludes = mealPlanIncludes;
-    }
 
     public String getRoomTypeName() {
         return roomTypeName;

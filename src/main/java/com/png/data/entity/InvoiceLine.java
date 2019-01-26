@@ -12,7 +12,8 @@ import java.util.List;
 @Inheritance(strategy =InheritanceType.JOINED)
 public class InvoiceLine extends BaseEntity{
     public enum InvoiceLineTypeCodes {MEALPLAN,EXTRA_PERSON,
-    ITEM, TAX,LINE_DISCOUNT,TXN_DISCOUNT,ADJUSTMENT,SUBTOTAL,TOTAL};
+        ITEM, CANCEL_LINE, LINE_DISCOUNT, TXN_DISCOUNT, ADJUSTMENT, SUBTOTAL, TOTAL
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_invoice_line")
@@ -21,6 +22,7 @@ public class InvoiceLine extends BaseEntity{
     private int sequenceNo;
     @Column(name = "group_sequence_no")
     private int groupSequenceNo;
+    //stores the invoice line types
     @Column(name = "invoice_line_type_code")
     private String invoiceLineTypeCode;
     @Column(name = "description")
@@ -131,5 +133,25 @@ public class InvoiceLine extends BaseEntity{
 
     public void setInvoiceLineTaxes(List<InvoiceLineTax> invoiceLineTaxes) {
         this.invoiceLineTaxes = invoiceLineTaxes;
+    }
+
+    public void calculateAmountWithTax() {
+        this.amountWithTax = BigDecimal.ZERO;
+        List<InvoiceLineTax> invLineTaxes = new ArrayList<>();
+        if (this.invoiceLineTaxes.size() > 0) {
+            this.invoiceLineTaxes.forEach(invoiceLineTax -> {
+                InvoiceLineTax invLineTax = new InvoiceLineTax();
+                invLineTax.setIdInvoiceLineTax(invoiceLineTax.getIdInvoiceLineTax());
+                invLineTax.setItemTaxPercent(invoiceLineTax.getItemTaxPercent());
+                invLineTax.setItemTaxDescription(invoiceLineTax.getItemTaxDescription());
+                invLineTax.setItemTaxCode(invoiceLineTax.getItemTaxCode());
+                invLineTax.setItemTaxAmount(this.amount.multiply(new BigDecimal(invoiceLineTax.getItemTaxPercent()))
+                        .divide(new BigDecimal(100)));
+                this.amountWithTax = this.amountWithTax.add(invLineTax.getItemTaxAmount());
+                invLineTaxes.add(invLineTax);
+            });
+            this.invoiceLineTaxes = invLineTaxes;
+            this.amountWithTax = this.amountWithTax.add(this.amount);
+        }
     }
 }
