@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ItemTaxRepository extends JpaRepository<ItemTax,Integer> {
     List<ItemTax> findAll();
+
+    List<ItemTax> findAllByItemTaxPercentEquals(String taxPercent);
 }

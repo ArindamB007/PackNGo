@@ -3,6 +3,7 @@ package com.png.data.entity;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="item_tax")
@@ -12,7 +13,7 @@ public class ItemTax extends BaseEntity{
     @Column(name = "id_item_tax")
     private Integer idItemTax;
 
-    @Column (name="item_tax_code", nullable = false, unique = true)
+    @Column(name = "item_tax_code", nullable = false)
     @NotEmpty
     private String itemTaxCode;
 
@@ -23,6 +24,9 @@ public class ItemTax extends BaseEntity{
     @Column (name="item_tax_percent", nullable = false)
     @NotEmpty
     private String itemTaxPercent;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Item> item;
 
     public Integer getIdItemTax() {
         return idItemTax;

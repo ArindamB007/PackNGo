@@ -1,18 +1,10 @@
 package com.png.data.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import java.util.List;
 
 @Entity
 @Table(name="item")
@@ -29,6 +21,11 @@ public class Item extends BaseEntity {
 	@OneToOne
 	@JoinColumn (name = "item_price_id")
     private ItemPrice itemPrice;
+
+    @ManyToMany(mappedBy = "item", cascade = CascadeType.PERSIST)
+	/*@JoinTable(name = "items_item_taxes", joinColumns = @JoinColumn(name = "item_id"),
+			inverseJoinColumns = @JoinColumn(name = "item_tax_id"))*/
+    private List<ItemTax> appliedTaxes;
 	
 	@Column (name="description", nullable = false, unique = true)
     @NotEmpty
@@ -66,4 +63,11 @@ public class Item extends BaseEntity {
 		this.description = description;
 	}
 
+    public List<ItemTax> getAppliedTaxes() {
+        return appliedTaxes;
+    }
+
+    public void setAppliedTaxes(List<ItemTax> appliedTaxes) {
+        this.appliedTaxes = appliedTaxes;
+    }
 }

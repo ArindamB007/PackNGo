@@ -33,7 +33,10 @@ public interface InvoiceMapper {
             invoice.setInvoiceTotalTax(invoiceDto.getInvoiceTotalTax());
             invoice.setAmountPaid(invoiceDto.getAmountPaid());
             invoice.setAmountPending(invoiceDto.getAmountPending());
-            invoice.setAmountToBePaid(invoiceDto.getAmountToBePaid());
+            invoice.setAmountRefunded(invoiceDto.getAmountRefunded());
+            invoice.setAmountToBeRefunded(invoiceDto.getAmountToBeRefunded());
+            invoice.setInvoiceTotalRefund(invoiceDto.getInvoiceTotalRefund());
+            invoice.setInvoiceTotalWithTaxRefund(invoiceDto.getInvoiceTotalWithTaxRefund());
             invoice.setInvoiceStatusCode(invoiceDto.getInvoiceStatusCode());
             invoice.setTravellerEmail(invoiceDto.getTravellerEmail());
             invoice.setTravellerFirstName(invoiceDto.getTravellerFirstName());
@@ -74,8 +77,11 @@ public interface InvoiceMapper {
         invoiceDto.setInvoiceTotal(invoice.getInvoiceTotal());
         invoiceDto.setInvoiceTotalWithTax(invoice.getInvoiceTotalWithTax());
         invoiceDto.setInvoiceTotalTax(invoice.getInvoiceTotalTax());
+        invoiceDto.setAmountRefunded(invoice.getAmountRefunded());
+        invoiceDto.setAmountToBeRefunded(invoice.getAmountToBeRefunded());
+        invoiceDto.setInvoiceTotalRefund(invoice.getInvoiceTotalRefund());
+        invoiceDto.setInvoiceTotalWithTaxRefund(invoice.getInvoiceTotalWithTaxRefund());
         invoiceDto.setAmountPending(invoice.getAmountPending());
-        invoiceDto.setAmountToBePaid(invoice.getAmountToBePaid());
         invoiceDto.setAmountPaid(invoice.getAmountPaid());
         invoiceDto.setInvoiceStatusCode(invoice.getInvoiceStatusCode());
         invoiceDto.setTravellerEmail(invoice.getTravellerEmail());

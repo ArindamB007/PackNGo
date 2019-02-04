@@ -1,10 +1,12 @@
 package com.png.data.dto.invoice;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.png.data.dto.checkinoutdetails.InvoiceCheckInOutDetailsDto;
 import com.png.data.dto.property.PropertyDto;
 import com.png.data.dto.user.UserContext;
 import com.png.data.entity.InvoiceLine;
 import com.png.data.entity.ItemType;
+import com.png.util.CurrecySerializer;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,12 +22,24 @@ public class InvoiceDto {
     private Integer maxExtraChilds = 0;
     private Integer maxExtraAdults = 0;
     private Integer nights;
+    @JsonSerialize(using = CurrecySerializer.class)
     private BigDecimal invoiceTotal;
+    @JsonSerialize(using = CurrecySerializer.class)
     private BigDecimal invoiceTotalWithTax;
+    @JsonSerialize(using = CurrecySerializer.class)
     private BigDecimal invoiceTotalTax;
-    private BigDecimal amountToBePaid;
+    @JsonSerialize(using = CurrecySerializer.class)
     private BigDecimal amountPaid;
+    @JsonSerialize(using = CurrecySerializer.class)
     private BigDecimal amountPending;
+    @JsonSerialize(using = CurrecySerializer.class)
+    private BigDecimal invoiceTotalRefund;
+    @JsonSerialize(using = CurrecySerializer.class)
+    private BigDecimal invoiceTotalWithTaxRefund;
+    @JsonSerialize(using = CurrecySerializer.class)
+    private BigDecimal amountToBeRefunded;
+    @JsonSerialize(using = CurrecySerializer.class)
+    private BigDecimal amountRefunded;
     private String invoiceStatusCode;
     private String travellerFirstName;
     private String travellerMiddleName;
@@ -39,6 +53,11 @@ public class InvoiceDto {
     private UserContext userContext;
     private PaymentDto payment;
 
+    public InvoiceDto() {
+        invoiceTotal = invoiceTotalWithTax = invoiceTotalTax = amountPaid =
+                amountPending = invoiceTotalRefund = invoiceTotalWithTaxRefund =
+                        amountToBeRefunded = amountRefunded = BigDecimal.ZERO;
+    }
     public Long getIdInvoice() {
         return idInvoice;
     }
@@ -183,14 +202,6 @@ public class InvoiceDto {
         this.travellerMobile = travellerMobile;
     }
 
-    public BigDecimal getAmountToBePaid() {
-        return amountToBePaid;
-    }
-
-    public void setAmountToBePaid(BigDecimal amountToBePaid) {
-        this.amountToBePaid = amountToBePaid;
-    }
-
     public BigDecimal getAmountPaid() {
         return amountPaid;
     }
@@ -209,6 +220,38 @@ public class InvoiceDto {
 
     public String getCheckInTimestamp() {
         return checkInTimestamp;
+    }
+
+    public BigDecimal getInvoiceTotalRefund() {
+        return invoiceTotalRefund;
+    }
+
+    public void setInvoiceTotalRefund(BigDecimal invoiceTotalRefund) {
+        this.invoiceTotalRefund = invoiceTotalRefund;
+    }
+
+    public BigDecimal getInvoiceTotalWithTaxRefund() {
+        return invoiceTotalWithTaxRefund;
+    }
+
+    public void setInvoiceTotalWithTaxRefund(BigDecimal invoiceTotalWithTaxRefund) {
+        this.invoiceTotalWithTaxRefund = invoiceTotalWithTaxRefund;
+    }
+
+    public BigDecimal getAmountToBeRefunded() {
+        return amountToBeRefunded;
+    }
+
+    public void setAmountToBeRefunded(BigDecimal amountToBeRefunded) {
+        this.amountToBeRefunded = amountToBeRefunded;
+    }
+
+    public BigDecimal getAmountRefunded() {
+        return amountRefunded;
+    }
+
+    public void setAmountRefunded(BigDecimal amountRefunded) {
+        this.amountRefunded = amountRefunded;
     }
 
     public void setCheckInTimestamp(String checkInTimestamp) {

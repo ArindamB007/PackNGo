@@ -14,6 +14,8 @@ public class InvoiceLine extends BaseEntity{
     public enum InvoiceLineTypeCodes {MEALPLAN,EXTRA_PERSON,
         ITEM, CANCEL_LINE, LINE_DISCOUNT, TXN_DISCOUNT, ADJUSTMENT, SUBTOTAL, TOTAL
     }
+
+    public enum InvoiceLineStatusCodes {SALE, REFUND}
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_invoice_line")
@@ -31,6 +33,12 @@ public class InvoiceLine extends BaseEntity{
     private BigDecimal amount;
     @Column(name = "amount_with_tax")
     private BigDecimal amountWithTax;
+    @Column(name = "cancel_charge")
+    private BigDecimal cancelCharge;
+    @Column(name = "cancel_charge_with_tax")
+    private BigDecimal cancelChargeWithTax;
+    @Column(name = "invoice_line_status_code")
+    private String invoiceLineStatusCode;
     @OneToMany (mappedBy = "invoiceLine", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<InvoiceLineTax> invoiceLineTaxes;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -46,6 +54,13 @@ public class InvoiceLine extends BaseEntity{
     @Override
     public int hashCode() {
         return 101;
+    }
+
+    public InvoiceLine() {
+        amount =
+                amountWithTax =
+                        cancelCharge =
+                                cancelChargeWithTax = BigDecimal.ZERO;
     }
 
     public Long getIdInvoiceLine() {
@@ -112,6 +127,22 @@ public class InvoiceLine extends BaseEntity{
         this.invoice = invoice;
     }
 
+    public BigDecimal getCancelCharge() {
+        return cancelCharge;
+    }
+
+    public void setCancelCharge(BigDecimal cancelCharge) {
+        this.cancelCharge = cancelCharge;
+    }
+
+    public BigDecimal getCancelChargeWithTax() {
+        return cancelChargeWithTax;
+    }
+
+    public void setCancelChargeWithTax(BigDecimal cancelChargeWithTax) {
+        this.cancelChargeWithTax = cancelChargeWithTax;
+    }
+
     public void addInvoiceLineTax(InvoiceLineTax invoiceLineTax){
         if (invoiceLineTax == null)
             return;
@@ -135,6 +166,29 @@ public class InvoiceLine extends BaseEntity{
         this.invoiceLineTaxes = invoiceLineTaxes;
     }
 
+    public void calculateAmountWithTaxForCancellation() {
+        //this.amountWithTax = BigDecimal.ZERO;
+        this.cancelChargeWithTax = BigDecimal.ZERO;
+        //List<InvoiceLineTax> invLineTaxes = new ArrayList<>();
+        if (this.invoiceLineTaxes.size() > 0) {
+            this.invoiceLineTaxes.forEach(invoiceLineTax -> {
+               /* InvoiceLineTax invLineTax = new InvoiceLineTax();
+                invLineTax.setIdInvoiceLineTax(invoiceLineTax.getIdInvoiceLineTax());
+                invLineTax.setItemTaxPercent(invoiceLineTax.getItemTaxPercent());
+                invLineTax.setItemTaxDescription(invoiceLineTax.getItemTaxDescription());
+                invLineTax.setItemTaxCode(invoiceLineTax.getItemTaxCode());
+                if (getInvoiceLineTypeCode().equals(InvoiceLineTypeCodes.ITEM_REFUND.name())){
+                    invoiceLineTax.setItemTaxAmount(this.cancelCharge.multiply(new BigDecimal(invoiceLineTax.getItemTaxPercent()))
+                            .divide(new BigDecimal(100)));*/
+                this.cancelChargeWithTax = this.cancelChargeWithTax.add(invoiceLineTax.getItemTaxAmount());
+                //invLineTaxes.add(invLineTax);
+            });
+            //this.invoiceLineTaxes = invLineTaxes;
+            if (this.cancelCharge != null)
+                this.cancelChargeWithTax = this.cancelChargeWithTax.add(this.cancelCharge);
+        }
+    }
+
     public void calculateAmountWithTax() {
         this.amountWithTax = BigDecimal.ZERO;
         List<InvoiceLineTax> invLineTaxes = new ArrayList<>();
@@ -145,13 +199,23 @@ public class InvoiceLine extends BaseEntity{
                 invLineTax.setItemTaxPercent(invoiceLineTax.getItemTaxPercent());
                 invLineTax.setItemTaxDescription(invoiceLineTax.getItemTaxDescription());
                 invLineTax.setItemTaxCode(invoiceLineTax.getItemTaxCode());
-                invLineTax.setItemTaxAmount(this.amount.multiply(new BigDecimal(invoiceLineTax.getItemTaxPercent()))
-                        .divide(new BigDecimal(100)));
-                this.amountWithTax = this.amountWithTax.add(invLineTax.getItemTaxAmount());
+                if (getInvoiceLineStatusCode().equals(InvoiceLineStatusCodes.SALE.name())) {
+                    invLineTax.setItemTaxAmount(this.amount.multiply(new BigDecimal(invoiceLineTax.getItemTaxPercent()))
+                            .divide(new BigDecimal(100)));
+                    this.amountWithTax = this.amountWithTax.add(invLineTax.getItemTaxAmount());
+                }
                 invLineTaxes.add(invLineTax);
             });
             this.invoiceLineTaxes = invLineTaxes;
             this.amountWithTax = this.amountWithTax.add(this.amount);
         }
+    }
+
+    public String getInvoiceLineStatusCode() {
+        return invoiceLineStatusCode;
+    }
+
+    public void setInvoiceLineStatusCode(String invoiceLineStatusCode) {
+        this.invoiceLineStatusCode = invoiceLineStatusCode;
     }
 }

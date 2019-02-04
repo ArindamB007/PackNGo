@@ -1,6 +1,11 @@
 package com.png.data.dto.invoice;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.png.util.CurrecySerializer;
+
+import java.math.BigDecimal;
+
 public class InvoicePaymentLineDto {
 
     private Long idInvoicePaymentLine;
@@ -10,8 +15,8 @@ public class InvoicePaymentLineDto {
     private String transactionType;
 
     private String transactionId;
-
-    private int amountPaid;
+    @JsonSerialize(using = CurrecySerializer.class)
+    private BigDecimal amountPaid;
 
     private String transactionTimeStamp;
 
@@ -41,11 +46,11 @@ public class InvoicePaymentLineDto {
         this.transactionType = transactionType;
     }
 
-    public int getAmountPaid() {
+    public BigDecimal getAmountPaid() {
         return amountPaid;
     }
 
-    public void setAmountPaid(int amountPaid) {
+    public void setAmountPaid(BigDecimal amountPaid) {
         this.amountPaid = amountPaid;
     }
 

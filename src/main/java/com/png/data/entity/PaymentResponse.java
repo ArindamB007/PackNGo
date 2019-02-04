@@ -14,6 +14,9 @@ public class PaymentResponse {
     @Column(name = "payment_provider")
     private String paymentProvider;
 
+    @Column(name = "transaction_type")
+    private String transactionType;
+
     public String getIdPaymentResponse() {
         return idPaymentResponse;
     }
@@ -28,5 +31,13 @@ public class PaymentResponse {
 
     public void setPaymentProvider(String paymentProvider) {
         this.paymentProvider = paymentProvider;
+    }
+
+    public String getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
     }
 }

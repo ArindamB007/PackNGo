@@ -1,5 +1,8 @@
 package com.png.data.dto.invoice;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.png.util.CurrecySerializer;
+
 import java.math.BigDecimal;
 
 public class InvoiceLineTaxDto {
@@ -7,6 +10,7 @@ public class InvoiceLineTaxDto {
     private String itemTaxCode;
     private String itemTaxDescription;
     private String itemTaxPercent;
+    @JsonSerialize(using = CurrecySerializer.class)
     private BigDecimal itemTaxAmount;
 
     public Long getIdInvoiceLineTax() {

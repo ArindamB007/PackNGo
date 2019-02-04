@@ -1,13 +1,18 @@
 package com.png.data.entity;
 
 
+import com.png.payments.RazorPay;
+import com.png.services.InvoiceCancellationService;
+import com.png.util.DateFormatter;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Entity
@@ -29,9 +34,6 @@ public class Invoice extends BaseEntity{
 
     @Column(name = "invoice_total_with_tax")
     private BigDecimal invoiceTotalWithTax;
-
-    @Column(name = "amount_to_be_paid")
-    private BigDecimal amountToBePaid;
 
     @Column(name = "amount_paid")
     private BigDecimal amountPaid;
@@ -88,6 +90,7 @@ public class Invoice extends BaseEntity{
     private List<InvoiceTax> appliedTaxes;
 
     @OneToMany (mappedBy = "invoice",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy(value = "groupSequenceNo ASC, sequenceNo ASC")
     private List<InvoiceLine> invoiceLines;
 
     @OneToMany (mappedBy = "invoice",cascade = CascadeType.ALL, orphanRemoval = true)
@@ -103,6 +106,12 @@ public class Invoice extends BaseEntity{
     @ManyToOne (fetch = FetchType.LAZY, optional = false)
     @PrimaryKeyJoinColumn
     private User user;
+
+    public Invoice() {
+        invoiceTotal = invoiceTotalWithTax = invoiceTotalTax = amountPaid =
+                amountPending = invoiceTotalRefund = invoiceTotalWithTaxRefund =
+                        amountToBeRefunded = amountRefunded = BigDecimal.ZERO;
+    }
 
     public Long getIdInvoice() {
         return idInvoice;
@@ -241,14 +250,6 @@ public class Invoice extends BaseEntity{
         this.bookings = bookings;
     }
 
-    public BigDecimal getAmountToBePaid() {
-        return amountToBePaid;
-    }
-
-    public void setAmountToBePaid(BigDecimal amountToBePaid) {
-        this.amountToBePaid = amountToBePaid;
-    }
-
     public BigDecimal getAmountPaid() {
         return amountPaid;
     }
@@ -327,15 +328,34 @@ public class Invoice extends BaseEntity{
             invoiceTax.setInvoice(null);
     }
 
-    public void addInvoicePaymentLine(InvoicePaymentLine invoicePaymentLine){
-        if (invoicePaymentLine == null)
-            return;
+    public void addInvoicePaymentLine(PaymentResponse paymentResponse) {
+        //create new payment line
+        InvoicePaymentLine invoicePaymentLine = new InvoicePaymentLine();
+        invoicePaymentLine.setPaymentResponse(paymentResponse);
+        if (paymentResponse.getPaymentProvider().equals(PaymentResponse.PaymentProviders.RAZORPAY.name())) {
+            //RazorpayPaymentResponse razorpayPaymentResponse = (RazorpayPaymentResponse)paymentResponse;
+            if (paymentResponse.getTransactionType()
+                    .equalsIgnoreCase(InvoicePaymentLine.TransactionTypes.PAYMENT.name()))
+                invoicePaymentLine.setTransactionType(InvoicePaymentLine.TransactionTypes.PAYMENT.name());
+            else if (paymentResponse.getTransactionType()
+                    .equalsIgnoreCase(InvoicePaymentLine.TransactionTypes.REFUND.name()))
+                invoicePaymentLine.setTransactionType(InvoicePaymentLine.TransactionTypes.REFUND.name());
+        } else {
+            //todo throw error
+        }
         if (this.invoicePaymentLines == null){
             this.invoicePaymentLines = new ArrayList<>();
         }
         invoicePaymentLine.setSequenceNo(invoicePaymentLines.size()+1); //set the sequence number
-        processTotals(invoicePaymentLine);
-        updateInvoiceStatus();
+        processTotalsForPayment(invoicePaymentLine);
+        try {
+            if (invoicePaymentLine.getTransactionType().equals(InvoicePaymentLine.TransactionTypes.PAYMENT.name()))
+                updateInvoiceStatus(InvoiceStatusCodes.PAID);
+            else if (invoicePaymentLine.getTransactionType().equals(InvoicePaymentLine.TransactionTypes.REFUND.name()))
+                updateInvoiceStatus(InvoiceStatusCodes.REFUNDED);
+        } catch (Exception e) {
+            //todo log exception
+        }
         this.invoicePaymentLines.add(invoicePaymentLine);
         invoicePaymentLine.setInvoice(this);
     }
@@ -375,29 +395,202 @@ public class Invoice extends BaseEntity{
             booking.setInvoice(null);
     }
 
-    private void processTotals(InvoicePaymentLine invoicePaymentLine){
+    private void processTotalsForPayment(InvoicePaymentLine invoicePaymentLine) {
         //payment block
         if (invoicePaymentLine.getTransactionType().equals(InvoicePaymentLine.TransactionTypes.PAYMENT.name())){
             //razorpay block
             PaymentResponse paymentResponse = invoicePaymentLine.getPaymentResponse();
             if (paymentResponse.getPaymentProvider().equals(
                     PaymentResponse.PaymentProviders.RAZORPAY.name())){
-                BigDecimal amountPaid = new BigDecimal(((RazorpayResponse) paymentResponse).getAmount())
+                BigDecimal amountPaid = new BigDecimal(((RazorpayPaymentResponse) paymentResponse).getAmount())
                         .divide(BigDecimal.valueOf(100)); //Divide by hundred to get value in rupees
                 this.amountPaid = this.amountPaid
                         .add(amountPaid);
-                this.amountPending = this.amountToBePaid
+                this.amountPending = this.invoiceTotalWithTax
                         .subtract(amountPaid);
+            }
+
+        } else if (invoicePaymentLine.getTransactionType().equals(InvoicePaymentLine.TransactionTypes.REFUND.name())) {
+            //razorpay block
+            PaymentResponse paymentResponse = invoicePaymentLine.getPaymentResponse();
+            if (paymentResponse.getPaymentProvider().equals(
+                    PaymentResponse.PaymentProviders.RAZORPAY.name())) {
+                BigDecimal amountRefunded = new BigDecimal(((RazorpayRefundResponse) paymentResponse).getAmount())
+                        .divide(BigDecimal.valueOf(100)); //Divide by hundred to get value in rupees
+                this.amountRefunded = this.amountRefunded
+                        .add(amountRefunded);
+                this.amountToBeRefunded = this.amountToBeRefunded
+                        .subtract(this.amountToBeRefunded);
+                this.amountPaid = this.invoiceTotalWithTax;
             }
 
         }
     }
 
-    private void updateInvoiceStatus(){
-        if (this.amountPending.equals(BigDecimal.ZERO))
-            this.invoiceStatusCode = InvoiceStatusCodes.PAID.name();
-        else if (this.amountPending.compareTo(BigDecimal.ZERO)>0)
-            this.invoiceStatusCode = InvoiceStatusCodes.PAYMENT_PENDING.name();
+    private void processTotalsForCancellation() {
+        this.amountToBeRefunded = this.amountPaid.subtract(this.invoiceTotalWithTax);
     }
 
+    private void updateInvoiceStatus(InvoiceStatusCodes newStatus) throws Exception {
+        if (this.invoiceStatusCode.equals(InvoiceStatusCodes.PAID.name())
+                && newStatus.equals(InvoiceStatusCodes.REFUND_PENDING)) // PAID -> REFUND_PENDING
+            this.invoiceStatusCode = newStatus.name();
+        else if (this.invoiceStatusCode.equals(InvoiceStatusCodes.REFUND_PENDING.name())
+                && newStatus.equals(InvoiceStatusCodes.REFUNDED)) // REFUND_PENDING -> REFUNDED
+            this.invoiceStatusCode = InvoiceStatusCodes.REFUNDED.name();
+        else if ((this.invoiceStatusCode.equals(InvoiceStatusCodes.TOTALED.name()))
+                && newStatus.equals(InvoiceStatusCodes.PAID)) // TOTALED -> PAID
+            this.invoiceStatusCode = InvoiceStatusCodes.PAID.name();
+        else if ((this.invoiceStatusCode.equals(InvoiceStatusCodes.TOTALED.name()))
+                && newStatus.equals(InvoiceStatusCodes.PAYMENT_PENDING)) // TOTALED -> PAYMENT_PENDING
+            this.invoiceStatusCode = InvoiceStatusCodes.PAYMENT_PENDING.name();
+        else
+            throw new Exception();
+    }
+
+    private int getLastInvoiceLineGroupSequenceNo() {
+        this.invoiceLines.sort(new Comparator<InvoiceLine>() {
+            public int compare(InvoiceLine l1, InvoiceLine l2) {
+                return l2.getGroupSequenceNo() - l1.getGroupSequenceNo();
+            }
+        });
+        return this.invoiceLines.get(this.invoiceLines.size() - 1).getGroupSequenceNo();
+    }
+
+
+    private void processInvoiceLineCancellation(InvoiceLine invoiceRefundLine, Item cancellationItem,
+                                                BigDecimal cancelPercent) {
+        invoiceRefundLine.setCancelCharge(invoiceRefundLine.getAmount()
+                .multiply(cancelPercent)
+                .divide(new BigDecimal(100)));//send deduction for calculation
+        invoiceRefundLine.setInvoiceLineStatusCode(InvoiceLine.InvoiceLineStatusCodes.REFUND.name());
+        cancellationItem.getItemPrice()
+                .setBasePrice(invoiceRefundLine.getCancelCharge()); //set cancellation charge for tax calculation
+        //remove all tax lines
+        invoiceRefundLine.getInvoiceLineTaxes().removeAll(invoiceRefundLine.getInvoiceLineTaxes());
+        getInvoiceLineTaxesForItem(cancellationItem).forEach(invoiceRefundLine::addInvoiceLineTax);
+        //invoiceRefundLine.setInvoiceLineTaxes(getInvoiceLineTaxesForItem(cancellationItem));
+        invoiceRefundLine.calculateAmountWithTaxForCancellation();
+    }
+
+    @Transactional
+    public void processFullInvoiceCancellation(Item cancellationItem,
+                                               InvoiceCancellationService.CancellationMode cancellationMode) {
+        //todo get cancel percent based on checkin date and current date
+        try {
+            updateInvoiceStatus(InvoiceStatusCodes.REFUND_PENDING);
+            this.invoiceLines.forEach(invLine ->
+                    processInvoiceLineCancellation(invLine, cancellationItem, BigDecimal.valueOf(0)));
+            calculateInvoiceLevelTaxes(); // recalculate invoice level taxes
+            calculateInvoiceTotalTax();   // recalculate
+            calculateInvoiceTotal();
+            calculateInvoiceTotalWithTax();
+            processTotalsForCancellation(); // find the total refund
+            // Cancel the booking and take the payment only if cancellation is confirmed
+            if (cancellationMode.equals(InvoiceCancellationService.CancellationMode.PROCESS_CANCELLATION)) {
+                // add the cancellation date for each booking to mark them as cancelled
+                bookings.forEach(booking -> booking.setCancelledTimestamp(DateFormatter.getCurrentTime()));
+                RazorPay razorPay = new RazorPay();
+                RazorpayRefundResponse refundResponse = razorPay.captureRazorPayRefund(
+                        invoicePaymentLines.get(0).getPaymentResponse().getIdPaymentResponse(),
+                        (amountToBeRefunded.multiply(BigDecimal.valueOf(100)).toString()));
+                // todo check if the response is successful in case not raise error
+                addInvoicePaymentLine(refundResponse);
+            }
+        } catch (Exception e) {
+            //todo log exception
+        }
+    }
+
+    private List<InvoiceLineTax> getInvoiceLineTaxesForItem(Item item) {
+        List<InvoiceLineTax> invoiceLineTaxes = new ArrayList<>();
+        item.getAppliedTaxes().forEach(applicableTax -> {
+            InvoiceLineTax invoiceLineTax = new InvoiceLineTax();
+            invoiceLineTax.setItemTaxCode(applicableTax.getItemTaxCode());
+            invoiceLineTax.setItemTaxPercent(applicableTax.getItemTaxPercent());
+            invoiceLineTax.setItemTaxDescription(applicableTax.getItemTaxDescription());
+            invoiceLineTax.setItemTaxAmount((item.getItemPrice().getBasePrice()
+                    .multiply(new BigDecimal(applicableTax.getItemTaxPercent()))
+                    .divide(new BigDecimal(100))));
+            invoiceLineTaxes.add(invoiceLineTax);
+        });
+        return invoiceLineTaxes;
+    }
+
+    public void calculateInvoiceLevelTaxes() {
+        List<InvoiceTax> appliedCurrentTaxes;
+        if (this.appliedTaxes == null)
+            appliedCurrentTaxes = new ArrayList<>();
+        else {
+            appliedCurrentTaxes = this.appliedTaxes;
+            appliedCurrentTaxes.removeAll(this.appliedTaxes);
+        }
+        for (InvoiceLine invoiceLine : this.getInvoiceLines()) {
+            for (InvoiceLineTax invoiceLineTax : invoiceLine.getInvoiceLineTaxes()) {
+                InvoiceTax currentInvoiceTax = appliedCurrentTaxes.stream()
+                        .filter(appliedTax ->
+                                invoiceLineTax.getItemTaxCode()
+                                        .equals(appliedTax.getItemTaxCode()) &&
+                                        invoiceLineTax.getItemTaxPercent().equals(appliedTax.getItemTaxPercent()))
+                        .findAny()
+                        .orElse(null);
+                if (currentInvoiceTax == null) { //new tax code
+                    InvoiceTax appliedTax = new InvoiceTax();
+                    appliedTax.setIdInvoiceTax(invoiceLineTax.getIdInvoiceLineTax());
+                    appliedTax.setItemTaxCode(invoiceLineTax.getItemTaxCode());
+                    appliedTax.setItemTaxDescription(invoiceLineTax.getItemTaxDescription());
+                    appliedTax.setItemTaxPercent(invoiceLineTax.getItemTaxPercent());
+                    appliedTax.setItemTaxAmount(invoiceLineTax.getItemTaxAmount());
+                    appliedCurrentTaxes.add(appliedTax); // add the new tax code
+                } else //existing tax code just set the new amount
+                {
+                    int existingIndex = appliedCurrentTaxes.indexOf(currentInvoiceTax);
+                    currentInvoiceTax.setItemTaxAmount(currentInvoiceTax.getItemTaxAmount()
+                            .add(invoiceLineTax.getItemTaxAmount()));
+                    appliedCurrentTaxes.set(existingIndex, currentInvoiceTax);
+                }
+            }
+        }
+        this.appliedTaxes = appliedCurrentTaxes;
+    }
+
+    public void calculateInvoiceTotalTax() {
+        BigDecimal totalInvoiceTax = BigDecimal.ZERO;
+        for (InvoiceTax appliedTax : this.appliedTaxes) {
+            totalInvoiceTax = totalInvoiceTax.add(appliedTax.getItemTaxAmount());
+        }
+        setInvoiceTotalTax(totalInvoiceTax);
+    }
+
+    public void calculateInvoiceTotal() {
+        BigDecimal invoiceTotal = BigDecimal.ZERO;
+        BigDecimal invoiceTotalRefund = BigDecimal.ZERO;
+        for (InvoiceLine invoiceLine : this.getInvoiceLines()) {
+            if (invoiceLine.getInvoiceLineStatusCode().equals(InvoiceLine.InvoiceLineStatusCodes.SALE.name()))
+                invoiceTotal = invoiceTotal.add(invoiceLine.getAmount());
+            else if (invoiceLine.getInvoiceLineStatusCode().equals(InvoiceLine.InvoiceLineStatusCodes.REFUND.name())) {
+                invoiceTotal = invoiceTotal.add(invoiceLine.getCancelCharge());
+                invoiceTotalRefund = invoiceTotalRefund.add(invoiceLine.getAmount());
+            }
+        }
+        setInvoiceTotal(invoiceTotal);
+        setInvoiceTotalRefund(invoiceTotalRefund);
+    }
+
+    public void calculateInvoiceTotalWithTax() {
+        BigDecimal invoiceTotalWithTax = BigDecimal.ZERO;
+        BigDecimal invoiceTotalRefundWithTax = BigDecimal.ZERO;
+        for (InvoiceLine invoiceLine : this.getInvoiceLines()) {
+            if (invoiceLine.getInvoiceLineStatusCode().equals(InvoiceLine.InvoiceLineStatusCodes.SALE.name()))
+                invoiceTotalWithTax = invoiceTotalWithTax.add(invoiceLine.getAmountWithTax());
+            else if (invoiceLine.getInvoiceLineStatusCode().equals(InvoiceLine.InvoiceLineStatusCodes.REFUND.name())) {
+                invoiceTotalWithTax = invoiceTotalWithTax.add(invoiceLine.getCancelChargeWithTax());
+                invoiceTotalRefundWithTax = invoiceTotalRefundWithTax.add(invoiceLine.getAmountWithTax());
+            }
+        }
+        setInvoiceTotalWithTax(invoiceTotalWithTax);
+        setInvoiceTotalWithTaxRefund(invoiceTotalRefundWithTax);
+        if (this.amountRefunded == null)
+            this.amountRefunded = BigDecimal.ZERO;
+    }
 }

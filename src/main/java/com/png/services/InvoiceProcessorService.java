@@ -1,7 +1,5 @@
 package com.png.services;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.png.data.dto.availableroomtype.AvailableRoomTypeDto;
 import com.png.data.dto.availableroomtype.MealPlanDto;
 import com.png.data.dto.bookingcart.BookingCartDto;
@@ -9,23 +7,17 @@ import com.png.data.dto.invoice.*;
 import com.png.data.dto.item.ItemDto;
 import com.png.data.entity.*;
 import com.png.data.mapper.InvoiceMapper;
-import com.png.data.mapper.MealPlanMapper;
 import com.png.data.repository.*;
 import com.png.exception.RoomJustSoldOutException;
+import com.png.payments.RazorPay;
 import com.png.util.DateFormatter;
 import com.png.util.StringGenerator;
-import com.razorpay.Payment;
-import com.razorpay.RazorpayClient;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -48,6 +40,9 @@ public class InvoiceProcessorService {
     @Autowired
     private RoomTypeRepository roomTypeRepository;
 
+    @Autowired
+    private RazorPay razorPay;
+
     private List<ItemTax> applicableTaxes;
 
     public InvoiceDto createInvoice(BookingCartDto bookingCartDto){
@@ -56,25 +51,24 @@ public class InvoiceProcessorService {
             invoice = new Invoice();
             String checkIn = bookingCartDto.getCheckInOutDetails().getCheckInTimestamp();
             String checkOut = bookingCartDto.getCheckInOutDetails().getCheckOutTimestamp();
-            applicableTaxes = itemTaxRepository.findAll();
+            applicableTaxes = itemTaxRepository.findAllByItemTaxPercentEquals("0");
             invoice.setCheckInTimestamp(DateFormatter.getTimestampFromString(checkIn));
             invoice.setCheckOutTimestamp(DateFormatter.getTimestampFromString(checkOut));
             invoice.setInvoiceStatusCode(Invoice.InvoiceStatusCodes.TOTALED.name());
             invoice.setProperty(propertyRepository.findByIdProperty(bookingCartDto.getSelectedProperty().getIdProperty()));
             invoice.setInvoiceLines(getInvoiceLinesForMealPlans(bookingCartDto.getSelectedRoomTypes()));
-            invoice.setAppliedTaxes(calculateInvoiceLevelTaxes());
-            invoice.setInvoiceTotalTax(calculateInvoiceTotalTax(invoice.getAppliedTaxes()));
-            invoice.setInvoiceTotalWithTax(calculateInvoiceTotalWithTax());
-            invoice.setInvoiceTotal(calculateInvoiceTotal());
+            invoice.calculateInvoiceLevelTaxes();
+            invoice.calculateInvoiceTotalTax();
+            invoice.calculateInvoiceTotalWithTax();
+            invoice.calculateInvoiceTotal();
             invoice.setAmountPaid(BigDecimal.ZERO);
-            invoice.setAmountToBePaid(invoice.getInvoiceTotalWithTax());
-            invoice.setAmountPending(invoice.getAmountToBePaid());
+            invoice.setAmountPending(invoice.getInvoiceTotalWithTax());
 
             invoiceDto = InvoiceMapper.INSTANCE.InvoiceToInvoiceDto(invoice);
 
             invoiceDto.setInvoiceNo(createInvoiceNumber());
             invoiceDto.setNights(DateFormatter.getNights(DateFormatter.getTimestampFromString(checkOut),
-                    DateFormatter.getTimestampFromString(checkOut)));
+                    DateFormatter.getTimestampFromString(checkIn)));
             invoiceDto.setUserContext(bookingCartDto.getUserContext());
             invoiceDto.setInvoiceOccupancyInfo();
         } catch (Exception e) {
@@ -106,11 +100,11 @@ public class InvoiceProcessorService {
                 }
             }
             //capture payment
-            RazorpayResponse razorpayResponse =
-                    captureRazorPayment(invoice.getPayment().getProviderPaymentId(),
+            RazorpayPaymentResponse razorpayPaymentResponse =
+                    razorPay.captureRazorPayPayment(invoice.getPayment().getProviderPaymentId(),
                             invoice.getPayment().getAmountPaid());
             // incase of any error in razorpay response we need stop the booking
-            //razorpayResponseRepository.save(razorpayResponse);
+            //razorpayResponseRepository.save(razorpayPaymentResponse);
 
 
             // create new invoice
@@ -119,7 +113,7 @@ public class InvoiceProcessorService {
             newInvoice.setProperty(propertyRepository.findByIdProperty(invoice.getProperty().getIdProperty()));
             newInvoice.setUser(customUserDetailsService.getUserByUserContext(invoice.getUserContext()));
             //add payment line
-            newInvoice.addInvoicePaymentLine(getInvoicePaymentLine(razorpayResponse));
+            newInvoice.addInvoicePaymentLine(razorpayPaymentResponse);
 
             //create new bookings for each room
             List<Booking> newBookings = new ArrayList<>();
@@ -161,42 +155,6 @@ public class InvoiceProcessorService {
         return null;
     }
 
-    private InvoicePaymentLine getInvoicePaymentLine(PaymentResponse paymentResponse){
-        //create new payment line
-        InvoicePaymentLine invoicePaymentLine = new InvoicePaymentLine();
-        invoicePaymentLine.setPaymentResponse(paymentResponse);
-        invoicePaymentLine.setTransactionType(InvoicePaymentLine.TransactionTypes.PAYMENT.name());
-        return invoicePaymentLine;
-    }
-
-    private RazorpayResponse captureRazorPayment(String razor_payment_id, String amountPaid){
-        RazorpayResponse razorpayResponse = null;
-        try {
-            RazorpayClient razorpayClient = new RazorpayClient("rzp_test_9LJbdDeHn1EYIr",
-                    "ZCdjpt0xMYnO3yuYtiAgQBLf");
-            JSONObject options = new JSONObject();
-            options.put("amount",new BigDecimal(amountPaid));
-
-            Payment razorpayPayment= razorpayClient.Payments.capture(razor_payment_id,options);
-            System.out.println(razorpayPayment.toString());
-            System.out.println("Status: " + razorpayPayment.get("status").toString());
-
-            ObjectMapper razorpayMapper = new ObjectMapper();
-            razorpayMapper.configure(
-                    DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            try{
-                razorpayResponse = razorpayMapper.readValue(razorpayPayment.toString(),RazorpayResponse.class);
-                razorpayResponse.setIdPaymentResponse(razor_payment_id);
-                razorpayResponse.setPaymentProvider(PaymentResponse.PaymentProviders.RAZORPAY.name());
-            } catch (Exception e){
-                System.out.println(e.getMessage()); // put logs
-            }
-
-        } catch(Exception e){
-            //log the exception
-        }
-        return razorpayResponse;
-    }
 
     private List<InvoiceLine> getInvoiceLinesForMealPlans(List<AvailableRoomTypeDto> selectedRoomTypes) {
         int groupSequenceNo = 1;
@@ -241,62 +199,11 @@ public class InvoiceProcessorService {
         return invoiceLines;
     }
 
-    private BigDecimal calculateInvoiceTotal(){
-        BigDecimal invoiceTotal = BigDecimal.ZERO;
-        for (InvoiceLine invoiceLine : this.invoice.getInvoiceLines()) {
-            invoiceTotal = invoiceTotal.add(invoiceLine.getAmount());
-        }
-        return invoiceTotal;
-    }
-
-    private BigDecimal calculateInvoiceTotalWithTax(){
-        BigDecimal invoiceTotalWithTax = BigDecimal.ZERO;
-        for (InvoiceLine invoiceLine : this.invoice.getInvoiceLines()) {
-            invoiceTotalWithTax = invoiceTotalWithTax.add(invoiceLine.getAmountWithTax());
-        }
-        return invoiceTotalWithTax;
-    }
-
-    private BigDecimal calculateInvoiceTotalTax(List<InvoiceTax> appliedTaxes) {
-        BigDecimal totalInvoiceTax = BigDecimal.ZERO;
-        for (InvoiceTax appliedTax : appliedTaxes) {
-            totalInvoiceTax = totalInvoiceTax.add(appliedTax.getItemTaxAmount());
-        }
-        return totalInvoiceTax;
-    }
-
-    private List<InvoiceTax> calculateInvoiceLevelTaxes() {
-        List<InvoiceTax> appliedTaxes = new ArrayList<>();
-        for (InvoiceLine invoiceLine : this.invoice.getInvoiceLines()) {
-            for (InvoiceLineTax invoiceLineTax : invoiceLine.getInvoiceLineTaxes()) {
-                InvoiceTax currentInvoiceTax = appliedTaxes.stream()
-                        .filter(appliedTax -> invoiceLineTax.getItemTaxCode().equals(appliedTax.getItemTaxCode()))
-                        .findAny()
-                        .orElse(null);
-                if (currentInvoiceTax == null){ //new tax code
-                    InvoiceTax appliedTax = new InvoiceTax();
-                    appliedTax.setIdInvoiceTax(invoiceLineTax.getIdInvoiceLineTax());
-                    appliedTax.setItemTaxCode(invoiceLineTax.getItemTaxCode());
-                    appliedTax.setItemTaxDescription(invoiceLineTax.getItemTaxDescription());
-                    appliedTax.setItemTaxPercent(invoiceLineTax.getItemTaxPercent());
-                    appliedTax.setItemTaxAmount(invoiceLineTax.getItemTaxAmount());
-                    appliedTaxes.add(appliedTax); // add the new tax code
-                }
-                else //existing tax code just set the new amount
-                {
-                    int existingIndex = appliedTaxes.indexOf(currentInvoiceTax);
-                    currentInvoiceTax.setItemTaxAmount(currentInvoiceTax.getItemTaxAmount()
-                            .add(invoiceLineTax.getItemTaxAmount()));
-                    appliedTaxes.set(existingIndex,currentInvoiceTax);
-                }
-            }
-        }
-        return appliedTaxes;
-    }
 
     private InvoiceLineItem getInvoiceLineForMealPlan(MealPlanDto mealPlan) {
         InvoiceMealPlanLine invoiceLine = new InvoiceMealPlanLine();
         invoiceLine.setInvoiceLineTypeCode(InvoiceLine.InvoiceLineTypeCodes.MEALPLAN.name());
+        invoiceLine.setInvoiceLineStatusCode(InvoiceLine.InvoiceLineStatusCodes.SALE.name());
         invoiceLine.setDescription(mealPlan.getMealPlanItem().getDescription());
         invoiceLine.setItemType(mealPlan.getMealPlanItem().getItemType().getItemTypeCode());
         invoiceLine.setPrice(mealPlan.getMealPlanItem().getItemPrice().getBasePrice());
@@ -319,6 +226,7 @@ public class InvoiceProcessorService {
         if (item.getItemType().getItemTypeCode().equals(ItemType.ItemTypeCodes.EXTRABEDADULT.name()) ||
                 (item.getItemType().getItemTypeCode().equals(ItemType.ItemTypeCodes.EXTRABEDCHILD.name())))
             invoiceLine.setInvoiceLineTypeCode(InvoiceLine.InvoiceLineTypeCodes.EXTRA_PERSON.name());
+        invoiceLine.setInvoiceLineStatusCode(InvoiceLine.InvoiceLineStatusCodes.SALE.name());
         invoiceLine.setDescription(item.getDescription());
         invoiceLine.setPrice(item.getItemPrice().getBasePrice());
         invoiceLine.setQuantity(item.getQuantity());

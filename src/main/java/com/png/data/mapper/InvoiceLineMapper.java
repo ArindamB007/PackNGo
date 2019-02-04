@@ -21,16 +21,19 @@ public interface InvoiceLineMapper {
         if (invoiceLineDto == null) {
             return null;
         }
-        InvoiceLine invoiceLine = null;
+        InvoiceLine invoiceLine;
         if (invoiceLineDto.getInvoiceLineTypeCode().equals(InvoiceLine.InvoiceLineTypeCodes.EXTRA_PERSON.name())) {
             InvoiceLineItem invoiceLineItem = new InvoiceLineItem();
             invoiceLineItem.setIdInvoiceLine(invoiceLineDto.getIdInvoiceLine());
             invoiceLineItem.setInvoiceLineTypeCode(invoiceLineDto.getInvoiceLineTypeCode());
+            invoiceLineItem.setInvoiceLineStatusCode(invoiceLineDto.getInvoiceLineTypeCode());
             invoiceLineItem.setSequenceNo(invoiceLineDto.getSequenceNo());
             invoiceLineItem.setGroupSequenceNo(invoiceLineDto.getGroupSequenceNo());
             invoiceLineItem.setDescription(invoiceLineDto.getDescription());
             invoiceLineItem.setAmount(invoiceLineDto.getAmount());
             invoiceLineItem.setAmountWithTax(invoiceLineDto.getAmountWithTax());
+            invoiceLineItem.setCancelCharge(invoiceLineDto.getCancelCharge());
+            invoiceLineItem.setCancelChargeWithTax(invoiceLineDto.getCancelChargeWithTax());
             invoiceLineItem.setPrice(((InvoiceLineItemDto)invoiceLineDto).getPrice());
             invoiceLineItem.setQuantity(((InvoiceLineItemDto)invoiceLineDto).getQuantity());
             invoiceLineItem.setItemType(((InvoiceLineItemDto) invoiceLineDto).getItemType());
@@ -45,11 +48,14 @@ public interface InvoiceLineMapper {
             InvoiceMealPlanLine invoiceMealPlanLine = new InvoiceMealPlanLine();
             invoiceMealPlanLine.setIdInvoiceLine(invoiceLineDto.getIdInvoiceLine());
             invoiceMealPlanLine.setInvoiceLineTypeCode(invoiceLineDto.getInvoiceLineTypeCode());
+            invoiceMealPlanLine.setInvoiceLineStatusCode(invoiceLineDto.getInvoiceLineStatusCode());
             invoiceMealPlanLine.setSequenceNo(invoiceLineDto.getSequenceNo());
             invoiceMealPlanLine.setGroupSequenceNo(invoiceLineDto.getGroupSequenceNo());
             invoiceMealPlanLine.setDescription(invoiceLineDto.getDescription());
             invoiceMealPlanLine.setAmount(invoiceLineDto.getAmount());
             invoiceMealPlanLine.setAmountWithTax(invoiceLineDto.getAmountWithTax());
+            invoiceMealPlanLine.setCancelCharge(invoiceLineDto.getCancelCharge());
+            invoiceMealPlanLine.setCancelChargeWithTax(invoiceLineDto.getCancelChargeWithTax());
             invoiceMealPlanLine.setPrice(((InvoiceMealPlanLineDto) invoiceLineDto).getPrice());
             invoiceMealPlanLine.setQuantity(((InvoiceMealPlanLineDto)invoiceLineDto).getQuantity());
             invoiceMealPlanLine.setItemType(((InvoiceMealPlanLineDto) invoiceLineDto).getItemType());
@@ -61,6 +67,22 @@ public interface InvoiceLineMapper {
                     .InvoiceLineTaxDtosToInvoiceLineTaxes(invoiceLineDto.getInvoiceLineTaxes());
             invoiceLineTaxes.forEach(invoiceMealPlanLine::addInvoiceLineTax);
             invoiceLine = invoiceMealPlanLine;
+        } else {
+            InvoiceLineItem invoiceLineItem = new InvoiceLineItem();
+            invoiceLineItem.setIdInvoiceLine(invoiceLineDto.getIdInvoiceLine());
+            invoiceLineItem.setInvoiceLineTypeCode(invoiceLineDto.getInvoiceLineTypeCode());
+            invoiceLineItem.setInvoiceLineStatusCode(invoiceLineDto.getInvoiceLineStatusCode());
+            invoiceLineItem.setSequenceNo(invoiceLineDto.getSequenceNo());
+            invoiceLineItem.setGroupSequenceNo(invoiceLineDto.getGroupSequenceNo());
+            invoiceLineItem.setDescription(invoiceLineDto.getDescription());
+            invoiceLineItem.setAmount(invoiceLineDto.getAmount());
+            invoiceLineItem.setAmountWithTax(invoiceLineDto.getAmountWithTax());
+            invoiceLineItem.setCancelCharge(invoiceLineDto.getCancelCharge());
+            invoiceLineItem.setCancelChargeWithTax(invoiceLineDto.getCancelChargeWithTax());
+            List<InvoiceLineTax> invoiceLineTaxes = InvoiceLineTaxMapper.INSTANCE
+                    .InvoiceLineTaxDtosToInvoiceLineTaxes(invoiceLineDto.getInvoiceLineTaxes());
+            invoiceLineTaxes.forEach(invoiceLineItem::addInvoiceLineTax);
+            invoiceLine = invoiceLineItem;
         }
         return invoiceLine;
     }
@@ -69,16 +91,19 @@ public interface InvoiceLineMapper {
         if (invoiceLine == null) {
             return null;
         }
-        InvoiceLineDto invoiceLineDto = null;
+        InvoiceLineDto invoiceLineDto;
         if (invoiceLine.getInvoiceLineTypeCode().equals(InvoiceLine.InvoiceLineTypeCodes.EXTRA_PERSON.name())) {
             InvoiceLineItemDto invoiceLineItemDto = new InvoiceLineItemDto();
             invoiceLineItemDto.setIdInvoiceLine(invoiceLine.getIdInvoiceLine());
             invoiceLineItemDto.setInvoiceLineTypeCode(invoiceLine.getInvoiceLineTypeCode());
+            invoiceLineItemDto.setInvoiceLineStatusCode(invoiceLine.getInvoiceLineStatusCode());
             invoiceLineItemDto.setSequenceNo(invoiceLine.getSequenceNo());
             invoiceLineItemDto.setGroupSequenceNo(invoiceLine.getGroupSequenceNo());
             invoiceLineItemDto.setDescription(invoiceLine.getDescription());
             invoiceLineItemDto.setAmount(invoiceLine.getAmount());
             invoiceLineItemDto.setAmountWithTax(invoiceLine.getAmountWithTax());
+            invoiceLineItemDto.setCancelCharge(invoiceLine.getCancelCharge());
+            invoiceLineItemDto.setCancelChargeWithTax(invoiceLine.getCancelChargeWithTax());
             invoiceLineItemDto.setInvoiceLineTaxes(InvoiceLineTaxMapper
                     .INSTANCE.InvoiceLineTaxesToInvoiceLineTaxDtos(invoiceLine.getInvoiceLineTaxes()));
             invoiceLineItemDto.setPrice(((InvoiceLineItem)invoiceLine).getPrice());
@@ -91,11 +116,14 @@ public interface InvoiceLineMapper {
             InvoiceMealPlanLineDto invoiceMealPlanLineDto = new InvoiceMealPlanLineDto();
             invoiceMealPlanLineDto.setIdInvoiceLine(invoiceLine.getIdInvoiceLine());
             invoiceMealPlanLineDto.setInvoiceLineTypeCode(invoiceLine.getInvoiceLineTypeCode());
+            invoiceMealPlanLineDto.setInvoiceLineStatusCode(invoiceLine.getInvoiceLineStatusCode());
             invoiceMealPlanLineDto.setSequenceNo(invoiceLine.getSequenceNo());
             invoiceMealPlanLineDto.setGroupSequenceNo(invoiceLine.getGroupSequenceNo());
             invoiceMealPlanLineDto.setDescription(invoiceLine.getDescription());
             invoiceMealPlanLineDto.setAmount(invoiceLine.getAmount());
             invoiceMealPlanLineDto.setAmountWithTax(invoiceLine.getAmountWithTax());
+            invoiceMealPlanLineDto.setCancelCharge(invoiceLine.getCancelCharge());
+            invoiceMealPlanLineDto.setCancelChargeWithTax(invoiceLine.getCancelChargeWithTax());
             invoiceMealPlanLineDto.setInvoiceLineTaxes(InvoiceLineTaxMapper
                     .INSTANCE.InvoiceLineTaxesToInvoiceLineTaxDtos(invoiceLine.getInvoiceLineTaxes()));
             invoiceMealPlanLineDto.setPrice(((InvoiceMealPlanLine)invoiceLine).getPrice());
@@ -106,6 +134,20 @@ public interface InvoiceLineMapper {
             invoiceMealPlanLineDto.setRoomTypeName(((InvoiceMealPlanLine)invoiceLine).getRoomTypeName());
             invoiceMealPlanLineDto.setItemType(((InvoiceMealPlanLine) invoiceLine).getItemType());
             invoiceLineDto = invoiceMealPlanLineDto ;
+        } else {
+            invoiceLineDto = new InvoiceLineDto();
+            invoiceLineDto.setIdInvoiceLine(invoiceLine.getIdInvoiceLine());
+            invoiceLineDto.setInvoiceLineTypeCode(invoiceLine.getInvoiceLineTypeCode());
+            invoiceLineDto.setInvoiceLineStatusCode(invoiceLine.getInvoiceLineStatusCode());
+            invoiceLineDto.setSequenceNo(invoiceLine.getSequenceNo());
+            invoiceLineDto.setGroupSequenceNo(invoiceLine.getGroupSequenceNo());
+            invoiceLineDto.setDescription(invoiceLine.getDescription());
+            invoiceLineDto.setAmount(invoiceLine.getAmount());
+            invoiceLineDto.setAmountWithTax(invoiceLine.getAmountWithTax());
+            invoiceLineDto.setCancelCharge(invoiceLine.getCancelCharge());
+            invoiceLineDto.setCancelChargeWithTax(invoiceLine.getCancelChargeWithTax());
+            invoiceLineDto.setInvoiceLineTaxes(InvoiceLineTaxMapper
+                    .INSTANCE.InvoiceLineTaxesToInvoiceLineTaxDtos(invoiceLine.getInvoiceLineTaxes()));
         }
         return invoiceLineDto;
     }

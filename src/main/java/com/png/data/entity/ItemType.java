@@ -19,7 +19,8 @@ public class ItemType extends BaseEntity {
 		FOCITEM, COUPONNITEM}*/
 	
 	public enum ItemTypeCodes {MEALPLANITEM,
-		EXTRABEDADULT, EXTRABEDCHILD}
+        EXTRABEDADULT, EXTRABEDCHILD, CANCELLATION_ITEM
+    }
 	
 	@Column (name="item_type_code", nullable = false)
     @NotEmpty

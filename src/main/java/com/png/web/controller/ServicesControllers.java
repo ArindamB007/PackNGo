@@ -77,6 +77,9 @@ public class ServicesControllers {
 	private InvoiceProcessorService invoiceProcessorService;
 
 	@Autowired
+	private InvoiceCancellationService invoiceCancellationService;
+
+	@Autowired
 	private InvoiceSearchService invoiceSearchService;
 
     private HashMap<String,String> populateErrorDetails(Exception e){
@@ -268,6 +271,28 @@ public class ServicesControllers {
 			InvoiceDto invoice = invoiceProcessorService.processInvoice(preInvoice);
 			return new ResponseEntity<>(invoice, HttpStatus.OK);
 		} catch (BaseException e){
+			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value = "/process_cancel_invoice", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Object> cancelInvoice(@RequestBody Number idInvoice) {
+		try {
+			InvoiceDto invoice = invoiceCancellationService.processCancelInvoice(idInvoice.longValue());
+			return new ResponseEntity<>(invoice, HttpStatus.OK);
+		} catch (BaseException e) {
+			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value = "/prepare_cancel_invoice", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Object> prepareCancelInvoice(@RequestBody Number idInvoice) {
+		try {
+			InvoiceDto invoice = invoiceCancellationService.prepareCancelInvoice(idInvoice.longValue());
+			return new ResponseEntity<>(invoice, HttpStatus.OK);
+		} catch (BaseException e) {
 			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);
 		}
 	}

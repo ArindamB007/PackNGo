@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface InvoiceRepository extends PagingAndSortingRepository<Invoice, Long>, InvoiceRepositoryCustom {
+
     List<Invoice> findInvoicesByUserOrderByCreatedTimestampDesc(User user);
 
     List<Invoice> findInvoicesByUserIdUserAndTravellerEmailContainsOrderByCreatedTimestampDesc(Long userId,

@@ -14,6 +14,11 @@ public class DateFormatter {
         return new Timestamp(new java.util.Date().getTime());
     }
 
+    public static String getCurrentTimeString() {
+        DateFormat df = new SimpleDateFormat("dd-MMM-yyyy hh:mm a");
+        return df.format(new java.util.Date().getTime());
+    }
+
     public static Timestamp getTimestampFromString(String dateString) throws ParseException{
         DateFormat df = new SimpleDateFormat("dd-MMM-yyyy hh:mm a");
         return new Timestamp(df.parse(dateString).getTime());

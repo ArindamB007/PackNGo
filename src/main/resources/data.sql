@@ -103,6 +103,20 @@ INSERT INTO item_tax (item_tax_code,item_tax_description,item_tax_percent,create
 VALUES ("CGST", "CGST",0,now(),now(),1);
 INSERT INTO item_tax (item_tax_code,item_tax_description,item_tax_percent,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ("SGST", "SGST",0,now(),now(),1);
+INSERT INTO item_tax (item_tax_code,
+                      item_tax_description,
+                      item_tax_percent,
+                      created_timestamp,
+                      updated_timestamp,
+                      enabled_flag)
+VALUES ("CGST", "CGST", 5, now(), now(), 1);
+INSERT INTO item_tax (item_tax_code,
+                      item_tax_description,
+                      item_tax_percent,
+                      created_timestamp,
+                      updated_timestamp,
+                      enabled_flag)
+VALUES ("SGST", "SGST", 5, now(), now(), 1);
 
 
 /*Item Type Data*/
@@ -120,6 +134,8 @@ INSERT INTO item_type (item_type_code,description,created_timestamp,updated_time
 VALUES ("EXTRABEDADULT", "This is an adult extra bed type item",now(),now(),1);
 INSERT INTO item_type (item_type_code,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ("EXTRABEDCHILD", "This is a child extra bed type item",now(),now(),1);
+INSERT INTO item_type (item_type_code, description, created_timestamp, updated_timestamp, enabled_flag)
+VALUES ("CANCELLATION_ITEM", "This item is used to charge cancellation fees", now(), now(), 1);
 INSERT INTO item_type (item_type_code,description,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ("REGULARITEM", "This is a regular type item",now(),now(),1);
 INSERT INTO item_type (item_type_code,description,created_timestamp,updated_timestamp,enabled_flag)
@@ -758,6 +774,43 @@ VALUES ((SELECT id_meal_plan from meal_plan
 		(SELECT id_item from item where description = 'Suite Extra Bed Child - AP'));
 
 /*Item Price, Item and Mealplan data - end*/
+
+/*Cancellation Charge Item*/
+INSERT INTO item_price (base_price, created_timestamp, updated_timestamp, enabled_flag)
+VALUES (0, now(), now(), 1);
+INSERT INTO item (item_type_id_item_type,
+                  item_price_id,
+                  description,
+                  created_timestamp,
+                  updated_timestamp,
+                  enabled_flag)
+VALUES ((select id_item_type from item_type where item_type_code = 'CANCELLATION_ITEM'),
+        last_insert_id(),
+        "Cancellation Charge",
+        now(),
+        now(),
+        1);
+INSERT INTO item_tax_item (item_id_item, applied_taxes_id_item_tax)
+VALUES ((SELECT id_item
+         FROM item
+                INNER JOIN item_type ON item.item_type_id_item_type = item_type.id_item_type
+                                          AND item_type_code = 'CANCELLATION_ITEM'
+         LIMIT 1),
+        (SELECT id_item_tax
+         from item_tax
+         WHERE item_tax_code = 'CGST'
+           and item_tax_percent = '5'));
+INSERT INTO item_tax_item (item_id_item, applied_taxes_id_item_tax)
+VALUES ((SELECT id_item
+         FROM item
+                INNER JOIN item_type ON item.item_type_id_item_type = item_type.id_item_type
+                                          AND item_type_code = 'CANCELLATION_ITEM'
+         LIMIT 1),
+        (SELECT id_item_tax
+         from item_tax
+         WHERE item_tax_code = 'SGST'
+           and item_tax_percent = '5'));
+
 
 
 /*Room Type Facility data*/

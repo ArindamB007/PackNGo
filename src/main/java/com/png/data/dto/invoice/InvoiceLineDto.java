@@ -2,6 +2,8 @@ package com.png.data.dto.invoice;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.png.util.CurrecySerializer;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,10 +20,24 @@ public class InvoiceLineDto {
     private int sequenceNo;
     private int groupSequenceNo;
     private String invoiceLineTypeCode;
+    private String invoiceLineStatusCode;
     private String description;
+    @JsonSerialize(using = CurrecySerializer.class)
     private BigDecimal amount;
+    @JsonSerialize(using = CurrecySerializer.class)
     private BigDecimal amountWithTax;
+    @JsonSerialize(using = CurrecySerializer.class)
+    private BigDecimal cancelCharge;
+    @JsonSerialize(using = CurrecySerializer.class)
+    private BigDecimal cancelChargeWithTax;
     private List<InvoiceLineTaxDto> invoiceLineTaxes;
+
+    public InvoiceLineDto() {
+        amount =
+                amountWithTax =
+                        cancelCharge =
+                                cancelChargeWithTax = BigDecimal.ZERO;
+    }
 
     public Long getIdInvoiceLine() {
         return idInvoiceLine;
@@ -45,6 +61,14 @@ public class InvoiceLineDto {
 
     public void setInvoiceLineTypeCode(String invoiceLineTypeCode) {
         this.invoiceLineTypeCode = invoiceLineTypeCode;
+    }
+
+    public String getInvoiceLineStatusCode() {
+        return invoiceLineStatusCode;
+    }
+
+    public void setInvoiceLineStatusCode(String invoiceLineStatusCode) {
+        this.invoiceLineStatusCode = invoiceLineStatusCode;
     }
 
     public String getDescription() {
@@ -85,5 +109,21 @@ public class InvoiceLineDto {
 
     public void setGroupSequenceNo(int groupSequenceNo) {
         this.groupSequenceNo = groupSequenceNo;
+    }
+
+    public BigDecimal getCancelCharge() {
+        return cancelCharge;
+    }
+
+    public void setCancelCharge(BigDecimal cancelCharge) {
+        this.cancelCharge = cancelCharge;
+    }
+
+    public BigDecimal getCancelChargeWithTax() {
+        return cancelChargeWithTax;
+    }
+
+    public void setCancelChargeWithTax(BigDecimal cancelChargeWithTax) {
+        this.cancelChargeWithTax = cancelChargeWithTax;
     }
 }

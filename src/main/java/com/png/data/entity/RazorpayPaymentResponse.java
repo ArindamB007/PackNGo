@@ -5,9 +5,9 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
-@Table(name = "razorpay_response")
-@PrimaryKeyJoinColumn(name="id_razorpay_response")
-public class RazorpayResponse extends PaymentResponse{
+@Table(name = "razorpay_payment_response")
+@PrimaryKeyJoinColumn(name = "id_razorpay_payment_response")
+public class RazorpayPaymentResponse extends PaymentResponse {
       public enum PaymentStatus {created, authorized, captured, refunded, failed}
       public enum RefundStatus {partial, full}
       public enum Methods {card,netbanking,wallet,emi}

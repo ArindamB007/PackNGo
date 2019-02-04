@@ -10,8 +10,6 @@ public class InvoiceLineTax extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_invoice_line_tax")
     private Long idInvoiceLineTax;
-    @Column(name = "invoice_line_id")
-    private Long invoiceLineId;
     @Column(name = "item_tax_code")
     private String itemTaxCode;
     @Column(name = "item_tax_description")
@@ -41,14 +39,6 @@ public class InvoiceLineTax extends BaseEntity{
 
     public void setIdInvoiceLineTax(Long idInvoiceLineTax) {
         this.idInvoiceLineTax = idInvoiceLineTax;
-    }
-
-    public Long getInvoiceLineId() {
-        return invoiceLineId;
-    }
-
-    public void setInvoiceLineId(Long invoiceLineId) {
-        this.invoiceLineId = invoiceLineId;
     }
 
     public String getItemTaxCode() {

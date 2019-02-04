@@ -42,7 +42,8 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
                         "  where id_room not in (\n" +
                         "     select room.id_room from room \n" +
                         "    LEFT JOIN  booking\n" +
-                        "      on room.id_room = booking.room_id_room where\n" +
+                        "      on room.id_room = booking.room_id_room " +
+                        "      AND booking.cancelled_timestamp IS NULL where\n" +
                         "           (:checkInTimestamp <= booking.check_in_timestamp and " +
                         "               :checkOutTimestamp >= booking.check_in_timestamp) OR\n" +
                         "           (:checkInTimestamp <= booking.check_out_timestamp and " +
@@ -134,7 +135,8 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
                         "  WHERE id_room NOT IN (\n" +
                         "     select room.id_room from room \n" +
                         "    LEFT JOIN  booking\n" +
-                        "      on room.id_room = booking.room_id_room where \n" +
+                        "      on room.id_room = booking.room_id_room " +
+                        "      AND booking.cancelled_timestamp IS NULL where \n" +
                         "           (:checkInTimestamp <= booking.check_in_timestamp AND \n" +
                         "           :checkOutTimestamp >= booking.check_in_timestamp) OR \n" +
                         "           (:checkInTimestamp <= booking.check_out_timestamp AND \n" +
