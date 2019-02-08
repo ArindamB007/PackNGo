@@ -3,9 +3,11 @@ package com.png.services;
 import com.png.data.dto.invoice.InvoiceDto;
 import com.png.data.entity.Invoice;
 import com.png.data.entity.Item;
+import com.png.data.entity.User;
 import com.png.data.mapper.InvoiceMapper;
 import com.png.data.repository.InvoiceRepository;
 import com.png.data.repository.ItemRepository;
+import com.png.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +20,12 @@ public class InvoiceCancellationService {
     @Autowired
     private ItemRepository itemRepository;
 
-    public InvoiceDto processCancelInvoice(Long idInvoice) {
+    @Autowired
+    private UserRepository userRepository;
+
+    public InvoiceDto processCancelInvoice(Long idInvoice, Long idUserCancelledBy) {
         Invoice cancelledInvoice = invoiceRepository.findOne(idInvoice);
+        User cancelledByUser = userRepository.findByIdUser(idUserCancelledBy);
         if (cancelledInvoice == null) {
             //throw invoice not found exception
             return null;
@@ -34,6 +40,7 @@ public class InvoiceCancellationService {
             return null;
         }
         cancelledInvoice.processFullInvoiceCancellation(cancelItem, CancellationMode.PROCESS_CANCELLATION);
+        cancelledInvoice.setCancelledByUser(cancelledByUser); // setting the user who cancelled the invoice
         cancelledInvoice = invoiceRepository.save(cancelledInvoice);
         return InvoiceMapper.INSTANCE.InvoiceToInvoiceDto(cancelledInvoice);
     }

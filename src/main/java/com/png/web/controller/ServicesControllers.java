@@ -4,6 +4,7 @@ import com.png.auth.service.SecurityService;
 import com.png.auth.service.UserService;
 import com.png.data.dto.search.InvoiceSearchDto;
 import com.png.data.dto.search.PagedRequest;
+import com.png.data.requests.InvoiceCancellationRequest;
 import com.png.validators.EmailValidator;
 import com.png.validators.UserValidator;
 import com.png.comms.email.EmailService;
@@ -277,9 +278,11 @@ public class ServicesControllers {
 
 	@RequestMapping(value = "/process_cancel_invoice", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Object> cancelInvoice(@RequestBody Number idInvoice) {
+	public ResponseEntity<Object> cancelInvoice(@RequestBody InvoiceCancellationRequest invoiceCancellationRequest) {
 		try {
-			InvoiceDto invoice = invoiceCancellationService.processCancelInvoice(idInvoice.longValue());
+			InvoiceDto invoice = invoiceCancellationService
+					.processCancelInvoice(invoiceCancellationRequest.getIdInvoice().longValue(),
+							invoiceCancellationRequest.getIdCancelledByUser().longValue());
 			return new ResponseEntity<>(invoice, HttpStatus.OK);
 		} catch (BaseException e) {
 			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);

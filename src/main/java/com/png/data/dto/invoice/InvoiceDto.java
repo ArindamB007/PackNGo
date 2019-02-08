@@ -51,6 +51,7 @@ public class InvoiceDto {
     private List<InvoicePaymentLineDto> invoicePaymentLines;
     private PropertyDto property;
     private UserContext userContext;
+    private UserContext cancelledByUser;
     private PaymentDto payment;
 
     public InvoiceDto() {
@@ -144,6 +145,14 @@ public class InvoiceDto {
 
     public void setUserContext(UserContext userContext) {
         this.userContext = userContext;
+    }
+
+    public UserContext getCancelledByUser() {
+        return cancelledByUser;
+    }
+
+    public void setCancelledByUser(UserContext cancelledByUser) {
+        this.cancelledByUser = cancelledByUser;
     }
 
     public PaymentDto getPayment() {

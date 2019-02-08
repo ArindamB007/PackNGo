@@ -63,6 +63,7 @@ public interface InvoiceMapper {
 
     default InvoiceDto InvoiceToInvoiceDto(Invoice invoice) {
         UserContext userContext = new UserContext();
+        UserContext cancelledByUserContext = new UserContext();
         if (invoice == null) {
             return null;
         }
@@ -101,6 +102,8 @@ public interface InvoiceMapper {
         invoiceDto.setInvoiceOccupancyInfo();
         userContext.setUserDetails(invoice.getUser());
         invoiceDto.setUserContext(userContext);
+        cancelledByUserContext.setUserDetails(invoice.getCancelledByUser());
+        invoiceDto.setCancelledByUser(cancelledByUserContext);
         return invoiceDto;
     }
 }

@@ -107,6 +107,10 @@ public class Invoice extends BaseEntity{
     @PrimaryKeyJoinColumn
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
+    private User cancelledByUser;
+
     public Invoice() {
         invoiceTotal = invoiceTotalWithTax = invoiceTotalTax = amountPaid =
                 amountPending = invoiceTotalRefund = invoiceTotalWithTaxRefund =
@@ -192,6 +196,14 @@ public class Invoice extends BaseEntity{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public User getCancelledByUser() {
+        return cancelledByUser;
+    }
+
+    public void setCancelledByUser(User cancelledByUser) {
+        this.cancelledByUser = cancelledByUser;
     }
 
     public String getTravellerFirstName() {
