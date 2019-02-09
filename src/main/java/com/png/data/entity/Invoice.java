@@ -86,6 +86,9 @@ public class Invoice extends BaseEntity{
     @Column(name = "check_out_timestamp", nullable = false)
     private Timestamp checkOutTimestamp;
 
+    @Column(name = "allow_cancel_flag", nullable = false)
+    private Boolean allow_cancel_flag = true;
+
     @OneToMany (mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<InvoiceTax> appliedTaxes;
 
@@ -324,6 +327,14 @@ public class Invoice extends BaseEntity{
 
     public void setCheckOutTimestamp(Timestamp checkOutTimestamp) {
         this.checkOutTimestamp = checkOutTimestamp;
+    }
+
+    public Boolean getAllow_cancel_flag() {
+        return allow_cancel_flag;
+    }
+
+    public void setAllow_cancel_flag(Boolean allow_cancel_flag) {
+        this.allow_cancel_flag = allow_cancel_flag;
     }
 
     public void addInvoiceTax(InvoiceTax invoiceTax){

@@ -35,15 +35,34 @@ public class DateFormatter {
 
     public static Integer getNights(Timestamp startDate, Timestamp endDate){
 
-            //milliseconds
-            long milliInDateDiff = Math.abs(endDate.getTime() - startDate.getTime());
+        //milliseconds
+        long milliInDateDiff = Math.abs(endDate.getTime() - startDate.getTime());
 
-            long milliInSec = 1000;
-            long milliInMin = milliInSec * 60;
-            long milliInHour = milliInMin * 60;
-            long milliInDay = milliInHour * 24;
-            int elapsedDays = (int)Math.abs(Math.ceil(milliInDateDiff*1.0 /milliInDay));
-            System.out.printf("%d Nights:  %n", elapsedDays);
-            return elapsedDays;
+        long milliInSec = 1000;
+        long milliInMin = milliInSec * 60;
+        long milliInHour = milliInMin * 60;
+        long milliInDay = milliInHour * 24;
+        int elapsedDays = (int) Math.ceil(milliInDateDiff * 1.0 / milliInDay);
+        System.out.printf("%d Nights:  %n", elapsedDays);
+        return elapsedDays;
+    }
+
+    public static Integer getDiffInDays(Timestamp startDate, Timestamp endDate) {
+
+        //milliseconds
+        long milliInDateDiff = endDate.getTime() - startDate.getTime();
+
+        long milliInSec = 1000;
+        long milliInMin = milliInSec * 60;
+        long milliInHour = milliInMin * 60;
+        long milliInDay = milliInHour * 24;
+        long dayDiff = milliInDateDiff / milliInDay;
+        int elapsedDays;
+        if (dayDiff < 0)
+            elapsedDays = (int) Math.ceil(dayDiff);
+        else
+            elapsedDays = (int) Math.floor(dayDiff);
+        System.out.printf("Diff in Days:  %d", elapsedDays);
+        return elapsedDays;
     }
 }

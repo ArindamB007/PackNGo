@@ -4,6 +4,7 @@ import com.png.data.dto.invoice.InvoiceDto;
 import com.png.data.entity.Invoice;
 import com.png.data.mapper.InvoiceMapper;
 import com.png.data.repository.InvoiceRepository;
+import com.png.util.DateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,6 +32,11 @@ public class InvoiceSearchService {
                 "checkInTimestamp"));
 
         Page<Invoice> invoicesPage = invoiceRepository.findPagedInvoicesByUserId(userId, pageRequest);
+        invoicesPage.forEach(invoice -> {
+            if (DateFormatter.getDiffInDays(DateFormatter.getCurrentTime(), invoice.getCheckInTimestamp()) <= 0) {
+                invoice.setAllow_cancel_flag(false);
+            }
+        });
         return new PagedResponse<>(InvoiceMapper.INSTANCE.InvoicesToInvoiceDtos(invoicesPage.getContent()),
                 invoicesPage.getTotalElements(),
                 invoicesPage.getTotalPages(), invoicesPage.getSize());

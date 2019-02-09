@@ -46,6 +46,7 @@ public class InvoiceDto {
     private String travellerLastName;
     private String travellerEmail;
     private String travellerMobile;
+    private Boolean allow_cancel_flag = true;
     private List<InvoiceTaxDto> appliedTaxes;
     private List<InvoiceLineDto> invoiceLines;
     private List<InvoicePaymentLineDto> invoicePaymentLines;
@@ -153,6 +154,14 @@ public class InvoiceDto {
 
     public void setCancelledByUser(UserContext cancelledByUser) {
         this.cancelledByUser = cancelledByUser;
+    }
+
+    public Boolean getAllow_cancel_flag() {
+        return allow_cancel_flag;
+    }
+
+    public void setAllow_cancel_flag(Boolean allow_cancel_flag) {
+        this.allow_cancel_flag = allow_cancel_flag;
     }
 
     public PaymentDto getPayment() {
