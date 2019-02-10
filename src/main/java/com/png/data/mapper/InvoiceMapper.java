@@ -45,7 +45,7 @@ public interface InvoiceMapper {
             invoice.setTravellerMobile(invoiceDto.getTravellerMobile());
             invoice.setCheckInTimestamp(DateFormatter.getTimestampFromString(invoiceDto.getCheckInTimestamp()));
             invoice.setCheckOutTimestamp(DateFormatter.getTimestampFromString(invoiceDto.getCheckOutTimestamp()));
-            invoice.setAllow_cancel_flag(invoiceDto.getAllow_cancel_flag());
+            invoice.setAllow_cancel_flag(invoiceDto.getAllowCancelFlag());
             List<InvoiceTax> appliedTaxes = InvoiceTaxMapper.INSTANCE.InvoiceTaxDtosToInvoiceTaxes(
                     invoiceDto.getAppliedTaxes());
             appliedTaxes.forEach(invoice::addInvoiceTax);
@@ -75,7 +75,7 @@ public interface InvoiceMapper {
         invoiceDto.setInvoiceNo(invoice.getInvoiceNo());
         invoiceDto.setCheckInTimestamp(DateFormatter.getDateStringFromTimestamp(checkIn));
         invoiceDto.setCheckOutTimestamp(DateFormatter.getDateStringFromTimestamp(checkOut));
-        invoiceDto.setAllow_cancel_flag(invoice.getAllow_cancel_flag());
+        invoiceDto.setAllowCancelFlag(invoice.getAllow_cancel_flag());
         invoiceDto.setNights(DateFormatter.getNights(checkOut, checkIn));
         invoiceDto.setInvoiceTotal(invoice.getInvoiceTotal());
         invoiceDto.setInvoiceTotalWithTax(invoice.getInvoiceTotalWithTax());

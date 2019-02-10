@@ -291,9 +291,11 @@ public class ServicesControllers {
 
 	@RequestMapping(value = "/prepare_cancel_invoice", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Object> prepareCancelInvoice(@RequestBody Number idInvoice) {
+	public ResponseEntity<Object> prepareCancelInvoice(@RequestBody InvoiceCancellationRequest
+															   invoiceCancellationRequest) {
 		try {
-			InvoiceDto invoice = invoiceCancellationService.prepareCancelInvoice(idInvoice.longValue());
+			InvoiceDto invoice = invoiceCancellationService.prepareCancelInvoice(invoiceCancellationRequest
+					.getIdInvoice().longValue());
 			return new ResponseEntity<>(invoice, HttpStatus.OK);
 		} catch (BaseException e) {
 			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);

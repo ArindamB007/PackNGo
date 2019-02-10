@@ -6,7 +6,7 @@
 	<groupId>com.png</groupId>
 	<artifactId>PackNGo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>PackNGo</name>
 	<description>Startup Project for PackNGo</description>
 
@@ -144,6 +144,23 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.7.0</version>
+				<executions>
+					<execution>
+						<id>default-copy-resources</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<overwrite>true</overwrite>
+							<outputDirectory>
+								${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/
+							</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/src/main/resources</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
 				<configuration>
 					<source>1.8</source> <!-- or higher, depending on your project -->
 					<target>1.8</target> <!-- or higher, depending on your project -->

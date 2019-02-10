@@ -3,8 +3,402 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .booking_main_list {
+            list-style: none;
+            margin: 10px 0;
+            border-bottom: 1px solid #dcdcdc;
+            display: inline;
+        }
+
+        .header_wrap {
+            border-bottom: 2px solid #d80000;
+            margin-bottom: 20px;
+            padding-bottom: 6px;
+        }
+
+        .print_link {
+            border-left: 1px solid #dcdcdc
+        }
+
+        .red {
+            color: #d80000;
+        }
+
+        .white {
+            color: #fff;
+        }
+
+        .bg_red {
+            background: #d80000;
+            border: 1px solid #d80000;
+            padding: 3px 16px;
+            font-size: 15px;
+        }
+
+        .bg_red:hover,
+        .bg_red:focus {
+            background: #fff;
+            color: #d80000;
+            border: 1px solid #d80000;
+        }
+
+        .align_right {
+            text-align: right;
+        }
+
+        .capitalize {
+            text-transform: capitalize;
+        }
+
+        .cancel_btn {
+            margin-top: 20px;
+        }
+
+        .invoice_list {
+            background: #fff;
+            width: 100%;
+            float: left;
+        }
+
+        .invoice_list p {
+            font-family: "Verlag-Book", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+    </style>
 </head>
 <body>
-View and Manage Booking
+<div class="container " style="padding-top:100px;">
+    <div class="main_check col-sm-12" style="float:left;">
+
+        <div ng-hide="isServiceAvailable" style="margin: 0 auto;width:64px;">
+            <div class="lds-dual-ring"></div>
+        </div>
+
+
+        <div class="invoice_list" ng-show="isServiceAvailable">
+            <div class="col-sm-12 header_wrap">
+                <div class="col-sm-6"><h2>My Booking</h2></div>
+                <div class="col-sm-6 align_right cancel_btn">
+                    <button type="button" class="btn" data-toggle="modal" data-target="#cancel">Cancellation Policy
+                    </button>
+                    <button type="button" class="png ui basic red button" ng-show="invoicePage" ng-click="goBack()">
+                        Back
+                    </button>
+                </div>
+
+            </div>
+            <ul ng-show="bookingHistory">
+                <li class="booking_main_list col-sm-12">
+                    <div class="col-sm-1">
+                    </div>
+                    <p class="col-sm-2" id="bkgID"> Invoice Number</p>
+                    <p class="trip-list-item__date col-sm-2" id="all_date_1">
+                        <span class="" id="all_date_1_1">CheckIn Time</span>
+                    </p>
+                    <p class="trip-list-item__hotel col-sm-3" id="all_detail_1 ">
+                        <span class="elipses capitalize" id="all_detail_1_1">Property Details</span>
+                    </p>
+                    <p class="col-sm-2">
+                        <span class="" id="all_date_1_1">Total Amout Inc Tax</span>
+                    </p>
+                    <p class="col-sm-1 align_right">
+
+                    </p>
+                    <p class="col-sm-1 align_right print_link">
+                    </p>
+                </li>
+
+                <li class="booking_main_list col-sm-12" ng-repeat="i in invoiceList">
+                    <div class="col-sm-1">
+                        <i class="material-icons red">hotel</i>
+                        <a ng-click="GetRowInvoice($index)">
+                            <i class="material-icons red">fullscreen</i>
+                        </a>
+                    </div>
+
+                    <p class="col-sm-2" id="bkgID"> {{i.invoiceNo}}</p>
+                    <p class="trip-list-item__date col-sm-2" id="all_date_1">
+                        <span class="" id="all_date_1_1">{{i.checkInTimestamp}}</span>
+                    </p>
+                    <p class="trip-list-item__hotel col-sm-3" id="all_detail_1 ">
+                        <span class="elipses capitalize" id="all_detail_1_1">{{i.property.name}}</span>
+                    </p>
+                    <p class="col-sm-2">
+                        <span class="" id="all_date_1_1">{{i.invoiceTotalWithTax}}</span>
+                    </p>
+                    <p class="col-sm-1 align_right">
+                        <button class="png ui basic red button" ng-disabled="checkCancel(i)"><i class="material-icons">delete_forever</i>
+                        </button>
+                    </p>
+                    <p class="col-sm-1 align_right print_link">
+                        <button class="png ui basic red button" ng-click="GetRowPrint($index)"><i
+                                class="material-icons">print</i></button>
+                    </p>
+
+                </li>
+            </ul>
+            <div ng-show="invoicePage">
+                <div class="col-sm-12">
+                    <div class="col-sm-6" style="padding-left:0;">
+                        <div class="panel panel-default cust_panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Customer Details</h3>
+                            </div>
+                            <div class="panel-body">
+                                <dl class="dl-horizontal">
+                                    <dt>Name</dt>
+                                    <dd>{{FinalInvoice.userContext.firstName}} {{FinalInvoice.userContext.middleName}}
+                                        {{FinalInvoice.userContext.lastName}}
+                                    </dd>
+                                    <dt>Location</dt>
+                                    <dd>{{FinalInvoice.property.tagLine}}, {{FinalInvoice.property.location}}</dd>
+                                    <!-- <dd>{{FinalInvoice.property.description}}</dd> -->
+                                    <dt>Hotel Name</dt>
+                                    <dd>{{FinalInvoice.property.name}}, {{FinalInvoice.property.shortDesc}}</dd>
+                                    <dt>Check In</dt>
+                                    <dd>{{FinalInvoice.checkInTimestamp}}</dd>
+                                    <dt>Check Out</dt>
+                                    <dd>{{FinalInvoice.checkOutTimestamp}}</dd>
+                                    <dt>Phone</dt>
+                                    <dd>{{FinalInvoice.userContext.email.mobile}}</dd>
+                                    <dt>Email</dt>
+                                    <dd>{{FinalInvoice.userContext.email}}</dd>
+                                    <dt>Facilities</dt>
+                                    <dd>
+                                        <i ng-if="FinalInvoice.property.facilities.wifi" class="wi-fi icon red"></i>
+                                        <i ng-if="FinalInvoice.property.facilities.parking" class="car icon red"></i>
+                                        <i ng-if="FinalInvoice.property.facilities.breakfast" class="food icon red"></i>
+                                        <i ng-if="FinalInvoice.property.facilities.restaurant"
+                                           class="food icon red"></i>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" style="padding-left:0;">
+                        <div class="panel panel-default cust_panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Traveller Details</h3>
+                            </div>
+                            <div class="panel-body">
+                                <dl class="dl-horizontal">
+                                    <dt>Name</dt>
+                                    <dd>{{FinalInvoice.travellerFirstName}} {{FinalInvoice.travellerMiddleName}}
+                                        {{FinalInvoice.travellerLastName}}
+                                    </dd>
+                                    <dt>Mobile</dt>
+                                    <dd>{{FinalInvoice.travellerMobile}}</dd>
+                                    <!-- <dd>{{FinalInvoice.property.description}}</dd> -->
+                                    <dt>Email</dt>
+                                    <dd>{{FinalInvoice.travellerEmail}}</dd>
+                                    <dt>Invoice Number</dt>
+                                    <dd>{{FinalInvoice.invoiceNo}}</dd>
+                                    <dt>Invoice Status</dt>
+                                    <dd>{{FinalInvoice.invoiceStatusCode}}</dd>
+                                    <dt>Phone</dt>
+                                    <dd>{{FinalInvoice.userContext.email.mobile}}</dd>
+                                    <dt>Email</dt>
+                                    <dd>{{FinalInvoice.userContext.email}}</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <!-- Hotel Details starts -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Hotel Details</h3>
+                        </div>
+                        <table class="table table-bordered table-condensed">
+                            <thead>
+                            <tr>
+                                <th class="text-center colfix">Sl#</th>
+                                <th class="text-center colfix">Room Details</th>
+                                <th class="text-center colfix">Room Counts</th>
+                                <th class="text-center colfix">Inclusion</th>
+                                <th class="text-center colfix">Tariif</th>
+                                <th class="text-center colfix">{{FinalInvoice.invoiceLineTaxes[0].itemTaxDescription}}
+                                    {{FinalInvoice.invoiceLineTaxes[0].itemTaxPercent}}%
+                                </th>
+                                <th class="text-center colfix">{{FinalInvoice.invoiceLineTaxes[1].itemTaxDescription}}
+                                    {{FinalInvoice.invoiceLineTaxes[1].itemTaxPercent}}%
+                                </th>
+                                <th class="text-center colfix">Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="i in invoiceLines">
+                                <td>{{i.sequenceNo}}</td>
+                                <td>{{i.description}}</td>
+                                <td>{{i.quantity}}</td>
+                                <td>{{i.includes[0]}} {{i.includes[1]}} {{i.includes[2]}}</td>
+                                <td>{{i.price}}</td>
+                                <td>{{i.invoiceLineTaxes[0].itemTaxAmount}}</td>
+                                <td>{{i.invoiceLineTaxes[1].itemTaxAmount}}</td>
+                                <td>{{i.amountWithTax}}</td>
+                            </tr>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="panel panel-default">
+                        <table class="table table-bordered table-condensed">
+                            <thead>
+                            <tr>
+                                <td class="text-center col-sm-1">Sub Total</td>
+                                <td class="text-center col-sm-1">Discount</td>
+                                <td class="text-center col-sm-1">Total</td>
+                                <td class="text-center col-sm-1">Tax</td>
+                                <td class="text-center col-sm-1">Final</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th class="text-center rowtotal mono">{{FinalInvoice.invoiceTotal}}</th>
+                                <th class="text-center rowtotal mono">0.00</th>
+                                <th class="text-center rowtotal mono">{{FinalInvoice.invoiceTotal}}</th>
+                                <th class="text-center rowtotal mono">{{FinalInvoice.invoiceTotalTax}}</th>
+                                <th class="text-center rowtotal mono">{{FinalInvoice.invoiceTotalWithTax}}</th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+    <footer class="footer footer-big footer-color-gray ng-scope" id="footerTrigger">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 col-sm-3">
+                    <div class="info add-animation-stopped animation-1">
+                        <h5 class="title">Company</h5>
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        Home
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Find offers
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Discover Projects
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Our Portfolio
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        About Us
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-md-3 col-md-offset-1 col-sm-3">
+                    <div class="info add-animation-stopped animation-2">
+                        <h5 class="title"> Help and Support</h5>
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        Contact Us
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        How it works
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Terms &amp; Conditions
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Company Policy
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Money Back
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <div class="info add-animation-stopped animation-3">
+                        <h5 class="title">Latest News</h5>
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-twitter"></i> <b>Get Shit Done</b>
+                                        The best kit in the market is here, just give it a try and let us...
+                                        <hr class="hr-small">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-twitter"></i>
+                                        We've just been featured on <b> Awwwards Website</b>! Thank you everybody for...
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-md-2 col-md-offset-1 col-sm-3">
+                    <div class="info add-animation-stopped animation-4">
+                        <h5 class="title">Follow us on</h5>
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="#" class="btn btn-social btn-facebook btn-simple">
+                                        <i class="fa fa-facebook-square"></i> Facebook
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="btn btn-social btn-dribbble btn-simple">
+                                        <i class="fa fa-dribbble"></i> Dribbble
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="btn btn-social btn-twitter btn-simple">
+                                        <i class="fa fa-twitter"></i> Twitter
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="btn btn-social btn-reddit btn-simple">
+                                        <i class="fa fa-google-plus-square"></i> Google+
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </footer>
 </body>
 </html>
