@@ -21,4 +21,11 @@ public class InvoiceRepositoryImpl implements InvoiceRepositoryCustom {
                 .getResultList();
     }
 
+    @Override
+    public void detach(Invoice invoice) {
+        em.detach(invoice);
+    }
+
+
+
 }

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface InvoiceRepositoryCustom {
     List<Invoice> findInvoicesByUserIdOrderByCheckInTimestamp(Long userId);
+
+    void detach(Invoice invoice);
 }

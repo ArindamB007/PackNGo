@@ -102,15 +102,15 @@ public class Invoice extends BaseEntity{
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Booking> bookings;
 
-    @ManyToOne (fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @PrimaryKeyJoinColumn
     private Property property;
 
-    @ManyToOne (fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @PrimaryKeyJoinColumn
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @PrimaryKeyJoinColumn
     private User cancelledByUser;
 
@@ -486,6 +486,8 @@ public class Invoice extends BaseEntity{
         invoiceRefundLine.setCancelCharge(invoiceRefundLine.getAmount()
                 .multiply(cancelPercent)
                 .divide(new BigDecimal(100)));//send deduction for calculation
+        invoiceRefundLine.setDescription(invoiceRefundLine.getDescription() + " - " +
+                cancellationItem.getDescription());
         invoiceRefundLine.setInvoiceLineStatusCode(InvoiceLine.InvoiceLineStatusCodes.REFUND.name());
         cancellationItem.getItemPrice()
                 .setBasePrice(invoiceRefundLine.getCancelCharge()); //set cancellation charge for tax calculation
@@ -499,11 +501,27 @@ public class Invoice extends BaseEntity{
     @Transactional
     public void processFullInvoiceCancellation(Item cancellationItem,
                                                InvoiceCancellationService.CancellationMode cancellationMode) {
-        //todo get cancel percent based on checkin date and current date
+        int daysBeforeCheckIn = DateFormatter.getDiffInDays(DateFormatter.getCurrentTime(), this.checkInTimestamp);
+        //todo if days Before Checkin is negative throw error
+        //store the first rule IMP list sorted asc by days from check in with query
+        CancellationRule applicableCancelRule = this.property.getCancellationRules().get(0);
+        for (CancellationRule cancellationRule : this.property.getCancellationRules()) {
+            if (daysBeforeCheckIn > applicableCancelRule.getDaysFromCheckin() &&
+                    daysBeforeCheckIn <= cancellationRule.getDaysFromCheckin()) {
+                applicableCancelRule = cancellationRule;
+            }
+
+        }
+        //now got the cancel percent based on check
+        // in date and current date
+        cancellationItem.setDescription(String.format("Charged %d%% for cancellation",
+                applicableCancelRule.getCancelationPercent()));    // set cancellation charge text
         try {
             updateInvoiceStatus(InvoiceStatusCodes.REFUND_PENDING);
-            this.invoiceLines.forEach(invLine ->
-                    processInvoiceLineCancellation(invLine, cancellationItem, BigDecimal.valueOf(0)));
+            for (InvoiceLine invLine : this.invoiceLines) {
+                processInvoiceLineCancellation(invLine, cancellationItem,
+                        BigDecimal.valueOf(applicableCancelRule.getCancelationPercent()));
+            }
             calculateInvoiceLevelTaxes(); // recalculate invoice level taxes
             calculateInvoiceTotalTax();   // recalculate
             calculateInvoiceTotal();
@@ -524,6 +542,36 @@ public class Invoice extends BaseEntity{
             //todo log exception
         }
     }
+
+/*    public void prepareFullInvoiceCancellation(Item cancellationItem) {
+        int daysBeforeCheckIn = DateFormatter.getDiffInDays(DateFormatter.getCurrentTime(),this.checkInTimestamp);
+        //todo if days Before Checkin is negative throw error
+        //store the first rule IMP list sorted asc by days from check in with query
+        CancellationRule applicableCancelRule = this.property.getCancellationRules().get(0);
+        for(CancellationRule cancellationRule : this.property.getCancellationRules()){
+            if (daysBeforeCheckIn >= cancellationRule.getDaysFromCheckin())
+                applicableCancelRule = cancellationRule;
+            else
+                break;
+        }
+        //getting cancel percent based on checkin date and current date
+        try {
+            updateInvoiceStatus(InvoiceStatusCodes.REFUND_PENDING);
+            for (InvoiceLine invLine :this.invoiceLines){
+                processInvoiceLineCancellation(invLine, cancellationItem,
+                        BigDecimal.valueOf(applicableCancelRule.getCancelationPercent()));
+            }
+            calculateInvoiceLevelTaxes(); // recalculate invoice level taxes
+            calculateInvoiceTotalTax();   // recalculate
+            calculateInvoiceTotal();
+            calculateInvoiceTotalWithTax();
+            processTotalsForCancellation(); // find the total refund
+        } catch (Exception e) {
+            //todo log exception
+        }
+    }*/
+
+
 
     private List<InvoiceLineTax> getInvoiceLineTaxesForItem(Item item) {
         List<InvoiceLineTax> invoiceLineTaxes = new ArrayList<>();

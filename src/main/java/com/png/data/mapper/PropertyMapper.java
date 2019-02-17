@@ -45,6 +45,8 @@ public interface PropertyMapper {
 		propertyDto.setUpdatedTimestamp( property.getUpdatedTimestamp() );
 		propertyDto.setDeleteFlag( property.getDeletedFlag() );
 		propertyDto.setEnabledFlag( property.getEnabledFlag() );
+		propertyDto.setCancellationRules(CancellationRuleMapper.INSTANCE
+				.cancellationRulesToCancellationRuleDtos(property.getCancellationRules()));
 
 		HashMap<String,Boolean> facilitiesMap = new HashMap<>();
 		property.getFacilities().forEach(facility-> {

@@ -31,6 +31,28 @@ VALUES ('Property EFGH','Earthly Comfort',
         'Amazing location of the property and connections from this city makes this property and excellent option to spend your stay. This is a sprawling property in the heart of the city.',
         "Location",now(),now(),1);
 
+/*Cancellation Rule*/
+INSERT INTO cancellation_rule (property_id,
+															 cancellation_percent,
+															 days_from_checkin,
+															 created_timestamp,
+															 updated_timestamp,
+															 enabled_flag)
+VALUES ((select id_property from property where name = 'Property XYZ'), 5, -1, now(), now(), 1);
+INSERT INTO cancellation_rule (property_id,
+															 cancellation_percent,
+															 days_from_checkin,
+															 created_timestamp,
+															 updated_timestamp,
+															 enabled_flag)
+VALUES ((select id_property from property where name = 'Property XYZ'), 60, 2, now(), now(), 1);
+INSERT INTO cancellation_rule (property_id,
+															 cancellation_percent,
+															 days_from_checkin,
+															 created_timestamp,
+															 updated_timestamp,
+															 enabled_flag)
+VALUES ((select id_property from property where name = 'Property XYZ'), 30, 15, now(), now(), 1);
 /*Facility Data*/
 INSERT INTO facility (name,css_class_name,created_timestamp,updated_timestamp,enabled_flag)
 VALUES ('WIFI','WIFI',now(),now(),1);
@@ -109,14 +131,14 @@ INSERT INTO item_tax (item_tax_code,
                       created_timestamp,
                       updated_timestamp,
                       enabled_flag)
-VALUES ("CGST", "CGST", 5, now(), now(), 1);
+VALUES ("CGST", "CGST", 2.5, now(), now(), 1);
 INSERT INTO item_tax (item_tax_code,
                       item_tax_description,
                       item_tax_percent,
                       created_timestamp,
                       updated_timestamp,
                       enabled_flag)
-VALUES ("SGST", "SGST", 5, now(), now(), 1);
+VALUES ("SGST", "SGST", 2.5, now(), now(), 1);
 
 
 /*Item Type Data*/

@@ -2,6 +2,7 @@ package com.png.data.dto.property;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 
 public class PropertyDto {
     private Long idProperty;
@@ -27,6 +28,8 @@ public class PropertyDto {
 	private HashMap<String,Object> images;
 
 	private String location;
+
+	private List<CancellationRuleDto> cancellationRules;
 
 	public Long getIdProperty() {
 		return idProperty;
@@ -122,5 +125,13 @@ public class PropertyDto {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public List<CancellationRuleDto> getCancellationRules() {
+		return cancellationRules;
+	}
+
+	public void setCancellationRules(List<CancellationRuleDto> cancellationRules) {
+		this.cancellationRules = cancellationRules;
 	}
 }

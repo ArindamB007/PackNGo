@@ -1,6 +1,8 @@
 package com.png.data.entity;
 
 import com.png.data.dto.invoice.InvoiceLineTaxDto;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

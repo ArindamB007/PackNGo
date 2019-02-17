@@ -1,8 +1,10 @@
 package com.png.data.entity;
 
+import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,6 +37,10 @@ public class Property extends BaseEntity{
 	
 	@OneToMany (mappedBy = "propertyId")
     private Set<PropertyImage> propertyImages;
+
+	@OneToMany(mappedBy = "propertyId")
+	@PrimaryKeyJoinColumn
+	private List<CancellationRule> cancellationRules;
 
 	public Long getIdProperty() {
 		return idProperty;
@@ -90,6 +96,14 @@ public class Property extends BaseEntity{
 
 	public void setPropertyImages(Set<PropertyImage> propertyImages) {
 		this.propertyImages = propertyImages;
+	}
+
+	public List<CancellationRule> getCancellationRules() {
+		return cancellationRules;
+	}
+
+	public void setCancellationRules(List<CancellationRule> cancellationRules) {
+		this.cancellationRules = cancellationRules;
 	}
 
 	public String getLocation() { return location; }
