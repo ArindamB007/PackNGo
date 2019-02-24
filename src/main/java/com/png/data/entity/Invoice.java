@@ -414,9 +414,9 @@ public class Invoice extends BaseEntity{
     }
 
     public void addInvoiceLine(InvoiceLine invoiceLine){
-        if (invoiceLines == null)
-            invoiceLines = new ArrayList<>();
-        invoiceLines.add(invoiceLine);
+        if (this.invoiceLines == null)
+            this.invoiceLines = new ArrayList<>();
+        this.invoiceLines.add(invoiceLine);
         if (invoiceLine != null)
             invoiceLine.setInvoice(this);
     }
@@ -428,9 +428,9 @@ public class Invoice extends BaseEntity{
     }
 
     public void addInvoiceDiscountLine(InvoiceDiscountLine invoiceDiscountLine) {
-        if (invoiceDiscountLine == null)
-            invoiceDiscountLines = new ArrayList<>();
-        invoiceDiscountLines.add(invoiceDiscountLine);
+        if (this.invoiceDiscountLines == null)
+            this.invoiceDiscountLines = new ArrayList<>();
+        this.invoiceDiscountLines.add(invoiceDiscountLine);
         if (invoiceDiscountLine != null)
             invoiceDiscountLine.setInvoice(this);
     }

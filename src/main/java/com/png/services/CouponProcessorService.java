@@ -51,7 +51,7 @@ public class CouponProcessorService {
         invoice.calculateInvoiceTotal();
         invoice.calculateInvoiceTotalWithTax();
 
-
+        // create a discount line and add
         InvoiceDiscountLine invoiceDiscountLine = new InvoiceDiscountLine();
         invoiceDiscountLine.setCouponCode(couponToApply.getCouponCode());
         invoiceDiscountLine.setCouponType(couponToApply.getCouponType());
@@ -68,6 +68,43 @@ public class CouponProcessorService {
             invoiceDiscountLines.add(invoiceDiscountLine);
             invoice.setInvoiceDiscountLines(invoiceDiscountLines);
         }
+        // calculate the totals
+        invoice.calculateInvoiceTotalDiscount();
+        invoice.processTotalsForDiscount();
+        return InvoiceMapper.INSTANCE.InvoiceToInvoiceDto(invoice);
+    }
+
+    public InvoiceDto removeDiscountCoupon(ApplyCouponRequest removeCouponRequest) {
+        String appliedCouponCode = removeCouponRequest.getCouponCode();
+        Invoice invoice = InvoiceMapper.INSTANCE.InvoiceDtoToInvoice(removeCouponRequest.getInvoice());
+        //get coupons that are already applied - if coupon applied throw error
+        List<InvoiceDiscountLine> appliedDiscountLines = invoice.getInvoiceDiscountLines();
+        InvoiceDiscountLine appliedDiscountLine = null;
+        if (appliedDiscountLines != null)
+            appliedDiscountLine = appliedDiscountLines.stream()
+                    .filter(appliedCoupon ->
+                            appliedCoupon.getCouponCode()
+                                    .equals(appliedCouponCode))
+                    .findAny()
+                    .orElse(null);
+        if (appliedDiscountLine == null) //the coupon code was not applied
+            throw new InvalidCouponCodeException("1007", "No Such Coupon is applied");
+        // get the coupon that needs to be applied
+        DiscountCoupon couponToRemove = discountCouponRepository.findEligibleDiscountCoupon(appliedCouponCode);
+        //start removing the coupon
+        invoice.getInvoiceLines().forEach(invoiceLine -> {
+            invoiceLine.removeDiscountCoupon(couponToRemove); //discount the lines
+            invoiceLine.calculateAmountWithTax();           //re-calculate the taxes
+        });
+        invoice.calculateInvoiceLevelTaxes(); // recalculate invoice level taxes
+        invoice.calculateInvoiceTotalTax();   // recalculate
+        invoice.calculateInvoiceTotal();
+        invoice.calculateInvoiceTotalWithTax();
+
+        //remove the discount line already applied
+        appliedDiscountLines.remove(appliedDiscountLine);
+        invoice.setInvoiceDiscountLines(appliedDiscountLines);
+
         // calculate the totals
         invoice.calculateInvoiceTotalDiscount();
         invoice.processTotalsForDiscount();

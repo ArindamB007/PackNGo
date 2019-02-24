@@ -313,6 +313,18 @@ public class ServicesControllers {
 		}
 	}
 
+	@RequestMapping(value = "/remove_discount_coupon", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Object> removeDiscountCoupon(@RequestBody ApplyCouponRequest
+															   removeCouponRequest) {
+		try {
+			InvoiceDto invoice = couponProcessorService.removeDiscountCoupon(removeCouponRequest);
+			return new ResponseEntity<>(invoice, HttpStatus.OK);
+		} catch (BaseException e) {
+			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);
+		}
+	}
+
 	@RequestMapping(value ="/send_email_otp",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> sendEmailOtp(@RequestBody EmailOtpValidationDto emailOtp,

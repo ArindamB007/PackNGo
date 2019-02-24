@@ -208,4 +208,10 @@ public class InvoiceLine extends BaseEntity{
                 .divide(BigDecimal.valueOf(100));
     }
 
+    public void removeDiscountCoupon(DiscountCoupon discountCoupon) {
+        this.discountAmount = this.discountAmount.subtract(this.amount
+                .multiply(BigDecimal.valueOf(discountCoupon.getDiscountPercent()))
+                .divide(BigDecimal.valueOf(100)));
+    }
+
 }
