@@ -4,6 +4,7 @@ import com.png.auth.service.SecurityService;
 import com.png.auth.service.UserService;
 import com.png.data.dto.search.InvoiceSearchDto;
 import com.png.data.dto.search.PagedRequest;
+import com.png.data.requests.ApplyCouponRequest;
 import com.png.data.requests.InvoiceCancellationRequest;
 import com.png.validators.EmailValidator;
 import com.png.validators.UserValidator;
@@ -81,18 +82,16 @@ public class ServicesControllers {
 	private InvoiceCancellationService invoiceCancellationService;
 
 	@Autowired
+	private CouponProcessorService couponProcessorService;
+
+	@Autowired
 	private InvoiceSearchService invoiceSearchService;
 
     private HashMap<String,String> populateErrorDetails(Exception e){
         HashMap<String,String> errorDetails = new HashMap<String,String>();
         errorDetails.put("type", e.getClass().getSimpleName());
-        if (e.getClass() == BaseException.class) {
-			errorDetails.put("errorCode", ((BaseException)e).getErrorCode());
-			errorDetails.put("message", ((BaseException)e).getErrorMessage());
-		} else{
-			errorDetails.put("errorCode", "NA");
-			errorDetails.put("message", e.getMessage());
-		}
+		errorDetails.put("errorCode", ((BaseException) e).getErrorCode());
+		errorDetails.put("message", ((BaseException) e).getErrorMessage());
         return errorDetails;
     }
     private List <HashMap <String,String>> getBindingErrors(BindingResult bindingResult) {
@@ -296,6 +295,18 @@ public class ServicesControllers {
 		try {
 			InvoiceDto invoice = invoiceCancellationService.prepareCancelInvoice(invoiceCancellationRequest
 					.getIdInvoice().longValue());
+			return new ResponseEntity<>(invoice, HttpStatus.OK);
+		} catch (BaseException e) {
+			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value = "/apply_discount_coupon", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Object> applyDiscountCoupon(@RequestBody ApplyCouponRequest
+															  applyCouponRequest) {
+		try {
+			InvoiceDto invoice = couponProcessorService.processDiscountCoupon(applyCouponRequest);
 			return new ResponseEntity<>(invoice, HttpStatus.OK);
 		} catch (BaseException e) {
 			return new ResponseEntity<>(populateErrorDetails(e), HttpStatus.BAD_REQUEST);

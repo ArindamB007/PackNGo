@@ -42,6 +42,10 @@ public class Property extends BaseEntity{
 	@PrimaryKeyJoinColumn
 	private List<CancellationRule> cancellationRules;
 
+	@OneToMany(mappedBy = "propertyId", fetch = FetchType.LAZY)
+	@PrimaryKeyJoinColumn
+	private List<DiscountCoupon> discountCoupons;
+
 	public Long getIdProperty() {
 		return idProperty;
 	}
@@ -109,4 +113,12 @@ public class Property extends BaseEntity{
 	public String getLocation() { return location; }
 
 	public void setLocation(String location) { this.location = location; }
+
+	public List<DiscountCoupon> getDiscountCoupons() {
+		return discountCoupons;
+	}
+
+	public void setDiscountCoupons(List<DiscountCoupon> discountCoupons) {
+		this.discountCoupons = discountCoupons;
+	}
 }

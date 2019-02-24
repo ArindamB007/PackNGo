@@ -131,14 +131,14 @@ INSERT INTO item_tax (item_tax_code,
                       created_timestamp,
                       updated_timestamp,
                       enabled_flag)
-VALUES ("CGST", "CGST", 2.5, now(), now(), 1);
+VALUES ("CGST", "CGST", "2.5", now(), now(), 1);
 INSERT INTO item_tax (item_tax_code,
                       item_tax_description,
                       item_tax_percent,
                       created_timestamp,
                       updated_timestamp,
                       enabled_flag)
-VALUES ("SGST", "SGST", 2.5, now(), now(), 1);
+VALUES ("SGST", "SGST", "2.5", now(), now(), 1);
 
 
 /*Item Type Data*/
@@ -821,7 +821,7 @@ VALUES ((SELECT id_item
         (SELECT id_item_tax
          from item_tax
          WHERE item_tax_code = 'CGST'
-           and item_tax_percent = '5'));
+           and item_tax_percent = '2.5'));
 INSERT INTO item_tax_item (item_id_item, applied_taxes_id_item_tax)
 VALUES ((SELECT id_item
          FROM item
@@ -831,7 +831,7 @@ VALUES ((SELECT id_item
         (SELECT id_item_tax
          from item_tax
          WHERE item_tax_code = 'SGST'
-           and item_tax_percent = '5'));
+           and item_tax_percent = '2.5'));
 
 
 
@@ -927,6 +927,15 @@ VALUES ('11',now(),now(),1, (select id_room_type from room_type where type_name=
 INSERT INTO room (room_no,created_timestamp,updated_timestamp,enabled_flag,room_type_id_room_type)
 VALUES ('12',now(),now(),1, (select id_room_type from room_type where type_name='Executive'));
 
+INSERT INTO discount_coupon (coupon_code,
+                             coupon_type,
+                             description,
+                             discount_percent,
+                             valid_upto,
+                             created_timestamp,
+                             updated_timestamp,
+                             enabled_flag)
+VALUES ('GET10', 'SINGLE_USE', 'Flat 10% Discount', 10, '2019-02-25 11:00:00.0', now(), now(), 1);
 
 /*--------- Inserting Test Data---------*/
 /*INSERT INTO booking (check_in_timestamp,check_out_timestamp,created_timestamp,updated_timestamp,enabled_flag)

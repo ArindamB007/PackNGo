@@ -5,6 +5,7 @@ import com.png.data.dto.checkinoutdetails.InvoiceCheckInOutDetailsDto;
 import com.png.data.dto.invoice.InvoiceDto;
 import com.png.data.dto.user.UserContext;
 import com.png.data.entity.Invoice;
+import com.png.data.entity.InvoiceDiscountLine;
 import com.png.data.entity.InvoiceLine;
 import com.png.data.entity.InvoiceTax;
 import com.png.util.DateFormatter;
@@ -32,6 +33,7 @@ public interface InvoiceMapper {
             invoice.setInvoiceTotalWithTax(invoiceDto.getInvoiceTotalWithTax());
             invoice.setInvoiceTotalTax(invoiceDto.getInvoiceTotalTax());
             invoice.setAmountPaid(invoiceDto.getAmountPaid());
+            invoice.setInvoiceDiscount(invoiceDto.getInvoiceDiscount());
             invoice.setAmountPending(invoiceDto.getAmountPending());
             invoice.setAmountRefunded(invoiceDto.getAmountRefunded());
             invoice.setAmountToBeRefunded(invoiceDto.getAmountToBeRefunded());
@@ -48,10 +50,16 @@ public interface InvoiceMapper {
             invoice.setAllow_cancel_flag(invoiceDto.getAllowCancelFlag());
             List<InvoiceTax> appliedTaxes = InvoiceTaxMapper.INSTANCE.InvoiceTaxDtosToInvoiceTaxes(
                     invoiceDto.getAppliedTaxes());
-            appliedTaxes.forEach(invoice::addInvoiceTax);
+            if (appliedTaxes != null && appliedTaxes.size() > 0)
+                appliedTaxes.forEach(invoice::addInvoiceTax);
             List<InvoiceLine> invoiceLines = InvoiceLineMapper.INSTANCE.InvoiceLineDtosToInvoiceLines(
                     invoiceDto.getInvoiceLines());
-            invoiceLines.forEach(invoice::addInvoiceLine);
+            if (invoiceLines != null && invoiceLines.size() > 0)
+                invoiceLines.forEach(invoice::addInvoiceLine);
+            List<InvoiceDiscountLine> invoiceDiscountLines = InvoiceDiscountLineMapper.INSTANCE
+                    .InvoiceDiscountLineDtosToInvoiceDiscountLines(invoiceDto.getInvoiceDiscountLines());
+            if (invoiceDiscountLines != null && invoiceDiscountLines.size() > 0)
+                invoiceDiscountLines.forEach(invoice::addInvoiceDiscountLine);
             invoice.setProperty(null); // will be set after payment is added
             invoice.setUser(null); // will be set after payment line is added
             invoice.setInvoicePaymentLines(null); //payment yet to be done
@@ -80,6 +88,7 @@ public interface InvoiceMapper {
         invoiceDto.setInvoiceTotal(invoice.getInvoiceTotal());
         invoiceDto.setInvoiceTotalWithTax(invoice.getInvoiceTotalWithTax());
         invoiceDto.setInvoiceTotalTax(invoice.getInvoiceTotalTax());
+        invoiceDto.setInvoiceDiscount(invoice.getInvoiceDiscount());
         invoiceDto.setAmountRefunded(invoice.getAmountRefunded());
         invoiceDto.setAmountToBeRefunded(invoice.getAmountToBeRefunded());
         invoiceDto.setInvoiceTotalRefund(invoice.getInvoiceTotalRefund());
@@ -101,6 +110,8 @@ public interface InvoiceMapper {
                 .InvoiceLinesToInvoiceLineDtos(invoice.getInvoiceLines()));
         invoiceDto.setInvoicePaymentLines(InvoicePaymentLineMapper.INSTANCE
                 .InvoicePaymentLineToInvoicePaymentLineDtos(invoice.getInvoicePaymentLines()));
+        invoiceDto.setInvoiceDiscountLines(InvoiceDiscountLineMapper.INSTANCE
+                .InvoiceDiscountLinesToInvoiceDiscountLineDtos(invoice.getInvoiceDiscountLines()));
         invoiceDto.setInvoiceOccupancyInfo();
         userContext.setUserDetails(invoice.getUser());
         invoiceDto.setUserContext(userContext);

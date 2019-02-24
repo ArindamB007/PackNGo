@@ -31,6 +31,16 @@ public class GlobalPngExceptionHandler {
     public ResponseEntity<?> handleBaseException(RoomJustSoldOutException e){
         return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
     }
+
+    @ResponseBody
+    public ResponseEntity<?> handleBaseException(InvalidCouponCodeException e) {
+        return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
+    }
+
+    @ResponseBody
+    public ResponseEntity<?> handleBaseException(CouponAlreadyAppliedException e) {
+        return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
+    }
     
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) 
     @ExceptionHandler(value = Exception.class)  

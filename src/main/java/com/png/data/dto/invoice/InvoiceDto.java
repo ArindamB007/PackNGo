@@ -25,6 +25,8 @@ public class InvoiceDto {
     @JsonSerialize(using = CurrecySerializer.class)
     private BigDecimal invoiceTotal;
     @JsonSerialize(using = CurrecySerializer.class)
+    private BigDecimal invoiceDiscount;
+    @JsonSerialize(using = CurrecySerializer.class)
     private BigDecimal invoiceTotalWithTax;
     @JsonSerialize(using = CurrecySerializer.class)
     private BigDecimal invoiceTotalTax;
@@ -50,6 +52,7 @@ public class InvoiceDto {
     private List<InvoiceTaxDto> appliedTaxes;
     private List<InvoiceLineDto> invoiceLines;
     private List<InvoicePaymentLineDto> invoicePaymentLines;
+    private List<InvoiceDiscountLineDto> invoiceDiscountLines;
     private PropertyDto property;
     private UserContext userContext;
     private UserContext cancelledByUser;
@@ -90,6 +93,14 @@ public class InvoiceDto {
 
     public void setInvoiceTotal(BigDecimal invoiceTotal) {
         this.invoiceTotal = invoiceTotal;
+    }
+
+    public BigDecimal getInvoiceDiscount() {
+        return invoiceDiscount;
+    }
+
+    public void setInvoiceDiscount(BigDecimal invoiceDiscount) {
+        this.invoiceDiscount = invoiceDiscount;
     }
 
     public BigDecimal getInvoiceTotalWithTax() {
@@ -178,6 +189,14 @@ public class InvoiceDto {
 
     public void setInvoicePaymentLines(List<InvoicePaymentLineDto> invoicePaymentLines) {
         this.invoicePaymentLines = invoicePaymentLines;
+    }
+
+    public List<InvoiceDiscountLineDto> getInvoiceDiscountLines() {
+        return invoiceDiscountLines;
+    }
+
+    public void setInvoiceDiscountLines(List<InvoiceDiscountLineDto> invoiceDiscountLines) {
+        this.invoiceDiscountLines = invoiceDiscountLines;
     }
 
     public String getTravellerFirstName() {

@@ -32,6 +32,9 @@ public class Invoice extends BaseEntity{
     @Column(name = "invoice_total")
     private BigDecimal invoiceTotal;
 
+    @Column(name = "invoice_discount")
+    private BigDecimal invoiceDiscount;
+
     @Column(name = "invoice_total_with_tax")
     private BigDecimal invoiceTotalWithTax;
 
@@ -99,6 +102,9 @@ public class Invoice extends BaseEntity{
     @OneToMany (mappedBy = "invoice",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<InvoicePaymentLine> invoicePaymentLines;
 
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<InvoiceDiscountLine> invoiceDiscountLines;
+
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Booking> bookings;
 
@@ -117,7 +123,7 @@ public class Invoice extends BaseEntity{
     public Invoice() {
         invoiceTotal = invoiceTotalWithTax = invoiceTotalTax = amountPaid =
                 amountPending = invoiceTotalRefund = invoiceTotalWithTaxRefund =
-                        amountToBeRefunded = amountRefunded = BigDecimal.ZERO;
+                        amountToBeRefunded = amountRefunded = invoiceDiscount = BigDecimal.ZERO;
     }
 
     public Long getIdInvoice() {
@@ -142,6 +148,14 @@ public class Invoice extends BaseEntity{
 
     public void setInvoiceTotal(BigDecimal invoiceTotal) {
         this.invoiceTotal = invoiceTotal;
+    }
+
+    public BigDecimal getInvoiceDiscount() {
+        return invoiceDiscount;
+    }
+
+    public void setInvoiceDiscount(BigDecimal invoiceDiscount) {
+        this.invoiceDiscount = invoiceDiscount;
     }
 
     public BigDecimal getInvoiceTotalWithTax() {
@@ -183,6 +197,14 @@ public class Invoice extends BaseEntity{
 
     public void setInvoiceLines(List<InvoiceLine> invoiceLines) {
         this.invoiceLines = invoiceLines;
+    }
+
+    public List<InvoiceDiscountLine> getInvoiceDiscountLines() {
+        return invoiceDiscountLines;
+    }
+
+    public void setInvoiceDiscountLines(List<InvoiceDiscountLine> invoiceDiscountLines) {
+        this.invoiceDiscountLines = invoiceDiscountLines;
     }
 
     public Property getProperty() {
@@ -351,6 +373,7 @@ public class Invoice extends BaseEntity{
             invoiceTax.setInvoice(null);
     }
 
+
     public void addInvoicePaymentLine(PaymentResponse paymentResponse) {
         //create new payment line
         InvoicePaymentLine invoicePaymentLine = new InvoicePaymentLine();
@@ -404,6 +427,20 @@ public class Invoice extends BaseEntity{
             invoiceLine.setInvoice(null);
     }
 
+    public void addInvoiceDiscountLine(InvoiceDiscountLine invoiceDiscountLine) {
+        if (invoiceDiscountLine == null)
+            invoiceDiscountLines = new ArrayList<>();
+        invoiceDiscountLines.add(invoiceDiscountLine);
+        if (invoiceDiscountLine != null)
+            invoiceDiscountLine.setInvoice(this);
+    }
+
+    public void removeInvoiceDiscountLine(InvoiceLine invoiceLine) {
+        invoiceLines.remove(invoiceLine);
+        if (invoiceLine != null)
+            invoiceLine.setInvoice(null);
+    }
+
     public void addBooking(Booking booking) {
         if (bookings == null)
             bookings = new ArrayList<>();
@@ -411,6 +448,7 @@ public class Invoice extends BaseEntity{
         if (booking != null)
             booking.setInvoice(this);
     }
+
 
     public void removeBooking(Booking booking) {
         bookings.remove(booking);
@@ -454,6 +492,11 @@ public class Invoice extends BaseEntity{
         this.amountToBeRefunded = this.amountPaid.subtract(this.invoiceTotalWithTax);
     }
 
+    public void processTotalsForDiscount() {
+        this.invoiceTotal = this.invoiceTotal.subtract(this.invoiceDiscount);
+        this.amountPending = this.invoiceTotalWithTax;
+    }
+
     private void updateInvoiceStatus(InvoiceStatusCodes newStatus) throws Exception {
         if (this.invoiceStatusCode.equals(InvoiceStatusCodes.PAID.name())
                 && newStatus.equals(InvoiceStatusCodes.REFUND_PENDING)) // PAID -> REFUND_PENDING
@@ -483,19 +526,25 @@ public class Invoice extends BaseEntity{
 
     private void processInvoiceLineCancellation(InvoiceLine invoiceRefundLine, Item cancellationItem,
                                                 BigDecimal cancelPercent) {
-        invoiceRefundLine.setCancelCharge(invoiceRefundLine.getAmount()
-                .multiply(cancelPercent)
-                .divide(new BigDecimal(100)));//send deduction for calculation
+        if (invoiceRefundLine.getInvoiceLineTypeCode().equals(InvoiceLine.InvoiceLineTypeCodes.MEALPLAN.name()) ||
+                invoiceRefundLine.getInvoiceLineTypeCode().equals(InvoiceLine.InvoiceLineTypeCodes.EXTRA_PERSON.name())) {
+            ((InvoiceLineItem) invoiceRefundLine).setCancelCharge(invoiceRefundLine.getAmount()
+                    .multiply(cancelPercent)
+                    .divide(new BigDecimal(100)));//send deduction for calculation
+            cancellationItem.getItemPrice()
+                    .setBasePrice(((InvoiceLineItem) invoiceRefundLine)
+                            .getCancelCharge()); //set cancellation charge for tax calculation
+        }
         invoiceRefundLine.setDescription(invoiceRefundLine.getDescription() + " - " +
                 cancellationItem.getDescription());
         invoiceRefundLine.setInvoiceLineStatusCode(InvoiceLine.InvoiceLineStatusCodes.REFUND.name());
-        cancellationItem.getItemPrice()
-                .setBasePrice(invoiceRefundLine.getCancelCharge()); //set cancellation charge for tax calculation
         //remove all tax lines
         invoiceRefundLine.getInvoiceLineTaxes().removeAll(invoiceRefundLine.getInvoiceLineTaxes());
         getInvoiceLineTaxesForItem(cancellationItem).forEach(invoiceRefundLine::addInvoiceLineTax);
         //invoiceRefundLine.setInvoiceLineTaxes(getInvoiceLineTaxesForItem(cancellationItem));
-        invoiceRefundLine.calculateAmountWithTaxForCancellation();
+        if (invoiceRefundLine.getInvoiceLineTypeCode().equals(InvoiceLine.InvoiceLineTypeCodes.MEALPLAN.name()) ||
+                invoiceRefundLine.getInvoiceLineTypeCode().equals(InvoiceLine.InvoiceLineTypeCodes.EXTRA_PERSON.name()))
+            ((InvoiceLineItem) invoiceRefundLine).calculateAmountWithTaxForCancellation();
     }
 
     @Transactional
@@ -633,35 +682,40 @@ public class Invoice extends BaseEntity{
         setInvoiceTotalTax(totalInvoiceTax);
     }
 
+    public void calculateInvoiceTotalDiscount() {
+        BigDecimal totalInvoiceDiscount = BigDecimal.ZERO;
+        for (InvoiceDiscountLine appliedDiscount : this.invoiceDiscountLines) {
+            totalInvoiceDiscount = totalInvoiceDiscount.add(appliedDiscount.getAmount());
+        }
+        setInvoiceDiscount(totalInvoiceDiscount);
+    }
+
     public void calculateInvoiceTotal() {
-        BigDecimal invoiceTotal = BigDecimal.ZERO;
-        BigDecimal invoiceTotalRefund = BigDecimal.ZERO;
+        this.invoiceTotal = BigDecimal.ZERO;
+        this.invoiceDiscount = BigDecimal.ZERO;
+        this.invoiceTotalRefund = BigDecimal.ZERO;
         for (InvoiceLine invoiceLine : this.getInvoiceLines()) {
-            if (invoiceLine.getInvoiceLineStatusCode().equals(InvoiceLine.InvoiceLineStatusCodes.SALE.name()))
-                invoiceTotal = invoiceTotal.add(invoiceLine.getAmount());
+            if (invoiceLine.getInvoiceLineStatusCode().equals(InvoiceLine.InvoiceLineStatusCodes.SALE.name())) {
+                this.invoiceTotal = this.invoiceTotal.add(invoiceLine.getAmount());
+                this.invoiceDiscount = this.invoiceDiscount.add(invoiceLine.getDiscountAmount());
+            }
             else if (invoiceLine.getInvoiceLineStatusCode().equals(InvoiceLine.InvoiceLineStatusCodes.REFUND.name())) {
-                invoiceTotal = invoiceTotal.add(invoiceLine.getCancelCharge());
-                invoiceTotalRefund = invoiceTotalRefund.add(invoiceLine.getAmount());
+                this.invoiceTotal = this.invoiceTotal.add(((InvoiceLineItem) invoiceLine).getCancelCharge());
+                this.invoiceTotalRefund = this.invoiceTotalRefund.add(invoiceLine.getAmount());
             }
         }
-        setInvoiceTotal(invoiceTotal);
-        setInvoiceTotalRefund(invoiceTotalRefund);
     }
 
     public void calculateInvoiceTotalWithTax() {
-        BigDecimal invoiceTotalWithTax = BigDecimal.ZERO;
-        BigDecimal invoiceTotalRefundWithTax = BigDecimal.ZERO;
+        this.invoiceTotalWithTax = BigDecimal.ZERO;
+        this.invoiceTotalWithTaxRefund = BigDecimal.ZERO;
         for (InvoiceLine invoiceLine : this.getInvoiceLines()) {
             if (invoiceLine.getInvoiceLineStatusCode().equals(InvoiceLine.InvoiceLineStatusCodes.SALE.name()))
-                invoiceTotalWithTax = invoiceTotalWithTax.add(invoiceLine.getAmountWithTax());
+                this.invoiceTotalWithTax = this.invoiceTotalWithTax.add(invoiceLine.getAmountWithTax());
             else if (invoiceLine.getInvoiceLineStatusCode().equals(InvoiceLine.InvoiceLineStatusCodes.REFUND.name())) {
-                invoiceTotalWithTax = invoiceTotalWithTax.add(invoiceLine.getCancelChargeWithTax());
-                invoiceTotalRefundWithTax = invoiceTotalRefundWithTax.add(invoiceLine.getAmountWithTax());
+                this.invoiceTotalWithTax = invoiceTotalWithTax.add(((InvoiceLineItem) invoiceLine).getCancelChargeWithTax());
+                this.invoiceTotalWithTaxRefund = this.invoiceTotalWithTaxRefund.add(invoiceLine.getAmountWithTax());
             }
         }
-        setInvoiceTotalWithTax(invoiceTotalWithTax);
-        setInvoiceTotalWithTaxRefund(invoiceTotalRefundWithTax);
-        if (this.amountRefunded == null)
-            this.amountRefunded = BigDecimal.ZERO;
     }
 }

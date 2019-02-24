@@ -31,6 +31,8 @@ public interface InvoiceLineMapper {
             invoiceLineItem.setGroupSequenceNo(invoiceLineDto.getGroupSequenceNo());
             invoiceLineItem.setDescription(invoiceLineDto.getDescription());
             invoiceLineItem.setAmount(invoiceLineDto.getAmount());
+            invoiceLineItem.setDiscountAmount(invoiceLineDto.getDiscountAmount());
+            invoiceLineItem.setTaxableAmount(invoiceLineDto.getTaxableAmount());
             invoiceLineItem.setAmountWithTax(invoiceLineDto.getAmountWithTax());
             invoiceLineItem.setCancelCharge(invoiceLineDto.getCancelCharge());
             invoiceLineItem.setCancelChargeWithTax(invoiceLineDto.getCancelChargeWithTax());
@@ -53,6 +55,8 @@ public interface InvoiceLineMapper {
             invoiceMealPlanLine.setGroupSequenceNo(invoiceLineDto.getGroupSequenceNo());
             invoiceMealPlanLine.setDescription(invoiceLineDto.getDescription());
             invoiceMealPlanLine.setAmount(invoiceLineDto.getAmount());
+            invoiceMealPlanLine.setDiscountAmount(invoiceLineDto.getDiscountAmount());
+            invoiceMealPlanLine.setTaxableAmount(invoiceLineDto.getTaxableAmount());
             invoiceMealPlanLine.setAmountWithTax(invoiceLineDto.getAmountWithTax());
             invoiceMealPlanLine.setCancelCharge(invoiceLineDto.getCancelCharge());
             invoiceMealPlanLine.setCancelChargeWithTax(invoiceLineDto.getCancelChargeWithTax());
@@ -76,7 +80,9 @@ public interface InvoiceLineMapper {
             invoiceLineItem.setGroupSequenceNo(invoiceLineDto.getGroupSequenceNo());
             invoiceLineItem.setDescription(invoiceLineDto.getDescription());
             invoiceLineItem.setAmount(invoiceLineDto.getAmount());
+            invoiceLineItem.setTaxableAmount(invoiceLineDto.getTaxableAmount());
             invoiceLineItem.setAmountWithTax(invoiceLineDto.getAmountWithTax());
+            invoiceLineItem.setDiscountAmount(invoiceLineDto.getDiscountAmount());
             invoiceLineItem.setCancelCharge(invoiceLineDto.getCancelCharge());
             invoiceLineItem.setCancelChargeWithTax(invoiceLineDto.getCancelChargeWithTax());
             List<InvoiceLineTax> invoiceLineTaxes = InvoiceLineTaxMapper.INSTANCE
@@ -101,9 +107,11 @@ public interface InvoiceLineMapper {
             invoiceLineItemDto.setGroupSequenceNo(invoiceLine.getGroupSequenceNo());
             invoiceLineItemDto.setDescription(invoiceLine.getDescription());
             invoiceLineItemDto.setAmount(invoiceLine.getAmount());
+            invoiceLineItemDto.setDiscountAmount(invoiceLine.getDiscountAmount());
+            invoiceLineItemDto.setTaxableAmount(invoiceLine.getTaxableAmount());
             invoiceLineItemDto.setAmountWithTax(invoiceLine.getAmountWithTax());
-            invoiceLineItemDto.setCancelCharge(invoiceLine.getCancelCharge());
-            invoiceLineItemDto.setCancelChargeWithTax(invoiceLine.getCancelChargeWithTax());
+            invoiceLineItemDto.setCancelCharge(((InvoiceLineItem) invoiceLine).getCancelCharge());
+            invoiceLineItemDto.setCancelChargeWithTax(((InvoiceLineItem) invoiceLine).getCancelChargeWithTax());
             invoiceLineItemDto.setInvoiceLineTaxes(InvoiceLineTaxMapper
                     .INSTANCE.InvoiceLineTaxesToInvoiceLineTaxDtos(invoiceLine.getInvoiceLineTaxes()));
             invoiceLineItemDto.setPrice(((InvoiceLineItem)invoiceLine).getPrice());
@@ -121,9 +129,11 @@ public interface InvoiceLineMapper {
             invoiceMealPlanLineDto.setGroupSequenceNo(invoiceLine.getGroupSequenceNo());
             invoiceMealPlanLineDto.setDescription(invoiceLine.getDescription());
             invoiceMealPlanLineDto.setAmount(invoiceLine.getAmount());
+            invoiceMealPlanLineDto.setTaxableAmount(invoiceLine.getTaxableAmount());
             invoiceMealPlanLineDto.setAmountWithTax(invoiceLine.getAmountWithTax());
-            invoiceMealPlanLineDto.setCancelCharge(invoiceLine.getCancelCharge());
-            invoiceMealPlanLineDto.setCancelChargeWithTax(invoiceLine.getCancelChargeWithTax());
+            invoiceMealPlanLineDto.setDiscountAmount(invoiceLine.getDiscountAmount());
+            invoiceMealPlanLineDto.setCancelCharge(((InvoiceMealPlanLine) invoiceLine).getCancelCharge());
+            invoiceMealPlanLineDto.setCancelChargeWithTax(((InvoiceMealPlanLine) invoiceLine).getCancelChargeWithTax());
             invoiceMealPlanLineDto.setInvoiceLineTaxes(InvoiceLineTaxMapper
                     .INSTANCE.InvoiceLineTaxesToInvoiceLineTaxDtos(invoiceLine.getInvoiceLineTaxes()));
             invoiceMealPlanLineDto.setPrice(((InvoiceMealPlanLine)invoiceLine).getPrice());
@@ -143,9 +153,9 @@ public interface InvoiceLineMapper {
             invoiceLineDto.setGroupSequenceNo(invoiceLine.getGroupSequenceNo());
             invoiceLineDto.setDescription(invoiceLine.getDescription());
             invoiceLineDto.setAmount(invoiceLine.getAmount());
+            invoiceLineDto.setTaxableAmount(invoiceLine.getTaxableAmount());
             invoiceLineDto.setAmountWithTax(invoiceLine.getAmountWithTax());
-            invoiceLineDto.setCancelCharge(invoiceLine.getCancelCharge());
-            invoiceLineDto.setCancelChargeWithTax(invoiceLine.getCancelChargeWithTax());
+            invoiceLineDto.setDiscountAmount(invoiceLine.getDiscountAmount());
             invoiceLineDto.setInvoiceLineTaxes(InvoiceLineTaxMapper
                     .INSTANCE.InvoiceLineTaxesToInvoiceLineTaxDtos(invoiceLine.getInvoiceLineTaxes()));
         }

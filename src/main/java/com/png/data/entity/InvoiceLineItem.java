@@ -18,6 +18,10 @@ public class InvoiceLineItem extends InvoiceLine {
     private Integer noOfNights;
     @Column(name = "item_type")
     private String itemType;
+    @Column(name = "cancel_charge")
+    private BigDecimal cancelCharge;
+    @Column(name = "cancel_charge_with_tax")
+    private BigDecimal cancelChargeWithTax;
 
     public BigDecimal getPrice() {
         return price;
@@ -46,5 +50,50 @@ public class InvoiceLineItem extends InvoiceLine {
 
     public void setItemType(String itemType) {
         this.itemType = itemType;
+    }
+
+    public InvoiceLineItem() {
+        super();
+        cancelCharge =
+                cancelChargeWithTax = BigDecimal.ZERO;
+    }
+
+    public BigDecimal getCancelCharge() {
+        return cancelCharge;
+    }
+
+    public void setCancelCharge(BigDecimal cancelCharge) {
+        this.cancelCharge = cancelCharge;
+    }
+
+    public BigDecimal getCancelChargeWithTax() {
+        return cancelChargeWithTax;
+    }
+
+    public void setCancelChargeWithTax(BigDecimal cancelChargeWithTax) {
+        this.cancelChargeWithTax = cancelChargeWithTax;
+    }
+
+    public void calculateAmountWithTaxForCancellation() {
+        //this.amountWithTax = BigDecimal.ZERO;
+        this.cancelChargeWithTax = BigDecimal.ZERO;
+        //List<InvoiceLineTax> invLineTaxes = new ArrayList<>();
+        if (super.getInvoiceLineTaxes().size() > 0) {
+            super.getInvoiceLineTaxes().forEach(invoiceLineTax -> {
+               /* InvoiceLineTax invLineTax = new InvoiceLineTax();
+                invLineTax.setIdInvoiceLineTax(invoiceLineTax.getIdInvoiceLineTax());
+                invLineTax.setItemTaxPercent(invoiceLineTax.getItemTaxPercent());
+                invLineTax.setItemTaxDescription(invoiceLineTax.getItemTaxDescription());
+                invLineTax.setItemTaxCode(invoiceLineTax.getItemTaxCode());
+                if (getInvoiceLineTypeCode().equals(InvoiceLineTypeCodes.ITEM_REFUND.name())){
+                    invoiceLineTax.setItemTaxAmount(this.cancelCharge.multiply(new BigDecimal(invoiceLineTax.getItemTaxPercent()))
+                            .divide(new BigDecimal(100)));*/
+                this.cancelChargeWithTax = this.cancelChargeWithTax.add(invoiceLineTax.getItemTaxAmount());
+                //invLineTaxes.add(invLineTax);
+            });
+            //this.invoiceLineTaxes = invLineTaxes;
+            if (this.cancelCharge != null)
+                this.cancelChargeWithTax = this.cancelChargeWithTax.add(this.cancelCharge);
+        }
     }
 }

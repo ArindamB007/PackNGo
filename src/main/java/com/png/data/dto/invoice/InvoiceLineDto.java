@@ -9,7 +9,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "invoiceLineTypeCode", visible = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "invoiceLineTypeCode", visible = true,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = InvoiceLineItemDto.class, name = "ITEM"),
         @JsonSubTypes.Type(value = InvoiceLineItemDto.class, name = "EXTRA_PERSON"),
@@ -26,6 +27,10 @@ public class InvoiceLineDto {
     private BigDecimal amount;
     @JsonSerialize(using = CurrecySerializer.class)
     private BigDecimal amountWithTax;
+    @JsonSerialize(using = CurrecySerializer.class)
+    private BigDecimal taxableAmount;
+    @JsonSerialize(using = CurrecySerializer.class)
+    private BigDecimal discountAmount;
     @JsonSerialize(using = CurrecySerializer.class)
     private BigDecimal cancelCharge;
     @JsonSerialize(using = CurrecySerializer.class)
@@ -125,5 +130,21 @@ public class InvoiceLineDto {
 
     public void setCancelChargeWithTax(BigDecimal cancelChargeWithTax) {
         this.cancelChargeWithTax = cancelChargeWithTax;
+    }
+
+    public BigDecimal getTaxableAmount() {
+        return taxableAmount;
+    }
+
+    public void setTaxableAmount(BigDecimal taxableAmount) {
+        this.taxableAmount = taxableAmount;
+    }
+
+    public BigDecimal getDiscountAmount() {
+        return discountAmount;
+    }
+
+    public void setDiscountAmount(BigDecimal discountAmount) {
+        this.discountAmount = discountAmount;
     }
 }

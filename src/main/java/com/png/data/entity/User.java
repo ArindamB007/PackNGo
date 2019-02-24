@@ -74,6 +74,10 @@ public class User extends BaseEntity{
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_role"))
     private Set<Role> roles;
 
+    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
+    private List<DiscountCoupon> discountCoupons;
+
     public String getMobile() {
         return mobile;
     }
@@ -208,5 +212,13 @@ public class User extends BaseEntity{
 
     public void setTravellers(List<Traveller> travellers) {
         this.travellers = travellers;
+    }
+
+    public List<DiscountCoupon> getDiscountCoupons() {
+        return discountCoupons;
+    }
+
+    public void setDiscountCoupons(List<DiscountCoupon> discountCoupons) {
+        this.discountCoupons = discountCoupons;
     }
 }
