@@ -4,6 +4,7 @@ package com.png.data.entity;
 import com.png.payments.RazorPay;
 import com.png.services.InvoiceCancellationService;
 import com.png.util.DateFormatter;
+import com.png.util.Utils;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "invoice")
@@ -521,6 +524,36 @@ public class Invoice extends BaseEntity{
             }
         });
         return this.invoiceLines.get(this.invoiceLines.size() - 1).getGroupSequenceNo();
+    }
+
+    //reapply applicable taxes after discount
+    public void reapplyApplicableTaxesAfterDiscount(List<ItemTax> applicableTaxes) {
+        //find distinct group of invoice lines
+        List<InvoiceLine> distinctInvoiceGroupLines = this.invoiceLines.stream()
+                .filter(Utils.distinctByKey(InvoiceLine::getGroupSequenceNo))
+                .collect(Collectors.toList());
+        //process each group of invoice lines
+        for (InvoiceLine invoiceLine : distinctInvoiceGroupLines) {
+            // filter out the invoice lines in this group from original array
+            List<InvoiceLine> groupLines = this.invoiceLines.stream()
+                    .filter(invLine -> invLine.getGroupSequenceNo() == invoiceLine.getGroupSequenceNo())
+                    .collect(Collectors.toList());
+            //calculate the total taxable amount
+            BigDecimal groupTotal = BigDecimal.ZERO;
+            for (InvoiceLine invLine : groupLines) {
+                groupTotal = groupTotal.add(invLine.getTaxableAmount());
+            }
+            // tax hardcode for SGST and CGST check limits and assign rates
+            if (groupTotal.compareTo(new BigDecimal(0)) >= 0 && groupTotal.compareTo(new BigDecimal(1500)) < 0)
+                groupLines.forEach(invLine -> invLine.getInvoiceLineTaxes()
+                        .forEach(invLineTax -> invLineTax.setItemTaxPercent("0")));
+            else if (groupTotal.compareTo(new BigDecimal(1500)) >= 0 && groupTotal.compareTo(new BigDecimal(2500)) < 0)
+                groupLines.forEach(invLine -> invLine.getInvoiceLineTaxes()
+                        .forEach(invLineTax -> invLineTax.setItemTaxPercent("6")));
+            else if (groupTotal.compareTo(new BigDecimal(2500)) >= 0 && groupTotal.compareTo(new BigDecimal(7500)) < 0)
+                groupLines.forEach(invLine -> invLine.getInvoiceLineTaxes()
+                        .forEach(invLineTax -> invLineTax.setItemTaxPercent("9")));
+        }
     }
 
 

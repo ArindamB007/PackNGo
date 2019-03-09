@@ -66,6 +66,34 @@
 										</div>
 									</div>
 
+									<div class="input-group">
+										<span class="input-group-addon"> <i
+												class="material-icons">smartphone</i>
+										</span>
+										<div class="mui-form-group is-empty"
+											 ng-class="{'has-error':(signup.mobile.$error.required || signup.mobile.$error.custom) && signup.$submitted,
+                 'has-success':!signup.mobile.$error.required && !signup.mobile.$error.custom && signup.$submitted}">
+											<input data-ng-model="userDetails.mobile" type="text"
+												   class="mui-form-control" placeholder="Mobile number..."
+												   name="mobile" ng-change="resetErrors('mobile')" required> <span
+												ng-show="!signup.mobile.$error.required && !signup.mobile.$error.custom && signup.$submitted"
+												class="form-control-feedback"> <i
+												class="material-icons">thumb_up</i>
+											</span> <span
+												ng-show="(signup.mobile.$error.required || signup.mobile.$error.custom) && signup.$submitted"
+												class="form-control-feedback"> <i
+												class="material-icons">error_outline</i>
+											</span>
+										</div>
+										<div class="png-input-error">
+											<div ng-show="signup.$submitted"
+												 ng-messages="signup.mobile.$error" role="alert">
+												<span ng-show=signup.mobile.$error.required>{{signup.mobile.errMsg}}</span>
+												<span ng-show=signup.mobile.$error.custom>{{signup.mobile.errMsg}}</span>
+											</div>
+										</div>
+									</div>
+
 
 									<div class="input-group">
 										<span class="input-group-addon"> <i

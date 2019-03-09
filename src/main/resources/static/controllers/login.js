@@ -6,8 +6,7 @@ PackNGo.controller('LoginCtrl',function($scope,$http,$location, $rootScope,Login
       .then(function(response){
         var userContext;
         $scope.loginForm.$setPristine();
-        console.log(UserContext.value);
-        UserContext.value = response.data; // for access across the application
+          UserContext.value = response.data.responseData; // for access across the application
         userContext = UserContext.value;
         console.log(userContext);
         LocalStorageService.setLocalStore('token',response.headers("x-auth-token"));
@@ -28,15 +27,8 @@ PackNGo.controller('LoginCtrl',function($scope,$http,$location, $rootScope,Login
       })
       .catch(function(response){
         $scope.loginDetails = {};
-        console.log(response);
-        CommonService.handleDefaultErrorResponse("md","Login Failed!", response,["OK"]);
-        /*var modalInstance = ModalService.showModal("sm","Login Failed!",
-          response.data[0].message,["OK"]);
-        modalInstance.result.then(function (response) {
-          //need to put the focus on the element
-        }, function (response) {
-          //need to put the focus on the element
-        });*/
+          if (response.data.apiError)
+              CommonService.handleDefaultErrorResponse("md", "Login Failed!", response, ["OK"]);
       });
   };
 });

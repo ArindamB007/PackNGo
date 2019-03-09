@@ -48,7 +48,7 @@ public class EmailServiceImpl implements EmailService{
 
 
     @Override
-    public void sendMessageWithAttachment(Mail mail) {
+    public void sendMessageWithAttachment(Mail mail, String mailTemplate) {
         try {
             String [] toList = mail.getToList();
             String to = mail.getTo();
@@ -76,7 +76,7 @@ public class EmailServiceImpl implements EmailService{
             helper.setFrom(mail.getInternetAddressFrom());
             Context context = new Context();
             context.setVariables(mail.getTemplateModel());
-            String html=springTemplateEngine.process("verify-email",context);
+            String html = springTemplateEngine.process(mailTemplate, context);
             helper.setText(html, true);
             //helper.addAttachment("facebook.png",new ClassPathResource("static/img/facebook.png"));
             helper.addInline("facebook.png",new ClassPathResource("static/img/facebook.png"));
@@ -94,7 +94,7 @@ public class EmailServiceImpl implements EmailService{
         }
     }
     @Async
-    public void sendEmailAsync(String firstName, String email){
+    public void sendEmailAsyncWithAttachment(String firstName, String email, String emailTemplate) {
         try {
             Mail mail = new Mail();
             HashMap<String, Object> modelMap = new HashMap<>();
@@ -103,33 +103,58 @@ public class EmailServiceImpl implements EmailService{
             mail.setFromName("Maples 'N' Mist - Online");
             mail.setTemplateModel(modelMap);
             mail.setToList(new String[]{email});
+            //todo remove hardcoding
             mail.setBcc("patraanup123@gmail.com");
             mail.setSubject("Hi, " + firstName + " verify your email (Do Not Reply)");
-            sendMessageWithAttachment(mail);
+            sendMessageWithAttachment(mail, emailTemplate);
         } catch (Exception e){
 
         }
     }
 
-    @Async
-    public void sendValidationEmailAsync(String firstName, String email, Timestamp validUptoTimestamp, String validationCode){
+    private Mail setEmailProperties(String baseUrl, String firstName, String email,
+                                    Timestamp validUptoTimestamp, String validationCode) {
+        Mail mail = new Mail();
         try {
-            Mail mail = new Mail();
             HashMap<String, Object> modelMap = new HashMap<>();
             modelMap.put("name", firstName);
             modelMap.put("validUpto", dateFormatter.getDateStringFromTimestamp(validUptoTimestamp));
             modelMap.put("validationCode", validationCode);
+            modelMap.put("baseUrl", baseUrl);
             mail.setFromAddress("web.maplesnmist@gmail.com");
             mail.setFromName("Maples 'N' Mist - Online");
             mail.setTemplateModel(modelMap);
             mail.setToList(new String[]{email});
-            mail.setBccList(new String [] {"arindam.bandyopadhyay@gmail.com","patraanup123@gmail.com"});
-            mail.setSubject("Hi, " + firstName + " verify your email (Do not reply)");
-            sendMessageWithAttachment(mail);
-        } catch (Exception e){
+            // todo remove hardcoding
+            mail.setBccList(new String[]{"arindam.bandyopadhyay@gmail.com", "patraanup123@gmail.com"});
+        } catch (Exception e) {
+            // todo log error
+        }
+        return mail;
+    }
 
+    @Async
+    public void sendValidationEmailAsync(String baseUrl, String firstName, String email, Timestamp validUptoTimestamp,
+                                         String validationCode) {
+        try {
+            Mail mail = setEmailProperties(baseUrl, firstName, email, validUptoTimestamp, validationCode);
+            mail.setSubject("Hi, " + firstName + " verify your email (Do not reply)");
+            sendMessageWithAttachment(mail, "verify-email");
+        } catch (Exception e) {
+            // todo log errors
         }
     }
 
+    @Async
+    public void sendForgotPasswordEmailAsync(String baseUrl, String firstName, String email, Timestamp validUptoTimestamp,
+                                             String validationCode) {
+        try {
+            Mail mail = setEmailProperties(baseUrl, firstName, email, validUptoTimestamp, validationCode);
+            mail.setSubject("Hi, " + firstName + ", your reset account password request (Do not reply)");
+            sendMessageWithAttachment(mail, "forgot-password");
+        } catch (Exception e){
+            // todo log errors
+        }
+    }
 
 }

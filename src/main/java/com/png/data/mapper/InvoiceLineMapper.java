@@ -26,7 +26,7 @@ public interface InvoiceLineMapper {
             InvoiceLineItem invoiceLineItem = new InvoiceLineItem();
             invoiceLineItem.setIdInvoiceLine(invoiceLineDto.getIdInvoiceLine());
             invoiceLineItem.setInvoiceLineTypeCode(invoiceLineDto.getInvoiceLineTypeCode());
-            invoiceLineItem.setInvoiceLineStatusCode(invoiceLineDto.getInvoiceLineTypeCode());
+            invoiceLineItem.setInvoiceLineStatusCode(invoiceLineDto.getInvoiceLineStatusCode());
             invoiceLineItem.setSequenceNo(invoiceLineDto.getSequenceNo());
             invoiceLineItem.setGroupSequenceNo(invoiceLineDto.getGroupSequenceNo());
             invoiceLineItem.setDescription(invoiceLineDto.getDescription());

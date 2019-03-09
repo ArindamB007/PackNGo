@@ -70,6 +70,8 @@ public class CustomUserDetailsService implements UserDetailsService{
 	}
 
 	public UserContext getUserContext() {
+        if (userContext == null)
+            userContext = new UserContext();
 		userContext.setUserDetails(this.user);
 		return this.userContext;
 	}
@@ -94,8 +96,22 @@ public class CustomUserDetailsService implements UserDetailsService{
 	public void updateLastLogOffTimeStamp(Timestamp lastLogOffTimestamp){
 		this.user.setLastLogOffTimestamp(lastLogOffTimestamp);
 	}
-	
+
+    public void resetForgotPasswordData() {
+        this.user.setPasswordLinkSentTimestamp(null);
+        this.user.setForgotPasswordCode(null);
+        this.user.setPasswordLinkValidUptoTimestamp(null);
+    }
+
 	public void saveUser(){
-		userRepository.save(this.user);
-	}
+        this.user = userRepository.save(this.user);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

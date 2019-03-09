@@ -255,6 +255,7 @@ public class InvoiceProcessorService {
             if (mealPlan.getMealPlanItem().getItemType().getItemTypeCode().equals(ItemType.ItemTypeCodes.MEALPLANITEM.name()) ||
                     mealPlan.getMealPlanItem().getItemType().getItemTypeCode().equals(ItemType.ItemTypeCodes.EXTRABEDADULT.name()) ||
                     mealPlan.getMealPlanItem().getItemType().getItemTypeCode().equals(ItemType.ItemTypeCodes.EXTRABEDCHILD.name())) {
+                // tax hardcode for SGST and CGST
                 if (totalPrice.compareTo(new BigDecimal(0)) >= 0 && totalPrice.compareTo(new BigDecimal(1500)) < 0 )
                     invoiceLineTax.setItemTaxPercent("0");
                 else if (totalPrice.compareTo(new BigDecimal(1500)) >= 0 && totalPrice.compareTo(new BigDecimal(2500)) < 0 )

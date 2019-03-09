@@ -7,6 +7,7 @@ public class BaseException extends RuntimeException{
 	private static final long serialVersionUID = 4220652593343624408L;
 	private String errorCode;
 	private String errorMessage;
+	private String extendedErrorMessage;
 	public String getErrorCode() {
 		return errorCode;
 	}
@@ -21,5 +22,13 @@ public class BaseException extends RuntimeException{
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getExtendedErrorMessage() {
+		return extendedErrorMessage;
+	}
+
+	public void setExtendedErrorMessage(String extendedErrorMessage) {
+		this.extendedErrorMessage = extendedErrorMessage;
 	}
 }

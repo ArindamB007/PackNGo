@@ -1,13 +1,14 @@
-PackNGo.controller('SignupCtrl',function($scope,LoginService,ModalService,$location,$log){
+PackNGo.controller('SignupCtrl', function ($scope, LoginService, ModalService, $location, $log, CommonService) {
 $scope.userDetails = {};
 $scope.doSignUp = function(){
+    $scope.signup.$setPristine();
   LoginService.signUp($scope.userDetails)
   .then(function(response){
     //reset the user details after successful submission
     $scope.signup.$setPristine();
-    $scope.userDetails = {};
-    var modalInstance = ModalService.showModal("md","Signup Success",
-			"We are delighted to have you with us! Please login!",["OK"]);
+      $scope.userDetails = response.data.responseData;
+      var modalInstance = ModalService.showModal("md", "Signup Success", response.data.message,
+          ["OK"]);
     modalInstance.result.then(function (response) {
       $log.info('Modal dismissed at: ' + new Date() + 'Response: ' + response);
       $location.path("\login");
@@ -18,19 +19,21 @@ $scope.doSignUp = function(){
 	  console.log(response);
 	  })
   .catch(function(response){
-	  //alert("Signup failed");
-	  //$scope.signup.email.$error.email = true;
-	  angular.forEach(response.data,function(map){
-		  console.log(map);
-		  console.log(map.fieldName);
-		  $scope.signup[map.fieldName].$error[map.errorType] = true;
-		  $scope.signup[map.fieldName].errMsg = map.message;
-	  })
-	  console.log("Error:" + response.data);
-	  console.log(response.data);
+      if (response.data.validationErrors) {
+          angular.forEach(response.data.validationErrors, function (map) {
+              $scope.signup[map.fieldName].$error[map.errorType] = true;
+              $scope.signup[map.fieldName].errMsg = map.message;
+          });
+      }
+      else if (response.data.apiError) {
+          CommonService.handleDefaultErrorResponse("sm", "Error Signing up", response, ["OK"]);
+      }
+
 	  });
 };
 $scope.resetErrors = function(fieldName){
 	$scope.signup[fieldName].$error['custom'] = false;
+    $scope.signup[fieldName].$error['required'] = false;
+
 };
 });

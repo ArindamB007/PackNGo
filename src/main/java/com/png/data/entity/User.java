@@ -44,6 +44,15 @@ public class User extends BaseEntity{
     @Column (name = "email_valid_upto_timestamp")
     private Timestamp emailValidUptoTimestamp;
 
+    @Column(name = "forgot_password_code")
+    private String forgotPasswordCode;
+
+    @Column(name = "password_link_sent_timestamp")
+    private Timestamp passwordLinkSentTimestamp;
+
+    @Column(name = "password_link_valid_upto_timestamp")
+    private Timestamp passwordLinkValidUptoTimestamp;
+
     @Column (name="password")
     @Length (min = 5)
     @NotEmpty
@@ -158,6 +167,30 @@ public class User extends BaseEntity{
         this.emailValidUptoTimestamp = emailValidUptoTimestamp;
     }
 
+    public String getForgotPasswordCode() {
+        return forgotPasswordCode;
+    }
+
+    public void setForgotPasswordCode(String forgotPasswordCode) {
+        this.forgotPasswordCode = forgotPasswordCode;
+    }
+
+    public Timestamp getPasswordLinkSentTimestamp() {
+        return passwordLinkSentTimestamp;
+    }
+
+    public void setPasswordLinkSentTimestamp(Timestamp passwordLinkSentTimestamp) {
+        this.passwordLinkSentTimestamp = passwordLinkSentTimestamp;
+    }
+
+    public Timestamp getPasswordLinkValidUptoTimestamp() {
+        return passwordLinkValidUptoTimestamp;
+    }
+
+    public void setPasswordLinkValidUptoTimestamp(Timestamp passwordLinkValidUptoTimestamp) {
+        this.passwordLinkValidUptoTimestamp = passwordLinkValidUptoTimestamp;
+    }
+
     public Timestamp getLastLoginTimestamp() {
         return lastLoginTimestamp;
     }
@@ -201,7 +234,8 @@ public class User extends BaseEntity{
 		this.lastName = this.lastName.trim();
 		this.email = this.email.trim();
 	}
-	public String generateEmailValidationCode(){
+
+    public String generateUUIDValidationCode() {
         String validationCode = UUID.randomUUID().toString();
         return validationCode;
     }

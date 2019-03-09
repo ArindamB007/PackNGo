@@ -5,8 +5,8 @@ PackNGo.factory('CommonService',function(ModalService,CONSTANTS) {
     	  if (response.status === 400 && response.data)
     		  modalInstance = ModalService.showModal(modalSize,modalTitle + "-" + response.data.type,
     				  response.data.message,modalButtonsList);
-    	  else if (response.status === 404)
-    		  modalInstance = ModalService.showModal(modalSize,modalTitle,response.data.message, modalButtonsList);
+          else if (response.status === 404 && response.data.apiError)
+              modalInstance = ModalService.showModal(modalSize, modalTitle, response.data.apiError.message, modalButtonsList);
     	  else if (response.status === CONSTANTS.RESPONSE_CODES.REQUEST_IN_PROGRESS)
     		  {
 	    		  modalInstance = ModalService.showModal(modalSize,modalTitle,response.data.message, modalButtonsList);

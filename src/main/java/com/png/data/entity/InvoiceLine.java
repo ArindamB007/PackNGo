@@ -165,7 +165,6 @@ public class InvoiceLine extends BaseEntity{
                 invLineTax.setItemTaxDescription(invoiceLineTax.getItemTaxDescription());
                 invLineTax.setItemTaxCode(invoiceLineTax.getItemTaxCode());
                 if (getInvoiceLineStatusCode().equals(InvoiceLineStatusCodes.SALE.name())) {
-                    this.taxableAmount = this.amount.subtract(this.discountAmount);
                     invLineTax.setItemTaxAmount(this.taxableAmount
                             .multiply(new BigDecimal(invoiceLineTax.getItemTaxPercent()))
                             .divide(new BigDecimal(100)));
@@ -206,12 +205,14 @@ public class InvoiceLine extends BaseEntity{
         this.discountAmount = this.amount
                 .multiply(BigDecimal.valueOf(discountCoupon.getDiscountPercent()))
                 .divide(BigDecimal.valueOf(100));
+        this.taxableAmount = this.amount.subtract(this.discountAmount);
     }
 
     public void removeDiscountCoupon(DiscountCoupon discountCoupon) {
         this.discountAmount = this.discountAmount.subtract(this.amount
                 .multiply(BigDecimal.valueOf(discountCoupon.getDiscountPercent()))
                 .divide(BigDecimal.valueOf(100)));
+        this.taxableAmount = this.amount.subtract(this.discountAmount);
     }
 
 }

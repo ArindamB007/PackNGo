@@ -1,12 +1,14 @@
 package com.png.auth.service;
 
 import com.png.data.dto.user.UserContext;
+import com.png.exception.ApiBusinessException;
 import com.png.exception.EmailNotVerifiedException;
 import com.png.services.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -67,15 +69,19 @@ public class SecurityServiceImpl implements SecurityService{
 		UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
 				new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
-		authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        try {
+            authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        } catch (BadCredentialsException e) {
+            throw new ApiBusinessException("1000", "Invalid username or password, please try again!");
+        }
 		if (usernamePasswordAuthenticationToken.isAuthenticated()) {
 			userContext = userDetailsService.getUserContext();
 			if (!userContext.getEmailValidated())
-				throw new EmailNotVerifiedException("1001",
+                throw new EmailNotVerifiedException("1000",
 						String.format("Email not validated, validation email sent to %s",userContext.getEmail()));
 			userDetailsService.updateLastLoginTimeStamp(new Timestamp(new java.util.Date().getTime()));
+            userDetailsService.resetForgotPasswordData();
 			userDetailsService.saveUser();
-
 			SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 			System.out.println(String.format("User %s logged in successfully!", email));
 		}

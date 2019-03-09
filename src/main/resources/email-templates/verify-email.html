@@ -232,10 +232,13 @@
                                                     <div class="contentEditableContainer contentTextEditable">
                                                         <div class="contentEditable" align='center'>
                                                             <p >
-                                                                Thank you for signing up, please click the button below to validate the email address.
+                                                                Thank you for signing up, please click the button below
+                                                                to validate the email address and
+                                                                activate your account.
                                                                 <br>
                                                                 <br>
-                                                                We wanted to ensure the email is correct so you get all your correspondence from us delivered as expected.
+                                                                We wanted to ensure the email is correct so you get all
+                                                                your correspondence from us delivered, as expected.
                                                                 <br>
                                                                 <br>
                                                                 Regards,
@@ -249,8 +252,16 @@
                                                 </td>
                                             </tr>
 
-                                            <tr><td height='55'></td></tr>
-
+                                            <tr>
+                                                <td height='55'>Click the button below or the URL may be copied and
+                                                    pasted into another browser window
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td th:text="@{__${baseUrl}__#/verify-email/__${validationCode}__}"
+                                                    align='center'>url goes here
+                                                </td>
+                                            </tr>
                                             <tr>
                                                 <td align='center'>
                                                     <table>
@@ -258,7 +269,10 @@
                                                             <td align='center' bgcolor='#1A54BA' style='background:#DC2828; padding:15px 18px;-webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;'>
                                                                 <div class="contentEditableContainer contentTextEditable">
                                                                     <div class="contentEditable" align='center'>
-                                                                        <a target='_blank' href='#' class='link2' style='color:#ffffff;'>Activate your Account</a>
+                                                                        <a target='_blank'
+                                                                           th:href="@{__${baseUrl}__#/verify-email/__${validationCode}__}"
+                                                                           class='link2' style='color:#ffffff;'>Activate
+                                                                            your Account</a>
                                                                     </div>
                                                                 </div>
                                                             </td>
