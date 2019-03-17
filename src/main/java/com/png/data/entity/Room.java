@@ -12,23 +12,28 @@ public class Room extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_room")
-    private Integer idRoom;
+    private Long idRoom;
 
     @Column (name = "room_no", nullable = false, unique = true)
     private String roomNo;
 
-    @OneToOne(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
+    @OneToOne(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true,
+            fetch = FetchType.LAZY)
     private Booking booking;
 
     @ManyToOne (fetch = FetchType.LAZY, optional = false)
     @PrimaryKeyJoinColumn
     private RoomType roomType;
 
-    public Integer getIdRoom() {
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "property_id")
+    private Property property;
+
+    public Long getIdRoom() {
         return idRoom;
     }
 
-    public void setIdRoom(Integer idRoom) {
+    public void setIdRoom(Long idRoom) {
         this.idRoom = idRoom;
     }
 
@@ -54,5 +59,13 @@ public class Room extends BaseEntity {
 
     public void setBooking(Booking booking) {
         this.booking = booking;
+    }
+
+    public Property getProperty() {
+        return property;
+    }
+
+    public void setProperty(Property property) {
+        this.property = property;
     }
 }

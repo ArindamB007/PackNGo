@@ -1,8 +1,6 @@
 package com.png.data.mapper;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

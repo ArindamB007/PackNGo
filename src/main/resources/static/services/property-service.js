@@ -3,7 +3,7 @@ PackNGo.factory('PropertyService',function($rootScope,$q,$http,$log,SelectedProp
   return{
         getProperties : function() {
           var deferred = $q.defer();
-          $http.get("../services/getAllEnabledProperties")
+            $http.get("../api/property/getAllEnabledProperties")
             .then(function(response){
               deferred.resolve(response);
             })

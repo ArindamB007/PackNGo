@@ -2,7 +2,7 @@ PackNGo.factory('InvoiceSearchService', function ($q, $http, $log) {
     return {
         invoiceSearch: function (invoiceSearchObject) {
             var deferred = $q.defer();
-            $http.post("../services/findInvoice", invoiceSearchObject)
+            $http.post("../api/invoice/findInvoice", invoiceSearchObject)
                 .then(function (response) {
                     deferred.resolve(response);
                 })

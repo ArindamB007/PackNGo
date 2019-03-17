@@ -12,7 +12,7 @@
  *
  * # ngRoute
  *
- * The `ngRoute` module provides routing and deeplinking services and directives for angular apps.
+ * The `ngRoute` module provides routing and deeplinking api and directives for angular apps.
  *
  * ## Example
  * See {@link ngRoute.$route#example $route} for an example of configuring and using `ngRoute`.
@@ -392,7 +392,7 @@ function $RouteProvider() {
      * @name $route#$routeChangeStart
      * @eventType broadcast on root scope
      * @description
-     * Broadcasted before a route change. At this  point the route services starts
+     * Broadcasted before a route change. At this  point the route api starts
      * resolving all of the dependencies needed for the route change to occur.
      * Typically this involves fetching the view template as well as any dependencies
      * defined in `resolve` route property. Once  all of the dependencies are resolved

@@ -1,5 +1,6 @@
 package com.png.util;
 
+import com.png.exception.ApiBusinessException;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
@@ -19,14 +20,32 @@ public class DateFormatter {
         return df.format(new java.util.Date().getTime());
     }
 
-    public static Timestamp getTimestampFromString(String dateString) throws ParseException{
+    public static Timestamp getTimestampFromString(String dateString) {
         DateFormat df = new SimpleDateFormat("dd-MMM-yyyy hh:mm a");
-        return new Timestamp(df.parse(dateString).getTime());
+        Timestamp timestamp;
+        try {
+            timestamp = new Timestamp(df.parse(dateString).getTime());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //todo log error
+            throw new ApiBusinessException("1000", "An unexpected situation is creating hindrance to further progress. " +
+                    "Support team needs to intervene!");
+        }
+        return timestamp;
     }
 
-    public static Timestamp getTimestampFromString(String dateString, String parseFormat) throws ParseException {
+    public static Timestamp getTimestampFromString(String dateString, String parseFormat) {
         DateFormat df = new SimpleDateFormat(parseFormat);
-        return new Timestamp(df.parse(dateString).getTime());
+        Timestamp timestamp;
+        try {
+            timestamp = new Timestamp(df.parse(dateString).getTime());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //todo log error
+            throw new ApiBusinessException("1000", "An unexpected situation is creating hindrance to further progress. " +
+                    "Support team needs to intervene!");
+        }
+        return timestamp;
     }
     public static String getDateStringFromTimestamp(Timestamp timestamp){
         DateFormat df = new SimpleDateFormat("dd-MMM-yyyy hh:mm a");

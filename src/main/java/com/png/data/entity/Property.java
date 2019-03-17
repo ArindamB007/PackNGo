@@ -34,8 +34,12 @@ public class Property extends BaseEntity{
 	@ManyToMany
     @JoinTable(name = "properties_facilities", joinColumns = @JoinColumn(name = "id_property"), inverseJoinColumns = @JoinColumn(name = "id_facility"))
     private Set<Facility> facilities;
+
+	@OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private List<Room> rooms;
 	
 	@OneToMany (mappedBy = "propertyId")
+	@PrimaryKeyJoinColumn
     private Set<PropertyImage> propertyImages;
 
 	@OneToMany(mappedBy = "propertyId")
@@ -120,5 +124,13 @@ public class Property extends BaseEntity{
 
 	public void setDiscountCoupons(List<DiscountCoupon> discountCoupons) {
 		this.discountCoupons = discountCoupons;
+	}
+
+	public List<Room> getRooms() {
+		return rooms;
+	}
+
+	public void setRooms(List<Room> rooms) {
+		this.rooms = rooms;
 	}
 }

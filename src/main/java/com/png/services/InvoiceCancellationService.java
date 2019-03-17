@@ -8,6 +8,7 @@ import com.png.data.mapper.InvoiceMapper;
 import com.png.data.repository.InvoiceRepository;
 import com.png.data.repository.ItemRepository;
 import com.png.data.repository.UserRepository;
+import com.png.util.DateFormatter;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,12 @@ public class InvoiceCancellationService {
         }
         cancelledInvoice.processFullInvoiceCancellation(cancelItem, CancellationMode.PROCESS_CANCELLATION);
         cancelledInvoice.setCancelledByUser(cancelledByUser); // setting the user who cancelled the invoice
+        cancelledInvoice.setUpdatedTimestamp(DateFormatter.getCurrentTime());
+        //setting cancelled by for the booking entity
+        cancelledInvoice.getBookings().forEach(booking -> {
+            booking.setCancelledByUser(cancelledByUser);
+            booking.setCancelledTimestamp(DateFormatter.getCurrentTime());
+        });
         cancelledInvoice = invoiceRepository.save(cancelledInvoice);
         return InvoiceMapper.INSTANCE.InvoiceToInvoiceDto(cancelledInvoice);
     }

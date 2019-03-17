@@ -1014,7 +1014,7 @@ function setupModuleLoader(window) {
      *
      * # Module
      *
-     * A module is a collocation of services, directives, filters, and configure information. Module
+     * A module is a collocation of api, directives, filters, and configure information. Module
      * is used to configure the {@link angular.module.AUTO.$injector $injector}.
      *
      * <pre>
@@ -1024,7 +1024,7 @@ function setupModuleLoader(window) {
      * // register a new service
      * myModule.value('appName', 'MyCoolApp');
      *
-     * // configure existing services inside initialization blocks.
+     * // configure existing api inside initialization blocks.
      * myModule.config(function($locationProvider) {
      *   // Configure existing providers
      *   $locationProvider.hashPrefix('!');
@@ -2181,7 +2181,7 @@ HashQueueMap.prototype = {
  * @function
  *
  * @description
- * Creates an injector function that can be used for retrieving services as well as for
+ * Creates an injector function that can be used for retrieving api as well as for
  * dependency injection (see {@link guide/dev_guide.di dependency injection}).
  *
 
@@ -2403,7 +2403,7 @@ function inferInjectionArgs(fn) {
  * @methodOf angular.module.AUTO.$provide
  * @description
  *
- * A short hand for configuring services if only `$get` method is required.
+ * A short hand for configuring api if only `$get` method is required.
  *
  * @param {string} name The name of the instance.
  * @param {function()} $getFn The $getFn for the instance creation. Internally this is a short hand for
@@ -2432,7 +2432,7 @@ function inferInjectionArgs(fn) {
  * @methodOf angular.module.AUTO.$provide
  * @description
  *
- * A short hand for configuring services if the `$get` method is a constant.
+ * A short hand for configuring api if the `$get` method is a constant.
  *
  * @param {string} name The name of the instance.
  * @param {*} value The value.
@@ -6876,8 +6876,8 @@ function $RootScopeProvider(){
      *
      * @param {Object.<string, function()>=} providers Map of service factory which need to be provided
      *     for the current scope. Defaults to {@link angular.module.ng}.
-     * @param {Object.<string, *>=} instanceCache Provides pre-instantiated services which should
-     *     append/override services provided by `providers`. This is handy when unit-testing and having
+     * @param {Object.<string, *>=} instanceCache Provides pre-instantiated api which should
+     *     append/override api provided by `providers`. This is handy when unit-testing and having
      *     the need to override a default service.
      * @returns {Object} Newly created scope.
      *

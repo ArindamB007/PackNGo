@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -25,6 +27,7 @@ public class MealPlan extends BaseEntity {
 	
 	@OneToMany
 	@JoinTable(name = "meal_plan_items", joinColumns = @JoinColumn(name = "id_meal_plan"), inverseJoinColumns = @JoinColumn(name = "id_item"))
+	@Fetch(value = FetchMode.JOIN)
 	private List<Item> items;
 
 	@OneToMany(mappedBy = "mealPlan", cascade = CascadeType.ALL, orphanRemoval = true)

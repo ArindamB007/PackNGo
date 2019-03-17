@@ -2,7 +2,7 @@ PackNGo.factory('BookingService', function ($rootScope, $q, $http, $log) {
     return{
         searchRoom : function(checkInOutDetails) {
             var deferred = $q.defer();
-            $http.post("../services/search_room_types",checkInOutDetails)
+            $http.post("../api/property/search_room_types", checkInOutDetails)
                 .then(function(response){
                     deferred.resolve(response);
                 })
@@ -14,7 +14,7 @@ PackNGo.factory('BookingService', function ($rootScope, $q, $http, $log) {
         },
         prepareInvoice : function(bookingCart) {
             var deferred = $q.defer();
-            $http.post("../services/prepare_invoice",bookingCart)
+            $http.post("../api/invoice/prepare_invoice", bookingCart)
                 .then(function(response){
                     deferred.resolve(response);
                 })
@@ -26,7 +26,7 @@ PackNGo.factory('BookingService', function ($rootScope, $q, $http, $log) {
         },
         processInvoice : function(invoice) {
             var deferred = $q.defer();
-            $http.post("../services/process_invoice",invoice)
+            $http.post("../api/invoice/process_invoice", invoice)
                 .then(function(response){
                     deferred.resolve(response);
                 })

@@ -8,6 +8,7 @@ import com.png.data.dto.item.ItemDto;
 import com.png.data.entity.*;
 import com.png.data.mapper.InvoiceMapper;
 import com.png.data.repository.*;
+import com.png.exception.ApiBusinessException;
 import com.png.exception.RoomJustSoldOutException;
 import com.png.payments.RazorPay;
 import com.png.util.DateFormatter;
@@ -123,6 +124,8 @@ public class InvoiceProcessorService {
                 booking.setCheckInTimestamp(DateFormatter.getTimestampFromString(invoice.getCheckInTimestamp()));
                 booking.setCheckOutTimestamp(DateFormatter.getTimestampFromString(invoice.getCheckOutTimestamp()));
                 booking.setUpdatedTimestamp(DateFormatter.getCurrentTime());
+                booking.setBookingTypeCode(Booking.BookingTypeCodes.ONLINE.name());
+                booking.setBookedByUser(customUserDetailsService.getUserByUserContext(invoice.getUserContext()));
                 newBookings.add(booking);
             }
             for (Booking newBooking : newBookings) {
@@ -135,6 +138,9 @@ public class InvoiceProcessorService {
             return InvoiceMapper.INSTANCE.InvoiceToInvoiceDto(newInvoice);
         } catch(Exception e) {
             e.printStackTrace();
+            //todo add logging
+            throw new ApiBusinessException("1000", "An unexpected situation is creating hindrance to further progress. " +
+                    "Support team needs to intervene!");
         }
         //roomTypeRepository.getRoomsToBeBooked()
         //Book the room
@@ -152,7 +158,6 @@ public class InvoiceProcessorService {
 
         //process Payment
         //send email
-        return null;
     }
 
 
@@ -214,6 +219,7 @@ public class InvoiceProcessorService {
         if (invoiceLine.getNoOfNights()!=null && invoiceLine.getNoOfNights()>1)
             invoiceLine.setAmount(invoiceLine.getAmount().multiply(
                     new BigDecimal((invoiceLine.getNoOfNights()))));
+        invoiceLine.setTaxableAmount(invoiceLine.getAmount().subtract(invoiceLine.getDiscountAmount()));
         invoiceLine.setInvoiceLineTaxes(getInvoiceLineTaxesForMealPlan(mealPlan));
         invoiceLine.calculateAmountWithTax();
         return invoiceLine;
@@ -237,6 +243,7 @@ public class InvoiceProcessorService {
         if (invoiceLine.getNoOfNights()!=null && invoiceLine.getNoOfNights()>1)
             invoiceLine.setAmount(invoiceLine.getAmount().multiply(
                     new BigDecimal((invoiceLine.getNoOfNights()))));
+        invoiceLine.setTaxableAmount(invoiceLine.getAmount().subtract(invoiceLine.getDiscountAmount()));
         return invoiceLine;
     }
 

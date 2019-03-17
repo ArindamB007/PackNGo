@@ -1,5 +1,7 @@
 package com.png.data.entity;
 
+import com.png.util.DateFormatter;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -11,6 +13,9 @@ import java.util.Set;
 @Entity
 @Table(name="booking")
 public class Booking extends BaseEntity{
+    public enum BookingTypeCodes {
+        ONLINE, BLOCK, OFFLINE
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_booking")
@@ -19,14 +24,8 @@ public class Booking extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     private Invoice invoice;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
     private Room room;
-
-
-   /* @ManyToMany
-    @JoinTable(name = "bookings_rooms", joinColumns = @JoinColumn(name = "id_booking"),
-            inverseJoinColumns = @JoinColumn(name = "id_room"))
-    private List<Room> rooms;*/
 
     @Column (name = "cancelled_timestamp")
     private Timestamp cancelledTimestamp;
@@ -36,6 +35,33 @@ public class Booking extends BaseEntity{
 
     @Column(name = "check_out_timestamp", nullable = false)
     private Timestamp checkOutTimestamp;
+
+    @Column(name = "booking_type_code", nullable = false)
+    private String bookingTypeCode;
+
+    @ManyToOne(optional = false)
+    @PrimaryKeyJoinColumn
+    private User bookedByUser;
+
+    @ManyToOne
+    @PrimaryKeyJoinColumn
+    private User cancelledByUser;
+
+    public Booking() {
+        super();
+    }
+
+    public Booking(BookingTypeCodes bookingTypeCode, Timestamp checkInTimestamp, Timestamp checkOutTimestamp,
+                   User bookedByUser, Room room, Invoice invoice) {
+        super();
+        this.bookingTypeCode = bookingTypeCode.name();
+        this.invoice = invoice;
+        this.checkInTimestamp = checkInTimestamp;
+        this.checkOutTimestamp = checkOutTimestamp;
+        this.cancelledByUser = null;
+        this.room = room;
+        this.bookedByUser = bookedByUser;
+    }
 
     public Long getIdBooking() {
         return idBooking;
@@ -83,5 +109,29 @@ public class Booking extends BaseEntity{
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public User getBookedByUser() {
+        return bookedByUser;
+    }
+
+    public void setBookedByUser(User bookedByUser) {
+        this.bookedByUser = bookedByUser;
+    }
+
+    public User getCancelledByUser() {
+        return cancelledByUser;
+    }
+
+    public void setCancelledByUser(User cancelledByUser) {
+        this.cancelledByUser = cancelledByUser;
+    }
+
+    public String getBookingTypeCode() {
+        return bookingTypeCode;
+    }
+
+    public void setBookingTypeCode(String bookingTypeCode) {
+        this.bookingTypeCode = bookingTypeCode;
     }
 }

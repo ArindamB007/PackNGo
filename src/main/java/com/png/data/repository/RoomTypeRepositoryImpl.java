@@ -29,29 +29,51 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
     @Override
     public List<AvailableRoomType> getAvailableRoomTypeWithCount(Timestamp checkInTimestamp,Timestamp checkOutTimestamp,
                                                                  Long idProperty){
-        Query query = em.createNativeQuery(
+        /*Query query = em.createNativeQuery(
                 "  select A.id_room_type,A.type_name,A.base_price,count(B.id_room) as count_available, \n" +
                         "    A.discount,A.description,A.max_adult_occupancy, A.max_child_occupancy,\n" +
                         "    A.max_extra_adult_occupancy, A.max_extra_child_occupancy, A.max_total_occupancy from\n" +
                         " (select * from room_type)  AS A\n" +
                         "  LEFT JOIN\n" +
-                        " (select room.id_room, room.room_no, room_type.id_room_type,room_type.type_name\n" +
+                        " (select room.id_room, room.room_no, room.property_id,room_type.id_room_type,room_type.type_name\n" +
                         "    from room \n" +
                         "    LEFT JOIN room_type \n" +
                         "    on room.room_type_id_room_type = room_type.id_room_type\n" +
                         "  where id_room not in (\n" +
-                        "     select room.id_room from room \n" +
+                        "     select room.id_room from room \n" +*/
+        /*
                         "    LEFT JOIN  booking\n" +
                         "      on room.id_room = booking.room_id_room " +
                         "      AND booking.cancelled_timestamp IS NULL where\n" +
                         "           (:checkInTimestamp <= booking.check_in_timestamp and " +
                         "               :checkOutTimestamp >= booking.check_in_timestamp) OR\n" +
                         "           (:checkInTimestamp <= booking.check_out_timestamp and " +
-                        "               :checkOutTimestamp >= booking.check_out_timestamp))\n" +
-                        "  and room_type.property_id_property = :idProperty ) AS B\n" +
+                        "               :checkOutTimestamp >= booking.check_out_timestamp) OR" +
+                        "           (:checkInTimestamp >= booking.check_in_timestamp AND " +
+                        "             :checkOutTimestamp <= booking.check_out_timestamp)) " +
+                        "  and room.property_id = :idProperty ) AS B\n" +
                         "    ON A.id_room_type = B.id_room_type\n" +
-                        "    WHERE A.property_id_property = :idProperty\n" +
-                        "    GROUP BY A.type_name order by A.id_room_type;");
+                        "    WHERE B.property_id = :idProperty\n" +
+                        "    GROUP BY A.type_name order by A.id_room_type;");*/
+        Query query = em.createNativeQuery("select room_type.id_room_type,room_type.type_name,room_type.base_price,count(room.id_room) as count_available, " +
+                "room_type.discount, room_type.description, room_type.max_adult_occupancy, room_type.max_child_occupancy, " +
+                "room_type.max_extra_adult_occupancy, room_type.max_extra_child_occupancy, room_type.max_total_occupancy " +
+                "from room " +
+                "LEFT JOIN room_type " +
+                "on room.room_type_id_room_type = room_type.id_room_type " +
+                "where id_room not in ( " +
+                " select room.id_room from room " +
+                " LEFT JOIN  booking " +
+                " on room.id_room = booking.room_id_room " +
+                " AND booking.cancelled_timestamp IS NULL where " +
+                " (:checkInTimestamp <= booking.check_in_timestamp AND " +
+                " :checkOutTimestamp >= booking.check_in_timestamp) OR " +
+                "(:checkInTimestamp <= booking.check_out_timestamp AND " +
+                " :checkOutTimestamp >= booking.check_out_timestamp) OR " +
+                "(:checkInTimestamp >= booking.check_in_timestamp AND " +
+                " :checkOutTimestamp <= booking.check_out_timestamp))" +
+                " and room.property_id = :idProperty " +
+                " GROUP BY room_type.type_name ORDER BY room_type.id_room_type;");
         query.setParameter("checkInTimestamp",checkInTimestamp);
         query.setParameter("checkOutTimestamp",checkOutTimestamp);
         query.setParameter("idProperty",idProperty);
@@ -126,7 +148,7 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
     @Override
     public List<Room> getRoomsToBeBooked(Long idProperty, String roomTypeName, Integer roomQuantity,
                                                     Timestamp checkInTimestamp, Timestamp checkOutTimestamp){
-        Query query = em.createNativeQuery(
+        /*Query query = em.createNativeQuery(
                 " select room.id_room, room.room_no,room_type.id_room_type,room_type.type_name\n" +
                         "    from room \n" +
                         "    LEFT JOIN room_type \n" +
@@ -136,29 +158,36 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepositoryCustom {
                         "     select room.id_room from room \n" +
                         "    LEFT JOIN  booking\n" +
                         "      on room.id_room = booking.room_id_room " +
+                        "      AND room.property_id = :idProperty"+
                         "      AND booking.cancelled_timestamp IS NULL where \n" +
-                        "           (:checkInTimestamp <= booking.check_in_timestamp AND \n" +
-                        "           :checkOutTimestamp >= booking.check_in_timestamp) OR \n" +
-                        "           (:checkInTimestamp <= booking.check_out_timestamp AND \n" +
-                        "           :checkOutTimestamp >= booking.check_out_timestamp)) \n" +
-                        " AND room_type.property_id_property = :idProperty\n" +
-                        " order by room.room_no*1 LIMIT :roomQuantity");
-        query.setParameter("checkInTimestamp",checkInTimestamp);
-        query.setParameter("checkOutTimestamp",checkOutTimestamp);
-        query.setParameter("idProperty",idProperty);
-        query.setParameter("roomTypeName",roomTypeName);
-        query.setParameter("roomQuantity",roomQuantity);
-        List<Object[]> results = query.getResultList();
-        List<Room> roomAllotmentList = new ArrayList<>();
-        if ((results.get(0))[0] == null)
-            return roomAllotmentList;
-        results.forEach(row-> {
-            Room room  = new Room();
-            room.setIdRoom((Integer)row[0]);
-            room.setRoomNo(row[1].toString());
-            roomAllotmentList.add(room);
-        });
-        return roomAllotmentList;
+                        "           (:checkInTimestamp <= booking.check_in_timestamp AND  " +
+                        "           :checkOutTimestamp >= booking.check_in_timestamp) OR  " +*//*
+                        "           (:checkInTimestamp <= booking.check_out_timestamp AND " +
+                        "           :checkOutTimestamp >= booking.check_out_timestamp) OR " +
+                        "           (:checkInTimestamp >= booking.check_in_timestamp AND " +
+                        "           :checkOutTimestamp <= booking.check_out_timestamp)) " +
+                        " order by room.room_no*1 LIMIT :roomQuantity");*/
+        return em.createQuery(
+                "SELECT OBJECT(room) FROM Room room " +
+                        "LEFT JOIN room.roomType rt " +
+                        "WHERE rt.typeName = :roomTypeName AND " +
+                        "room NOT IN (" +
+                        "SELECT rm FROM Room rm " +
+                        "LEFT JOIN rm.booking booking WHERE " +
+                        "rm.property.idProperty = :idProperty AND " +
+                        "booking.cancelledTimestamp IS NULL AND " +
+                        "(:checkInTimestamp <= booking.checkInTimestamp AND " +
+                        " :checkOutTimestamp >= booking.checkInTimestamp) OR " +
+                        "(:checkInTimestamp <= booking.checkOutTimestamp AND " +
+                        " :checkOutTimestamp >= booking.checkOutTimestamp) OR " +
+                        "(:checkInTimestamp >= booking.checkInTimestamp AND " +
+                        "  :checkOutTimestamp <= booking.checkOutTimestamp)) ORDER BY room.idRoom ASC", Room.class)
+                .setParameter("checkInTimestamp", checkInTimestamp)
+                .setParameter("checkOutTimestamp", checkOutTimestamp)
+                .setParameter("idProperty", idProperty)
+                .setParameter("roomTypeName", roomTypeName)
+                .setMaxResults(roomQuantity)
+                .getResultList();
     }
 
 }
